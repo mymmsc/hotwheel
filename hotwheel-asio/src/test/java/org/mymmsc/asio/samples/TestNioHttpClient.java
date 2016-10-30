@@ -18,7 +18,7 @@ public class TestNioHttpClient {
         String url = "http://100.73.18.11/mybankv21/phppassport/v2/passport/inner/get-user-basic-info";
         url = "http://100.73.16.32:5021/id?type=outdebt";
         url = "http://100.73.16.32:5021/id";
-        url = "http://127.0.0.1:8080/dsmp/innerApi/v2/status.cgi";
+        //url = "http://127.0.0.1:8080/dsmp/innerApi/v2/status.cgi";
         final String appKey = "fb371c48e9a9b2a1174ed729ae888513";
         final String userId = "538522734200627281";
         int concurrency = 200;
