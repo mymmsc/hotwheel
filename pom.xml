@@ -18,6 +18,7 @@
         <module>hotwheel-test</module>
         <module>hotwheel-json</module>
         <module>hotwheel-asio</module>
+        <module>hotwheel-jdbc</module>
     </modules>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
