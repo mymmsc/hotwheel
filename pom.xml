@@ -17,6 +17,7 @@
         <module>hotwheel-j2ee</module>
         <module>hotwheel-test</module>
         <module>hotwheel-json</module>
+        <module>hotwheel-asio</module>
     </modules>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
