@@ -11,6 +11,19 @@
     <packaging>pom</packaging>
     <version>1.0.0</version>
 
+    <contributors>
+        <contributor>
+            <name>Wang Feng</name>
+            <email>wangfengxy@sina.cn</email>
+        </contributor>
+    </contributors>
+
+    <scm>
+        <url>http://github.com/mymmsc/hotwheel</url>
+        <connection>scm:git:ssh://github.com/mymmsc/hotwheel.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/mymmsc/hotwheel.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
     <!-- ==================== 子模块设置 =========================== -->
     <modules>
         <module>hotwheel-core</module>
