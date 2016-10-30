@@ -13,7 +13,9 @@
 
     <!-- ==================== 子模块设置 =========================== -->
     <modules>
-
+        <module>hotwheel-core</module>
+        <module>hotwheel-j2ee</module>
+        <module>hotwheel-test</module>
     </modules>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
