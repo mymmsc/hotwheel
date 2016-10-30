@@ -12,41 +12,18 @@
 
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc</groupId>
-    <artifactId>hotwheel-j2ee</artifactId>
+    <artifactId>hotwheel-json</artifactId>
     <version>${hotwheel.version}</version>
     <packaging>jar</packaging>
 
     <!-- ==================== 依赖jar 设置 =========================== -->
     <dependencies>
-        <!-- j2ee start -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${javax.servlet-api.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-web</artifactId>
-            <version>${log4j2.version}</version>
-        </dependency>
-        <!-- j2ee end -->
-        <dependency>
-            <groupId>org.ow2.asm</groupId>
-            <artifactId>asm</artifactId>
-            <version>${asm.version}</version>
-        </dependency>
-        <!-- hotwheel start -->
+        <!-- hotwheel-core start -->
         <dependency>
             <groupId>org.mymmsc</groupId>
             <artifactId>hotwheel-core</artifactId>
             <version>${hotwheel.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.mymmsc</groupId>
-            <artifactId>hotwheel-json</artifactId>
-            <version>${hotwheel.version}</version>
-        </dependency>
-        <!-- hotwheel end -->
+        <!-- hotwheel-core end -->
     </dependencies>
 </project>

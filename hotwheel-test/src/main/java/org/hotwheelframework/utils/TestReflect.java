@@ -66,13 +66,13 @@ public class TestReflect {
         for (int i = 0; i < count; i++) {
             testJdk();
         }
-        System.out.println("jdk   用时:" + (System.currentTimeMillis() - tm) + "毫秒");
+        System.out.println("jdk  用时:" + (System.currentTimeMillis() - tm) + "毫秒");
 
         // cglib高效反射FastClass
         tm = System.currentTimeMillis();
         for (int i = 0; i < count; i++) {
             testCglib();
         }
-        System.out.println("cgilib用时:" + (System.currentTimeMillis() - tm) + "毫秒");
+        System.out.println("cglib用时:" + (System.currentTimeMillis() - tm) + "毫秒");
     }
 }

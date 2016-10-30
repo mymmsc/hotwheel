@@ -16,12 +16,17 @@
         <module>hotwheel-core</module>
         <module>hotwheel-j2ee</module>
         <module>hotwheel-test</module>
+        <module>hotwheel-json</module>
     </modules>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
     <properties>
+        <!-- JDK设置 -->
+        <javac.version>1.7</javac.version>
+        <javac.encoding>UTF-8</javac.encoding>
+
         <!-- MyMMSC组件 版本设置 -->
-        <mymmsc.version>1.0.0</mymmsc.version>
+        <hotwheel.version>1.0.0</hotwheel.version>
 
         <!-- J2EE 版本 -->
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
@@ -65,16 +70,21 @@
 
     <!-- ==================== 编译设置 =========================== -->
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.tpl</include>
-                    <include>**/*.txt</include>
-                </includes>
-            </resource>
-        </resources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>${javac.version}</source>
+                    <target>${javac.version}</target>
+                    <encoding>${javac.encoding}</encoding>
+                    <compilerArgs>
+                        <!-- 过期的方法的警告-->
+                        <arg>-Xlint:deprecation</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -86,7 +96,7 @@
                     <execution>
                         <phase>compile</phase>
                         <goals>
-                            <goal>jar</goal>
+                            <goal>jar-no-fork</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -100,6 +110,15 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.tpl</include>
+                    <include>**/*.txt</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
     <!-- ==================== Nexus私服设置 =========================== -->
     <repositories>
