@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- ==================== 顶层设计 =========================== -->
     <parent>
         <artifactId>hotwheel-framework</artifactId>
         <groupId>org.mymmsc</groupId>
@@ -9,9 +10,28 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc</groupId>
     <artifactId>hotwheel-core</artifactId>
-    <version>1.0.0</version>
+    <version>${hotwheel.version}</version>
+    <packaging>jar</packaging>
 
+    <!-- ==================== 依赖jar 设置 =========================== -->
+    <dependencies>
+        <!-- logger start -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <!-- logger end -->
 
+        <!-- redis start -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
+        </dependency>
+        <!-- redis end -->
+    </dependencies>
 </project>
