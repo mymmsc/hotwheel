@@ -1,8 +1,8 @@
-package org.hotwheelframework.utils;
+package org.hotwheel.utils;
 
 import net.sf.cglib.reflect.FastClass;
 import net.sf.cglib.reflect.FastMethod;
-import org.hotwheelframework.context.Person;
+import org.hotwheel.context.Person;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- ==================== 顶层设计 =========================== -->
+    <parent>
+        <artifactId>hotwheel-framework</artifactId>
+        <groupId>org.mymmsc</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ==================== 项目设置 =========================== -->
+    <groupId>org.mymmsc</groupId>
+    <artifactId>hotwheel-mybatis</artifactId>
+    <version>${hotwheel.version}</version>
+    <packaging>jar</packaging>
+
+    <!-- ==================== 依赖jar版本 设置 =========================== -->
+    <properties>
+        <mybatis.version>3.4.1</mybatis.version>
+        <httpcore.version>4.4.4</httpcore.version>
+        <httpasyncclient.version>4.1.1</httpasyncclient.version>
+    </properties>
+
+    <!-- ==================== 依赖jar 设置 =========================== -->
+    <dependencies>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

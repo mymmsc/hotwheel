@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="org.hotwheel.dsmp.dao.ermas.IOverdueErrorDao">
+    <select id="getDirtyAndErrorData" resultType="java.lang.String">
+        select distinct(uuid)
+        from ermas_account
+        where
+        <![CDATA[
+        (over_due_days<(DATEDIFF(now(),loan_due_date))-1 AND over_due_amt>0.00)
+         OR over_due_amt<0.00
+        ]]>
+        order by uuid asc limit #{limit}
+    </select>
+
+    <select id="getAllDirtyAndErrorData" resultType="java.lang.String">
+        select distinct(uuid)
+        from ermas_account
+        where
+        <![CDATA[
+        (over_due_days<(DATEDIFF(now(),loan_due_date))-1 AND over_due_amt>0.00)
+         OR over_due_amt<0.00
+        ]]>
+        order by uuid asc
+    </select>
+    
+    <select id="getAllLossFriends" resultType="java.lang.String">
+        select a.cust_no from ermas_case_main a left join ermas_contact b on a.cust_no=b.cust_no where b.cust_no is null and a.collect_flag='I'
+    </select>
+
+    <select id="getPartialDebtorLossCreditor" resultType="java.lang.String">
+        select distinct(t1.debtor) from
+        (select a.cust_no as debtor,c.cust_no as creditor from ermas_case_main a, ermas_account b, ermas_creditororder c where a.cust_no=b.cust_no and a.collect_flag='I' and b.pay_off='N' and b.product_id=c.product_id) t1 left join ermas_contact t2
+        on t1.debtor=t2.cust_no and t1.creditor=t2.contact_no where t2.contact_no is null;
+    </select>
+</mapper>
