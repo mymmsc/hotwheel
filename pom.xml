@@ -32,6 +32,7 @@
         <module>hotwheel-json</module>
         <module>hotwheel-asio</module>
         <module>hotwheel-jdbc</module>
+        <module>hotwheel-mybatis</module>
     </modules>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->

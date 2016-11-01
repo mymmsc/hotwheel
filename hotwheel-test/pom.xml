@@ -5,18 +5,34 @@
     <!-- ==================== 顶层设计 =========================== -->
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>hotwheel-framework</artifactId>
         <groupId>org.mymmsc</groupId>
+        <artifactId>hotwheel-framework</artifactId>
         <version>1.0.0</version>
     </parent>
 
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc</groupId>
     <artifactId>hotwheel-test</artifactId>
-    <version>1.0.0</version>
+    <version>${hotwheel.version}</version>
+    <packaging>jar</packaging>
 
     <!-- ==================== 依赖jar 设置 =========================== -->
     <dependencies>
+        <dependency>
+            <groupId>org.mymmsc</groupId>
+            <artifactId>hotwheel-core</artifactId>
+            <version>${hotwheel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mymmsc</groupId>
+            <artifactId>hotwheel-mybatis</artifactId>
+            <version>${hotwheel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mymmsc</groupId>
+            <artifactId>hotwheel-jdbc</artifactId>
+            <version>${hotwheel.version}</version>
+        </dependency>
         <!-- cglib start -->
         <dependency>
             <groupId>cglib</groupId>
@@ -24,5 +40,11 @@
             <version>${cglib.version}</version>
         </dependency>
         <!-- cglib end -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql_connector.version}</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 </project>
