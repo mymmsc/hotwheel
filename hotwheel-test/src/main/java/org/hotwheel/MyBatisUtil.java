@@ -1,12 +1,12 @@
 package org.hotwheel;
 
-import org.apache.ibatis.builder.xml.XMLConfigBuilder;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.hotwheel.dsmp.dao.ermas.IOverdueErrorDao;
+import org.hotwheel.mybatis.builder.ApplicationContext;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,7 +44,7 @@ public class MyBatisUtil {
         try {
             File file = new File(xmlMybatisConfig);
             inputStream = new FileInputStream(file);
-            XMLConfigBuilder builder = new XMLConfigBuilder(inputStream);
+            ApplicationContext builder = new ApplicationContext(inputStream);
             Configuration config = builder.parse();
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(config);
         } catch (IOException e) {
