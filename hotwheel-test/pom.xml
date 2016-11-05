@@ -5,9 +5,9 @@
     <!-- ==================== 顶层设计 =========================== -->
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.mymmsc</groupId>
+        <groupId>org.mymmsc.hotwheel</groupId>
         <artifactId>hotwheel-framework</artifactId>
-        <version>1.0.0</version>
+        <version>2.0.1</version>
     </parent>
 
     <!-- ==================== 项目设置 =========================== -->
@@ -47,4 +47,53 @@
             <scope>runtime</scope>
         </dependency>
     </dependencies>
+
+    <!-- ==================== 多环境 设置 =========================== -->
+    <profiles>
+        <!-- local start -->
+        <profile>
+            <id>local</id>
+            <properties>
+                <dsmp.env>local</dsmp.env>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- local end -->
+        <!-- dev start -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <dsmp.env>dev</dsmp.env>
+            </properties>
+
+        </profile>
+        <!-- dev end -->
+        <!-- test start -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <dsmp.env>test</dsmp.env>
+            </properties>
+
+        </profile>
+        <!-- test end -->
+        <!-- bate start -->
+        <profile>
+            <id>beta</id>
+            <properties>
+                <dsmp.env>beta</dsmp.env>
+            </properties>
+        </profile>
+        <!-- beta start -->
+        <!-- prod start -->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <dsmp.env>prod</dsmp.env>
+            </properties>
+        </profile>
+        <!-- prod end -->
+    </profiles>
 </project>

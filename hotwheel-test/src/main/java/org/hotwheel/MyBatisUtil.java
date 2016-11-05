@@ -16,12 +16,13 @@ import java.util.List;
 
 /**
  * Created by wangfeng on 2016/11/1.
+ * @since 1.0
  */
 public class MyBatisUtil {
     private final static String projectPath = "/Users/wangfeng/projects/mymmsc/hotwheel/hotwheel-test";
     private final static String resourcePath = projectPath + "/src/main/resources";
-
-    private final static String xmlMybatisConfig = resourcePath +  "/mybatis/hotwheel-mybatis.xml";
+    private final static String xmlFilename = "applicationContext-orm.xml";
+    private final static String xmlMybatisConfig = resourcePath +  "/profiles/local/" + xmlFilename;
     // 每一个MyBatis的应用程序都以一个SqlSessionFactory对象的实例为核心
     // 使用SqlSessionFactory的最佳实践是在应用运行期间不要重复创建多次,最佳范围是应用范围
     private static SqlSessionFactory sqlSessionFactory;
