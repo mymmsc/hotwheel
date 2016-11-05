@@ -1,199 +1,74 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<beans>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
-    <bean id="dsmpDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driver}" />
-        <property name="url" value="${dsmp.jdbc.url}" />
-        <property name="username" value="${dsmp.jdbc.username}" />
-        <property name="password" value="${dsmp.jdbc.password}" />
-        <property name="initialSize" value="${pool.initialPoolSize}" />
-        <property name="maxActive" value="${pool.maxPoolSize}" />
-        <property name="maxIdle" value="${pool.maxIdle}"/>
-        <property name="minIdle" value="${pool.minIdle}" />
-        <property name="timeBetweenEvictionRunsMillis" value="${pool.timeBetweenEvictionRunsMillis}" />
-        <property name="minEvictableIdleTimeMillis" value="${pool.minEvictableIdleTimeMillis}" />
-        <property name="removeAbandoned" value="${pool.removeAbandoned}" />
-        <property name="removeAbandonedTimeout" value="${pool.removeAbandonedTimeout}" />
-        <property name="maxWait" value="${pool.maxWait}" />
-        <property name="validationQuery" value="SELECT 1" />
-        <property name="testOnBorrow" value="${pool.testOnBorrow}" />
-        <property name="testWhileIdle" value="${pool.testWhileIdle}" />
-        <property name="jdbcInterceptors" value="${pool.jdbcInterceptors}"/>
-    </bean>
+<configuration>
 
-    <bean id="jdbDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driver}" />
-        <property name="url" value="${jdb.jdbc.url}" />
-        <property name="username" value="${jdb.jdbc.username}" />
-        <property name="password" value="${jdb.jdbc.password}" />
-        <property name="initialSize" value="${pool.initialPoolSize}" />
-        <property name="maxActive" value="${pool.maxPoolSize}" />
-        <property name="maxIdle" value="${pool.maxIdle}"/>
-        <property name="minIdle" value="${pool.minIdle}" />
-        <property name="timeBetweenEvictionRunsMillis" value="${pool.timeBetweenEvictionRunsMillis}" />
-        <property name="minEvictableIdleTimeMillis" value="${pool.minEvictableIdleTimeMillis}" />
-        <property name="removeAbandoned" value="${pool.removeAbandoned}" />
-        <property name="removeAbandonedTimeout" value="${pool.removeAbandonedTimeout}" />
-        <property name="maxWait" value="${pool.maxWait}" />
-        <property name="validationQuery" value="SELECT 1" />
-        <property name="testOnBorrow" value="${pool.testOnBorrow}" />
-        <property name="testWhileIdle" value="${pool.testWhileIdle}" />
-        <property name="jdbcInterceptors" value="${pool.jdbcInterceptors}"/>
-    </bean>
+    <properties resource="mysql-jdbc.properties"/>
 
-    <bean id="transDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driver}" />
-        <property name="url" value="${trans.jdbc.url}" />
-        <property name="username" value="${trans.jdbc.username}" />
-        <property name="password" value="${trans.jdbc.password}" />
-        <property name="initialSize" value="${pool.initialPoolSize}" />
-        <property name="maxActive" value="${pool.maxPoolSize}" />
-        <property name="maxIdle" value="${pool.maxIdle}"/>
-        <property name="minIdle" value="${pool.minIdle}" />
-        <property name="timeBetweenEvictionRunsMillis" value="${pool.timeBetweenEvictionRunsMillis}" />
-        <property name="minEvictableIdleTimeMillis" value="${pool.minEvictableIdleTimeMillis}" />
-        <property name="removeAbandoned" value="${pool.removeAbandoned}" />
-        <property name="removeAbandonedTimeout" value="${pool.removeAbandonedTimeout}" />
-        <property name="maxWait" value="${pool.maxWait}" />
-        <property name="validationQuery" value="SELECT 1" />
-        <property name="testOnBorrow" value="${pool.testOnBorrow}" />
-        <property name="testWhileIdle" value="${pool.testWhileIdle}" />
-        <property name="jdbcInterceptors" value="${pool.jdbcInterceptors}"/>
-    </bean>
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="lazyLoadingEnabled" value="false"/>
+        <setting name="multipleResultSetsEnabled" value="true"/>
+        <setting name="useColumnLabel" value="true"/>
+        <setting name="useGeneratedKeys" value="false"/>
+        <setting name="defaultExecutorType" value="SIMPLE"/>
+        <setting name="defaultStatementTimeout" value="25"/>
+    </settings>
 
-    <bean id="ppiDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driver}" />
-        <property name="url" value="${products.jdbc.url}" />
-        <property name="username" value="${products.jdbc.username}" />
-        <property name="password" value="${products.jdbc.password}" />
-        <property name="initialSize" value="${pool.initialPoolSize}" />
-        <property name="maxActive" value="${pool.maxPoolSize}" />
-        <property name="maxIdle" value="${pool.maxIdle}"/>
-        <property name="minIdle" value="${pool.minIdle}" />
-        <property name="timeBetweenEvictionRunsMillis" value="${pool.timeBetweenEvictionRunsMillis}" />
-        <property name="minEvictableIdleTimeMillis" value="${pool.minEvictableIdleTimeMillis}" />
-        <property name="removeAbandoned" value="${pool.removeAbandoned}" />
-        <property name="removeAbandonedTimeout" value="${pool.removeAbandonedTimeout}" />
-        <property name="maxWait" value="${pool.maxWait}" />
-        <property name="validationQuery" value="SELECT 1" />
-        <property name="testOnBorrow" value="${pool.testOnBorrow}" />
-        <property name="testWhileIdle" value="${pool.testWhileIdle}" />
-        <property name="jdbcInterceptors" value="${pool.jdbcInterceptors}"/>
-    </bean>
+    <!--
+    <typeAliases>
+        <typeAlias alias="Author" type="domain.blog.Author"/>
+        <typeAlias alias="Blog" type="domain.blog.Blog"/>
+        <typeAlias alias="Comment" type="domain.blog.Comment"/>
+        <typeAlias alias="Post" type="domain.blog.Post"/>
+        <typeAlias alias="Section" type="domain.blog.Section"/>
+        <typeAlias alias="Tag" type="domain.blog.Tag"/>
+    </typeAliases>
+    <typeHandlers>
+        <typeHandler javaType="String" jdbcType="VARCHAR" handler="org.hotwheel.mybatis.builder.ExampleTypeHandler"/>
+    </typeHandlers>
 
-    <bean id="passportDatasource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driver}" />
-        <property name="url" value="${passport.jdbc.url}" />
-        <property name="username" value="${passport.jdbc.username}" />
-        <property name="password" value="${passport.jdbc.password}" />
-        <property name="initialSize" value="${pool.initialPoolSize}" />
-        <property name="maxActive" value="${pool.maxPoolSize}" />
-        <property name="maxIdle" value="${pool.maxIdle}"/>
-        <property name="minIdle" value="${pool.minIdle}" />
-        <property name="timeBetweenEvictionRunsMillis" value="${pool.timeBetweenEvictionRunsMillis}" />
-        <property name="minEvictableIdleTimeMillis" value="${pool.minEvictableIdleTimeMillis}" />
-        <property name="removeAbandoned" value="${pool.removeAbandoned}" />
-        <property name="removeAbandonedTimeout" value="${pool.removeAbandonedTimeout}" />
-        <property name="maxWait" value="${pool.maxWait}" />
-        <property name="validationQuery" value="SELECT 1" />
-        <property name="testOnBorrow" value="${pool.testOnBorrow}" />
-        <property name="testWhileIdle" value="${pool.testWhileIdle}" />
-        <property name="jdbcInterceptors" value="${pool.jdbcInterceptors}"/>
-    </bean>
+    <objectFactory type="org.hotwheel.mybatis.builder.ExampleObjectFactory">
+        <property name="objectFactoryProperty" value="100"/>
+    </objectFactory>
 
-    <bean id="friendsDatasource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driver}" />
-        <property name="url" value="${friends.jdbc.url}" />
-        <property name="username" value="${friends.jdbc.username}" />
-        <property name="password" value="${friends.jdbc.password}" />
-        <property name="initialSize" value="${pool.initialPoolSize}" />
-        <property name="maxActive" value="${pool.maxPoolSize}" />
-        <property name="maxIdle" value="${pool.maxIdle}"/>
-        <property name="minIdle" value="${pool.minIdle}" />
-        <property name="timeBetweenEvictionRunsMillis" value="${pool.timeBetweenEvictionRunsMillis}" />
-        <property name="minEvictableIdleTimeMillis" value="${pool.minEvictableIdleTimeMillis}" />
-        <property name="removeAbandoned" value="${pool.removeAbandoned}" />
-        <property name="removeAbandonedTimeout" value="${pool.removeAbandonedTimeout}" />
-        <property name="maxWait" value="${pool.maxWait}" />
-        <property name="validationQuery" value="SELECT 1" />
-        <property name="testOnBorrow" value="${pool.testOnBorrow}" />
-        <property name="testWhileIdle" value="${pool.testWhileIdle}" />
-        <property name="jdbcInterceptors" value="${pool.jdbcInterceptors}"/>
-    </bean>
+    <plugins>
+        <plugin interceptor="org.hotwheel.mybatis.builder.ExamplePlugin">
+            <property name="pluginProperty" value="100"/>
+        </plugin>
+    </plugins>
+-->
 
-    <!--mybatis start-->
-    <bean id="dsmpSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dsmpDataSource" />
-        <property name="configLocation" value="classpath:/mybatis/config.xml" />
-        <property name="typeAliasesPackage" value="com.jiedaibao.trade.model" />
-        <property name="mapperLocations" value="classpath*:mybatis/dsmp/*.xml" />
-    </bean>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="org.hotwheel.mybatis.HotWheelDataSourceFactory">
+                <property name="driverClassName" value="${cuishou.driver}" />
+                <property name="url" value="${cuishou.url}" />
+                <property name="username" value="${cuishou.username}" />
+                <property name="password" value="${cuishou.password}" />
 
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.jiedaibao.trade.dao.dsmp" />
-        <property name="sqlSessionFactoryBeanName" value="dsmpSessionFactory" />
-    </bean>
+                <property name="initialSize" value="${pool.initialSize}" />
+                <property name="maxActive" value="${pool.maxActive}" />
+                <property name="maxIdle" value="${pool.maxIdle}"/>
+                <property name="minIdle" value="${pool.minIdle}" />
+                <property name="timeBetweenEvictionRunsMillis" value="${pool.timeBetweenEvictionRunsMillis}" />
+                <property name="minEvictableIdleTimeMillis" value="${pool.minEvictableIdleTimeMillis}" />
+                <property name="removeAbandoned" value="${pool.removeAbandoned}" />
+                <property name="removeAbandonedTimeout" value="${pool.removeAbandonedTimeout}" />
+                <property name="maxWait" value="${pool.maxWait}" />
+                <property name="validationQuery" value="${pool.validationQuery}" />
+                <property name="testOnBorrow" value="${pool.testOnBorrow}" />
+                <property name="testWhileIdle" value="${pool.testWhileIdle}" />
+                <property name="jdbcInterceptors" value="${pool.jdbcInterceptors}"/>
+            </dataSource>
+        </environment>
+    </environments>
 
-    <bean id="jdbSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="jdbDataSource" />
-        <property name="configLocation" value="classpath:/mybatis/config.xml" />
-        <property name="typeAliasesPackage" value="com.jiedaibao.trade.model" />
-        <property name="mapperLocations" value="classpath*:mybatis/jdb/*.xml" />
-    </bean>
+    <mappers>
+        <mapper resource="ermas.xml"/>
+    </mappers>
 
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.jiedaibao.trade.dao.jdb" />
-        <property name="sqlSessionFactoryBeanName" value="jdbSessionFactory" />
-    </bean>
-
-    <bean id="transSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="transDataSource" />
-        <property name="configLocation" value="classpath:/mybatis/config.xml" />
-        <property name="typeAliasesPackage" value="com.jiedaibao.trade.model" />
-        <property name="mapperLocations" value="classpath*:mybatis/trans/*.xml" />
-    </bean>
-
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.jiedaibao.trade.dao.trans" />
-        <property name="sqlSessionFactoryBeanName" value="transSessionFactory" />
-    </bean>
-
-    <bean id="ppiSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="ppiDataSource" />
-        <property name="configLocation" value="classpath:/mybatis/config.xml" />
-        <property name="typeAliasesPackage" value="com.jiedaibao.trade.model" />
-        <property name="mapperLocations" value="classpath*:mybatis/products/*.xml" />
-    </bean>
-
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.jiedaibao.trade.dao.products" />
-        <property name="sqlSessionFactoryBeanName" value="ppiSessionFactory" />
-    </bean>
-
-    <bean id="passportSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="passportDatasource" />
-        <property name="configLocation" value="classpath:/mybatis/config.xml" />
-        <property name="typeAliasesPackage" value="com.jiedaibao.trade.model" />
-        <property name="mapperLocations" value="classpath*:mybatis/passport/*.xml" />
-    </bean>
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.jiedaibao.trade.dao.passport" />
-        <property name="sqlSessionFactoryBeanName" value="passportSessionFactory" />
-    </bean>
-
-    <bean id="friendsSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="friendsDatasource" />
-        <property name="configLocation" value="classpath:/mybatis/config.xml" />
-        <property name="typeAliasesPackage" value="com.jiedaibao.trade.model" />
-        <property name="mapperLocations" value="classpath*:mybatis/friends/*.xml" />
-    </bean>
-
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.jiedaibao.trade.dao.friends" />
-        <property name="sqlSessionFactoryBeanName" value="friendsSessionFactory" />
-    </bean>
-    <!--mybatis end-->
-
-    <aspectj-autoproxy />
-
-</beans>
+</configuration>
