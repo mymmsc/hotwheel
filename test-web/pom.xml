@@ -9,7 +9,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ==================== 项目设置 =========================== -->
-    <groupId>org.mymmsc</groupId>
+    <groupId>org.mymmsc.hotwheel</groupId>
     <artifactId>test-web</artifactId>
     <version>${hotwheel.version}</version>
     <packaging>war</packaging>
@@ -17,17 +17,17 @@
     <!-- ==================== 依赖jar 设置 =========================== -->
     <dependencies>
         <dependency>
-            <groupId>org.mymmsc</groupId>
+            <groupId>org.mymmsc.hotwheel</groupId>
             <artifactId>hotwheel-core</artifactId>
             <version>${hotwheel.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.mymmsc</groupId>
+            <groupId>org.mymmsc.hotwheel</groupId>
             <artifactId>hotwheel-mybatis</artifactId>
             <version>${hotwheel.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.mymmsc</groupId>
+            <groupId>org.mymmsc.hotwheel</groupId>
             <artifactId>hotwheel-jdbc</artifactId>
             <version>${hotwheel.version}</version>
         </dependency>
