@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ==================== 项目设置 =========================== -->
-    <groupId>org.mymmsc</groupId>
+    <groupId>org.mymmsc.hotwheel</groupId>
     <artifactId>hotwheel-mybatis</artifactId>
     <version>${hotwheel.version}</version>
     <packaging>jar</packaging>
@@ -25,6 +25,11 @@
 
     <!-- ==================== 依赖jar 设置 =========================== -->
     <dependencies>
+        <dependency>
+            <groupId>org.mymmsc.hotwheel</groupId>
+            <artifactId>hotwheel-core</artifactId>
+            <version>${hotwheel.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>

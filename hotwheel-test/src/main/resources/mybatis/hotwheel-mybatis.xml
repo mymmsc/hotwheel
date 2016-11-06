@@ -1,20 +1,77 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE hotwheel-mybatis
-        PUBLIC "-//hotwheel.org//DTD Config 3.0//EN"
-        "http://hotwheel.org/dtd/hotwheel-mybatis-config.dtd">
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
-<hotwheel-mybatis>
+<configuration>
 
     <properties resource="mysql-jdbc.properties"/>
+
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="lazyLoadingEnabled" value="false"/>
+        <setting name="multipleResultSetsEnabled" value="true"/>
+        <setting name="useColumnLabel" value="true"/>
+        <setting name="useGeneratedKeys" value="false"/>
+        <setting name="defaultExecutorType" value="SIMPLE"/>
+        <setting name="defaultStatementTimeout" value="25"/>
+    </settings>
+
+    <!--
+    <typeAliases>
+        <typeAlias alias="Author" type="domain.blog.Author"/>
+        <typeAlias alias="Blog" type="domain.blog.Blog"/>
+        <typeAlias alias="Comment" type="domain.blog.Comment"/>
+        <typeAlias alias="Post" type="domain.blog.Post"/>
+        <typeAlias alias="Section" type="domain.blog.Section"/>
+        <typeAlias alias="Tag" type="domain.blog.Tag"/>
+    </typeAliases>
+    <typeHandlers>
+        <typeHandler javaType="String" jdbcType="VARCHAR" handler="org.hotwheel.mybatis.builder.ExampleTypeHandler"/>
+    </typeHandlers>
+
+    <objectFactory type="org.hotwheel.mybatis.builder.ExampleObjectFactory">
+        <property name="objectFactoryProperty" value="100"/>
+    </objectFactory>
+
+    <plugins>
+        <plugin interceptor="org.hotwheel.mybatis.builder.ExamplePlugin">
+            <property name="pluginProperty" value="100"/>
+        </plugin>
+    </plugins>
+-->
 
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
-            <dataSource id="cuishou" class="org.hotwheel.mybatis.HotWheelDataSourceFactory" destroy-method="close">
+            <dataSource type="org.hotwheel.mybatis.HotWheelDataSourceFactory">
                 <property name="driverClassName" value="${cuishou.driver}" />
                 <property name="url" value="${cuishou.url}" />
                 <property name="username" value="${cuishou.username}" />
                 <property name="password" value="${cuishou.password}" />
+
+                <property name="initialSize" value="${pool.initialSize}" />
+                <property name="maxActive" value="${pool.maxActive}" />
+                <property name="maxIdle" value="${pool.maxIdle}"/>
+                <property name="minIdle" value="${pool.minIdle}" />
+                <property name="timeBetweenEvictionRunsMillis" value="${pool.timeBetweenEvictionRunsMillis}" />
+                <property name="minEvictableIdleTimeMillis" value="${pool.minEvictableIdleTimeMillis}" />
+                <property name="removeAbandoned" value="${pool.removeAbandoned}" />
+                <property name="removeAbandonedTimeout" value="${pool.removeAbandonedTimeout}" />
+                <property name="maxWait" value="${pool.maxWait}" />
+                <property name="validationQuery" value="${pool.validationQuery}" />
+                <property name="testOnBorrow" value="${pool.testOnBorrow}" />
+                <property name="testWhileIdle" value="${pool.testWhileIdle}" />
+                <property name="jdbcInterceptors" value="${pool.jdbcInterceptors}"/>
+            </dataSource>
+        </environment>
+        <environment id="dsmp">
+            <transactionManager type="JDBC"/>
+            <dataSource type="org.hotwheel.mybatis.HotWheelDataSourceFactory">
+                <property name="driverClassName" value="${dsmp.driver}" />
+                <property name="url" value="${dsmp.url}" />
+                <property name="username" value="${dsmp.username}" />
+                <property name="password" value="${dsmp.password}" />
 
                 <property name="initialSize" value="${pool.initialSize}" />
                 <property name="maxActive" value="${pool.maxActive}" />
@@ -37,4 +94,4 @@
         <mapper resource="ermas.xml"/>
     </mappers>
 
-</hotwheel-mybatis>
+</configuration>
