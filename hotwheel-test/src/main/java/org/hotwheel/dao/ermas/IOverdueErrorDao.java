@@ -1,4 +1,4 @@
-package org.hotwheel.dsmp.dao.ermas;
+package org.hotwheel.dao.ermas;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -16,14 +16,14 @@ public interface IOverdueErrorDao {
      * 拉取脏错数据
      * @return
      */
-    public List<String> getDirtyAndErrorData(@Param("limit") int limit);
-    public List<String> getAllDirtyAndErrorData();
+    List<String> getDirtyAndErrorData(@Param("limit") int limit);
+    List<String> getAllDirtyAndErrorData();
 
-    public List<String> getAllLossFriends();
+    List<String> getAllLossFriends();
 
     /**
      * 拉取部分债务人的好友缺少债权人
      * @return
      */
-    public List<String> getPartialDebtorLossCreditor();
+    List<String> getPartialDebtorLossCreditor();
 }

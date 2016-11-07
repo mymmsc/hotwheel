@@ -4,7 +4,8 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.hotwheel.dsmp.dao.ermas.IOverdueErrorDao;
+import org.hotwheel.dao.dsmp.IOverdueMessageDao;
+import org.hotwheel.dao.ermas.IOverdueErrorDao;
 import org.hotwheel.ibatis.builder.ApplicationContext;
 
 import java.io.IOException;
@@ -59,19 +60,35 @@ public class MyBatisUtil {
         // 每个线程都应该有它自己的SqlSession实例。SqlSession的实例不能被共享，也是线程不安全的。因此最佳的范围是请求或方法范围。
         loadFile();
         SqlSession sqlSession = null;
-        Class<?> clazz = IOverdueErrorDao.class;
+        Class<?> clazz = null;
         try {
+            clazz = IOverdueErrorDao.class;
             sqlSession = applicationContext.getSesseion(clazz);
             IOverdueErrorDao userMapper = (IOverdueErrorDao) sqlSession.getMapper(clazz);
             List<String> listError = userMapper.getAllDirtyAndErrorData();
             //sqlSession.commit();
             if(listError != null) {
                 for (String uuid : listError) {
-                    System.out.println(uuid);
+                    System.out.println("cuishou:" + uuid);
                 }
             } else {
-                System.out.println("null");
+                System.out.println("cuishou:" +"null");
             }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            sqlSession.close();
+        }
+
+        try {
+            clazz = IOverdueMessageDao.class;
+            sqlSession = applicationContext.getSesseion(clazz);
+            IOverdueMessageDao overdueMessage = (IOverdueMessageDao) sqlSession.getMapper(clazz);
+            int count = overdueMessage.countMessage();
+            System.out.println("dsmp-count:" + count);
+
         }
         catch (Exception e) {
             e.printStackTrace();
