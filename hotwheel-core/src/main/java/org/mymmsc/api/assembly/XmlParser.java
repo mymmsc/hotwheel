@@ -139,8 +139,7 @@ public class XmlParser {
      * @param document 需要保存的document对象
      * @return true:保存成功 flase:失败
      */
-    public static boolean doc2XmlFile(Document document,
-                                      String filename) {
+    public static boolean doc2XmlFile(Document document, String filename) {
         boolean flag = true;
         try {
             /** 将document中的内容写入文件中 */
@@ -255,6 +254,38 @@ public class XmlParser {
     /**
      * 检索XML文档, 输出一个NodeList
      *
+     * @param expression
+     * @return NodeList
+     * @throws XPathExpressionException
+     */
+    public Node queryOne(String expression)  throws XPathExpressionException {
+        Node node = null;
+        NodeList list = query(null, expression);
+        if (list != null && list.getLength() > 0) {
+            node = list.item(0);
+        }
+        return node;
+    }
+
+    /**
+     * 检索XML文档, 输出一个NodeList
+     *
+     * @param expression
+     * @return NodeList
+     * @throws XPathExpressionException
+     */
+    public Node queryOne(Node parent, String expression)  throws XPathExpressionException {
+        Node node = null;
+        NodeList list = query(parent, expression);
+        if (list != null && list.getLength() > 0) {
+            node = list.item(0);
+        }
+        return node;
+    }
+
+    /**
+     * 检索XML文档, 输出一个NodeList
+     *
      * @param node       当前节点
      * @param expression
      * @return NodeList
@@ -304,6 +335,37 @@ public class XmlParser {
         return value;
     }
 
+    /**
+     * 获取一个节点属性值
+     *
+     * @param node
+     * @return String, 如果没有找到对应的属性则返回null
+     */
+    /*
+    public Properties getAttributes(Node node) {
+        Properties properties = null;
+        if (node != null && node.hasAttributes()) {
+            // 获得一个节点属性值
+            NamedNodeMap map = node.getAttributes();
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                String key = entry.getKey();
+                String value = Api.toString(entry.getValue());
+                String str = String.format("&%s=%s", key, value);
+                sb.append(str);
+            }
+            if (map != null && map.getLength() > 0) {
+                Node tmpNode = map.getNamedItem(name);
+                if (tmpNode != null) {
+                    value = tmpNode.getNodeValue();
+                    if (value != null) {
+                        value = value.trim();
+                    }
+                }
+            }
+        }
+        return properties;
+    }
+*/
     /**
      * 类反射得到一个XPATH查询结果的对象 , 此方法适合以节点为主的一组关联属性的读取
      *
