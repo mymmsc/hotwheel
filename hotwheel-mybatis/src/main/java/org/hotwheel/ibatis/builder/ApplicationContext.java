@@ -79,6 +79,7 @@ public class ApplicationContext {
             Properties settings = settingsAsPropertiess(node);
             node = parser.queryOne(root, CONTEXT_PROPERTIES);
             Properties defaults = propertiesElement(node);
+            defaults.setProperty("logImpl", "log4j2");
             //parser.setVariables(defaults);
             Configuration defaultConfig = contextFactoty.defaultConfiguration(settings);
             defaultConfig.setVariables(defaults);
