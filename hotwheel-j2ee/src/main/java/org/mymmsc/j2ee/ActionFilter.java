@@ -12,6 +12,9 @@ package org.mymmsc.j2ee;
 //import org.apache.logging.log4j.core.config.ConfigurationSource;
 //import org.apache.logging.log4j.core.config.Configurator;
 
+import org.apache.ibatis.session.SqlSession;
+import org.hotwheel.beans.factory.annotation.Autowired;
+import org.hotwheel.ibatis.builder.ApplicationContext;
 import org.mymmsc.api.Environment;
 import org.mymmsc.api.adapter.AutoObject;
 import org.mymmsc.api.assembly.Api;
@@ -30,6 +33,7 @@ import org.mymmsc.j2ee.http.Category;
 import org.mymmsc.j2ee.http.HttpCookie;
 import org.mymmsc.j2ee.http.HttpParameter;
 import org.mymmsc.j2ee.util.PackageUtil;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.servlet.*;
@@ -39,12 +43,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.*;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * FastAction过滤器
@@ -64,11 +66,12 @@ public class ActionFilter extends AutoObject implements Filter {
     private volatile static boolean isInit = false;
     private static String project = null;
     private static String webPath = null;
-    private static XmlParser xp = null;
+    private static XmlParser xmlParser = null;
     private static RedisApi redisApi = null;
     private Map<String, Object> map = null;
     private ServletContext context = null;
     private String expire = null;
+    private static ApplicationContext applicationContext;
 
     public ActionFilter() {
         super();
@@ -128,6 +131,23 @@ public class ActionFilter extends AutoObject implements Filter {
         return clazz;
     }
 
+    private List<SqlSession> actionAutowired(HttpController action) {
+        List<SqlSession> sessions = new ArrayList<SqlSession>();
+        Class clazz = action.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            Autowired autowired = field.getAnnotation(Autowired.class);
+            if (autowired != null) {
+                Class<?> contextClass = field.getType();
+                SqlSession session = applicationContext.getSesseion(contextClass);
+                Api.setValue(action, field.getName(), session.getMapper(contextClass));
+                sessions.add(session);
+            }
+        }
+
+        return sessions;
+    }
+
     private void doService(ServletRequest req, ServletResponse resp, FilterChain chain, Object controller)
             throws IOException, SecurityException, NoSuchMethodException, IllegalArgumentException,
             IllegalAccessException, InvocationTargetException, XPathExpressionException, ClassNotFoundException,
@@ -149,6 +169,7 @@ public class ActionFilter extends AutoObject implements Filter {
             clazz = ac.clazz;
         }
         action = (HttpController) parameter.valueOf(clazz);
+        List<SqlSession> sqlSessionList = actionAutowired(action);
         String xip = request.getHeader("X-Forwarded-For");
         if (xip == null) {
             xip = request.getRemoteAddr();
@@ -200,6 +221,10 @@ public class ActionFilter extends AutoObject implements Filter {
 
         } catch (Exception e) {
             logger.error("", e);
+        } finally {
+            for (SqlSession session : sqlSessionList) {
+                session.close();
+            }
         }
         // 重置 字符集
         response.setCharacterEncoding(action.getCharset());
@@ -408,21 +433,22 @@ public class ActionFilter extends AutoObject implements Filter {
         filename = webPath + "WEB-INF/classes/api.xml";
         if (Api.isFile(filename)) {
             try {
-                xp = new XmlParser(filename, true);
+                xmlParser = new XmlParser(filename, true);
             } catch (Exception e) {
                 logger.error("解析XML失败", e);
-                if (xp != null) {
-                    xp.close();
+                if (xmlParser != null) {
+                    xmlParser.close();
                 }
             }
         }
+        applicationContext = initBatis();
         logger.info("扫描action...");
         if (map == null) {
             map = scanAnnotations();
         }
         logger.info("扫描action...结束");
         // 初始化RedisApi
-        if (xp != null) {
+        if (xmlParser != null) {
             String redisHost = "redis.api.mymmsc.org";
             int redisPort = 6379;
             String redisDatabase = null;
@@ -434,14 +460,14 @@ public class ActionFilter extends AutoObject implements Filter {
                 exp = String.format("//api[@schema='%s']/redis", schema);
             }
             try {
-                NodeList list = xp.query(exp);
+                NodeList list = xmlParser.query(exp);
                 if (list != null && list.getLength() > 0) {
                     org.w3c.dom.Node node = list.item(0);
-                    redisHost = xp.valueOf(node, "host");
-                    String tmpPort = xp.valueOf(node, "port");
+                    redisHost = xmlParser.valueOf(node, "host");
+                    String tmpPort = xmlParser.valueOf(node, "port");
                     redisPort = Api.valueOf(int.class, tmpPort);
-                    redisDatabase = xp.valueOf(node, "database");
-                    redisAuth = xp.valueOf(node, "auth");
+                    redisDatabase = xmlParser.valueOf(node, "database");
+                    redisAuth = xmlParser.valueOf(node, "auth");
                 }
             } catch (XPathExpressionException e) {
                 //
@@ -495,8 +521,8 @@ public class ActionFilter extends AutoObject implements Filter {
      * @see javax.servlet.Filter#destroy()
      */
     public void destroy() {
-        if (xp != null) {
-            xp.close();
+        if (xmlParser != null) {
+            xmlParser.close();
         }
     }
 
@@ -562,5 +588,23 @@ public class ActionFilter extends AutoObject implements Filter {
             }
         }
         return map;
+    }
+
+    private ApplicationContext initBatis() {
+        ApplicationContext applicationContext = null;
+        final String exp = "//plugins/mybatis";
+        Node node = null;
+        try {
+            node = xmlParser.queryOne(exp);
+            String location = xmlParser.valueOf(node, "resource");
+            applicationContext = new ApplicationContext(location);
+            applicationContext.parse();
+        } catch (XPathExpressionException e) {
+            logger.error("", e);
+        } catch (IOException e) {
+            logger.error("", e);
+        }
+
+        return applicationContext;
     }
 }

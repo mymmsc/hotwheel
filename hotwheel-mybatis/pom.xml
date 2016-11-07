@@ -31,6 +31,11 @@
             <version>${hotwheel.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.mymmsc.hotwheel</groupId>
+            <artifactId>hotwheel-jdbc</artifactId>
+            <version>${hotwheel.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
             <version>${mybatis.version}</version>
