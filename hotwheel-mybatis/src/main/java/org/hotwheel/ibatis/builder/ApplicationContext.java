@@ -45,7 +45,13 @@ public class ApplicationContext {
     private final static String CONTEXT_OBJECT_FACTORY = "objectFactory";
     private final static String CONTEXT_OBJECT_WRAPPER_FACTORY = "objectWrapperFactory";
     private final static String CONTEXT_REFLECTOR_FACTORY = "reflectorFactory";
-    private final static String CONTEXT_ENVIRONMENTS = "//dataSource";
+    private final static String CONTEXT_DATASOURCES = "//dataSource";
+
+    private final static String DATASOURCE_ID          = "name";
+    private final static String DATASOURCE_TYPE        = "class";
+    private final static String DATASOURCE_TRANSACTION = "transaction";
+
+
     private final static String CONTEXT_DATABASE_ID_PROVIDER = "databaseIdProvider";
     private final static String CONTEXT_TYPE_HANDLER = "typeHandlers";
     private final static String CONTEXT_MAPPER = "//mappers";
@@ -80,8 +86,8 @@ public class ApplicationContext {
 
             //settingsElement(settings);
             // read it after objectFactory and objectWrapperFactory issue #631
-            node = parser.queryOne(root, CONTEXT_ENVIRONMENTS);
-            sqlSessionFactory = environmentsElement(defaultConfig, node);
+            NodeList nodes = parser.query(root, CONTEXT_DATASOURCES);
+            sqlSessionFactory = environmentsElement(defaultConfig, nodes);
             node = parser.queryOne(root, CONTEXT_MAPPER);
             mapperElement(sqlSessionFactory, node);
         } catch (XPathExpressionException e) {
@@ -178,40 +184,23 @@ public class ApplicationContext {
         }
     }
 
-    private SqlSessionFactory environmentsElement(Configuration config, Node context) throws Exception {
+    private SqlSessionFactory environmentsElement(Configuration config, NodeList nodes) throws Exception {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactory();
-        SqlContextFactoty contextFactoty = new SqlContextFactoty(config);
-        String id = getAttribute(context, "name");
-        String transactionManager = getAttribute(context, "transactionManager");
-        TransactionFactory txFactory = transactionManagerElement(contextFactoty, context);
-        DataSourceFactory dsFactory = dataSourceElement(contextFactoty, context);
-        DataSource dataSource = dsFactory.getDataSource();
-        Environment.Builder environmentBuilder = new Environment.Builder(id)
-                .transactionFactory(txFactory)
-                .dataSource(dataSource);
-        Configuration configuration = contextFactoty.getConfiguration();
-        configuration.setEnvironment(environmentBuilder.build());
-        sqlSessionFactory.addDataSource(id, configuration);
-        return sqlSessionFactory;
-    }
-
-    private SqlSessionFactory environmentsElement1(Configuration config, Node context) throws Exception {
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactory();
-        if (context != null) {
-            for (Node child : getChildren(context)) {
-                SqlContextFactoty contextFactoty = new SqlContextFactoty(config);
-                String id = getAttribute(child, "name");
-                String transactionManager = getAttribute(child, "transactionManager");
-                TransactionFactory txFactory = transactionManagerElement(contextFactoty, child);
-                DataSourceFactory dsFactory = dataSourceElement(contextFactoty, child);
-                DataSource dataSource = dsFactory.getDataSource();
-                Environment.Builder environmentBuilder = new Environment.Builder(id)
-                        .transactionFactory(txFactory)
-                        .dataSource(dataSource);
-                Configuration configuration = contextFactoty.getConfiguration();
-                configuration.setEnvironment(environmentBuilder.build());
-                sqlSessionFactory.addDataSource(id, configuration);
-            }
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node context = nodes.item(i);
+            Properties properties = config.getVariables();
+            SqlContextFactoty contextFactoty = new SqlContextFactoty(properties);
+            String id = getAttribute(context, DATASOURCE_ID);
+            //String transactionManager = getAttribute(context, DATASOURCE_TRANSACTION);
+            TransactionFactory txFactory = transactionManagerElement(contextFactoty, context);
+            DataSourceFactory dsFactory = dataSourceElement(contextFactoty, context);
+            DataSource dataSource = dsFactory.getDataSource();
+            Environment.Builder environmentBuilder = new Environment.Builder(id)
+                    .transactionFactory(txFactory)
+                    .dataSource(dataSource);
+            Configuration configuration = contextFactoty.getConfiguration();
+            configuration.setEnvironment(environmentBuilder.build());
+            sqlSessionFactory.addDataSource(id, configuration);
         }
         return sqlSessionFactory;
     }
@@ -248,7 +237,7 @@ public class ApplicationContext {
 
     private DataSourceFactory dataSourceElement(SqlContextFactoty contextFactoty, Node context) throws Exception {
         if (context != null) {
-            String type = getAttribute(context, "type");
+            String type = getAttribute(context, DATASOURCE_TYPE);
             Properties props = getChildrenAsProperties(context, contextFactoty.getConfiguration().getVariables());
             DataSourceFactory factory = contextFactoty.dataSourceElement(type);
             factory.setProperties(props);
@@ -297,7 +286,7 @@ public class ApplicationContext {
 
     private TransactionFactory transactionManagerElement(SqlContextFactoty contextFactoty, Node context) throws Exception {
         if (context != null) {
-            String type = null;//getAttribute(context, "type");
+            String type = getAttribute(context, DATASOURCE_TRANSACTION);
             Properties props = new Properties();
             if (Api.isEmpty(type)) {
                 type = "JDBC";

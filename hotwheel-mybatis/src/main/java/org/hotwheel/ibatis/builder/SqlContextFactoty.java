@@ -29,6 +29,7 @@ public class SqlContextFactoty extends BaseBuilder{
     public SqlContextFactoty(Properties props) {
         super(new Configuration());
         this.properties = props;
+        defaultConfiguration(props);
     }
 
     private Properties defaultProperties() {
