@@ -10,6 +10,7 @@ import java.util.Properties;
 
 /**
  * Created by wangfeng on 2016/11/1.
+ * @since 1.0
  */
 public class HotWheelDataSourceFactory extends UnpooledDataSourceFactory {
     protected org.mymmsc.sql.jdbc.pool.DataSource dataSource;
