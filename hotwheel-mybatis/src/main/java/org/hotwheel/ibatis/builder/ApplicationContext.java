@@ -19,6 +19,7 @@ import org.hotwheel.core.io.Resource;
 import org.hotwheel.ibatis.session.SqlSessionFactory;
 import org.mymmsc.api.assembly.Api;
 import org.mymmsc.api.assembly.XmlParser;
+import org.mymmsc.sql.SQLApi;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -202,6 +203,7 @@ public class ApplicationContext {
             Configuration configuration = contextFactoty.getConfiguration();
             configuration.setEnvironment(environmentBuilder.build());
             sqlSessionFactory.addDataSource(id, configuration);
+            SQLApi.setDataSource("jdbc/" + id, dataSource);
         }
         return sqlSessionFactory;
     }
