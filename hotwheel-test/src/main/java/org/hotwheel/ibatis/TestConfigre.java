@@ -1,4 +1,4 @@
-package org.hotwheel.mybatis;
+package org.hotwheel.ibatis;
 
 import org.apache.ibatis.builder.xml.XMLConfigBuilder;
 import org.apache.ibatis.cache.Cache;
