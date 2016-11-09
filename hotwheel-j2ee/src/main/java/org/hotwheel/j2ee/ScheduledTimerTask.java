@@ -59,9 +59,9 @@ public abstract class ScheduledTimerTask extends BaseContext implements ServletC
             }
         } catch (Exception e) {
             error(e);
+        } finally {
+            isRunning = false;
         }
-
-        isRunning = false;
     }
 
     /**
