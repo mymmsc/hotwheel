@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.mymmsc.hotwheel</groupId>
         <artifactId>hotwheel-framework</artifactId>
-        <version>2.0.1</version>
+        <version>2.0.6</version>
     </parent>
 
     <!-- ==================== 项目设置 =========================== -->
@@ -45,6 +45,11 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql_connector.version}</version>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j2.version}</version>
         </dependency>
     </dependencies>
 

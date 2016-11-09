@@ -13,7 +13,7 @@
         <setting name="defaultStatementTimeout" value="25"/>
     </settings>
 
-    <dataSource name="cuishou" transaction="JDBC" class="org.hotwheel.mybatis.HotWheelDataSourceFactory">
+    <dataSource name="cuishou" transaction="JDBC" class="org.hotwheel.ibatis.datasource.HotWheelDataSourceFactory">
         <property name="driverClassName" value="${cuishou.driver}" />
         <property name="url" value="${cuishou.url}" />
         <property name="username" value="${cuishou.username}" />
@@ -33,7 +33,7 @@
         <property name="testWhileIdle" value="${pool.testWhileIdle}" />
         <property name="jdbcInterceptors" value="${pool.jdbcInterceptors}"/>
     </dataSource>
-    <dataSource name="dsmp" transaction="JDBC" class="org.hotwheel.mybatis.HotWheelDataSourceFactory">
+    <dataSource name="dsmp" transaction="JDBC" class="org.hotwheel.ibatis.datasource.HotWheelDataSourceFactory">
         <property name="driverClassName" value="${dsmp.driver}" />
         <property name="url" value="${dsmp.url}" />
         <property name="username" value="${dsmp.username}" />
