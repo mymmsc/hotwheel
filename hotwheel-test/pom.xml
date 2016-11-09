@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.mymmsc.hotwheel</groupId>
         <artifactId>hotwheel-framework</artifactId>
-        <version>2.0.7</version>
+        <version>2.0.8</version>
     </parent>
 
     <!-- ==================== 项目设置 =========================== -->
