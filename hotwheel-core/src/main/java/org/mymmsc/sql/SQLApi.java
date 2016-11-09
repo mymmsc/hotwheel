@@ -31,6 +31,9 @@ import java.util.regex.Pattern;
  * @since mymmsc-api 6.3.9
  */
 public final class SQLApi {
+    /** JNDI prefix used in a J2EE container */
+    public static final String CONTAINER_PREFIX = "java:comp/env/";
+
     /**
      * Logger class.
      */
@@ -315,7 +318,7 @@ public final class SQLApi {
         if (dataSource == null) {
             try {
                 javax.naming.Context ctx = new javax.naming.InitialContext();
-                dataSource = (javax.sql.DataSource) ctx.lookup("java:comp/env/" + jndiName);
+                dataSource = (javax.sql.DataSource) ctx.lookup(CONTAINER_PREFIX + jndiName);
                 m_hmDataSource.put(jndiName, dataSource);
             } catch (NamingException e) {
                 logger.error("get DataSource failed.", e);
@@ -341,7 +344,7 @@ public final class SQLApi {
         if (dataSource != null) {
             try {
                 javax.naming.Context ctx = new javax.naming.InitialContext();
-                ctx.bind("java:comp/env/" + jndiName, dataSource);
+                ctx.bind(CONTAINER_PREFIX + jndiName, dataSource);
                 m_hmDataSource.put(jndiName, dataSource);
             } catch (NamingException e) {
                 logger.error("set DataSource failed.", e);
