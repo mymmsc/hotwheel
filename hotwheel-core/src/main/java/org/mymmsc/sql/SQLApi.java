@@ -318,7 +318,7 @@ public final class SQLApi {
                 dataSource = (javax.sql.DataSource) ctx.lookup("java:comp/env/" + jndiName);
                 m_hmDataSource.put(jndiName, dataSource);
             } catch (NamingException e) {
-                logger.info("get DataSource failed.", e);
+                logger.error("get DataSource failed.", e);
             }
         }
         return dataSource;
@@ -330,7 +330,7 @@ public final class SQLApi {
                 NamingManager
                         .setInitialContextFactoryBuilder(new ApiInitialContextFactoryBuilder());
             } catch (NamingException e) {
-                logger.info("setInitialContextFactoryBuilder failed.", e);
+                logger.error("setInitialContextFactoryBuilder failed.", e);
             }
         }
     }
@@ -344,7 +344,7 @@ public final class SQLApi {
                 ctx.bind("java:comp/env/" + jndiName, dataSource);
                 m_hmDataSource.put(jndiName, dataSource);
             } catch (NamingException e) {
-                logger.info("set DataSource failed.", e);
+                logger.error("set DataSource failed.", e);
             }
         }
     }
@@ -356,7 +356,7 @@ public final class SQLApi {
             try {
                 conn = dataSource.getConnection();
             } catch (SQLException e) {
-                logger.info("get connection failed.", e);
+                logger.error("get connection failed.", e);
             }
         }
         return conn;
@@ -445,11 +445,11 @@ public final class SQLApi {
                 }
             }
         } catch (SQLException e) {
-            logger.info("valueOf failed.", e);
+            logger.error("valueOf failed.", e);
         } catch (InstantiationException e) {
-            logger.info("valueOf failed.", e);
+            logger.error("valueOf failed.", e);
         } catch (IllegalAccessException e) {
-            logger.info("valueOf failed.", e);
+            logger.error("valueOf failed.", e);
         }
         return obj;
     }
@@ -484,7 +484,7 @@ public final class SQLApi {
                 list.add(obj);
             }
         } catch (SQLException e) {
-            logger.info("get Rows failed.", e);
+            logger.error("get Rows failed.", e);
         }
 
         return list;
@@ -523,7 +523,7 @@ public final class SQLApi {
                 rs = pstmt.executeQuery();
                 result = getRows(rs, clazz);
             } catch (SQLException e) {
-                logger.info("get record list failed.", e);
+                logger.error("get record list failed.", e);
             } finally {
                 closeQuietly(rs);
                 closeQuietly(pstmt);
@@ -555,7 +555,7 @@ public final class SQLApi {
             rs = pstmt.executeQuery();
             list = getRows(rs, clazz);
         } catch (SQLException e) {
-            logger.info("get record list failed.", e);
+            logger.error("get record list failed.", e);
         } finally {
             closeQuietly(rs);
             closeQuietly(pstmt);
@@ -600,7 +600,7 @@ public final class SQLApi {
                 obj = null;
             }
         } catch (SQLException e) {
-            logger.info("get one record failed.", e);
+            logger.error("get one record failed.", e);
         } finally {
             closeQuietly(rs);
             closeQuietly(pstmt);
@@ -704,7 +704,7 @@ public final class SQLApi {
                     }
                 }
             } catch (SQLException e) {
-                logger.info("execute SQL failed.", e);
+                logger.error("execute SQL failed.", e);
             } finally {
                 closeQuietly(pstmt);
                 //closeQuietly(conn);
