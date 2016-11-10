@@ -11,6 +11,7 @@
         <setting name="useGeneratedKeys" value="false"/>
         <setting name="defaultExecutorType" value="SIMPLE"/>
         <setting name="defaultStatementTimeout" value="25"/>
+        <setting name="logImpl" value="log4j2" />
     </settings>
 
     <dataSource name="cuishou" transaction="JDBC" class="org.hotwheel.ibatis.datasource.HotWheelDataSourceFactory">
