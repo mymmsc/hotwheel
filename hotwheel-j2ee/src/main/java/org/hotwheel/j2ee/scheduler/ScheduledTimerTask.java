@@ -1,4 +1,4 @@
-package org.hotwheel.j2ee;
+package org.hotwheel.j2ee.scheduler;
 
 import org.hotwheel.core.BaseContext;
 import org.mymmsc.api.assembly.Api;

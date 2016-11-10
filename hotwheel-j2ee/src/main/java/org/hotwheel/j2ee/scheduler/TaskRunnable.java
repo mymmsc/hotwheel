@@ -1,4 +1,4 @@
-package org.hotwheel.j2ee;
+package org.hotwheel.j2ee.scheduler;
 
 /**
  * Created by wangfeng on 2016/11/10.
