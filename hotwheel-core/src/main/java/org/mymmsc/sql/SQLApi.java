@@ -18,6 +18,7 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,6 +32,8 @@ import java.util.regex.Pattern;
  * @since mymmsc-api 6.3.9
  */
 public final class SQLApi {
+    /** JNDI ContextFactory */
+    public static final String JNDI_CONTEXT_FACTORY = "java.naming.factory.initial";
     /** JNDI prefix used in a J2EE container */
     public static final String CONTAINER_PREFIX = "java:comp/env/";
 
@@ -39,7 +42,6 @@ public final class SQLApi {
      */
     private static final Logger logger = LoggerFactory.getLogger(SQLApi.class);
     // ///////////////////////////////////////////////////////////////////////////////////////
-    private static HashMap<String, javax.sql.DataSource> m_hmDataSource = null;
 
     /**
      * Close a <code>Connection</code>, avoid closing if null.
@@ -306,28 +308,29 @@ public final class SQLApi {
         }
     }
 
-    private static void ds_init() {
-        if (m_hmDataSource == null) {
-            m_hmDataSource = new HashMap<String, javax.sql.DataSource>();
+    private static final Hashtable jndiEnv = new Hashtable();
+    private static final HashMap<String, javax.sql.DataSource> mapDataSource = new HashMap<String, javax.sql.DataSource>();
+
+    static {
+        //initialContextFactory();
+        initialNamingManager();
+    }
+
+    /**
+     * 初始化javax.naming.Context环境变量
+     * tomcat 不允许在运行时动态绑定
+     */
+    private static void initialContextFactory() {
+        String cf = System.getProperty(JNDI_CONTEXT_FACTORY);
+        if(!Api.isEmpty(cf)) {
+            jndiEnv.put(JNDI_CONTEXT_FACTORY, cf);
+        } else {
+            cf = "org.mymmsc.api.context.ApiInitialContextFactoryBuilder";
+            jndiEnv.put(JNDI_CONTEXT_FACTORY, cf);
         }
     }
 
-    private static javax.sql.DataSource getDataSource(String jndiName) {
-        ds_init();
-        javax.sql.DataSource dataSource = m_hmDataSource.get(jndiName);
-        if (dataSource == null) {
-            try {
-                javax.naming.Context ctx = new javax.naming.InitialContext();
-                dataSource = (javax.sql.DataSource) ctx.lookup(CONTAINER_PREFIX + jndiName);
-                m_hmDataSource.put(jndiName, dataSource);
-            } catch (NamingException e) {
-                logger.error("get DataSource failed.", e);
-            }
-        }
-        return dataSource;
-    }
-
-    private static void app_init() {
+    private static void initialNamingManager() {
         if (!NamingManager.hasInitialContextFactoryBuilder()) {
             try {
                 NamingManager
@@ -338,14 +341,28 @@ public final class SQLApi {
         }
     }
 
+
+    private static javax.sql.DataSource getDataSource(String jndiName) {
+        javax.sql.DataSource dataSource = mapDataSource.get(jndiName);
+        if (dataSource == null) {
+            try {
+                javax.naming.Context ctx = new javax.naming.InitialContext(jndiEnv);
+                dataSource = (javax.sql.DataSource) ctx.lookup(CONTAINER_PREFIX + jndiName);
+                mapDataSource.put(jndiName, dataSource);
+            } catch (NamingException e) {
+                logger.error("get DataSource failed.", e);
+            }
+        }
+        return dataSource;
+    }
+
+
     public static void setDataSource(String jndiName, javax.sql.DataSource dataSource) {
-        ds_init();
-        app_init();
         if (dataSource != null) {
             try {
-                javax.naming.Context ctx = new javax.naming.InitialContext();
+                javax.naming.Context ctx = new javax.naming.InitialContext(jndiEnv);
                 ctx.bind(CONTAINER_PREFIX + jndiName, dataSource);
-                m_hmDataSource.put(jndiName, dataSource);
+                mapDataSource.put(jndiName, dataSource);
             } catch (NamingException e) {
                 logger.error("set DataSource failed.", e);
             }
