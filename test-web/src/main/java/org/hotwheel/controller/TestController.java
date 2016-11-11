@@ -12,6 +12,7 @@ import org.mymmsc.j2ee.annotation.ResponseBody;
 import java.util.List;
 
 /**
+ * 测试mybatis
  * Created by wangfeng on 2016/11/7.
  */
 @Controller
@@ -28,6 +29,8 @@ public class TestController extends HttpController {
     @ResponseBody
     public ActionStatus getStatus(String a, String time, String time1) {
         ActionStatus as = new ActionStatus();
+        boolean bRet = overdueMessage.clearExpired();
+        System.out.println("return = " + bRet);
         List<String> listError = overdueError.getAllDirtyAndErrorData();
         //sqlSession.commit();
         if(listError != null) {
