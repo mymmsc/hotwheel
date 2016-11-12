@@ -18,7 +18,7 @@
 
     <!-- ==================== 依赖jar 设置 =========================== -->
     <dependencies>
-        <!-- hotwheel-core start -->
+        <!-- hotwheel-core begin -->
         <dependency>
             <groupId>org.mymmsc.hotwheel</groupId>
             <artifactId>hotwheel-core</artifactId>

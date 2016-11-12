@@ -33,7 +33,7 @@
             <artifactId>hotwheel-jdbc</artifactId>
             <version>${hotwheel.version}</version>
         </dependency>
-        <!-- cglib start -->
+        <!-- cglib begin -->
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
@@ -51,6 +51,27 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>${log4j2.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.7</version>
+            <!--
+            <scope>test</scope>
+            -->
+        </dependency>
+        <!-- IoC begin -->
+        <dependency>
+            <groupId>aopalliance</groupId>
+            <artifactId>aopalliance</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.6.11</version>
+        </dependency>
+        <!-- IoC end -->
     </dependencies>
 
     <!-- ==================== 多环境 设置 =========================== -->
