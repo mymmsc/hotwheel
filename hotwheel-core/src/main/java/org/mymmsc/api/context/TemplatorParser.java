@@ -9,7 +9,7 @@ import java.util.Set;
 
 //MiniTemplatorParser is an immutable object that contains the parsed template
 //text.
-class TemplatorParser {
+public class TemplatorParser {
 
     // --- constants ------------------------------------------------------
     private static final int maxNestingLevel = 20; // maximum number of block
