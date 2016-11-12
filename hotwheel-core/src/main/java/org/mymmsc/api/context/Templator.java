@@ -169,7 +169,7 @@ public class Templator {
      * @param templateFileName the file name of the template file.
      * @throws TemplateSyntaxException when a syntax error is detected within the template.
      * @throws IOException             when an i/o error occurs while reading the template.
-     * @see #MiniTemplator(TemplateSpecification)
+     * @see #Templator(TemplateSpecification)
      */
     public Templator(String templateFileName, String charset)
             throws IOException, TemplateSyntaxException {

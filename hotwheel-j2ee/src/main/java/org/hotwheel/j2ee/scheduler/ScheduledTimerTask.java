@@ -1,4 +1,4 @@
-package org.hotwheel.j2ee;
+package org.hotwheel.j2ee.scheduler;
 
 import org.hotwheel.core.BaseContext;
 import org.mymmsc.api.assembly.Api;
@@ -38,17 +38,26 @@ public abstract class ScheduledTimerTask extends BaseContext implements ServletC
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         long msNow = System.currentTimeMillis();
-        long initDelay  = getTimeMillis(taskStartTime) - msNow;
-        initDelay = initDelay > 0 ? initDelay : MillisecondsOfDay + initDelay;
-        AbstractTask task = getTask();
+        long msStart = getTimeMillis(taskStartTime);
+        long msEnd = getTimeMillis(taskEndTime);
+        // 如果开始时间大于结束时间, 则视为定时任务不执行 [wangfeng on 2016/11/10 10:43]
+        if(msStart >= msEnd) {
+            isRunning = false;
+            logger.info("Task[{}] not executed, [{}>{}]", taskName,
+                    Api.toString(new Date(msStart), TimeFormat), Api.toString(new Date(msEnd), TimeFormat));
+        } else {
+            long initDelay = getTimeMillis(taskStartTime) - msNow;
+            initDelay = initDelay > 0 ? initDelay : MillisecondsOfDay + initDelay;
+            AbstractTask task = getTask();
 
-        executor.scheduleAtFixedRate(
-                task,
-                initDelay,
-                MillisecondsOfDay,
-                TimeUnit.MILLISECONDS);
-        isRunning = true;
-        logger.info("Task[{}] will be executed at [{}]", taskName, Api.toString(new Date(msNow + initDelay), TimeFormat));
+            executor.scheduleAtFixedRate(
+                    task,
+                    initDelay,
+                    MillisecondsOfDay,
+                    TimeUnit.MILLISECONDS);
+            isRunning = true;
+            logger.info("Task[{}] will be executed at [{}]", taskName, Api.toString(new Date(msNow + initDelay), TimeFormat));
+        }
     }
 
     @Override
@@ -72,8 +81,8 @@ public abstract class ScheduledTimerTask extends BaseContext implements ServletC
     private long getTimeMillis(String time) {
         long lRet = 0;
         try {
-            DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
-            DateFormat dayFormat = new SimpleDateFormat("yy-MM-dd");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            DateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date curDate = dateFormat.parse(dayFormat.format(new Date()) + " " + time);
             lRet = curDate.getTime();
         } catch (ParseException e) {

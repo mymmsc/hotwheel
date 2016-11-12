@@ -2,10 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="org.hotwheel.dao.dsmp.IOverdueMessageDao">
+
+    <!-- 统计已发送短信条数 -->
     <select id="countMessage" resultType="java.lang.Integer">
         select count(*)
         from overdue_message
         where
         flag='01'
     </select>
+
+    <update id="clearExpired">
+        <![CDATA[
+        UPDATE `overdue_message` SET `flag`='97',`SendTime`=now(),`RunTimes`=0 WHERE flag='00' AND `CreateTime`<CURRENT_DATE()
+        ]]>
+    </update>
+
+    <update id="clearError" parameterType="java.util.List">
+        UPDATE overdue_message SET flag='97'
+        WHERE id IN
+        <foreach collection="idList" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+
 </mapper>

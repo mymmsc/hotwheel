@@ -19,11 +19,13 @@ public class SqlContextFactoty extends BaseBuilder{
 
     public SqlContextFactoty() {
         super(new Configuration());
-        properties = defaultProperties();
+        //properties = defaultProperties();
+        this.properties = configuration.getVariables();
     }
 
     public SqlContextFactoty(Configuration configuration) {
         super(configuration);
+        this.properties = configuration.getVariables();
     }
 
     public SqlContextFactoty(Properties props) {
@@ -31,8 +33,8 @@ public class SqlContextFactoty extends BaseBuilder{
         this.properties = props;
         defaultConfiguration(props);
     }
-
-    private Properties defaultProperties() {
+/*
+    private Properties defaultProperties1() {
         Properties props = new Properties();
         props.setProperty("autoMappingBehavior", "PARTIAL");
         props.setProperty("autoMappingUnknownColumnBehavior", "NONE");
@@ -60,7 +62,7 @@ public class SqlContextFactoty extends BaseBuilder{
         //props.setProperty("configurationFactory", null);
         return props;
     }
-
+*/
     public Configuration defaultConfiguration(Properties props) {
         if(props == null) {
             props = properties;
