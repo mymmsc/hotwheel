@@ -6,8 +6,8 @@
  */
 package org.mymmsc.sql;
 
+import org.hotwheel.context.ApiInitialContextFactoryBuilder;
 import org.mymmsc.api.assembly.Api;
-import org.mymmsc.api.context.ApiInitialContextFactoryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -325,7 +325,7 @@ public final class SQLApi {
         if(!Api.isEmpty(cf)) {
             jndiEnv.put(JNDI_CONTEXT_FACTORY, cf);
         } else {
-            cf = "org.mymmsc.api.context.ApiInitialContextFactoryBuilder";
+            cf = "org.hotwheel.context.ApiInitialContextFactoryBuilder";
             jndiEnv.put(JNDI_CONTEXT_FACTORY, cf);
         }
     }

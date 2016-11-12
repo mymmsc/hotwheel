@@ -4,7 +4,7 @@
  * Copyright 2000-2010 MyMMSC Software Foundation (MSF), Inc. All rights reserved.
  * MyMMSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-package org.mymmsc.api.context;
+package org.hotwheel.context;
 
 import javax.naming.*;
 import javax.naming.directory.InvalidAttributesException;
