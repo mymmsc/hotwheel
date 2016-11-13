@@ -3,7 +3,7 @@ package us.codecraft.tinyioc.aop;
 import org.aopalliance.intercept.MethodInterceptor;
 import us.codecraft.tinyioc.beans.BeanPostProcessor;
 import us.codecraft.tinyioc.beans.factory.AbstractBeanFactory;
-import us.codecraft.tinyioc.beans.factory.BeanFactory;
+import us.codecraft.tinyioc.beans.factory.TinyIOCBeanFactory;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class AspectJAwareAdvisorAutoProxyCreator implements BeanPostProcessor, B
 	}
 
 	@Override
-	public void setBeanFactory(BeanFactory beanFactory) throws Exception {
+	public void setBeanFactory(TinyIOCBeanFactory beanFactory) throws Exception {
 		this.beanFactory = (AbstractBeanFactory) beanFactory;
 	}
 }
