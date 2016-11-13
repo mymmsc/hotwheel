@@ -18,9 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package org.cloudcoder.daemon.example;
+package org.hotwheel.daemon.example;
 
-import org.cloudcoder.daemon.IDaemon;
+import org.hotwheel.daemon.IDaemon;
 
 import java.util.concurrent.LinkedBlockingQueue;
 

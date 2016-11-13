@@ -18,22 +18,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package org.cloudcoder.daemon;
+package org.hotwheel.daemon.example;
+
+import org.hotwheel.daemon.DaemonController;
+import org.hotwheel.daemon.IDaemon;
 
 /**
- * Exception thrown if there is an error starting, shutting down,
- * or communicating with the daemon.
+ * An example main class to start, shut down, and control
+ * your daemon process.  If you are creating an executable jar file,
+ * a class like this one should be the main class.
  * 
  * @author David Hovemeyer
  */
-public class DaemonException extends Exception {
-	private static final long serialVersionUID = 1L;
-
-	public DaemonException(String msg) {
-		super(msg);
+public class ExampleDaemonController extends DaemonController {
+	@Override
+	public String getDefaultInstanceName() {
+		return "default";
 	}
-	
-	public DaemonException(String msg, Throwable cause) {
-		super(msg, cause);
+
+	@Override
+	public Class<? extends IDaemon> getDaemonClass() {
+		return ExampleDaemon.class;
+	}
+
+	public static void main(String[] args) {
+		ExampleDaemonController controller = new ExampleDaemonController();
+		controller.exec(args);
 	}
 }
