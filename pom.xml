@@ -34,6 +34,7 @@
         <module>hotwheel-jdbc</module>
         <module>hotwheel-mybatis</module>
         <module>test-web</module>
+        <module>hotwheel-daemon</module>
     </modules>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
