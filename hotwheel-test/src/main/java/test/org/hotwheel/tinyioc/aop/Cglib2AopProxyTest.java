@@ -6,8 +6,8 @@ import test.org.hotwheel.tinyioc.HelloWorldServiceImpl;
 import us.codecraft.tinyioc.aop.AdvisedSupport;
 import us.codecraft.tinyioc.aop.Cglib2AopProxy;
 import us.codecraft.tinyioc.aop.TargetSource;
-import us.codecraft.tinyioc.context.ApplicationContext;
-import us.codecraft.tinyioc.context.ClassPathXmlApplicationContext;
+import us.codecraft.tinyioc.context.TinyIoCApplicationContext;
+import us.codecraft.tinyioc.context.TinyIoCClassPathXmlApplicationContext;
 
 /**
  * @author yihua.huang@dianping.com
@@ -17,7 +17,7 @@ public class Cglib2AopProxyTest {
 	@Test
 	public void testInterceptor() throws Exception {
 		// --------- helloWorldService without AOP
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("tinyioc.xml");
+		TinyIoCApplicationContext applicationContext = new TinyIoCClassPathXmlApplicationContext("tinyioc.xml");
 		HelloWorldService helloWorldService = (HelloWorldService) applicationContext.getBean("helloWorldService");
 		helloWorldService.helloWorld();
 

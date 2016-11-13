@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author yihua.huang@dianping.com
  */
-public abstract class AbstractApplicationContext implements ApplicationContext {
+public abstract class AbstractApplicationContext implements TinyIoCApplicationContext {
 	protected AbstractBeanFactory beanFactory;
 
 	public AbstractApplicationContext(AbstractBeanFactory beanFactory) {

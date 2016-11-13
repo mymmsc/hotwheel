@@ -1,11 +1,11 @@
 package us.codecraft.tinyioc.aop;
 
-import us.codecraft.tinyioc.beans.factory.BeanFactory;
+import us.codecraft.tinyioc.beans.factory.TinyIOCBeanFactory;
 
 /**
  * @author yihua.huang@dianping.com
  */
 public interface BeanFactoryAware {
 
-    void setBeanFactory(BeanFactory beanFactory) throws Exception;
+    void setBeanFactory(TinyIOCBeanFactory beanFactory) throws Exception;
 }

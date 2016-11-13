@@ -3,7 +3,7 @@ package us.codecraft.tinyioc.aop;
 import org.aopalliance.aop.Advice;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import us.codecraft.tinyioc.beans.factory.BeanFactory;
+import us.codecraft.tinyioc.beans.factory.TinyIOCBeanFactory;
 
 import java.lang.reflect.Method;
 
@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
  */
 public class AspectJAroundAdvice implements Advice, MethodInterceptor {
 
-	private BeanFactory beanFactory;
+	private TinyIOCBeanFactory beanFactory;
 
 	private Method aspectJAdviceMethod;
 
@@ -23,11 +23,11 @@ public class AspectJAroundAdvice implements Advice, MethodInterceptor {
         return aspectJAdviceMethod.invoke(beanFactory.getBean(aspectInstanceName), invocation);
 	}
 
-    public BeanFactory getBeanFactory() {
+    public TinyIOCBeanFactory getBeanFactory() {
         return beanFactory;
     }
 
-    public void setBeanFactory(BeanFactory beanFactory) {
+    public void setBeanFactory(TinyIOCBeanFactory beanFactory) {
         this.beanFactory = beanFactory;
     }
 
