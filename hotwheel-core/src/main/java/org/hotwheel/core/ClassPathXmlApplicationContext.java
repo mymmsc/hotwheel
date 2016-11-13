@@ -1,4 +1,4 @@
-package org.hotwheel.j2ee;
+package org.hotwheel.core;
 
 /**
  *
