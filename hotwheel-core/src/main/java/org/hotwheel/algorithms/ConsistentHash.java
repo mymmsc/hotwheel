@@ -1,7 +1,7 @@
 /**
  *
  */
-package org.mymmsc.api.algorithms;
+package org.hotwheel.algorithms;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
