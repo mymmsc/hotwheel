@@ -1,4 +1,4 @@
-// Copyright (c) 2012, David H. Hovemeyer <david.hovemeyer@gmail.com>
+// Copyright (c) 2012-2014, David H. Hovemeyer <david.hovemeyer@gmail.com>
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,31 +18,36 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package org.cloudcoder.daemon.example;
-
-import org.cloudcoder.daemon.DaemonController;
-import org.cloudcoder.daemon.IDaemon;
+package org.hotwheel.daemon;
 
 /**
- * An example main class to start, shut down, and control
- * your daemon process.  If you are creating an executable jar file,
- * a class like this one should be the main class.
+ * Interface to be implemented by daemon tasks.
  * 
  * @author David Hovemeyer
  */
-public class ExampleDaemonController extends DaemonController {
-	@Override
-	public String getDefaultInstanceName() {
-		return "default";
-	}
-
-	@Override
-	public Class<? extends IDaemon> getDaemonClass() {
-		return ExampleDaemon.class;
-	}
-
-	public static void main(String[] args) {
-		ExampleDaemonController controller = new ExampleDaemonController();
-		controller.exec(args);
-	}
+public interface IDaemon {
+	/**
+	 * Start the daemon.
+	 * If this method returns normally (by not throwing an exception),
+	 * then it is assumed that the daemon has started normally.
+	 * If this method throws an exception, then it is assumed that
+	 * the daemon failed to start properly, and the FIFO and
+	 * pid file will be cleaned up, and the daemon process will
+	 * exit. 
+	 * 
+	 * @param instanceName the instance name for this daemon
+	 */
+	public void start(String instanceName);
+	
+	/**
+	 * Handle a command received via the FIFO.
+	 * 
+	 * @param command the command to handle
+	 */
+	public void handleCommand(String command);
+	
+	/**
+	 * Stop the daemon.
+	 */
+	public void shutdown();
 }

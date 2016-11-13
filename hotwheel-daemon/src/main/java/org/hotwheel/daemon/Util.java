@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package org.cloudcoder.daemon;
+package org.hotwheel.daemon;
 
 import java.io.*;
 import java.net.URL;

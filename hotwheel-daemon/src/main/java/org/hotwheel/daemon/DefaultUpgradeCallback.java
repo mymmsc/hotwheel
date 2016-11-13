@@ -19,7 +19,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package org.cloudcoder.daemon;
+package org.hotwheel.daemon;
 
 /**
  * Convenience implementation of {@link Upgrade.Callback} that indicates
