@@ -1,9 +1,3 @@
-/**
- * @(#)AutoObject.java 6.3.9 09/11/02
- * <p>
- * Copyright 2000-2010 MyMMSC Software Foundation (MSF), Inc. All rights reserved.
- * MyMMSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
- */
 package org.mymmsc.api.adapter;
 
 import org.mymmsc.api.assembly.Api;
@@ -23,7 +17,7 @@ import java.io.InputStream;
  * @remark 对象增加Log4j日志功能, 需要有common-logging.jar和log4j.jar
  * @since mymmsc-api 6.3.9
  */
-public abstract class AutoObject {
+public abstract class BaseObject {
     /**
      * log4j适配对象
      */
@@ -32,7 +26,7 @@ public abstract class AutoObject {
     /**
      * 自动适配对象
      */
-    public AutoObject() {
+    public BaseObject() {
         init();
     }
 

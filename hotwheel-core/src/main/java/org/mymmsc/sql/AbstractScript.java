@@ -6,7 +6,7 @@
  */
 package org.mymmsc.sql;
 
-import org.mymmsc.api.adapter.AutoObject;
+import org.mymmsc.api.adapter.BaseObject;
 import org.mymmsc.api.assembly.Api;
 import org.mymmsc.api.category.Encoding;
 import org.mymmsc.sql.app.TableObject;
@@ -21,7 +21,7 @@ import java.util.HashMap;
  * @version 6.3.9 09/10/02
  * @since mymmsc-commons 6.3.9
  */
-public abstract class AbstractScript extends AutoObject implements ScriptParser {
+public abstract class AbstractScript extends BaseObject implements ScriptParser {
     private File m_file = null;
     private FileInputStream m_file_in = null;
     private String m_scriptfile = null;
