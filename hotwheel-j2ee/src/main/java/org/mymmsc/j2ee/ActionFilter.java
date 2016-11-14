@@ -16,7 +16,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.hotwheel.beans.factory.annotation.Autowired;
 import org.hotwheel.ibatis.builder.SqlApplicationContext;
 import org.mymmsc.api.Environment;
-import org.mymmsc.api.adapter.AutoObject;
+import org.mymmsc.api.adapter.BaseObject;
 import org.mymmsc.api.assembly.Api;
 import org.mymmsc.api.assembly.XmlParser;
 import org.mymmsc.api.category.Encoding;
@@ -59,7 +59,7 @@ import java.util.*;
  * @since 6.11.0
  */
 @WebFilter(filterName = "MyMMSC-HotWheel(J2EE)-Filter", urlPatterns = {"*.cgi"}, asyncSupported = true)
-public class ActionFilter extends AutoObject implements Filter {
+public class ActionFilter extends BaseObject implements Filter {
     /**
      * 是否已经初始化
      */

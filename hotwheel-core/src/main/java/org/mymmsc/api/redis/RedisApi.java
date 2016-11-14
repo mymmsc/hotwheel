@@ -1,6 +1,6 @@
 package org.mymmsc.api.redis;
 
-import org.mymmsc.api.adapter.AutoObject;
+import org.mymmsc.api.adapter.BaseObject;
 import org.mymmsc.api.assembly.Api;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
@@ -16,7 +16,7 @@ import java.util.Random;
  *
  * @author WangFeng
  */
-public class RedisApi extends AutoObject {
+public class RedisApi extends BaseObject {
     /**
      * 同步执行成功状态
      */

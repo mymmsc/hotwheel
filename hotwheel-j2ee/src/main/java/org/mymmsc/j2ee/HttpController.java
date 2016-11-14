@@ -1,6 +1,6 @@
 package org.mymmsc.j2ee;
 
-import org.mymmsc.api.adapter.AutoObject;
+import org.mymmsc.api.adapter.BaseObject;
 import org.mymmsc.api.assembly.Api;
 import org.mymmsc.api.category.Encoding;
 import org.mymmsc.api.context.BlockNotDefinedException;
@@ -26,7 +26,7 @@ import java.util.Map;
  * Created by wangfeng on 2016/10/29.
  * @since 6.10.2
  */
-public abstract class HttpController extends AutoObject {
+public abstract class HttpController extends BaseObject {
     /**
      * 状态码
      */

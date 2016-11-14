@@ -5,7 +5,7 @@
  */
 package org.mymmsc.api.crypto;
 
-import org.mymmsc.api.adapter.AutoObject;
+import org.mymmsc.api.adapter.BaseObject;
 
 import javax.crypto.SecretKey;
 import java.security.Security;
@@ -15,7 +15,7 @@ import java.security.Security;
  * @version 6.3.9 09/10/02
  * @since mymmsc-api 6.3.9
  */
-public abstract class AbstractCrypto extends AutoObject {
+public abstract class AbstractCrypto extends BaseObject {
     protected boolean bIsBase64 = true;
     protected String sAlgorithm = null;
     protected SecretKey deskey = null;
