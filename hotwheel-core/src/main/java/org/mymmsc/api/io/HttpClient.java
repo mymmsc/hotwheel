@@ -8,6 +8,8 @@ package org.mymmsc.api.io;
 
 import org.mymmsc.api.assembly.Api;
 import org.mymmsc.api.assembly.RegExp;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -26,6 +28,8 @@ import java.util.Map;
  * @since mymmsc-api 6.3.9
  */
 public class HttpClient {
+    private static Logger logger = LoggerFactory.getLogger(HttpClient.class);
+
     private static final String ENCODING = "utf-8";
     private static final String METHOD_POST = "POST";
     private static final String METHOD_GET = "GET";
@@ -156,7 +160,7 @@ public class HttpClient {
             }
             data.write(temp.getBytes(charset));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 
@@ -176,7 +180,7 @@ public class HttpClient {
             temp = "\r\n";
             data.write(temp.getBytes(charset));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 
@@ -191,7 +195,7 @@ public class HttpClient {
         try {
             addMultiPart(name, temp.getBytes(charset));
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 
@@ -210,7 +214,7 @@ public class HttpClient {
                 addBasePart(name, temp);
             }
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 
@@ -241,9 +245,9 @@ public class HttpClient {
             temp = "\r\n";
             data.write(temp.getBytes(charset));
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 

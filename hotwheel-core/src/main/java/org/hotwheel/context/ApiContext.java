@@ -6,6 +6,9 @@
  */
 package org.hotwheel.context;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.naming.*;
 import javax.naming.directory.InvalidAttributesException;
 
@@ -15,6 +18,7 @@ import javax.naming.directory.InvalidAttributesException;
  * @since mymmsc-api 6.3.9
  */
 public class ApiContext {
+    private static Logger logger = LoggerFactory.getLogger(ApiContext.class);
     public static final String namePrefixOfJdbc = "java:comp/env/";
     private static boolean m_bInited = false;
 
@@ -51,7 +55,7 @@ public class ApiContext {
             Context ctx = new InitialContext();
             obj = (X) ctx.lookup(name);
         } catch (NoInitialContextException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
 
         return obj;
@@ -70,11 +74,11 @@ public class ApiContext {
             Context ctx = new InitialContext();
             ctx.bind(name, obj);
         } catch (NameAlreadyBoundException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (InvalidAttributesException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (NoInitialContextException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 }

@@ -77,7 +77,7 @@ public class DataStream {
                 bRet = baos.toByteArray();
                 baos.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                //
             }
         }
         return bRet;
@@ -118,7 +118,7 @@ public class DataStream {
                 baos.write(buff, 0, len);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            //
         }
         try {
             if (encoding != null) {
@@ -128,10 +128,8 @@ public class DataStream {
             }
             baos.close();
         } catch (UnsupportedEncodingException e) {
-            // e.printStackTrace();
             sRet = "";
         } catch (IOException e) {
-            e.printStackTrace();
             sRet = "";
         }
         return sRet;

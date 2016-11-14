@@ -6,6 +6,8 @@
  */
 package org.mymmsc.api.assembly;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -49,6 +51,7 @@ import java.util.List;
  * @since mymmsc-api 6.3.9
  */
 public class XmlParser {
+    private static Logger logger = LoggerFactory.getLogger(XmlParser.class);
     @SuppressWarnings("unused")
     private static String xmlFactory = "javax.xml.parsers.DocumentBuilderFactory";
     private static String xmlFactoryImpl = "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl";
@@ -208,13 +211,13 @@ public class XmlParser {
             // m_is.setEncoding(Encoding.Default);
             m_document = m_documentBuilder.parse(m_is);
         } catch (SAXException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (XPathFactoryConfigurationException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         if (checkMotified) {
             m_lastmotified = Api.getLastModified(m_systemId);
@@ -406,9 +409,9 @@ public class XmlParser {
                             try {
                                 obj = clazz.newInstance();
                             } catch (InstantiationException e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             } catch (IllegalAccessException e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             }
                         }
                         if (obj != null) {
@@ -420,9 +423,9 @@ public class XmlParser {
                                 // 对象字段赋值
                                 field.set(obj, objValue);
                             } catch (IllegalArgumentException e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             } catch (IllegalAccessException e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             } finally {
                                 // 恢复之前的存储权限状态
                                 field.setAccessible(isAccessible);
@@ -479,9 +482,9 @@ public class XmlParser {
                             try {
                                 obj = clazz.newInstance();
                             } catch (InstantiationException e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             } catch (IllegalAccessException e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             }
                         }
                         if (obj != null) {
@@ -493,9 +496,9 @@ public class XmlParser {
                                 // 对象字段赋值
                                 field.set(obj, objValue);
                             } catch (IllegalArgumentException e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             } catch (IllegalAccessException e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             } finally {
                                 // 恢复之前的存储权限状态
                                 field.setAccessible(isAccessible);
@@ -524,7 +527,7 @@ public class XmlParser {
                 node.setNodeValue(nodeValue);
                 bRet = true;
             } catch (DOMException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return bRet;

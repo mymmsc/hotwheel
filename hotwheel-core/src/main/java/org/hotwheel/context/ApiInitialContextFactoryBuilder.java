@@ -6,6 +6,9 @@
  */
 package org.hotwheel.context;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.naming.*;
 import javax.naming.spi.InitialContextFactory;
 import javax.naming.spi.InitialContextFactoryBuilder;
@@ -21,6 +24,7 @@ import java.util.Hashtable;
  */
 public class ApiInitialContextFactoryBuilder implements
         InitialContextFactoryBuilder {
+    private static Logger logger = LoggerFactory.getLogger(ApiInitialContextFactoryBuilder.class);
     private java.util.concurrent.ConcurrentHashMap<String, Object> m_chmObjects = null;
 
     public static void initialize() {
@@ -31,7 +35,7 @@ public class ApiInitialContextFactoryBuilder implements
                         .setInitialContextFactoryBuilder(new ApiInitialContextFactoryBuilder());
             }
         } catch (Exception e) {
-            e.printStackTrace(System.err);
+            logger.error("", e);
         }
     }
 

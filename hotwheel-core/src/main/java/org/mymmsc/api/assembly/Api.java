@@ -8,6 +8,8 @@ package org.mymmsc.api.assembly;
 
 import org.mymmsc.api.Environment;
 import org.mymmsc.api.category.Encoding;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.lang.annotation.Annotation;
@@ -37,6 +39,7 @@ import java.util.regex.PatternSyntaxException;
  * @since mymmsc-api 6.3.9
  */
 public final class Api {
+    private static Logger logger = LoggerFactory.getLogger(Api.class);
     /******************** < 系统环境变量APIs > ********************/
 
     /**
@@ -192,10 +195,10 @@ public final class Api {
                 try {
                     tRet = clazz.newInstance();
                 } catch (InstantiationException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                     break;
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                     break;
                 }
             }
@@ -326,13 +329,13 @@ public final class Api {
                 System.out.println(br.readLine());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             if (br != null) {
                 try {
                     br.close();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 }
             }
         }
@@ -555,13 +558,18 @@ public final class Api {
         return sRet;
     }
 
+    /**
+     * 获取本地ip
+     * @return
+     * @deprecated
+     */
     public static String getLocalIp_old() {
         String ip = "";
         try {
             InetAddress addr = InetAddress.getLocalHost();
             ip = addr.getHostAddress();
         } catch (UnknownHostException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return ip;
     }
@@ -749,7 +757,7 @@ public final class Api {
         try {
             sRet = URLEncoder.encode(sRet, Encoding.Default);
         } catch (Exception e) {
-            // e.printStackTrace();
+            logger.error("", e);
         }
         return sRet;
     }
@@ -765,9 +773,9 @@ public final class Api {
         try {
             sRet = URLDecoder.decode(sRet, Encoding.Default);
         } catch (UnsupportedEncodingException e) {
-            // e.printStackTrace();
+            logger.error("", e);
         } catch (IllegalArgumentException e) {
-            // e.printStackTrace();
+            logger.error("", e);
         }
         return sRet;
     }
@@ -1565,13 +1573,7 @@ public final class Api {
             try {
                 obj = cls.newInstance();
             } catch (Exception e) {
-                String ex = String.format("反射异常, 实在不能匹配[%s]给类[%s]",
-                        value, cls.toString());
-                try {
-                    throw new Exception(ex);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
+                logger.error("", e);
             }
         } else {
             // class 为空, 不知道你想干啥?
@@ -1650,9 +1652,9 @@ public final class Api {
                         objValue = field.get(obj);
                         bRet = true;
                     } catch (IllegalArgumentException e) {
-                        e.printStackTrace();
+                        logger.error("", e);
                     } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                        logger.error("", e);
                     } finally {
                         // 恢复之前的存储权限状态
                         field.setAccessible(isAccessible);
@@ -1800,7 +1802,7 @@ public final class Api {
                                     try {
                                         subObj = cClass.newInstance();
                                     } catch (InstantiationException e) {
-                                        e.printStackTrace();
+                                        logger.error("", e);
                                     } finally {
                                         // 不能干扰主流程处理过程
                                     }
@@ -1814,14 +1816,14 @@ public final class Api {
                             field.set(obj, objValue);
                             bRet = true;
                         } catch (IllegalArgumentException e) {
-                            e.printStackTrace();
+                            logger.error("", e);
                             // System.out.println("IllegalArgumentException: " +
                             // clazz.getName() + "#" + fieldName +
                             // ", invalid value from [" + value + "]");
                         } catch (IllegalAccessException e) {
-                            e.printStackTrace();
+                            logger.error("", e);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            logger.error("", e);
                         } finally {
                             // 恢复之前的存储权限状态
                             field.setAccessible(isAccessible);
@@ -2017,7 +2019,7 @@ public final class Api {
         try {
             dRet = sft.parse(text);
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return dRet;
     }
@@ -2360,7 +2362,7 @@ public final class Api {
             Class.forName(clazz);
             bRet = true;
         } catch (ClassNotFoundException e) {
-            // e.printStackTrace();
+            logger.error("", e);
         }
         return bRet;
     }
@@ -2400,7 +2402,7 @@ public final class Api {
         try {
             baos.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return sRet;
     }

@@ -11,6 +11,8 @@ import org.mymmsc.api.context.json.JacksonParser;
 import org.mymmsc.api.context.json.JsonFactory;
 import org.mymmsc.api.context.json.JsonParseException;
 import org.mymmsc.api.context.json.JsonToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.*;
@@ -25,6 +27,7 @@ import java.util.List;
  * @since mymmsc-api 6.3.9
  */
 public class JsonAdapter {
+    private static Logger logger = LoggerFactory.getLogger(JsonAdapter.class);
     private JacksonParser parser = null;
 
     private JsonAdapter(JacksonParser parser, boolean verbose) {
@@ -44,9 +47,9 @@ public class JsonAdapter {
             try {
                 jp = factory.createJsonParser(string);
             } catch (JsonParseException e) {
-                e.printStackTrace();
+                logger.error("", e);
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
             if (jp != null) {
                 ret = new JsonAdapter(jp, verbose);
@@ -266,9 +269,9 @@ public class JsonAdapter {
                         buffer.append(value);
                     }
                 } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 } finally {
                     field.setAccessible(isAccessible);
                 }
@@ -336,9 +339,9 @@ public class JsonAdapter {
                 }
             }
         } catch (JsonParseException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return list;
     }
@@ -467,9 +470,9 @@ public class JsonAdapter {
                 }
             }
         } catch (JsonParseException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return tRet;
     }
