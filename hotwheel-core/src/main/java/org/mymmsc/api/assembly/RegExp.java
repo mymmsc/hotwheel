@@ -6,7 +6,7 @@
  */
 package org.mymmsc.api.assembly;
 
-import org.mymmsc.api.algorithms.ConsistentHash;
+import org.hotwheel.algorithms.ConsistentHash;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -14,7 +14,7 @@ package org.mymmsc.j2ee;
 
 import org.apache.ibatis.session.SqlSession;
 import org.hotwheel.beans.factory.annotation.Autowired;
-import org.hotwheel.ibatis.builder.ApplicationContext;
+import org.hotwheel.ibatis.builder.SqlApplicationContext;
 import org.mymmsc.api.Environment;
 import org.mymmsc.api.adapter.AutoObject;
 import org.mymmsc.api.assembly.Api;
@@ -71,7 +71,7 @@ public class ActionFilter extends AutoObject implements Filter {
     private Map<String, Object> map = null;
     private ServletContext context = null;
     private String expire = null;
-    private static ApplicationContext applicationContext;
+    private static SqlApplicationContext applicationContext;
 
     public ActionFilter() {
         super();
@@ -590,14 +590,14 @@ public class ActionFilter extends AutoObject implements Filter {
         return map;
     }
 
-    private ApplicationContext initBatis() {
-        ApplicationContext applicationContext = null;
+    private SqlApplicationContext initBatis() {
+        SqlApplicationContext applicationContext = null;
         final String exp = "//plugins/mybatis";
         Node node = null;
         try {
             node = xmlParser.queryOne(exp);
             String location = xmlParser.valueOf(node, "resource");
-            applicationContext = new ApplicationContext(location);
+            applicationContext = new SqlApplicationContext(location);
             applicationContext.parse();
         } catch (XPathExpressionException e) {
             logger.error("", e);

@@ -1,7 +1,7 @@
 /**
  *
  */
-package org.mymmsc.api.protocol;
+package org.hotwheel.protocol;
 
 /**
  * HTTP协议

@@ -37,7 +37,7 @@ import java.util.Properties;
  * Created by wangfeng on 2016/11/2.
  * @since 1.0
  */
-public class ApplicationContext {
+public class SqlApplicationContext {
     private final static String CONTEXT_ROOT = "/configuration";
     private final static String CONTEXT_SETTINGS = "//settings";
     private final static String CONTEXT_PROPERTIES = "//properties";
@@ -65,7 +65,7 @@ public class ApplicationContext {
     private String environment;
     private ReflectorFactory localReflectorFactory = new DefaultReflectorFactory();
 
-    public ApplicationContext(String... configLocations) throws IOException {
+    public SqlApplicationContext(String... configLocations) throws IOException {
         this.configLocations = configLocations;
         resourceLoader = new DefaultResourceLoader();
         Resource resource = resourceLoader.getResource(configLocations[0]);
