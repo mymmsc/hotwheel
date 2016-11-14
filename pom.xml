@@ -44,7 +44,7 @@
         <javac.encoding>UTF-8</javac.encoding>
 
         <!-- MyMMSC组件 版本设置 -->
-        <hotwheel.version>2.0.14</hotwheel.version>
+        <hotwheel.version>2.0.15</hotwheel.version>
 
         <!-- J2EE 版本 -->
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>

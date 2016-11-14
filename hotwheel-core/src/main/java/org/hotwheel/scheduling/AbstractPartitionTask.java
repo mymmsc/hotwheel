@@ -15,10 +15,10 @@ import java.util.concurrent.RecursiveTask;
  *
  * Created by wangfeng on 2016/10/26.
  */
-public abstract class AbstractPartitionTask extends RecursiveTask<BatchContext> {
+public abstract class AbstractPartitionTask extends RecursiveTask<PartitionContext> {
     protected Logger logger = null;
     protected String taskName = null;
-    protected BatchContext data = new BatchContext();
+    protected PartitionContext data = new PartitionContext();
 
     /** 开始行数 */
     protected int start;
@@ -101,8 +101,8 @@ public abstract class AbstractPartitionTask extends RecursiveTask<BatchContext> 
     }
 
     @Override
-    protected BatchContext compute() {
-        BatchContext ret = new BatchContext();
+    protected PartitionContext compute() {
+        PartitionContext ret = new PartitionContext();
         ret.taskName = taskName;
         ret.file = data.file;
         ret.fields = data.fields;
@@ -127,8 +127,8 @@ public abstract class AbstractPartitionTask extends RecursiveTask<BatchContext> 
             rightTask.fork();
 
             //等待任务执行结束合并其结果
-            BatchContext leftResult = leftTask.join();
-            BatchContext rightResult = rightTask.join();
+            PartitionContext leftResult = leftTask.join();
+            PartitionContext rightResult = rightTask.join();
 
             //合并子任务
             if(leftResult.lines != null) {
