@@ -25,11 +25,10 @@ public abstract class AbstractTask extends ScheduledTimerTask implements TaskRun
             try {
                 isRunning = true;
                 doTask();
-                isRunning = false;
             } catch (Exception e) {
                 logger.error("{} 失败:", e);
             } finally {
-                //
+                isRunning = false;
             }
 
             logger.info("{} end", taskName);
