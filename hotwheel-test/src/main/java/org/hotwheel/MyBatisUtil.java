@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.hotwheel.dao.dsmp.IOverdueMessageDao;
 import org.hotwheel.dao.ermas.IOverdueErrorDao;
-import org.hotwheel.ibatis.builder.ApplicationContext;
+import org.hotwheel.ibatis.builder.SqlApplicationContext;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -24,7 +24,7 @@ public class MyBatisUtil {
     // 每一个MyBatis的应用程序都以一个SqlSessionFactory对象的实例为核心
     // 使用SqlSessionFactory的最佳实践是在应用运行期间不要重复创建多次,最佳范围是应用范围
     private static SqlSessionFactory sqlSessionFactory;
-    private static ApplicationContext applicationContext;
+    private static SqlApplicationContext applicationContext;
 
     private static void loadResource() {
         String resource = xmlMybatisConfig;
@@ -41,7 +41,7 @@ public class MyBatisUtil {
 
     private static void loadFile() {
         try {
-            applicationContext = new ApplicationContext("classpath:/" + xmlFilename);
+            applicationContext = new SqlApplicationContext("classpath:/" + xmlFilename);
             applicationContext.parse();
             //Configuration config = builder.parse();
             //sqlSessionFactory = new SqlSessionFactoryBuilder().build(config);

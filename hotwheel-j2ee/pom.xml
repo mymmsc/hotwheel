@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.mymmsc.hotwheel</groupId>
         <artifactId>hotwheel-framework</artifactId>
-        <version>2.0.10</version>
+        <version>2.0.11</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -18,7 +18,7 @@
 
     <!-- ==================== 依赖jar 设置 =========================== -->
     <dependencies>
-        <!-- j2ee start -->
+        <!-- j2ee begin -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -51,7 +51,7 @@
             <artifactId>asm</artifactId>
             <version>${asm.version}</version>
         </dependency>
-        <!-- hotwheel start -->
+        <!-- hotwheel begin -->
         <dependency>
             <groupId>org.mymmsc.hotwheel</groupId>
             <artifactId>hotwheel-core</artifactId>

@@ -22,8 +22,16 @@ public abstract class AbstractTask extends ScheduledTimerTask implements TaskRun
     public void run() {
         if(isTimerTask()) {
             logger.info("{} start.", taskName);
-            doTask();
-            isRunning = false;
+            try {
+                isRunning = false;
+                doTask();
+                isRunning = false;
+            } catch (Exception e) {
+                logger.error("{} 失败:", e);
+            } finally {
+                //
+            }
+
             logger.info("{} end", taskName);
         } else {
             logger.info("本机[{}] 不执行定时任务{}", Api.getLocalIp(), taskName);
