@@ -8,7 +8,7 @@ import java.util.List;
  * 批量上下文
  * Created by wangfeng on 2016/10/26.
  */
-public class BatchContext {
+public class PartitionContext {
     /** 任务名称 */
     public String taskName = null;
     /** CSV文件名 */
@@ -18,7 +18,7 @@ public class BatchContext {
     /** 输出文件行 */
     public List<String> lines = null;
 
-    public BatchContext() {
+    public PartitionContext() {
         this.lines = new ArrayList<>();
     }
 }
