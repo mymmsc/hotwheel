@@ -62,13 +62,13 @@ public abstract class AbstractTask extends ScheduledTimerTask implements TaskRun
         boolean bRet = false;
         Date date = new Date();
         String now = Api.toString(date, "HH:mm:ss");
-        logger.info("running={}, start={}, end={}", isRunning, taskStartTime, taskEndTime);
+        //logger.info("running={}, start={}, end={}", isRunning, taskStartTime, taskEndTime);
         if(isRunning &&  now.compareTo(taskStartTime) >= 0 && now.compareTo(taskEndTime) < 0) {
             bRet = true;
         } else {
             bRet = false;
         }
-        logger.info("running={}", bRet);
+        //logger.info("running={}", bRet);
 
         return bRet;
     }
