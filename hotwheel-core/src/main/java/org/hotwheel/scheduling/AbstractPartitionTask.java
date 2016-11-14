@@ -110,11 +110,11 @@ public abstract class AbstractPartitionTask extends RecursiveTask<BatchContext> 
         logger.info(taskName + ": " + start + "->" + end + ": 1");
         //如果任务足够小就计算任务
         int remaining = (end - start);
-        boolean canCompute = (end - start) <= threshold;
-        if (remaining < 0) {
+        //boolean canCompute = (end - start) <= threshold;
+        if (remaining <= 0) {
             // 不执行
             //return ret;
-        } else if(remaining <= threshold) {
+        } else if(remaining == 1 || remaining <= threshold) {
             logger.info(taskName + ": " + start + "->" + end + ": 2");
             execute(ret.lines);
         } else {
