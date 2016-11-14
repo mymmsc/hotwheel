@@ -100,7 +100,7 @@ public abstract class AutoObject {
             //Class.forName("org.apache.log4j.Logger");
             logger = LoggerFactory.getLogger(getClass());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 

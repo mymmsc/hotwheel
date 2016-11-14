@@ -4,6 +4,8 @@
 package org.hotwheel.context;
 
 import org.mymmsc.api.assembly.Api;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -17,6 +19,7 @@ import java.util.List;
  * @remark Traversal, Traverse
  */
 public abstract class ClassTraverser {
+    private static Logger logger = LoggerFactory.getLogger(ClassTraverser.class);
 
     /**
      * 向聚合型字段传递字段援引路径
@@ -150,9 +153,9 @@ public abstract class ClassTraverser {
                         operate(prefix, name, value);
                     }
                 } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 } finally {
                     // 恢复存取之前的类字段存取状态
                     field.setAccessible(isAccessible);

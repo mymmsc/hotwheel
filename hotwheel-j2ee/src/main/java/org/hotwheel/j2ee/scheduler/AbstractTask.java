@@ -47,7 +47,7 @@ public abstract class AbstractTask extends ScheduledTimerTask implements TaskRun
         try {
             sRet = rb.getString(key);
         } catch (Exception e) {
-            e.printStackTrace();
+            //
         }
 
         return sRet;

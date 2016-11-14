@@ -6,6 +6,9 @@
  */
 package org.mymmsc.sql;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,6 +24,7 @@ import java.util.Hashtable;
  * @since mymmsc-api 6.3.9
  */
 public class SQLCharset {
+    private static Logger logger = LoggerFactory.getLogger(SQLCharset.class);
     @SuppressWarnings("unused")
     private static final long serialVersionUID = -1498535122997239767L;
     private final static String DEFAULT = "utf-8";
@@ -71,7 +75,7 @@ public class SQLCharset {
                 Result = charset;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             SQLApi.closeQuietly(rs);
             SQLApi.closeQuietly(pstmt);

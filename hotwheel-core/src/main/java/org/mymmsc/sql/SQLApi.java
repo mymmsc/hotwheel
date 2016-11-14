@@ -669,7 +669,7 @@ public final class SQLApi {
             setTypes(pstmt, args);
             nRet = pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             closeQuietly(pstmt);
             //closeQuietly(conn);

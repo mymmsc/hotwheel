@@ -153,7 +153,7 @@ public class RedisApi extends AutoObject {
             jedis = redisPool.getResource();
             sRet = jedis.setex(key, seconds, value);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             releaseResource(jedis);
         }
@@ -174,7 +174,7 @@ public class RedisApi extends AutoObject {
             jedis = redisPool.getResource();
             sRet = jedis.set(key, value);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             releaseResource(jedis);
         }
@@ -194,7 +194,7 @@ public class RedisApi extends AutoObject {
             jedis = redisPool.getResource();
             value = jedis.get(key);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             releaseResource(jedis);
         }
@@ -214,7 +214,7 @@ public class RedisApi extends AutoObject {
             jedis.del(key);
             bRet = true;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             releaseResource(jedis);
         }

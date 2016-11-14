@@ -117,9 +117,9 @@ public class HttpParameter {
             }
             parse(128);
         } catch (UnsupportedEncodingException e) {
-            logger.error("支持的编码格式: ", e);
+            logger.error("", e);
         } catch (Exception e) {
-            logger.error("初始化参数异常: ", e);
+            logger.error("", e);
         }
     }
 
@@ -300,7 +300,7 @@ public class HttpParameter {
                 try {
                     s = URLDecoder.decode(s, m_encApp);
                 } catch (Exception e) {
-                    logger.error("支持的编码格式: ", e);
+                    logger.error("", e);
                 }
                 if (Api.isUtf8(s)) {
                     // s = Api.iconv(s, "utf-8", Environment.getFileEncoding());
@@ -386,9 +386,9 @@ public class HttpParameter {
                 Api.setValue(oRet, name, value);
             }
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return oRet;
     }

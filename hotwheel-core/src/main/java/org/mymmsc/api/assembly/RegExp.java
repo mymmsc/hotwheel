@@ -7,6 +7,8 @@
 package org.mymmsc.api.assembly;
 
 import org.hotwheel.algorithms.ConsistentHash;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +26,8 @@ import java.util.regex.PatternSyntaxException;
  * @since mymmsc-api 6.3.9
  */
 public final class RegExp {
+    private static Logger logger = LoggerFactory.getLogger(RegExp.class);
+
     public static boolean valid(String s, String exp) {
         boolean bRet = false;
         try {
@@ -33,9 +37,9 @@ public final class RegExp {
                 bRet = true;
             }
         } catch (PatternSyntaxException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
 
         return bRet;
@@ -124,7 +128,7 @@ public final class RegExp {
                 }
             }
         } catch (PatternSyntaxException e) {
-            //
+            logger.error("", e);
         }
 
         return lRet;

@@ -422,9 +422,9 @@ public class ActionFilter extends AutoObject implements Filter {
                     } else {
                     }
                 } catch (FileNotFoundException e) {
-                    // e.printStackTrace();
+                    logger.error("", e);
                 } catch (IOException e) {
-                    // e.printStackTrace();
+                    logger.error("", e);
                 } finally {
                     //
                 }
@@ -470,7 +470,7 @@ public class ActionFilter extends AutoObject implements Filter {
                     redisAuth = xmlParser.valueOf(node, "auth");
                 }
             } catch (XPathExpressionException e) {
-                //
+                logger.error("", e);
             }
             if (redisHost != null && redisPort > 0) {
                 try {

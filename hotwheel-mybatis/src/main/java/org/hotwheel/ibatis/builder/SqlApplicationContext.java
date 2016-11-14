@@ -20,6 +20,8 @@ import org.hotwheel.ibatis.session.SqlSessionFactory;
 import org.mymmsc.api.assembly.Api;
 import org.mymmsc.api.assembly.XmlParser;
 import org.mymmsc.sql.SQLApi;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -38,6 +40,8 @@ import java.util.Properties;
  * @since 1.0
  */
 public class SqlApplicationContext {
+    private static Logger logger = LoggerFactory.getLogger(SqlApplicationContext.class);
+
     private final static String CONTEXT_ROOT = "/configuration";
     private final static String CONTEXT_SETTINGS = "//settings";
     private final static String CONTEXT_PROPERTIES = "//properties";
@@ -93,9 +97,9 @@ public class SqlApplicationContext {
             node = parser.queryOne(root, CONTEXT_MAPPER);
             mapperElement(sqlSessionFactory, node);
         } catch (XPathExpressionException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 
@@ -150,9 +154,9 @@ public class SqlApplicationContext {
                 defaults = new Properties();
                 defaults.load(resource.getInputStream());
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                logger.error("", e);
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return defaults;
