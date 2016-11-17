@@ -1573,7 +1573,7 @@ public final class Api {
             try {
                 obj = cls.newInstance();
             } catch (Exception e) {
-                logger.error("", e);
+                logger.error("class={}", cls.getName(), e);
             }
         } else {
             // class 为空, 不知道你想干啥?
