@@ -1573,7 +1573,7 @@ public final class Api {
             try {
                 obj = cls.newInstance();
             } catch (Exception e) {
-                logger.error("class={}", cls.getName(), e);
+                //logger.error("class={}", cls.getName(), e);
             }
         } else {
             // class 为空, 不知道你想干啥?
@@ -1802,7 +1802,7 @@ public final class Api {
                                     try {
                                         subObj = cClass.newInstance();
                                     } catch (InstantiationException e) {
-                                        logger.error("", e);
+                                        //logger.error("", e);
                                     } finally {
                                         // 不能干扰主流程处理过程
                                     }
@@ -1816,14 +1816,11 @@ public final class Api {
                             field.set(obj, objValue);
                             bRet = true;
                         } catch (IllegalArgumentException e) {
-                            logger.error("", e);
-                            // System.out.println("IllegalArgumentException: " +
-                            // clazz.getName() + "#" + fieldName +
-                            // ", invalid value from [" + value + "]");
+                            //logger.error("", e);
                         } catch (IllegalAccessException e) {
-                            logger.error("", e);
+                            //logger.error("", e);
                         } catch (Exception e) {
-                            logger.error("", e);
+                            //logger.error("", e);
                         } finally {
                             // 恢复之前的存储权限状态
                             field.setAccessible(isAccessible);
