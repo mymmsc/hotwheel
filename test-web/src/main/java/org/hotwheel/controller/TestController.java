@@ -7,6 +7,7 @@ import org.mymmsc.api.io.ActionStatus;
 import org.mymmsc.j2ee.HttpController;
 import org.mymmsc.j2ee.annotation.Controller;
 import org.mymmsc.j2ee.annotation.RequestMapping;
+import org.mymmsc.j2ee.annotation.RequestMethod;
 import org.mymmsc.j2ee.annotation.ResponseBody;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class TestController extends HttpController {
     @Autowired
     private IOverdueMessageDao overdueMessage;
 
-    @RequestMapping("//v2/status")
+    @RequestMapping(value = "//v2/status", method = RequestMethod.POST)
     @ResponseBody
     public ActionStatus getStatus(String a, String time, String time1) {
         ActionStatus as = new ActionStatus();

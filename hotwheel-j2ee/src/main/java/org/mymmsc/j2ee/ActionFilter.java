@@ -16,6 +16,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.hotwheel.beans.factory.annotation.Autowired;
 import org.hotwheel.ibatis.builder.SqlApplicationContext;
 import org.hotwheel.j2ee.HotWheel;
+import org.hotwheel.protocol.Http11Status;
 import org.mymmsc.api.Environment;
 import org.mymmsc.api.adapter.BaseObject;
 import org.mymmsc.api.assembly.Api;
@@ -26,7 +27,10 @@ import org.mymmsc.api.context.Templator;
 import org.mymmsc.api.context.VariableNotDefinedException;
 import org.mymmsc.api.io.ActionStatus;
 import org.mymmsc.api.redis.RedisApi;
-import org.mymmsc.j2ee.annotation.*;
+import org.mymmsc.j2ee.annotation.Controller;
+import org.mymmsc.j2ee.annotation.RequestMapping;
+import org.mymmsc.j2ee.annotation.ResponseBody;
+import org.mymmsc.j2ee.annotation.WebAction;
 import org.mymmsc.j2ee.http.Category;
 import org.mymmsc.j2ee.http.HttpCookie;
 import org.mymmsc.j2ee.http.HttpParameter;
@@ -195,38 +199,31 @@ public class ActionFilter extends BaseObject implements Filter {
                 exec = clazz.getMethod("execute", new Class[]{});
                 data = (byte[]) exec.invoke(action);
             } else {
-                ActionContext ac = (ActionContext)controller;
-                exec = ac.method;
+                ActionContext actionContext = (ActionContext)controller;
+                exec = actionContext.method;
                 Object obj = null;
                 // 检查请求方法
-                String tmpMethods = "";
-                if (ac.requestMethod != null) {
-                    for (RequestMethod requestMethod : ac.requestMethod) {
-                        tmpMethods += "," + requestMethod.name();
-                    }
-                    tmpMethods = tmpMethods.substring(1);
-                }
-                if (tmpMethods.indexOf(request.getMethod().toUpperCase()) < 0) {
+                if (!actionContext.allowed(request.getMethod())) {
                     ActionStatus as = new ActionStatus();
-                    as.set(405, "Method Not Allowed");
+                    as.set(405, Http11Status.getStatus(405));
                     data = JsonAdapter.get(as, false).getBytes(action.getCharset());
                 } else {
-                    if (ac.paramNames == null) {
+                    if (actionContext.paramNames == null) {
                         obj = exec.invoke(action);
                     } else {
-                        Object[] params = new Object[ac.paramNames.length];
+                        Object[] params = new Object[actionContext.paramNames.length];
                         Class<?>[] parameterTypes = exec.getParameterTypes();
-                        for (int i = 0; i < ac.paramNames.length; i++) {
-                            String value = parameter.getStr(ac.paramNames[i]);
+                        for (int i = 0; i < actionContext.paramNames.length; i++) {
+                            String value = parameter.getStr(actionContext.paramNames[i]);
                             params[i] = Api.valueOf(parameterTypes[i], value);
                         }
                         obj = exec.invoke(action, params);
-                        if (!Api.isBaseType(obj)) {
-                            data = JsonAdapter.get(obj, false).getBytes(action.getCharset());
-                        } else {
-                            String str = Api.toString(obj);
-                            data = str.getBytes(action.getCharset());
-                        }
+                    }
+                    if (!Api.isBaseType(obj)) {
+                        data = JsonAdapter.get(obj, false).getBytes(action.getCharset());
+                    } else {
+                        String str = Api.toString(obj);
+                        data = str.getBytes(action.getCharset());
                     }
                 }
             }
