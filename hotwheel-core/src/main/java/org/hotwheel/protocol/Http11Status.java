@@ -3,6 +3,9 @@
  */
 package org.hotwheel.protocol;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * HTTP协议
  *
@@ -50,4 +53,62 @@ public final class Http11Status {
     public static final String SERVICE_UNAVAILABLE = "503 Service Unavailable";
     public static final String GATEWAY_TIMEOUT = "504 Gateway Timeout";
     public static final String HTTP_VERSION_NOT_SUPPORTED = "505 HTTP Version Not Supported";
+
+    private static final String[] allStatus = {
+            CONTINUE,
+            SWITCHING_PROTOCOLS,
+            OK,
+            CREATED,
+            ACCEPTED,
+            NON_AUTHORITATIVE_INFORMATION,
+            NO_CONTENT,
+            RESET_CONTENT,
+            PARTIAL_CONTENT,
+            MULTIPLE_CHOICES,
+            MOVED_PERMANENTLY,
+            FOUND,
+            SEE_OTHER,
+            NOT_MODIFIED,
+            USE_PROXY,
+            TEMPORARY_REDIRECT,
+            BAD_REQUEST,
+            UNAUTHORIZED,
+            PAYMENT_REQUIRED,
+            FORBIDDEN,
+            NOT_FOUND,
+            METHOD_NOT_ALLOWED,
+            NOT_ACCEPTABLE,
+            PROXY_AUTHENTICATION_REQUIRED,
+            REQUEST_TIMEOUT,
+            CONFLICT,
+            GONE,
+            LENGTH_REQUIRED,
+            PRECONDITION_FAILED,
+            REQUEST_ENTITY_TOO_LARGE,
+            REQUEST_URI_TOO_LONG,
+            UNSUPPORTED_MEDIA_TYPE,
+            REQUESTED_RANGE_NOT_SATISFIABLE,
+            EXPECTATION_FAILED,
+            INTERNAL_ERROR,
+            NOT_IMPLEMENTED,
+            BAD_GATEWAY,
+            SERVICE_UNAVAILABLE,
+            GATEWAY_TIMEOUT,
+            HTTP_VERSION_NOT_SUPPORTED
+    };
+
+    private static final Map<Integer, String> mapStatus = new HashMap<Integer, String>();
+
+    static {
+        for (String desc : allStatus) {
+            String tmpStatus = desc.substring(0, 3);
+            String tmpDesc = desc.substring(4);
+            int status = Integer.parseInt(tmpStatus);
+            mapStatus.put(status, tmpDesc);
+        }
+    }
+
+    public static String getStatus(int status) {
+        return mapStatus.get(status);
+    }
 }
