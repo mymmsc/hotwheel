@@ -25,7 +25,8 @@ public @interface RequestMapping {
      * When used at the type level, all method-level mappings inherit
      * this primary mapping, narrowing it for a specific handler method.
      */
-    String[] value() default {};
+    //String[] value() default {};
+    String value();
 
     /**
      * The HTTP request methods to map to, narrowing the primary mapping:
