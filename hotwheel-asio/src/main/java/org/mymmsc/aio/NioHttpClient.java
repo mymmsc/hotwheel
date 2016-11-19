@@ -315,7 +315,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         }/* else */
         if(number <= good + bad) {
             done = false;
-            logger.info("number={},request={},good={},bad={}.", number,requests, good, bad);
+            logger.info("number={},request={},good={},bad={}.", number, requests, good, bad);
         }
     }
 
