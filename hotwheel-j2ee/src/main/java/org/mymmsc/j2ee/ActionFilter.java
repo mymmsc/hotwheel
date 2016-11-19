@@ -15,6 +15,7 @@ package org.mymmsc.j2ee;
 import org.apache.ibatis.session.SqlSession;
 import org.hotwheel.beans.factory.annotation.Autowired;
 import org.hotwheel.ibatis.builder.SqlApplicationContext;
+import org.hotwheel.j2ee.HotWheel;
 import org.mymmsc.api.Environment;
 import org.mymmsc.api.adapter.BaseObject;
 import org.mymmsc.api.assembly.Api;
@@ -25,10 +26,7 @@ import org.mymmsc.api.context.Templator;
 import org.mymmsc.api.context.VariableNotDefinedException;
 import org.mymmsc.api.io.ActionStatus;
 import org.mymmsc.api.redis.RedisApi;
-import org.mymmsc.j2ee.annotation.Controller;
-import org.mymmsc.j2ee.annotation.RequestMapping;
-import org.mymmsc.j2ee.annotation.ResponseBody;
-import org.mymmsc.j2ee.annotation.WebAction;
+import org.mymmsc.j2ee.annotation.*;
 import org.mymmsc.j2ee.http.Category;
 import org.mymmsc.j2ee.http.HttpCookie;
 import org.mymmsc.j2ee.http.HttpParameter;
@@ -200,25 +198,38 @@ public class ActionFilter extends BaseObject implements Filter {
                 ActionContext ac = (ActionContext)controller;
                 exec = ac.method;
                 Object obj = null;
-                if(ac.paramNames == null) {
-                    obj = exec.invoke(action);
-                } else {
-                    Object[] params = new Object[ac.paramNames.length];
-                    Class<?>[] parameterTypes = exec.getParameterTypes();
-                    for (int i = 0; i < ac.paramNames.length; i++) {
-                        String value = parameter.getStr(ac.paramNames[i]);
-                        params[i] = Api.valueOf(parameterTypes[i], value);
+                // 检查请求方法
+                String tmpMethods = "";
+                if (ac.requestMethod != null) {
+                    for (RequestMethod requestMethod : ac.requestMethod) {
+                        tmpMethods += "," + requestMethod.name();
                     }
-                    obj = exec.invoke(action, params);
-                    if(!Api.isBaseType(obj)) {
-                        data = JsonAdapter.get(obj, false).getBytes(action.getCharset());
+                    tmpMethods = tmpMethods.substring(1);
+                }
+                if (tmpMethods.indexOf(request.getMethod().toUpperCase()) < 0) {
+                    ActionStatus as = new ActionStatus();
+                    as.set(405, "Method Not Allowed");
+                    data = JsonAdapter.get(as, false).getBytes(action.getCharset());
+                } else {
+                    if (ac.paramNames == null) {
+                        obj = exec.invoke(action);
                     } else {
-                        String str = Api.toString(obj);
-                        data = str.getBytes(action.getCharset());
+                        Object[] params = new Object[ac.paramNames.length];
+                        Class<?>[] parameterTypes = exec.getParameterTypes();
+                        for (int i = 0; i < ac.paramNames.length; i++) {
+                            String value = parameter.getStr(ac.paramNames[i]);
+                            params[i] = Api.valueOf(parameterTypes[i], value);
+                        }
+                        obj = exec.invoke(action, params);
+                        if (!Api.isBaseType(obj)) {
+                            data = JsonAdapter.get(obj, false).getBytes(action.getCharset());
+                        } else {
+                            String str = Api.toString(obj);
+                            data = str.getBytes(action.getCharset());
+                        }
                     }
                 }
             }
-
         } catch (Exception e) {
             logger.error("", e);
         } finally {
@@ -265,8 +276,8 @@ public class ActionFilter extends BaseObject implements Filter {
             }
             // 设置耗时, 单位毫秒
             tm = System.currentTimeMillis() - tm;
-            response.setHeader("MyMMSC-HotWheel/version", "6.11.0");
-            response.setHeader("MyMMSC-HotWheel/acrossTime", String.valueOf(tm));
+            response.setHeader(HotWheel.vender + "/version", HotWheel.version);
+            response.setHeader(HotWheel.vender + "/acrossTime", String.valueOf(tm));
             // 设置Content-Length
             response.setContentLength(data.length);
             ServletOutputStream out = response.getOutputStream();
@@ -573,6 +584,7 @@ public class ActionFilter extends BaseObject implements Filter {
                                             if (rb != null) {
                                                 ac.responseBody = true;
                                             }
+                                            ac.requestMethod = rm.method();
                                             ac.paramNames = PackageUtil.getMethodParamNames(method, webPath + "WEB-INF/classes");
                                             logger.info("request={}, class={}#{}, params={}", ac.uri, ac.clazz.getName(), ac.method.getName(), ac.paramNames);
                                             map.put(ac.uri, ac);
