@@ -7,10 +7,12 @@ import java.lang.reflect.Constructor;
 import java.util.concurrent.RecursiveTask;
 
 /**
+ * 快速批量任务
+ *
  * Created by wangfeng on 2016/11/15.
  * @since 2.0.15
  */
-public abstract class FastBatchFactory<T extends PartitionContext> extends RecursiveTask<T> implements TaskContext<T>{
+public abstract class FastBatchTask<T extends PartitionContext> extends RecursiveTask<T> implements TaskContext<T>{
     protected static final String PROP_THRESHOLD = "threshold";
     protected static final String PROP_THREADNUM = "threadNum";
     protected static final String PROP_BATCHSIZE = "batchSize";
@@ -38,7 +40,7 @@ public abstract class FastBatchFactory<T extends PartitionContext> extends Recur
     /** 传入参数 */
     protected Object[] args = null;
 
-    public FastBatchFactory() {
+    public FastBatchTask() {
         this(Runtime.getRuntime().availableProcessors(), 1000, 100, "default");
     }
 
@@ -49,7 +51,7 @@ public abstract class FastBatchFactory<T extends PartitionContext> extends Recur
      * @param batchSize
      * @param taskName
      */
-    public FastBatchFactory(int threadNum, int threshold, int batchSize, String taskName) {
+    public FastBatchTask(int threadNum, int threshold, int batchSize, String taskName) {
         this.threadNum = threadNum;
         this.threshold = threshold;
         this.batchSize = batchSize;
@@ -69,14 +71,14 @@ public abstract class FastBatchFactory<T extends PartitionContext> extends Recur
         this.args = args;
     }
 
-    private FastBatchFactory newTask(int start, int end, Object... args) {
-        FastBatchFactory task = null;
+    private FastBatchTask newTask(int start, int end, Object... args) {
+        FastBatchTask task = null;
         Constructor<?> constructor = null;
         try {
             //constructor = getClass().getConstructor(new Class[] {int.class, int.class, Object[].class});
             constructor = getClass().getConstructor(new Class[] {int.class, int.class, int.class, String.class});
             if(constructor != null) {
-                task = (FastBatchFactory)constructor.newInstance(this.threadNum, this.threshold, this.batchSize, this.taskName);
+                task = (FastBatchTask)constructor.newInstance(this.threadNum, this.threshold, this.batchSize, this.taskName);
                 task.init(start, end, args);
             }
         } catch (Exception e) {
@@ -105,8 +107,8 @@ public abstract class FastBatchFactory<T extends PartitionContext> extends Recur
         } else {
             // 如果任务大于阈值，就分裂成两个子任务计算
             int middle = (start + end) / 2;
-            FastBatchFactory leftTask = newTask(start, middle, args);
-            FastBatchFactory rightTask = newTask(middle, end, args);
+            FastBatchTask leftTask = newTask(start, middle, args);
+            FastBatchTask rightTask = newTask(middle, end, args);
             // 执行子任务
             leftTask.fork();
             rightTask.fork();
