@@ -40,7 +40,7 @@ public class ThreadPool implements Closeable {
     /**
      * Submits a ForkJoinTask for execution.
      */
-    public <T> ForkJoinTask<T> submit1(ForkJoinTask<T> task) {
+    public <T> ForkJoinTask<T> submit(ForkJoinTask<T> task) {
         return forkJoinPool.submit(task);
     }
 }
