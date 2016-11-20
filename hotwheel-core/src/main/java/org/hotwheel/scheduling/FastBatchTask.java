@@ -40,10 +40,6 @@ public abstract class FastBatchTask<T extends PartitionContext> extends Recursiv
     /** 传入参数 */
     protected Object[] args = null;
 
-    public FastBatchTask() {
-        this(Runtime.getRuntime().availableProcessors(), 1000, 100, "default");
-    }
-
     /**
      * 创建批量任务
      * @param threadNum
