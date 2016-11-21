@@ -37,6 +37,11 @@ public class TestNioHttpClient {
             NioHttpClient<String> httpClient = new NioHttpClient<String>(list, concurrency);
             httpClient.post(url, new IContextCallBack<String>() {
                 @Override
+                public void finished(NioHttpClient nioHttpClient) {
+                    //
+                }
+
+                @Override
                 public TreeMap<String, Object> getParams(String obj) {
                     TreeMap<String, Object> params1 = new TreeMap<>();
                     params1.put("type","outdebt");
@@ -62,7 +67,7 @@ public class TestNioHttpClient {
                 }
 
                 @Override
-                public void finishend(HttpContext ctx) {
+                public void completed(HttpContext ctx) {
 
                 }
             });
