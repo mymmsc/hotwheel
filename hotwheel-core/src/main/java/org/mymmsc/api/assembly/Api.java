@@ -1724,6 +1724,27 @@ public final class Api {
     }
 
     /**
+     * 获得字段泛型
+     *
+     * @param field
+     * @return
+     * @deprecated
+     */
+    public static Class<?> getClass(Field field) {
+        Class<?> clsField = field.getType();
+        if (clsField == List.class || clsField.isArray()) {
+            ParameterizedType pType = (ParameterizedType) field.getGenericType();
+            try {
+                clsField = (Class<?>) pType.getActualTypeArguments()[0];
+            } catch (ClassCastException e) {
+                clsField = List.class;
+            }
+        }
+
+        return clsField;
+    }
+
+    /**
      * 给一个对象的成员变量赋值
      *
      * @param obj
