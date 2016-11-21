@@ -6,13 +6,25 @@ import java.util.TreeMap;
  * 生成参数map的回调方法
  */
 public interface IContextCallBack<T> {
+
     /**
-     * post参数
+     * NIO整体完成
+     *
+     * @param nioHttpClient
+     */
+    void finished(NioHttpClient nioHttpClient);
+
+    /**
+     * 返回以TreeMap组织的post参数
      *
      * @param obj
      * @return
      */
-    public TreeMap<String ,Object> getParams(T obj);
+    TreeMap<String ,Object> getParams(T obj);
 
-    void finishend(HttpContext ctx);
+    /**
+     * 单个请求完成
+     * @param ctx
+     */
+    void completed(HttpContext ctx);
 }

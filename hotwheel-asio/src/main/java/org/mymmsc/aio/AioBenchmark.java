@@ -25,4 +25,20 @@ public abstract class AioBenchmark {
         this.number = number;
         this.concurrency = concurrency > 0 ? concurrency : kConcurrency;
     }
+
+    public int getConcurrency() {
+        return concurrency;
+    }
+
+    public void setConcurrency(int concurrency) {
+        this.concurrency = concurrency;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
 }

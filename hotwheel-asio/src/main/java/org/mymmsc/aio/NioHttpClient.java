@@ -61,7 +61,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         good ++;
         requests --;
         logger.debug("{} Completed", context.getClass().getSimpleName());
-        callBack.finishend(context);
+        callBack.completed(context);
     }
 
     @Override
@@ -315,7 +315,8 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         }/* else */
         if(number <= good + bad) {
             done = false;
-            logger.info("number={},request={},good={},bad={}.", number, requests, good, bad);
+            logger.debug("number={},request={},good={},bad={}.", number, requests, good, bad);
+            callBack.finished(this);
         }
     }
 
@@ -405,5 +406,29 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         }
         path = httpUrl.getFile();
         this.callBack = callBack;
+    }
+
+    public int getGood() {
+        return good;
+    }
+
+    public void setGood(int good) {
+        this.good = good;
+    }
+
+    public int getBad() {
+        return bad;
+    }
+
+    public void setBad(int bad) {
+        this.bad = bad;
+    }
+
+    public int getRequests() {
+        return requests;
+    }
+
+    public void setRequests(int requests) {
+        this.requests = requests;
     }
 }
