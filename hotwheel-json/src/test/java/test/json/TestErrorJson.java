@@ -20,8 +20,7 @@ public class TestErrorJson {
                 InnerApiResult creditInfoResponse = json.get(InnerApiResult.class, CreditInfo[].class);
                 if (creditInfoResponse != null && creditInfoResponse.data != null) {
 
-                    for (CreditInfo creditInfo :
-                            (CreditInfo[]) creditInfoResponse.data) {
+                    for (CreditInfo creditInfo : (CreditInfo[]) creditInfoResponse.data) {
                         System.out.println("id = " + creditInfo.getId());
                     }
                 }
