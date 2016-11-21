@@ -282,8 +282,8 @@ public class RedisApi extends BaseObject {
 
     public void releaseResource(ShardedJedis jedis) {
         if(jedis != null) {
-            redisPool.returnResource(jedis);
-            //jedis.close();
+            //redisPool.returnResource(jedis);
+            jedis.close();
         }
     }
 
