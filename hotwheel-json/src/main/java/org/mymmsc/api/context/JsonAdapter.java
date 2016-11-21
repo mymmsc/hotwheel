@@ -380,7 +380,11 @@ public class JsonAdapter {
                     }
                 }
                 fieldName = parser.getCurrentName();
-                fieldValue = parser.getText();
+                if (token == JsonToken.VALUE_NULL) {
+                    fieldValue = null;
+                } else {
+                    fieldValue = parser.getText();
+                }
                 Class<?> cls = Api.getClass(clazz, fieldName);
                 if (cls == null) {
                     continue;
@@ -408,7 +412,10 @@ public class JsonAdapter {
                             isArray = true;
                         }
                         List<?> list = parseList(cls);
-                        if (list != null) {
+                        if (list == null) {
+                            Object arr = Array.newInstance(claee.getComponentType(), 0);
+                            Api.setValue(tRet, fieldName, arr);
+                        } else {
                             if (!isArray) {
                                 Api.setValue(tRet, fieldName, list);
                             } else {
@@ -465,7 +472,14 @@ public class JsonAdapter {
                     } else if (token == JsonToken.VALUE_TRUE
                             || token == JsonToken.VALUE_FALSE) {
                         tmpObj = Api.valueOf(Boolean.class, fieldValue);
+                    } else if(cls instanceof Object && claee.isArray()) {
+                        Object arr = null;
+                        if (fieldValue == null) {
+                            arr = Array.newInstance(claee.getComponentType(), 0);
+                        }
+                        tmpObj = arr;
                     }
+
                     Api.setValue(tRet, fieldName, tmpObj);
                 }
             }
