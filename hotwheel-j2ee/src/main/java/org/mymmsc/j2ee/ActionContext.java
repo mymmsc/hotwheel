@@ -24,7 +24,7 @@ public class ActionContext {
             bRet = true;
         } else {
             for (RequestMethod rm : requestMethod) {
-                if (rm.equals(methodName)) {
+                if (rm.toString().equalsIgnoreCase(methodName)) {
                     bRet = true;
                     break;
                 }
