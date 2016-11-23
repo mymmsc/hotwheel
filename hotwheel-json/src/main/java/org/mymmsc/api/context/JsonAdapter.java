@@ -210,6 +210,9 @@ public class JsonAdapter {
                 if (Modifier.isStatic(field.getModifiers())) {
                     continue;
                 }
+                if (Modifier.isFinal(field.getModifiers())) {
+                    continue;
+                }
                 buffer.append("\"");
                 buffer.append(toLower ? name.toLowerCase() : name);
                 buffer.append("\":");
@@ -244,6 +247,13 @@ public class JsonAdapter {
                         }
                         buffer.append("]");
                     } else if (cls.isArray() || cls == List.class) {
+                        buffer.append("[");
+                        sub = getArray(value, toLower);
+                        if (sub != null) {
+                            buffer.append(sub);
+                        }
+                        buffer.append("]");
+                    } else if (value != null && value.getClass().isArray()) {
                         buffer.append("[");
                         sub = getArray(value, toLower);
                         if (sub != null) {
