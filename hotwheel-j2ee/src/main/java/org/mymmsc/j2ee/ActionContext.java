@@ -20,7 +20,7 @@ public class ActionContext {
 
     public boolean allowed(String methodName) {
         boolean bRet = false;
-        if (requestMethod == null) {
+        if (requestMethod == null || requestMethod.length < 1) {
             bRet = true;
         } else {
             for (RequestMethod rm : requestMethod) {
