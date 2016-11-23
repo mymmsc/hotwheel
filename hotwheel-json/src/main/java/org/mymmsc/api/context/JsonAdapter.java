@@ -423,7 +423,12 @@ public class JsonAdapter {
                         }
                         List<?> list = parseList(cls);
                         if (list == null) {
-                            Object arr = Array.newInstance(claee.getComponentType(), 0);
+                            Object arr = null;
+                            if (isArray && cls != null) {
+                                arr = Array.newInstance(cls, 0);
+                            } else {
+                                arr = null;
+                            }
                             Api.setValue(tRet, fieldName, arr);
                         } else {
                             if (!isArray) {
