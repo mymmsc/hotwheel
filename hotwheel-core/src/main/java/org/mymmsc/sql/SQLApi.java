@@ -313,7 +313,7 @@ public final class SQLApi {
 
     static {
         //initialContextFactory();
-        initialNamingManager();
+        //initialNamingManager();
     }
 
     /**
@@ -362,9 +362,10 @@ public final class SQLApi {
             try {
                 javax.naming.Context ctx = new javax.naming.InitialContext(jndiEnv);
                 ctx.bind(CONTAINER_PREFIX + jndiName, dataSource);
-                mapDataSource.put(jndiName, dataSource);
             } catch (NamingException e) {
                 logger.error("set DataSource failed.", e);
+            } finally {
+                mapDataSource.put(jndiName, dataSource);
             }
         }
     }
