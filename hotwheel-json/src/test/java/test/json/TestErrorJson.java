@@ -3,13 +3,59 @@ package test.json;
 import org.mymmsc.api.context.JsonAdapter;
 import test.json.bean.CreditInfo;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.List;
+
 /**
  * Created by wangfeng on 2016/11/21.
  */
 public class TestErrorJson {
 
+    private static Class<?> getFieldClass(Class<?> clazz, int index) {
+
+        //Class<?> cls = clazz.getGenericSuperclass();
+        Type genType = clazz.getGenericSuperclass();
+        if (!(genType instanceof ParameterizedType)) {
+            return Object.class;
+        }
+        Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
+        if (index >= params.length || index < 0) {
+            throw new RuntimeException("Index outof bounds");
+        }
+        if (!(params[index] instanceof Class)) {
+            return Object.class;
+        }
+        return (Class) params[index];
+    }
+    /**
+     * 获取field的类型，如果是复合对象，获取的是泛型的类型
+     *
+     * @param field
+     * @return
+     */
+    private static Class getFieldClass(Field field) {
+        Class fieldClazz = field.getType();
+
+        if (fieldClazz.isSynthetic()) {
+            System.out.println("array");
+        }
+        if (fieldClazz.isAssignableFrom(List.class)) {
+            Type fc = field.getGenericType(); // 关键的地方，如果是List类型，得到其Generic的类型
+
+            if (fc instanceof ParameterizedType) // 如果是泛型参数的类型
+            {
+                ParameterizedType pt = (ParameterizedType) fc;
+
+                fieldClazz = (Class) pt.getActualTypeArguments()[0]; //得到泛型里的class类型对象。
+            }
+        }
+
+        return fieldClazz;
+    }
     public static void main(String[] args) {
-        String body = "{\"error\":{\"returnCode\":\"0\",\"returnMessage\":\"操作成功\",\"returnUserMessage\":\"\"},\"data\":\"null\"}";
+        String body = "{\"error\":{\"returnCode\":\"0\",\"returnMessage\":\"操作成功\",\"returnUserMessage\":\"\"},\"data\":{}}";
         JsonAdapter json = null;
         try {
             json = JsonAdapter.parse(body);
@@ -17,13 +63,18 @@ public class TestErrorJson {
                 //TypeReference<InnerApiResult<CreditInfo[]>> clazz = new TypeReference<InnerApiResult<CreditInfo[]>>(){};
                 //InnerApiResult<CreditInfo[]> obj = new InnerApiResult<CreditInfo[]>();
                 //System.out.println(obj.getClass().getName());
-                InnerApiResult creditInfoResponse = json.get(InnerApiResult.class, CreditInfo[].class);
+                InnerApiResult<CreditInfo> creditInfoResponse = json.get(InnerApiResult.class, CreditInfo.class);
+                Field field = InnerApiResult.class.getDeclaredField("data");
+                getFieldClass(InnerApiResult.class, 0);
+                getFieldClass(field);
                 if (creditInfoResponse != null && creditInfoResponse.data != null) {
-
+/*
                     for (CreditInfo creditInfo : (CreditInfo[]) creditInfoResponse.data) {
                         System.out.println("id = " + creditInfo.getId());
                     }
+                    */
                 }
+
             }
         } catch (Exception e) {
 
