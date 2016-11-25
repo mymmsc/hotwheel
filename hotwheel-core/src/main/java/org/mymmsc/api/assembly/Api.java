@@ -1255,8 +1255,6 @@ public final class Api {
         return stringbuffer.toString();
     }
 
-    /******************** < 类反射APIs > ********************/
-
     public static byte[] HexToMem(String str) {
         String hexString = "0123456789ABCDEF";
         str = str.toUpperCase();
@@ -1320,6 +1318,27 @@ public final class Api {
      */
     public static void arrayCopy(byte[] dest, byte[] src) {
         arrayCopy(dest, src, src.length);
+    }
+
+    /******************** < 类反射APIs > ********************/
+
+    /**
+     * 判断字段是否泛型类型
+     *
+     * @param field
+     * @return
+     */
+    public static boolean isGeneric(Field field) {
+        boolean bRet = false;
+        try {
+            if (field.getGenericType().getClass() != java.lang.Class.class) {
+                bRet = true;
+            }
+        } catch (Exception e) {
+            //
+        }
+
+        return bRet;
     }
 
     /**
@@ -1582,8 +1601,6 @@ public final class Api {
         return (T) obj;
     }
 
-    /******************** < 线程APIs > ********************/
-
     private static String getFieldAlias(Field field) {
         String sRet = "";
         Annotation[] anns = null;
@@ -1603,8 +1620,6 @@ public final class Api {
 
         return sRet;
     }
-
-    /******************** < 日期时间APIs > ********************/
 
     /**
      * 获得一个对象的成员变量的值
@@ -1854,6 +1869,8 @@ public final class Api {
         return bRet;
     }
 
+    /******************** < 线程APIs > ********************/
+
     /**
      * 线程休眠
      *
@@ -1885,6 +1902,8 @@ public final class Api {
         }
         return bRet;
     }
+
+    /******************** < 日期时间APIs > ********************/
 
     /**
      * Tries different date formats to parse against the given string
