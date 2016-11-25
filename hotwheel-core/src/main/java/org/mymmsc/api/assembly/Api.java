@@ -1321,12 +1321,14 @@ public final class Api {
     }
 
     /******************** < 类反射APIs > ********************/
+    private final static Class<?> classGenericType = sun.reflect.generics.reflectiveObjects.TypeVariableImpl.class;
 
     /**
      * 判断字段是否泛型类型
      *
-     * @param field
-     * @return
+     * @param field 类成员变量字段
+     * @return 是否泛型或者模板
+     * @see sun.reflect.generics.reflectiveObjects.TypeVariableImpl
      */
     public static boolean isGeneric(Field field) {
         boolean bRet = false;
