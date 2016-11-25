@@ -3,7 +3,7 @@ package test.json;
 /**
  * Created by wangfeng on 2016/11/21.
  */
-public class InnerApiError {
+public class InnerError {
     /**< 错误码 */
     public int returnCode;
     /**< 错误信息 */

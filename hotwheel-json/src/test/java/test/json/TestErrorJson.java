@@ -84,14 +84,14 @@ public class TestErrorJson {
                 //TypeReference<InnerApiResult<CreditInfo[]>> clazz = new TypeReference<InnerApiResult<CreditInfo[]>>(){};
                 //InnerApiResult<CreditInfo[]> obj = new InnerApiResult<CreditInfo[]>();
                 //System.out.println(obj.getClass().getName());
-                InnerApiResult<CreditInfo> creditInfoResponse = json.get(InnerApiResult.class, CreditInfo.class);
-                Field field = InnerApiResult.class.getDeclaredField("data");
+                InnerResult<CreditInfo> creditInfoResponse = json.get(InnerResult.class, CreditInfo.class);
+                Field field = InnerResult.class.getDeclaredField("data");
                 System.out.println(isGeneric(field));
-                field = InnerApiResult.class.getDeclaredField("error");
+                field = InnerResult.class.getDeclaredField("error");
                 System.out.println(isGeneric(field));
-                field = InnerApiResult.class.getDeclaredField("a1");
+                field = InnerResult.class.getDeclaredField("a1");
                 System.out.println(isGeneric(field));
-                field = InnerApiResult.class.getDeclaredField("b1");
+                field = InnerResult.class.getDeclaredField("b1");
                 System.out.println(isGeneric(field));
                 if (creditInfoResponse != null && creditInfoResponse.data != null) {
 /*
