@@ -6,12 +6,13 @@ import test.json.bean.CreditInfo;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.List;
 
 /**
  * Created by wangfeng on 2016/11/21.
  */
 public class TestErrorJson {
+
+    private final static Class<?> classGenericType = sun.reflect.generics.reflectiveObjects.TypeVariableImpl.class;
 
     private static Class<?> getFieldClass(Class<?> clazz, int index) {
 
@@ -29,6 +30,23 @@ public class TestErrorJson {
         }
         return (Class) params[index];
     }
+
+    /**
+     * 判断字段是否泛型类型
+     *
+     * @param field
+     * @return
+     */
+    private static boolean isGeneric(Field field) {
+        boolean bRet = false;
+        System.out.println("field name=" + field.getName());
+
+        if (field.getGenericType().getClass() != java.lang.Class.class) {
+            bRet = true;
+        }
+        return bRet;
+    }
+
     /**
      * 获取field的类型，如果是复合对象，获取的是泛型的类型
      *
@@ -38,20 +56,23 @@ public class TestErrorJson {
     private static Class getFieldClass(Field field) {
         Class fieldClazz = field.getType();
 
-        if (fieldClazz.isSynthetic()) {
-            System.out.println("array");
+        Type fc = field.getGenericType(); // 关键的地方，如果是List类型，得到其Generic的类型
+        System.out.println(fc.getClass());
+        if(fc.getClass() == classGenericType) {
+            System.out.println("generics");
         }
-        if (fieldClazz.isAssignableFrom(List.class)) {
-            Type fc = field.getGenericType(); // 关键的地方，如果是List类型，得到其Generic的类型
+        Object[] os = fc.getClass().getSigners();
+        String fcName = fc.getClass().getName();
+        System.out.println("fcName=" + fcName);
+        fcName = fc.toString();
+        System.out.println("fcName=" + fcName);
+        if (fc instanceof ParameterizedType) // 如果是泛型参数的类型
+        {
+            ParameterizedType pt = (ParameterizedType) fc;
 
-            if (fc instanceof ParameterizedType) // 如果是泛型参数的类型
-            {
-                ParameterizedType pt = (ParameterizedType) fc;
-
-                fieldClazz = (Class) pt.getActualTypeArguments()[0]; //得到泛型里的class类型对象。
-            }
+            fieldClazz = (Class) pt.getActualTypeArguments()[0]; //得到泛型里的class类型对象。
         }
-
+        System.out.println("----------");
         return fieldClazz;
     }
     public static void main(String[] args) {
@@ -65,8 +86,13 @@ public class TestErrorJson {
                 //System.out.println(obj.getClass().getName());
                 InnerApiResult<CreditInfo> creditInfoResponse = json.get(InnerApiResult.class, CreditInfo.class);
                 Field field = InnerApiResult.class.getDeclaredField("data");
-                getFieldClass(InnerApiResult.class, 0);
-                getFieldClass(field);
+                System.out.println(isGeneric(field));
+                field = InnerApiResult.class.getDeclaredField("error");
+                System.out.println(isGeneric(field));
+                field = InnerApiResult.class.getDeclaredField("a1");
+                System.out.println(isGeneric(field));
+                field = InnerApiResult.class.getDeclaredField("b1");
+                System.out.println(isGeneric(field));
                 if (creditInfoResponse != null && creditInfoResponse.data != null) {
 /*
                     for (CreditInfo creditInfo : (CreditInfo[]) creditInfoResponse.data) {
