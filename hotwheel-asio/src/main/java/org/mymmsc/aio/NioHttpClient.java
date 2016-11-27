@@ -99,6 +99,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
             String str = String.format("&%s=%s", key, value);
             addField(data, key, entry.getValue());
         }
+        context.setParams(params);
 
         int postlen = data.size();
         int posting = 0;
@@ -152,10 +153,9 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         }
     }
 
-    @Override
-    public void onRead(HttpContext context) {
+    private void bufferRead(HttpContext context, ByteBuffer origin) {
         //logger.debug("{} Read", context.getClass().getSimpleName());
-        ByteBuffer buffer = context.getBuffer();
+        ByteBuffer buffer = origin == null ? context.getBuffer() : origin;
         buffer.flip();
         int pos = context.getReadpos();
         StringBuffer line = new StringBuffer();
@@ -203,7 +203,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         if(context.hasHeader && context.chunked) {
             // chunked编码
             buffer.flip();
-            ByteBuffer content = ByteBuffer.allocate(1024 * 64);
+            ByteBuffer content = ByteBuffer.allocate(1024 * 1024 * 64);
             int begin = buffer.position();
             int end = buffer.limit();
             //logger.debug("beigin={}, end={}...start", begin, end);
@@ -254,6 +254,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
             body.append(tmp);
             cl = body.length();
             logger.debug(tmp);
+            //System.out.println(body.toString());
         }
 
         if (!context.chunked) {
@@ -275,6 +276,23 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
             //onCompleted(context);
         }
         //logger.debug("----------------------------------");
+    }
+
+    private void streamRead(HttpContext context) throws IOException {
+        ByteArrayOutputStream outputStream = context.getOutputStream();
+        ByteBuffer byteBuffer = ByteBuffer.wrap(outputStream.toByteArray());
+        byteBuffer.compact();
+        bufferRead(context, byteBuffer);
+
+    }
+
+    @Override
+    public void onRead(HttpContext context) {
+        try {
+            streamRead(context);
+        } catch (IOException e) {
+            logger.error("read failed: ", e);
+        }
     }
 
     @Override
@@ -313,6 +331,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                         SelectionKey.OP_READ | SelectionKey.OP_WRITE | SelectionKey.OP_CONNECT,
                         ctx);
                 ctx.index = requests ++;
+                ctx.setUrl(httpUrl.toExternalForm());
             } catch (IOException e) {
                 logger.error("SocketChannel.connect failed: ", e);
             }

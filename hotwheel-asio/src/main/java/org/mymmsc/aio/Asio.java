@@ -172,29 +172,35 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
         SelectionKey sk = keyFor(sc);
         T context = contextFor(sc);
         int bufLen = 64 * 1024;
+        //bufLen = 1;
         ByteBuffer buf = ByteBuffer.allocate(bufLen);
+        //OutputStream output = context.getOutputStream();
         long bytesRead = 0;
         try {
             bytesRead = sc.read(buf);
+            //output.write(buf.array(), 0, buf.limit());
+            T ctx = contextFor(sc);
             if (bytesRead == -1) { // Did the other end close?
                 //System.out.println("C");
+                onRead(ctx);
+                onCompleted(context);
                 handleClosed(sc);
             } else if (bytesRead > 0) {
                 // Indicate via key that reading/writing are both of interest now.
                 //key.interestOps(SelectionKey.OP_READ | SelectionKey.OP_WRITE);
                 // 从套接字通道中读取数据
                 //CharBuffer buffer = charset.decode((ByteBuffer) buf.flip());
-                T ctx = contextFor(sc);
                 ctx.add((ByteBuffer) buf.flip());
-                onRead(ctx);
                 if(bytesRead >= bufLen) {
                     sk.interestOps(SelectionKey.OP_READ);
                 } else {
+                    onRead(ctx);
                     onCompleted(context);
                     handleClosed(sc);
                 }
             }
         } catch (IOException e) {
+            logger.error("read error: ", e);
             handleError(sc);
         }
     }
@@ -268,7 +274,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                                 try {
                                     channel.finishConnect();
                                 } catch(IOException e){
-                                    System.out.println(e);
+                                   logger.error("", e);
                                 }
                                 //handleConnected(channel);
                             }
