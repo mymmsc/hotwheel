@@ -280,8 +280,10 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
 
     private void streamRead(HttpContext context) throws IOException {
         ByteArrayOutputStream outputStream = context.getOutputStream();
-        ByteBuffer byteBuffer = ByteBuffer.wrap(outputStream.toByteArray());
-        byteBuffer.compact();
+        byte[] data = outputStream.toByteArray();
+        ByteBuffer byteBuffer = ByteBuffer.allocate(data.length);
+        byteBuffer.put(data);
+        outputStream.reset();
         bufferRead(context, byteBuffer);
 
     }
