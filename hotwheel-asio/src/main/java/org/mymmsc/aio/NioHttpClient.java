@@ -91,7 +91,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         // HTTP-Body区域的二进制数据
         ByteArrayOutputStream data = new ByteArrayOutputStream();
         int index = context.index;
-        //logger.info("list.index=" + index);
+        //logger.debug("list.index=" + index);
         TreeMap<String, Object> params = callBack.getParams(list.get(index));
         for (Map.Entry<String, Object> entry : params.entrySet()) {
             String key = entry.getKey();
@@ -175,12 +175,12 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                     // 处理内容
                     if(start == stop) {
                         // header域结束, 下面是body
-                        //logger.info("Body start...");
+                        //logger.debug("Body start...");
                         context.hasHeader = true;
                         String cl = context.getHeader("Content-Length");
                         int len = Api.valueOf(int.class, cl);
                         context.contentLength = len;
-                        //logger.info("contentLength={}", len);
+                        //logger.debug("contentLength={}", len);
                         break;
                     } else {
                         // header域
@@ -206,10 +206,10 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
             ByteBuffer content = ByteBuffer.allocate(1024 * 64);
             int begin = buffer.position();
             int end = buffer.limit();
-            //logger.info("beigin={}, end={}...start", begin, end);
+            //logger.debug("beigin={}, end={}...start", begin, end);
             while (true) { // 封包循环
                 for (int i = begin; i < end - 1; i++) {
-                    //logger.info("i={}", i);
+                    //logger.debug("i={}", i);
                     if (buffer.get(i) == 0x0D && buffer.get(i + 1) == 0x0A) {
                         byte[] nums = new byte[i - begin];
                         buffer.get(nums);
@@ -222,7 +222,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                         }
                         lineBuffer = lineBuffer.substring(0, separator);
                         int num = Integer.parseInt(lineBuffer, 16);
-                        //logger.info("num={}, start", num);
+                        //logger.debug("num={}, start", num);
                         byte[] strs = new byte[num];
                         buffer.get(strs);
                         content.put(strs);
@@ -231,35 +231,35 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                         begin = i + 4 + num;
                         context.contentLength += num;
 
-                        //logger.info("num={}, stop", num);
+                        //logger.debug("num={}, stop", num);
                         break;
                     }
                 }
-                //logger.info("1");
+                //logger.debug("1");
                 if(begin + 4 > end) {
                     break;
                 } else if (buffer.get(begin) == 0x30 && buffer.get(begin + 1) == 0x0D && buffer.get(begin + 2) == 0x0A && buffer.get(begin + 3) == 0x0D && buffer.get(begin + 4) == 0x0A) {
-                    //logger.info("1-1");
+                    //logger.debug("1-1");
                     content.flip();
                     buffer.get(new byte[5]);
                     context.chunkedFinished = true;
-                    //logger.info("1-2");
+                    //logger.debug("1-2");
                     break;
                 }
-                //logger.info("2");
+                //logger.debug("2");
             }
-            //logger.info("beigin={}, end={}...stop", begin, end);
+            //logger.debug("beigin={}, end={}...stop", begin, end);
             String tmp = new String(content.array(), 0, content.limit());
             StringBuffer body = context.getBody();
             body.append(tmp);
             cl = body.length();
-            logger.info(tmp);
+            logger.debug(tmp);
         }
 
         if (!context.chunked) {
             byte[] ac = Arrays.copyOfRange(buffer.array(), 0, buffer.position());
             String response = new String(ac);
-            logger.info(response);
+            logger.debug(response);
             cl = buffer.position();
             try {
                 cl = response.getBytes(UTF8).length;
@@ -274,7 +274,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
             // 数据处理完毕, 关闭socket
             //onCompleted(context);
         }
-        //logger.info("----------------------------------");
+        //logger.debug("----------------------------------");
     }
 
     @Override
@@ -284,8 +284,8 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
 
     @Override
     public void onCompact(HttpContext context) {
-        //logger.info("channel-number=" + selector.keys().size());
-        //logger.info("Compact: number={},request={},good={},bad={}.", number,requests, good, bad);
+        //logger.debug("channel-number=" + selector.keys().size());
+        //logger.debug("Compact: number={},request={},good={},bad={}.", number,requests, good, bad);
         while((number < 0 || number > good + bad + requests) && concurrency > requests) {
             // 如果未达到并发限制数量, 新增加一个请求
             try {
@@ -302,8 +302,12 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 //sc.setOption(StandardSocketOptions.SO_LINGER, 10 * 1000);
                 //socket.setSoTimeout(connectTimeout);
                 InetSocketAddress sa = new InetSocketAddress(host, port);
-                @SuppressWarnings("unused")
                 boolean ret = sc.connect(sa);
+                if (ret) {
+                    //
+                } else {
+                    //
+                }
                 HttpContext ctx = new HttpContext(sc, connectTimeout);
                 sc.register(selector,
                         SelectionKey.OP_READ | SelectionKey.OP_WRITE | SelectionKey.OP_CONNECT,
