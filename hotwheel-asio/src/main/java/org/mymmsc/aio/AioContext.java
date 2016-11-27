@@ -6,6 +6,7 @@
  */
 package org.mymmsc.aio;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
@@ -18,11 +19,15 @@ import java.nio.channels.SocketChannel;
  * @since mymmsc-api 6.3.9
  */
 public abstract class AioContext {
+	private final static boolean haveBuffer = false;
+	private final static int kBufferSize = 128 * 1024;
 	private SocketChannel channel = null;
 	private int timeout = 0;
 	private long startTime = 0;
 	private ByteBuffer buffer = null;
 	public int length = 0;
+
+	private ByteArrayOutputStream data = new ByteArrayOutputStream();
 
 	/**
 	 * 创建一个AIO上下文
@@ -36,7 +41,7 @@ public abstract class AioContext {
 		this.timeout = timeout;
 		this.startTime = System.currentTimeMillis();
 		this.channel.configureBlocking(false);
-		this.buffer = ByteBuffer.allocate(128 * 1024);
+		this.buffer = ByteBuffer.allocate(kBufferSize);
 		this.buffer.clear();
 	}
 
@@ -47,6 +52,7 @@ public abstract class AioContext {
 		try {
 			buffer.clear();
 			channel.close();
+			data.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -58,14 +64,22 @@ public abstract class AioContext {
 
 	public int add(ByteBuffer buf) {
 		if (buf != null) {
-			buffer.put(buf);
+			if(haveBuffer) {
+				buffer.put(buf);
+			} else {
+				data.write(buf.array(), 0, buf.limit());
+			}
 		}
 		return buffer.position();
 	}
 
 	public int add(ByteBuffer buf, int len) {
 		if (buf != null) {
-			buffer.put(buf.array(), 0, len);
+			if (haveBuffer) {
+				buffer.put(buf.array(), 0, len);
+			} else {
+				data.write(buf.array(), 0, len);
+			}
 			length += len;
 		}
 		return buffer.position();
@@ -127,5 +141,9 @@ public abstract class AioContext {
 	 */
 	public long getStartTime() {
 		return startTime;
+	}
+
+	public ByteArrayOutputStream getOutputStream() {
+		return data;
 	}
 }
