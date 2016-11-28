@@ -23,6 +23,7 @@ import java.util.TreeMap;
 public class NioHttpClient<T> extends Asio<HttpContext>{
 
     private List<T> list = null;
+    private int sequeueId = 0;
     private IContextCallBack<T> callBack = null;
 
     private URL httpUrl = null;
@@ -332,7 +333,8 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 sc.register(selector,
                         SelectionKey.OP_READ | SelectionKey.OP_WRITE | SelectionKey.OP_CONNECT,
                         ctx);
-                ctx.index = requests ++;
+                ctx.index = sequeueId ++;
+                requests ++;
                 ctx.setUrl(httpUrl.toExternalForm());
             } catch (IOException e) {
                 logger.error("SocketChannel.connect failed: ", e);
