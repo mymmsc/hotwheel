@@ -1,5 +1,6 @@
 package org.mymmsc.aio;
 
+import org.mymmsc.api.assembly.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -174,32 +175,31 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
         int bufLen = 64 * 1024;
         //bufLen = 1;
         ByteBuffer buf = ByteBuffer.allocate(bufLen);
-        //OutputStream output = context.getOutputStream();
         long bytesRead = 0;
         try {
             bytesRead = sc.read(buf);
-            //output.write(buf.array(), 0, buf.limit());
             T ctx = contextFor(sc);
             if (bytesRead == -1) { // Did the other end close?
-                //System.out.println("C");
                 onRead(ctx);
-                onCompleted(context);
-                handleClosed(sc);
+                handleError(sc);
             } else if (bytesRead > 0) {
                 // Indicate via key that reading/writing are both of interest now.
                 //key.interestOps(SelectionKey.OP_READ | SelectionKey.OP_WRITE);
                 // 从套接字通道中读取数据
                 //CharBuffer buffer = charset.decode((ByteBuffer) buf.flip());
                 ctx.add((ByteBuffer) buf.flip());
+                onRead(ctx);
                 if(bytesRead >= bufLen) {
                     sk.interestOps(SelectionKey.OP_READ);
                 } else {
-                    onRead(ctx);
+                    //
+                }
+                if(ctx != null && ctx.completed()){
                     onCompleted(context);
                     handleClosed(sc);
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error("read error: ", e);
             handleError(sc);
         }
@@ -216,6 +216,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
      * 检测所有在册的通道超时情况, 并处理
      */
     private void checkTimeout() {
+        boolean bAction = false;
         Iterator<SelectionKey> it = selector.keys().iterator();
         while (it.hasNext()) {
             SelectionKey sk = (SelectionKey) it.next();
@@ -224,6 +225,10 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             if (context.isTimeout()) {
                 handleTimeout(sc);
             }
+            bAction = true;
+        }
+        if (!bAction) {
+            Api.sleep(100);
         }
     }
 
@@ -239,6 +244,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
         done = true;
         // 主流程不允许抛出异常
         while (done) {
+            //System.out.println("---");
             try {
                 // 超时检测
                 num = selector.select(/*timeout*/1);
