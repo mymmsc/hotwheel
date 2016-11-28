@@ -45,6 +45,11 @@ public class HttpContext extends AioContext {
 		super(channel, timeout);
 	}
 
+	@Override
+	public boolean completed() {
+		return contentLength > 0 && contentLength >= body.length();
+	}
+
 	/**
 	 * 检出 指定的header域的值
 	 *

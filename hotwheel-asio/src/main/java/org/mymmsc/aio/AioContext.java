@@ -64,11 +64,13 @@ public abstract class AioContext {
 
 	public int add(ByteBuffer buf) {
 		if (buf != null) {
+			int len = buf.limit();
 			if(haveBuffer) {
 				buffer.put(buf);
 			} else {
 				data.write(buf.array(), 0, buf.limit());
 			}
+			length += len;
 		}
 		return buffer.position();
 	}
@@ -146,4 +148,6 @@ public abstract class AioContext {
 	public ByteArrayOutputStream getOutputStream() {
 		return data;
 	}
+
+	public abstract boolean completed();
 }

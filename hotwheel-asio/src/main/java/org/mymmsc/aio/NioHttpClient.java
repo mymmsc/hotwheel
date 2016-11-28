@@ -92,7 +92,8 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         // HTTP-Body区域的二进制数据
         ByteArrayOutputStream data = new ByteArrayOutputStream();
         int index = context.index;
-        //logger.debug("list.index=" + index);
+        logger.debug("list.index=" + index);
+        //System.out.println("list.index=" + index);
         TreeMap<String, Object> params = callBack.getParams(list.get(index));
         for (Map.Entry<String, Object> entry : params.entrySet()) {
             String key = entry.getKey();
@@ -238,6 +239,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 }
                 //logger.debug("1");
                 if(begin + 4 > end) {
+                    content.flip();
                     break;
                 } else if (buffer.get(begin) == 0x30 && buffer.get(begin + 1) == 0x0D && buffer.get(begin + 2) == 0x0A && buffer.get(begin + 3) == 0x0D && buffer.get(begin + 4) == 0x0A) {
                     //logger.debug("1-1");
@@ -245,6 +247,9 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                     buffer.get(new byte[5]);
                     context.chunkedFinished = true;
                     //logger.debug("1-2");
+                    break;
+                } else {
+                    content.flip();
                     break;
                 }
                 //logger.debug("2");
@@ -255,7 +260,13 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
             body.append(tmp);
             cl = body.length();
             logger.debug(tmp);
-            //System.out.println(body.toString());
+            /*
+            System.out.println("cl=" + cl);
+            if (cl > 1000000) {
+                System.out.println("error");
+            }
+            System.out.println(body.toString());
+            */
         }
 
         if (!context.chunked) {
@@ -275,6 +286,11 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 && context.contentLength > 0 && cl >= context.contentLength) {
             // 数据处理完毕, 关闭socket
             //onCompleted(context);
+        }
+        // 如果还有剩余数据
+        if(buffer.hasRemaining()) {
+            buffer.compact();
+            context.add(buffer);
         }
         //logger.debug("----------------------------------");
     }
