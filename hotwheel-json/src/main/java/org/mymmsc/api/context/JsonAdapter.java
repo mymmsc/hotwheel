@@ -168,6 +168,47 @@ public class JsonAdapter {
     }
 
     /**
+     * JSON字符串特殊字符处理，比如：“\A1;1300”
+     * @param s
+     * @return String
+     */
+    private static String string2Json(String s) {
+        StringBuffer sb = new StringBuffer();
+        for (int i=0; i<s.length(); i++) {
+            char c = s.charAt(i);
+            switch (c){
+                case '\"':
+                    sb.append("\\\"");
+                    break;
+                case '\\':
+                    sb.append("\\\\");
+                    break;
+                case '/':
+                    sb.append("\\/");
+                    break;
+                case '\b':
+                    sb.append("\\b");
+                    break;
+                case '\f':
+                    sb.append("\\f");
+                    break;
+                case '\n':
+                    sb.append("\\n");
+                    break;
+                case '\r':
+                    sb.append("\\r");
+                    break;
+                case '\t':
+                    sb.append("\\t");
+                    break;
+                default:
+                    sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
      * 获得bean的JSON串
      *
      * @param obj     对象
@@ -262,11 +303,12 @@ public class JsonAdapter {
                         buffer.append("]");
                     } else if (value instanceof String) {
                         buffer.append("\"");
+                        /*
                         String tmpStr = ((String) value).replaceAll("\"",
                                 "\\\\\"");
-                        //tmpStr = tmpStr.replaceAll("\\\", "\\");
-                        //tmpStr = tmpStr.replace("\\", "\\\\");
                         buffer.append(tmpStr);
+                        */
+                        buffer.append(string2Json((String)value));
                         buffer.append("\"");
                     } else if ((!Api.isBaseType(cls)) || !Api.isBaseType(value)) {
                         if (value != null) {
