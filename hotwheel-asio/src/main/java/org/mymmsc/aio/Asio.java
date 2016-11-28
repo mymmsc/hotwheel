@@ -1,6 +1,5 @@
 package org.mymmsc.aio;
 
-import org.mymmsc.api.assembly.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -180,8 +179,8 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             bytesRead = sc.read(buf);
             T ctx = contextFor(sc);
             if (bytesRead == -1) { // Did the other end close?
-                onRead(ctx);
-                handleError(sc);
+                //onRead(ctx);
+                handleClosed(sc);
             } else if (bytesRead > 0) {
                 // Indicate via key that reading/writing are both of interest now.
                 //key.interestOps(SelectionKey.OP_READ | SelectionKey.OP_WRITE);
@@ -197,6 +196,8 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                 if(ctx != null && ctx.completed()){
                     onCompleted(context);
                     handleClosed(sc);
+                } else {
+                    sk.interestOps(SelectionKey.OP_READ);
                 }
             }
         } catch (Exception e) {
@@ -228,7 +229,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             bAction = true;
         }
         if (!bAction) {
-            Api.sleep(100);
+            //Api.sleep(100);
         }
     }
 
