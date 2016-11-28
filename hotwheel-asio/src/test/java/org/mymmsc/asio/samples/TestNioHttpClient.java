@@ -23,7 +23,7 @@ public class TestNioHttpClient {
         final String productId = "5413757966488781180001";
         final String userId = "538522734200627281";
         int concurrency = 200;
-        int total = 1000;
+        int total = 10000;
         float n = total;
         long tm = System.currentTimeMillis();
         List list = new ArrayList();
@@ -34,12 +34,13 @@ public class TestNioHttpClient {
         System.out.println("ready data use    : " + ums + "ms");
 
         try {
+            final Integer[] number = {0};
             tm = System.currentTimeMillis();
             NioHttpClient<String> httpClient = new NioHttpClient<String>(list, concurrency);
             httpClient.post(url, new IContextCallBack<String>() {
                 @Override
-                public void finished(NioHttpClient nioHttpClient) {
-                    //
+                public void finished(NioHttpClient ntc) {
+                    System.out.println("number="+ntc.getNumber()+",request="+ntc.getRequests()+",good="+ntc.getGood()+",bad="+ntc.getBad() +".");
                 }
 
                 @Override
@@ -70,15 +71,18 @@ public class TestNioHttpClient {
 
                 @Override
                 public void completed(HttpContext ctx) {
-
+                    number[0] += 1;
+                    System.out.println(ctx.getBody().toString());
                 }
             });
+
             ums = (System.currentTimeMillis() - tm);
             System.out.println("create NilHttpClient Object use  : " + ums + "ms");
             tm = System.currentTimeMillis();
             httpClient.start();
             ums = (System.currentTimeMillis() - tm);
             httpClient.close();
+            System.out.println("number = " + number[0]);
             System.out.println("use                  : " + ums + "ms");
             System.out.println("Time taken for tests : " + (ums/1000) +" seconds");
             System.out.println("process              : " + (ums/n) + "ms/peer");

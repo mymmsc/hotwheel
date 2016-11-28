@@ -12,7 +12,6 @@ import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -269,24 +268,6 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
             */
         }
 
-        if (!context.chunked) {
-            byte[] ac = Arrays.copyOfRange(buffer.array(), 0, buffer.position());
-            String response = new String(ac);
-            logger.debug(response);
-            cl = buffer.position();
-            try {
-                cl = response.getBytes(UTF8).length;
-            } catch (UnsupportedEncodingException e) {
-                logger.error("encoding failed: ", e);
-            }
-        }
-
-        if((!context.chunked // 非chunked编码
-                || ( context.chunked && context.chunkedFinished)) // chunked编码且已经结束
-                && context.contentLength > 0 && cl >= context.contentLength) {
-            // 数据处理完毕, 关闭socket
-            //onCompleted(context);
-        }
         // 如果还有剩余数据
         if(buffer.hasRemaining()) {
             buffer.compact();
