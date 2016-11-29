@@ -281,9 +281,13 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                         }*/else if (sk.isConnectable()) {
                             //如果正在连接，则完成连接
                             if(channel.isConnectionPending()){
-                                channel.finishConnect();
+                                try {
+                                    channel.finishConnect();
+                                } catch (Exception e) {
+                                    //
+                                }
                             }
-                            channel.configureBlocking(false);
+                            //channel.configureBlocking(false);
                             handleConnected(channel);
                         }
                         else if (sk.isReadable()) {
@@ -299,7 +303,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                         }
                         // 更新时间
                         if (context != null) {
-                            updateTime(context);
+                            //updateTime(context);
                         }
                     }
                     //
