@@ -319,6 +319,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 // SO_LINGGER参数在java不能使用,
                 //sc.setOption(StandardSocketOptions.SO_LINGER, 10 * 1000);
                 //socket.setSoTimeout(connectTimeout);
+                sc.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
                 InetSocketAddress sa = new InetSocketAddress(host, port);
                 boolean ret = sc.connect(sa);
                 if (ret) {
