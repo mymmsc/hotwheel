@@ -179,8 +179,11 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             bytesRead = sc.read(buf);
             T ctx = contextFor(sc);
             if (bytesRead == -1) { // Did the other end close?
-                //onRead(ctx);
+                onRead(ctx);
+                onCompleted(context);
                 handleClosed(sc);
+            } else if (bytesRead == 0) {
+                sk.interestOps(SelectionKey.OP_READ);
             } else if (bytesRead > 0) {
                 // Indicate via key that reading/writing are both of interest now.
                 //key.interestOps(SelectionKey.OP_READ | SelectionKey.OP_WRITE);
