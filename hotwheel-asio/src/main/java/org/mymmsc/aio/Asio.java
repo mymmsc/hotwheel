@@ -179,8 +179,8 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             bytesRead = sc.read(buf);
             T ctx = contextFor(sc);
             if (bytesRead == -1) { // Did the other end close?
-                onRead(ctx);
-                onCompleted(context);
+                //onRead(ctx);
+                //onCompleted(context);
                 handleClosed(sc);
             } else if (bytesRead == 0) {
                 sk.interestOps(SelectionKey.OP_READ);
@@ -279,18 +279,12 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                             // 通道尚未连接到服务端套接字通道
                             handleConnected(channel);
                         }*/else if (sk.isConnectable()) {
-                            if(channel.isConnectionPending()) {
-                                //System.out.println("isConnectionPending");
-                                try {
-                                    channel.finishConnect();
-                                } catch(IOException e){
-                                   logger.error("", e);
-                                }
-                                //handleConnected(channel);
+                            //如果正在连接，则完成连接
+                            if(channel.isConnectionPending()){
+                                channel.finishConnect();
                             }
-                            //if(!channel.isConnected()) {
-                                handleConnected(channel);
-                            //}
+                            channel.configureBlocking(false);
+                            handleConnected(channel);
                         }
                         else if (sk.isReadable()) {
                             // 有数据可读, 读取数据字节数小于1, 即客户端断开, 需要关闭socket通道
