@@ -119,7 +119,7 @@ public class HttpBench<T extends List>{
     public static void main(String[] argv) {
         String url = "http://100.73.18.11/mybankv21/phppassport/v2/passport/inner/get-user-basic-info";
         String userId = "538522734200627281";
-        int total = 10000;
+        int total = 1000;
         float n = total;
         long tm = System.currentTimeMillis();
         List list = new ArrayList();

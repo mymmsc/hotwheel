@@ -237,7 +237,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                     }
                 }
                 //logger.debug("1");
-                if(begin + 4 > end) {
+                if(begin + 4 > end && context.completed()) {
                     content.flip();
                     break;
                 } else if (buffer.get(begin) == 0x30 && buffer.get(begin + 1) == 0x0D && buffer.get(begin + 2) == 0x0A && buffer.get(begin + 3) == 0x0D && buffer.get(begin + 4) == 0x0A) {
@@ -248,7 +248,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                     //logger.debug("1-2");
                     break;
                 } else {
-                    content.flip();
+                    //content.flip();
                     break;
                 }
                 //logger.debug("2");
@@ -273,6 +273,24 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
             buffer.compact();
             context.add(buffer);
         }
+        /*
+        byte[] ac = Arrays.copyOfRange(buffer.array(), 0 , buffer.position());
+        String response = new String(ac);
+        System.out.println(response);
+        cl = buffer.position();
+        try {
+            cl = response.getBytes("UTF-8").length;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        if((!context.chunked // 非chunked编码
+                || ( context.chunked && context.chunkedFinished)) // chunked编码且已经结束
+                && cl >= context.contentLength) {
+            //handleClosed(context.getChannel());
+            onCompleted(context);
+            // 数据处理完毕, 关闭socket
+            //onClosed(context);
+        }*/
         //logger.debug("----------------------------------");
     }
 

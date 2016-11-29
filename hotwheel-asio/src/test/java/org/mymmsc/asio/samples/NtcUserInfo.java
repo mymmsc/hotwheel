@@ -12,19 +12,38 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Created by wangfeng on 2016/10/30.
+ * Created by wangfeng on 2016/11/29.
  */
-public class TestNioHttpClient {
-    private final static String appKey = "fb371c48e9a9b2a1174ed729ae888513";
-    private final static String md5Key = "jdbRenRenCui20160328";
+public class NtcUserInfo {
 
     public static void main(String[] args){
-        String url = "http://100.73.16.5:8080/innerApi/rrc/getDebtInfoByProduct";
+        String url = "http://100.73.18.11/mybankv21/phppassport/v2/passport/inner/get-user-basic-info";
         final String productId = "5413757966488781180001";
         final String userId = "538522734200627281";
-        int concurrency = 500;
-        int total = 10000;
+        int concurrency = 200;
+        int total = 1000;
         float n = total;
+
+        final TreeMap<String, Object> params0 = new TreeMap<>();
+        //String userId = "538522734200627281";
+        String appKey = "fb371c48e9a9b2a1174ed729ae888513";
+
+        long ts = System.currentTimeMillis();
+        //RRX-PROMOTION-SECRET
+
+        params0.put("appKey", appKey);
+        params0.put("user_id", userId);
+        params0.put("ts", ts);
+
+        StringBuilder _preSign = new StringBuilder();
+        for (Map.Entry<String, Object> entry: params0.entrySet()) {
+            _preSign.append(entry.getValue()).append("|");
+        }
+        //_preSign.append('|');
+        _preSign.append("RRX-PROMOTION-SECRET");
+        String _sign = Api.md5(_preSign.toString());
+        params0.put("sign", _sign);
+
         long tm = System.currentTimeMillis();
         List list = new ArrayList();
         for (int i = 0; i < total; i++) {
@@ -47,25 +66,24 @@ public class TestNioHttpClient {
                 public TreeMap<String, Object> getParams(String obj) {
                     String productId = obj;
                     TreeMap<String, Object> params = new TreeMap<>();
-                    // 状态值 1计息中（未还，包括逾期） 2部分还款 3已还款 0全部
-                    params.put("status", 0);
-                    params.put("pageNo", 0);
-                    params.put("pageSize", Integer.MAX_VALUE);
-                    params.put("productID", productId);
+                    String userId = "538522734200627281";
+                    String appKey = "fb371c48e9a9b2a1174ed729ae888513";
 
-                    long ts = System.currentTimeMillis() / 1000;
+                    long ts = System.currentTimeMillis();
+                    //RRX-PROMOTION-SECRET
 
                     params.put("appKey", appKey);
+                    params.put("user_id", userId);
                     params.put("ts", ts);
 
-                    StringBuilder preSign = new StringBuilder();
+                    StringBuilder _preSign = new StringBuilder();
                     for (Map.Entry<String, Object> entry: params.entrySet()) {
-                        preSign.append(Api.toString(entry.getValue()));
-                        preSign.append('|');
+                        _preSign.append(entry.getValue()).append("|");
                     }
-                    String sRet = Api.md5(preSign.append(md5Key).toString());
-                    sRet = sRet.toLowerCase();
-                    params.put("sign", sRet);
+                    //_preSign.append('|');
+                    _preSign.append("RRX-PROMOTION-SECRET");
+                    String _sign = Api.md5(_preSign.toString());
+                    params.put("sign", _sign);
                     return params;
                 }
 
