@@ -159,6 +159,8 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             handleTimeout(sc);
         } catch (IOException e) {
             handleError(sc);
+        } catch (Exception e) {
+            handleError(sc);
         }
     }
 
@@ -171,9 +173,9 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
     public void handleRead(SocketChannel sc) {
         SelectionKey sk = keyFor(sc);
         T context = contextFor(sc);
-        int bufLen = 64 * 1024;
+        int bufferLen = 64 * 1024;
         //bufLen = 1;
-        ByteBuffer buf = ByteBuffer.allocate(bufLen);
+        ByteBuffer buf = ByteBuffer.allocate(bufferLen);
         long bytesRead = 0;
         try {
             bytesRead = sc.read(buf);
@@ -181,17 +183,13 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             if (bytesRead == -1) { // Did the other end close?
                 //onRead(ctx);
                 //onCompleted(context);
-                handleClosed(sc);
+                handleError(sc);
             } else if (bytesRead == 0) {
                 sk.interestOps(SelectionKey.OP_READ);
             } else if (bytesRead > 0) {
-                // Indicate via key that reading/writing are both of interest now.
-                //key.interestOps(SelectionKey.OP_READ | SelectionKey.OP_WRITE);
-                // 从套接字通道中读取数据
-                //CharBuffer buffer = charset.decode((ByteBuffer) buf.flip());
                 ctx.add((ByteBuffer) buf.flip());
                 onRead(ctx);
-                if(bytesRead >= bufLen) {
+                if(bytesRead >= bufferLen) {
                     sk.interestOps(SelectionKey.OP_READ);
                 } else {
                     //
@@ -287,7 +285,6 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                                     //
                                 }
                             }
-                            //channel.configureBlocking(false);
                             handleConnected(channel);
                         }
                         else if (sk.isReadable()) {
