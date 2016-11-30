@@ -363,7 +363,7 @@ public final class SQLApi {
                 javax.naming.Context ctx = new javax.naming.InitialContext(jndiEnv);
                 ctx.bind(CONTAINER_PREFIX + jndiName, dataSource);
             } catch (NamingException e) {
-                logger.error("set DataSource failed.", e);
+                logger.warn("server not support bind DataSource");
             } finally {
                 mapDataSource.put(jndiName, dataSource);
             }
