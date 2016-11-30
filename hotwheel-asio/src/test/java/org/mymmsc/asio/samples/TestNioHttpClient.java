@@ -19,11 +19,12 @@ public class TestNioHttpClient {
     private final static String md5Key = "jdbRenRenCui20160328";
 
     public static void main(String[] args){
-        String url = "http://100.73.16.5:8080/innerApi/rrc/getDebtInfoByProduct";
+        String url = "http://100.73.16.79:8080/innerApi/rrc/getDebtInfoByProduct";
+        //url = "http://100.73.17.2/dsmp/status.cgi";
         final String productId = "5413757966488781180001";
         final String userId = "538522734200627281";
-        int concurrency = 500;
-        int total = 10000;
+        int concurrency = 200;
+        int total = 1000;
         float n = total;
         long tm = System.currentTimeMillis();
         List list = new ArrayList();
