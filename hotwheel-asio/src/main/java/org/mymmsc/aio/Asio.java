@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.net.ConnectException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -146,20 +145,20 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
         // 如果客户端没有立即连接到服务端, 则客户端完成非立即连接操作
         try {
             // 设置成非阻塞
-            sc.configureBlocking(false);
+            //sc.configureBlocking(false);
             //if (sc.finishConnect()) {
                 // 处理完后必须吧OP_CONNECT关注去掉, 改为关注OP_READ
-                sk.interestOps(SelectionKey.OP_READ);
                 onConnected(context);
+                sk.interestOps(SelectionKey.OP_READ);
             //} else {
             //    handleError(sc);
             //}
-        } catch (ConnectException e) {
+        } /*catch (ConnectException e) {
             // java.net.ConnectException: Operation timed out
             handleTimeout(sc);
         } catch (IOException e) {
             handleError(sc);
-        } catch (Exception e) {
+        }*/ catch (Exception e) {
             handleError(sc);
         }
     }
@@ -296,11 +295,11 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                         } else {
                             // 一般情况下不太可能到达这个位置
                             //System.out.print('P');
-                            handleError(channel);
+                            //handleError(channel);
                         }
                         // 更新时间
                         if (context != null) {
-                            //updateTime(context);
+                            updateTime(context);
                         }
                     }
                     //
