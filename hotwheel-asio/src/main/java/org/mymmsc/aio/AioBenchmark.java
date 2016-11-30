@@ -13,7 +13,7 @@ public abstract class AioBenchmark {
     /** 并发数 */
     protected int concurrency = kConcurrency;
     /** 总请求数, -1为无限制 */
-    protected int number = -1;
+    protected volatile int number = -1;
 
     /** 选择器超时时间 */
     protected int timeout = 30 * 1000;

@@ -33,9 +33,16 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
     private int connectTimeout = 30 * 1000;
     private int readTimeout = 30 * 1000;
 
-    private int good = 0;
-    private int bad = 0;
-    private int requests = 0;
+    // 正在进行中的请求数
+    private volatile int requests = 0;
+    // 完成业务处理的数量
+    private volatile int good = 0;
+    // 失败的数量
+    private volatile int bad = 0;
+    // 关闭socket数量, 总体应该和number-good-bad保持一致
+    private volatile int closed = 0;
+
+    private boolean debug = false;
 
     public NioHttpClient(List<T> list) throws IOException {
         this(list, 500);
@@ -53,13 +60,14 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
 
     @Override
     public void onClosed(HttpContext context) {
+        closed ++;
+        requests --;
         logger.debug("{} closed", context.getClass().getSimpleName());
     }
 
     @Override
     public void onCompleted(HttpContext context) {
         good ++;
-        requests --;
         logger.debug("{} Completed", context.getClass().getSimpleName());
         callBack.completed(context);
     }
@@ -71,18 +79,14 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
 
     @Override
     public void onError(HttpContext context) {
-        requests --;
         bad ++;
-        //good --;
         logger.debug("{} Error", context.getClass().getSimpleName());
     }
 
     @Override
     public void onTimeout(HttpContext context) {
-        requests --;
         // 超时后, 失败请求数+1
         bad++;
-        //good --;
         logger.debug("{} Timeout", context.getClass().getSimpleName());
     }
 
@@ -142,7 +146,6 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
             SocketChannel sc = context.getChannel();
             sc.write(ByteBuffer.wrap(request.getBytes(UTF8)));
             sc.write(ByteBuffer.wrap(data.toByteArray()));
-            //requests ++;
         } catch (IOException e) {
             logger.error("SocketChannel.write failed: ", e);
         } finally {
@@ -231,7 +234,6 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                         buffer.get(new byte[2]);
                         begin = i + 4 + num;
                         context.contentLength += num;
-
                         //logger.debug("num={}, stop", num);
                         break;
                     }
@@ -301,7 +303,6 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         byteBuffer.put(data);
         outputStream.reset();
         bufferRead(context, byteBuffer);
-
     }
 
     @Override
@@ -321,15 +322,16 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
     @Override
     public void onCompact(HttpContext context) {
         //logger.debug("channel-number=" + selector.keys().size());
+        if (debug) System.out.println("channel-number=" + selector.keys().size());
         //logger.debug("Compact: number={},request={},good={},bad={}.", number,requests, good, bad);
-        while((number < 0 || number > good + bad + requests) && concurrency > requests) {
+        if (debug) System.out.println(String.format("Compact: number=%d,request=%d,good=%d,bad=%d.", number,requests, good, bad));
+        while(sequeueId < number && (/*number < 0 || */number > good + bad + requests) && concurrency > requests) {
             // 如果未达到并发限制数量, 新增加一个请求
             try {
                 SocketChannel sc = SocketChannel.open();
                 sc.configureBlocking(false);
                 sc.setOption(StandardSocketOptions.SO_RCVBUF, 128 * 1024);
-                sc.setOption(
-                        StandardSocketOptions.SO_SNDBUF, 128 * 1024);
+                sc.setOption(StandardSocketOptions.SO_SNDBUF, 128 * 1024);
                 //sc.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
                 sc.setOption(StandardSocketOptions.SO_REUSEADDR, true);
                 //sc.socket().setSoTimeout(10 * 1000);

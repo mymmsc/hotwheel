@@ -10,9 +10,9 @@ public interface IContextCallBack<T> {
     /**
      * NIO整体完成
      *
-     * @param nioHttpClient
+     * @param httpClient
      */
-    void finished(NioHttpClient nioHttpClient);
+    void finished(NioHttpClient httpClient);
 
     /**
      * 返回以TreeMap组织的post参数
