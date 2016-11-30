@@ -295,7 +295,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                         } else {
                             // 一般情况下不太可能到达这个位置
                             //System.out.print('P');
-                            //handleError(channel);
+                            handleError(channel);
                         }
                         // 更新时间
                         if (context != null) {
@@ -306,6 +306,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                 }
                 handleCompact(selector);
             } catch (Exception e) {
+                e.printStackTrace();
                 logger.error("Selector.select failed: ", e);
             } finally {
                 //
