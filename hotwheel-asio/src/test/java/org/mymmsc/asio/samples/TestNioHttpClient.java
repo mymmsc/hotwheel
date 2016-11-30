@@ -23,7 +23,7 @@ public class TestNioHttpClient {
         //url = "http://100.73.17.2/dsmp/status.cgi";
         final String productId = "5413757966488781180001";
         final String userId = "538522734200627281";
-        int concurrency = 200;
+        int concurrency = 100;
         int total = 1000;
         float n = total;
         long tm = System.currentTimeMillis();

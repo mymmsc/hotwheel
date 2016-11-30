@@ -257,12 +257,17 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                     // 遍历每个有可用IO操作Channel对应的SelectionKey
                     Iterator<SelectionKey> it = selector.selectedKeys().iterator();
                     while (it.hasNext()) {
-                        SelectionKey sk = (SelectionKey) it.next();
+                        final SelectionKey sk = (SelectionKey) it.next();
+                        int ops = sk.readyOps();
+                        boolean isAcceptable = (ops & SelectionKey.OP_ACCEPT) == SelectionKey.OP_ACCEPT;
+                        boolean isConnectable = (ops & SelectionKey.OP_CONNECT) == SelectionKey.OP_CONNECT;
+                        boolean isReadable = (ops & SelectionKey.OP_READ) == SelectionKey.OP_READ;
+                        boolean isWritable = (ops & SelectionKey.OP_WRITE) == SelectionKey.OP_WRITE;
                         T context = contextFor(sk);
                         // 从集合中删除此次事件
                         it.remove();
                         SocketChannel channel = (SocketChannel) sk.channel();
-                        if (sk.isAcceptable()) {
+                        if (isAcceptable) {
                             // 新客户端连接到达
                             ServerSocketChannel ssc = (ServerSocketChannel) sk.channel();
                             channel = ssc.accept();
@@ -275,7 +280,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                             // 当前通道选择器产生连接已经准备就绪事件, 并且客户端套接字
                             // 通道尚未连接到服务端套接字通道
                             handleConnected(channel);
-                        }*/else if (sk.isConnectable()) {
+                        }*/else if (isConnectable) {
                             //如果正在连接，则完成连接
                             if(channel.isConnectionPending()){
                                 try {
@@ -286,10 +291,10 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                             }
                             handleConnected(channel);
                         }
-                        else if (sk.isReadable()) {
+                        else if (isReadable) {
                             // 有数据可读, 读取数据字节数小于1, 即客户端断开, 需要关闭socket通道
                             handleRead(channel);
-                        } else if (sk.isWritable()) {
+                        } else if (isWritable) {
                             // socket通道可写
                             handleWrite(channel);
                         } else {
