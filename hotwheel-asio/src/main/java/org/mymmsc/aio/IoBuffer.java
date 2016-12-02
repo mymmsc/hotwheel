@@ -1053,4 +1053,27 @@ public final class IoBuffer {
             }
         }
     }
+
+    /**
+     * 读取一行
+     * @return
+     */
+    public byte[] readLine() {
+        byte[] bRet = null;
+        int begin = position();
+        int pos = begin;
+        byte[] data = array();
+        while(pos < data.length) {
+            if (pos + 1 < data.length && data[pos] == '\r' && data[pos + 1] == '\n') {
+                bRet = new byte[pos - begin];
+                get(bRet);
+                get(new byte[2]);
+                break;
+            } else {
+                pos++;
+            }
+        }
+
+        return bRet;
+    }
 }

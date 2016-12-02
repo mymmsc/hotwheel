@@ -48,7 +48,9 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpasyncclient</artifactId>
             <version>${httpasyncclient.version}</version>
+            <!--
             <scope>test</scope>
+            -->
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>

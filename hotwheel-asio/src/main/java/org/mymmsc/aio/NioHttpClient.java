@@ -20,7 +20,6 @@ import java.util.TreeMap;
  * 异步并发http客户端
  */
 public class NioHttpClient<T> extends Asio<HttpContext>{
-
     private List<T> list = null;
     private int sequeueId = 0;
     private IContextCallBack<T> callBack = null;
@@ -204,82 +203,78 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         }
         int cl = 0;
         buffer.compact();
-        if(context.hasHeader && context.chunked) {
-            // chunked编码
+        if (context.hasHeader) {
             buffer.flip();
-            ByteBuffer content = ByteBuffer.allocate(1024 * 1024 * 64);
-            int begin = buffer.position();
-            int end = buffer.limit();
-            //logger.debug("beigin={}, end={}...start", begin, end);
-            while (true) { // 封包循环
-                for (int i = begin; i < end - 1; i++) {
-                    //logger.debug("i={}", i);
-                    if (buffer.get(i) == 0x0D && buffer.get(i + 1) == 0x0A) {
-                        byte[] nums = new byte[i - begin];
-                        buffer.get(nums);
-                        // 丢弃\r\n
-                        buffer.get(new byte[2]);
+            if (!context.chunked) {
+                String tmp = new String(buffer.array(), 0 , buffer.limit());
+                StringBuffer body = context.getBody();
+                body.append(tmp);
+                buffer.reset();
+                //System.out.println(response);
+            } else {
+                // chunked编码
+                ByteBuffer content = ByteBuffer.allocate(1024 * 1024 * 64);
+                int begin = buffer.position();
+                int end = buffer.limit();
+                byte[] data = buffer.array();
+                line.setLength(0);
+                pos = 0;
+                //logger.debug("beigin={}, end={}...start", begin, end);
+                while (buffer.hasRemaining()) { // 封包循环
+                    if (context.chunkState == HttpContext.CHUNK_LEN) {
+                        byte[] nums = buffer.readLine();
+                        if (nums == null) {
+                            break;
+                        }
                         String lineBuffer = new String(nums);
                         int separator = lineBuffer.indexOf(';');
                         if (separator < 0) {
                             separator = lineBuffer.length();
                         }
                         lineBuffer = lineBuffer.substring(0, separator);
-                        int num = Integer.parseInt(lineBuffer, 16);
-                        //logger.debug("num={}, start", num);
-                        byte[] strs = new byte[num];
-                        buffer.get(strs);
-                        content.put(strs);
-                        // 丢弃\r\n
-                        buffer.get(new byte[2]);
-                        begin = i + 4 + num;
-                        context.contentLength += num;
-                        //logger.debug("num={}, stop", num);
+                        int num = -1;
+                        try {
+                            num = Integer.parseInt(lineBuffer, 16);
+                            if (num == 0) {
+                                context.chunkState = HttpContext.CHUNK_LAST;
+                            } else {
+                                context.chunkState = HttpContext.CHUNK_DATA;
+                            }
+                            context.chunkSize = num;
+                            context.contentLength += num;
+                        } catch (final NumberFormatException e) {
+                            logger.error("Bad chunk header: " + lineBuffer);
+                        }
+                    } else if (context.chunkState == HttpContext.CHUNK_DATA) {
+                        if (buffer.position() + context.chunkSize <= buffer.limit()) {
+                            byte[] strs = new byte[context.chunkSize];
+                            buffer.get(strs);
+                            content.put(strs);
+                            context.chunkState = HttpContext.CHUNK_CRLF;
+                        } else {
+                            break;
+                        }
+                    } else if (context.chunkState == HttpContext.CHUNK_CRLF) {
+                        if (buffer.position() + 2 <= buffer.limit()) {
+                            buffer.get(new byte[2]);
+                            context.chunkState = HttpContext.CHUNK_LEN;
+                        } else {
+                            break;
+                        }
+                    } else if (context.chunkState == HttpContext.CHUNK_LAST) {
+                        //
                         break;
                     }
                 }
-                //logger.debug("1");
-                if(begin + 4 > end && context.completed()) {
-                    content.flip();
-                    break;
-                } else if (buffer.get(begin) == 0x30 && buffer.get(begin + 1) == 0x0D && buffer.get(begin + 2) == 0x0A && buffer.get(begin + 3) == 0x0D && buffer.get(begin + 4) == 0x0A) {
-                    //logger.debug("1-1");
-                    content.flip();
-                    buffer.get(new byte[5]);
-                    context.chunkedFinished = true;
-                    //logger.debug("1-2");
-                    break;
-                } else {
-                    //content.flip();
-                    break;
-                }
-                //logger.debug("2");
+                //logger.debug("beigin={}, end={}...stop", begin, end);
+                content.flip();
+                String tmp = new String(content.array(), 0, content.limit());
+                StringBuffer body = context.getBody();
+                body.append(tmp);
+                //cl = body.length();
+                //logger.debug(tmp);
+                content.clear();
             }
-            //logger.debug("beigin={}, end={}...stop", begin, end);
-            String tmp = new String(content.array(), 0, content.limit());
-            StringBuffer body = context.getBody();
-            body.append(tmp);
-            cl = body.length();
-            logger.debug(tmp);
-            /*
-            System.out.println("cl=" + cl);
-            if (cl > 1000000) {
-                System.out.println("error");
-            }
-            System.out.println(body.toString());
-            */
-        } else if(context.hasHeader){
-            buffer.flip();
-            String tmp = new String(buffer.array(), 0 , buffer.limit());
-            StringBuffer body = context.getBody();
-            body.append(tmp);
-            //System.out.println(response);
-        }
-
-        // 如果还有剩余数据
-        if(buffer.hasRemaining()) {
-            buffer.compact();
-            context.add(buffer);
         }
         /*
         byte[] ac = Arrays.copyOfRange(buffer.array(), 0 , buffer.position());

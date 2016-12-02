@@ -172,8 +172,8 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
     public void handleRead(SocketChannel sc) {
         SelectionKey sk = keyFor(sc);
         T context = contextFor(sc);
-        int bufferLen = 64 * 1024;
-        //bufLen = 1;
+        int bufferLen = 128 * 1024;
+        //bufferLen = 1;
         ByteBuffer buf = ByteBuffer.allocate(bufferLen);
         long bytesRead = 0;
         try {
@@ -184,12 +184,12 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                 //onCompleted(context);
                 handleError(sc);
             } else if (bytesRead == 0) {
-                sk.interestOps(SelectionKey.OP_READ);
+                //sk.interestOps(SelectionKey.OP_READ);
             } else if (bytesRead > 0) {
                 ctx.add((ByteBuffer) buf.flip());
                 onRead(ctx);
                 if(bytesRead >= bufferLen) {
-                    sk.interestOps(SelectionKey.OP_READ);
+                    //sk.interestOps(SelectionKey.OP_READ);
                 } else {
                     //
                 }
@@ -197,7 +197,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                     onCompleted(context);
                     handleClosed(sc);
                 } else {
-                    sk.interestOps(SelectionKey.OP_READ);
+                    //sk.interestOps(SelectionKey.OP_READ);
                 }
             }
         } catch (Exception e) {

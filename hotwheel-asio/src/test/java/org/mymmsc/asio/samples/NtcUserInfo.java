@@ -1,8 +1,8 @@
 package org.mymmsc.asio.samples;
 
-import org.mymmsc.aio.HttpContext;
-import org.mymmsc.aio.IContextCallBack;
-import org.mymmsc.aio.NioHttpClient;
+import org.mymmsc.aio.IResponseCallBack;
+import org.mymmsc.aio.NHttpClient;
+import org.mymmsc.aio.ScoreBoard;
 import org.mymmsc.api.assembly.Api;
 
 import java.io.IOException;
@@ -55,15 +55,15 @@ public class NtcUserInfo {
         try {
             final Integer[] number = {0};
             tm = System.currentTimeMillis();
-            NioHttpClient<String> httpClient = new NioHttpClient<String>(list, concurrency);
-            httpClient.post(url, new IContextCallBack<String>() {
+            NHttpClient<String> httpClient = new NHttpClient<String>(list, concurrency);
+            httpClient.post(url, new IResponseCallBack<String>() {
                 @Override
-                public void finished(NioHttpClient ntc) {
-                    System.out.println("number="+ntc.getNumber()+",request="+ntc.getRequests()+",good="+ntc.getGood()+",bad="+ntc.getBad() +".");
+                public void finished(ScoreBoard scoreBoard) {
+
                 }
 
                 @Override
-                public TreeMap<String, Object> getParams(String obj) {
+                public Map<String, Object> getParams(String obj) {
                     String productId = obj;
                     TreeMap<String, Object> params = new TreeMap<>();
                     String userId = "538522734200627281";
@@ -88,18 +88,25 @@ public class NtcUserInfo {
                 }
 
                 @Override
-                public void completed(HttpContext ctx) {
-                    number[0] += 1;
-                    System.out.println(ctx.getBody().toString());
+                public void completed(String body) {
+                    synchronized (number[0]) {
+                        number[0] += 1;
+                    }
+                    System.out.println(body);
+                }
+
+                @Override
+                public void failed(Exception e) {
+
+                }
+
+                @Override
+                public void cancelled() {
+
                 }
             });
 
             ums = (System.currentTimeMillis() - tm);
-            System.out.println("create NilHttpClient Object use  : " + ums + "ms");
-            tm = System.currentTimeMillis();
-            httpClient.start();
-            ums = (System.currentTimeMillis() - tm);
-            httpClient.close();
             System.out.println("number = " + number[0]);
             System.out.println("use                  : " + ums + "ms");
             System.out.println("Time taken for tests : " + (ums/1000) +" seconds");
