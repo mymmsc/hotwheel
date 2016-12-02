@@ -41,7 +41,8 @@ public class HttpBench<T extends List>{
         this.concurrency = concurrency;
         ConnectingIOReactor ioReactor = new DefaultConnectingIOReactor();
         PoolingNHttpClientConnectionManager cm = new PoolingNHttpClientConnectionManager(ioReactor);
-        cm.setMaxTotal(this.concurrency);
+        //cm.setMaxTotal(this.concurrency);
+        cm.setDefaultMaxPerRoute(this.concurrency);
 
         this.httpclient = HttpAsyncClients.custom().setConnectionManager(cm).build();
     }

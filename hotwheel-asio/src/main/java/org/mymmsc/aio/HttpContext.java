@@ -17,6 +17,13 @@ import java.util.Map;
  */
 public class HttpContext extends AioContext {
 	private static Logger logger = LoggerFactory.getLogger(HttpContext.class);
+	public static final int CHUNK_UNKNOW  = -1;
+	public static final int CHUNK_LEN     = 1;
+	public static final int CHUNK_DATA    = 2;
+	public static final int CHUNK_CRLF    = 3;
+	public static final int CHUNK_LAST    = 4;
+	public static final int CHUNK_INVALID = Integer.MAX_VALUE;
+
 	public int index = -1;
 	private String url = null;
 	// 状态码
@@ -24,11 +31,13 @@ public class HttpContext extends AioContext {
 	// 接收到字节数
 	private int recviced = 0;
 	private int readpos = 0;
-
 	//
 	public boolean hasHeader = false;
 	public boolean chunked = false;
 	public boolean chunkedFinished = false;
+	public int chunkState = CHUNK_UNKNOW;
+	public int chunkSize = 0;
+
 	private int headerCount;
 	private String[] headers;
 	// body长度
@@ -110,6 +119,7 @@ public class HttpContext extends AioContext {
 			transferEncoding = checkoutHeader(header, key);
 			if (transferEncoding != null && transferEncoding.equalsIgnoreCase("chunked")) {
 				chunked = true;
+				chunkState = CHUNK_LEN;
 				logger.debug("{} is chunked", key);
 			}
 		}
