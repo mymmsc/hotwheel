@@ -1,6 +1,7 @@
 package org.mymmsc.asio.samples;
 
 import org.mymmsc.aio.HttpCallBack;
+import org.mymmsc.aio.HttpContext;
 import org.mymmsc.aio.NioHttpClient;
 import org.mymmsc.aio.ScoreBoard;
 import org.mymmsc.api.assembly.Api;
@@ -23,7 +24,7 @@ public class TestNioHttpClient {
         //url = "http://100.73.17.2/dsmp/status.cgi";
         final String productId = "5413757966488781180001";
         final String userId = "538522734200627281";
-        int concurrency = 20;
+        final int concurrency = 20;
         int total = 100;
         float n = total;
         long tm = System.currentTimeMillis();
@@ -71,8 +72,9 @@ public class TestNioHttpClient {
                 }
 
                 @Override
-                public void completed(int sequeueId, int status, String message, String body) {
+                public void completed(HttpContext context) {
                     number[0] += 1;
+                    String body = context.getBody().toString();
                     System.out.println(body);
                 }
 

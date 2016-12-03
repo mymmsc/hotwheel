@@ -24,12 +24,9 @@ public interface HttpCallBack<T> {
 
     /**
      * 单个请求完成
-     * @param sequeueId
-     * @param status
-     * @param message
-     * @param body
+     * @param ctx
      */
-    void completed(int sequeueId, int status, String message, String body);
+    void completed(HttpContext ctx);
 
     /**
      * 失败的请求

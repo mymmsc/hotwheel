@@ -25,6 +25,10 @@ public abstract class AioContext {
 	private IoBuffer buffer = null;
 	public int length = 0;
 
+	public AioContext() {
+		//
+	}
+
 	/**
 	 * 创建一个AIO上下文
 	 *
@@ -36,7 +40,9 @@ public abstract class AioContext {
 		this.channel = channel;
 		this.timeout = timeout;
 		this.startTime = System.currentTimeMillis();
-		this.channel.configureBlocking(false);
+		if (this.channel != null) {
+			this.channel.configureBlocking(false);
+		}
 		this.buffer = IoBuffer.allocate(kBufferSize);
 		this.buffer.clear();
 	}

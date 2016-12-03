@@ -3,6 +3,7 @@ package org.mymmsc.aio;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.StatusLine;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -42,6 +43,7 @@ public class AioHttpClient<T>{
     private static final String UTF_8 = "UTF-8";
     private HttpCallBack<T> callBack = null;
     private ScoreBoard scoreBoard = new ScoreBoard();
+    private List<Future<HttpResponse>> respList = null;
 
     public AioHttpClient(List<T> list) throws IOReactorException {
         this(list, 100);
@@ -65,15 +67,14 @@ public class AioHttpClient<T>{
     }
 
     public void post(final String url, final HttpCallBack<T> callBack) {
-        final String result = "";
-
+        this.callBack = callBack;
         httpclient.start();
-        List<Future<HttpResponse>> respList = new LinkedList<Future<HttpResponse>>();
+        respList = new LinkedList<Future<HttpResponse>>();
         for (int i = 0; i < list.size(); i++) {
             final int sequeueId = i;
             try {
                 scoreBoard.sequeueId = sequeueId;
-                Map<String, Object> map = callBack.getParams((T) list.get(sequeueId));
+                final Map<String, Object> map = callBack.getParams((T) list.get(sequeueId));
 
                 final HttpPost httpRequst = new HttpPost(url);
                 httpRequst.setHeader("Connection", "close");
@@ -102,7 +103,14 @@ public class AioHttpClient<T>{
                             logger.error("process HttpResponse exception:", e);
                             //body = e.getMessage();
                         }
-                        callBack.completed(sequeueId, httpResponse.getStatusLine().getStatusCode(), httpResponse.getStatusLine().getReasonPhrase(), body);
+                        StatusLine sl = httpResponse.getStatusLine();
+                        HttpContext httpContext = new HttpContext();
+                        httpContext.setUrl(url);
+                        httpContext.setParams(map);
+                        httpContext.index = sequeueId;
+                        httpContext.setStatus(sl.getStatusCode());
+                        httpContext.setBody(body);
+                        callBack.completed(httpContext);
                     }
 
                     @Override
@@ -122,13 +130,24 @@ public class AioHttpClient<T>{
             }
 
         }
+
+    }
+
+    public int start() {
+        int iRet = 0;
         for (Future<HttpResponse> response : respList) {
             try {
                 HttpResponse httpResponse = response.get();
             } catch (Exception e) {
                 logger.error("wait http response failed: ", e);
+                iRet = -1;
             }
         }
+
+        return iRet;
+    }
+
+    public void close() {
         try {
             httpclient.close();
             callBack.finished(scoreBoard);
