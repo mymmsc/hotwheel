@@ -7,6 +7,7 @@ package org.mymmsc.aio;
  * @since 2.1.1
  */
 public class ScoreBoard {
+    public long sequeueId;
     public long number = 0;
     public long good = 0;
     public long bad = 0;

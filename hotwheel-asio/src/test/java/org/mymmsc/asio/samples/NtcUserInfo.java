@@ -1,6 +1,6 @@
 package org.mymmsc.asio.samples;
 
-import org.mymmsc.aio.IResponseCallBack;
+import org.mymmsc.aio.HttpCallBack;
 import org.mymmsc.aio.NHttpClient;
 import org.mymmsc.aio.ScoreBoard;
 import org.mymmsc.api.assembly.Api;
@@ -21,7 +21,7 @@ public class NtcUserInfo {
         final String productId = "5413757966488781180001";
         final String userId = "538522734200627281";
         int concurrency = 20;
-        int total = 100000;
+        int total = 100;
         float n = total;
 
         final TreeMap<String, Object> params0 = new TreeMap<>();
@@ -56,7 +56,7 @@ public class NtcUserInfo {
             final Integer[] number = {0};
             tm = System.currentTimeMillis();
             NHttpClient<String> httpClient = new NHttpClient<String>(list, concurrency);
-            httpClient.post(url, new IResponseCallBack<String>() {
+            httpClient.post(url, new HttpCallBack<String>() {
                 @Override
                 public void finished(ScoreBoard scoreBoard) {
 
@@ -88,7 +88,7 @@ public class NtcUserInfo {
                 }
 
                 @Override
-                public void completed(String body) {
+                public void completed(int sequeueId, int status, String message, String body) {
                     synchronized (number[0]) {
                         number[0] += 1;
                     }
@@ -96,12 +96,7 @@ public class NtcUserInfo {
                 }
 
                 @Override
-                public void failed(Exception e) {
-
-                }
-
-                @Override
-                public void cancelled() {
+                public void failed(int sequeueId, Exception e) {
 
                 }
             });
