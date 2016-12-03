@@ -1,8 +1,8 @@
 package org.mymmsc.asio.samples;
 
-import org.mymmsc.aio.HttpContext;
-import org.mymmsc.aio.IContextCallBack;
+import org.mymmsc.aio.HttpCallBack;
 import org.mymmsc.aio.NioHttpClient;
+import org.mymmsc.aio.ScoreBoard;
 import org.mymmsc.api.assembly.Api;
 
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class TestNioHttpClient {
         final String productId = "5413757966488781180001";
         final String userId = "538522734200627281";
         int concurrency = 20;
-        int total = 1000;
+        int total = 100;
         float n = total;
         long tm = System.currentTimeMillis();
         List list = new ArrayList();
@@ -38,10 +38,10 @@ public class TestNioHttpClient {
             final Integer[] number = {0};
             tm = System.currentTimeMillis();
             NioHttpClient<String> httpClient = new NioHttpClient<String>(list, concurrency);
-            httpClient.post(url, new IContextCallBack<String>() {
+            httpClient.post(url, new HttpCallBack<String>() {
                 @Override
-                public void finished(NioHttpClient ntc) {
-                    System.out.println("number="+ntc.getNumber()+",request="+ntc.getRequests()+",good="+ntc.getGood()+",bad="+ntc.getBad() +".");
+                public void finished(ScoreBoard ntc) {
+                    System.out.println("number="+ntc.number+",request="+ntc.requests+",good="+ntc.good+",bad="+ntc.bad +".");
                 }
 
                 @Override
@@ -71,9 +71,14 @@ public class TestNioHttpClient {
                 }
 
                 @Override
-                public void completed(HttpContext ctx) {
+                public void completed(int sequeueId, int status, String message, String body) {
                     number[0] += 1;
-                    System.out.println(ctx.getBody().toString());
+                    System.out.println(body);
+                }
+
+                @Override
+                public void failed(int sequeueId, Exception e) {
+
                 }
             });
 

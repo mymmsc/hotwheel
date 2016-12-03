@@ -14,7 +14,6 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * 异步并发http客户端
@@ -22,7 +21,9 @@ import java.util.TreeMap;
 public class NioHttpClient<T> extends Asio<HttpContext>{
     private List<T> list = null;
     private int sequeueId = 0;
-    private IContextCallBack<T> callBack = null;
+    private ScoreBoard scoreBoard = new ScoreBoard();
+    private long beginTime = System.currentTimeMillis();
+    private HttpCallBack<T> callBack = null;
 
     private URL httpUrl = null;
     private String host = null;
@@ -68,7 +69,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
     public void onCompleted(HttpContext context) {
         good ++;
         logger.debug("{} Completed", context.getClass().getSimpleName());
-        callBack.completed(context);
+        callBack.completed(context.index, context.getStatus(), "", context.getBody().toString());
     }
 
     @Override
@@ -96,7 +97,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         int index = context.index;
         logger.debug("list.index=" + index);
         //System.out.println("list.index=" + index);
-        TreeMap<String, Object> params = callBack.getParams(list.get(index));
+        Map<String, Object> params = callBack.getParams(list.get(index));
         for (Map.Entry<String, Object> entry : params.entrySet()) {
             String key = entry.getKey();
             String value = Api.toString(entry.getValue());
@@ -356,7 +357,13 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         if(number <= good + bad) {
             done = false;
             logger.debug("number={},request={},good={},bad={}.", number, requests, good, bad);
-            callBack.finished(this);
+            scoreBoard.acrossTime = System.currentTimeMillis() - beginTime;
+            scoreBoard.bad = bad;
+            scoreBoard.good = good;
+            scoreBoard.number = number;
+            scoreBoard.requests = requests;
+            scoreBoard.sequeueId = sequeueId;
+            callBack.finished(scoreBoard);
         }
     }
 
@@ -435,7 +442,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         }
     }
 
-    public void post(String url, IContextCallBack<T> callBack) throws MalformedURLException {
+    public void post(String url, HttpCallBack<T> callBack) throws MalformedURLException {
         httpUrl = new URL(url);
         host = httpUrl.getHost();
         port = httpUrl.getPort();

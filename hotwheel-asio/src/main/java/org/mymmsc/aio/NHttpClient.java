@@ -62,14 +62,15 @@ public class NHttpClient <T>{
         this.httpclient = clientBuilder.build();
     }
 
-    public void post(final String url, final IResponseCallBack<T> callBack) {
-        String result = "";
+    public void post(final String url, final HttpCallBack<T> callBack) {
+        final String result = "";
 
         httpclient.start();
         List<Future<HttpResponse>> respList = new LinkedList<Future<HttpResponse>>();
         for (int i = 0; i < list.size(); i++) {
+            final int sequeueId = i;
             try {
-                Map<String, Object> map = callBack.getParams((T) list.get(i));
+                Map<String, Object> map = callBack.getParams((T) list.get(sequeueId));
 
                 final HttpPost httpRequst = new HttpPost(url);
                 httpRequst.setHeader("Connection", "close");
@@ -85,26 +86,29 @@ public class NHttpClient <T>{
 
                     @Override
                     public void completed(HttpResponse httpResponse) {
+                        String body = null;
                         try {
                             if(httpResponse.getStatusLine().getStatusCode() == 200)
                             {
                                 HttpEntity httpEntity = httpResponse.getEntity();
-                                String result = EntityUtils.toString(httpEntity);//取出应答字符串
-                                callBack.completed(result);
+                                body = EntityUtils.toString(httpEntity);//取出应答字符串
+
                             }
                         } catch (Exception e) {
                             logger.error("process HttpResponse exception:", e);
+                            //body = e.getMessage();
                         }
+                        callBack.completed(sequeueId, httpResponse.getStatusLine().getStatusCode(), httpResponse.getStatusLine().getReasonPhrase(), body);
                     }
 
                     @Override
                     public void failed(Exception e) {
-                        callBack.failed(e);
+                        callBack.failed(sequeueId, e);
                     }
 
                     @Override
                     public void cancelled() {
-                        callBack.cancelled();
+                        callBack.failed(sequeueId, null);
                     }
                 }));
             } catch (Exception e) {
