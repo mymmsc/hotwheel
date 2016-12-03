@@ -20,8 +20,8 @@ public class NtcUserInfo {
         String url = "http://100.73.18.11/mybankv21/phppassport/v2/passport/inner/get-user-basic-info";
         final String productId = "5413757966488781180001";
         final String userId = "538522734200627281";
-        int concurrency = 200;
-        int total = 1000;
+        int concurrency = 20;
+        int total = 100000;
         float n = total;
 
         final TreeMap<String, Object> params0 = new TreeMap<>();

@@ -114,7 +114,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         String cookie = "";
         String auth = "";
 
-        String hdrs = "application/x-www-form-urlencoded; charset=utf-8\r\n" + String.format("Host: %s\r\n", host);
+        String hdrs = "application/x-www-form-urlencoded; charset=utf-8\r\n" + String.format("Host: %s\r%n", host);
         hdrs += "User-Agent: HttpBench/1.0.1\r\n";
         //hdrs += "Accept: */*\r\n";
 
@@ -128,13 +128,13 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         }
 		/* setup request */
         if (posting <= 0) {
-            request = String.format("%s %s HTTP/1.1\r\n%s%s%s%s\r\n",
+            request = String.format("%s %s HTTP/1.1\r%n%s%s%s%s\r%n",
                     (posting == 0) ? "GET" : "HEAD",
                     (isproxy) ? fullurl : path,
                     keepalive ? "Connection: Keep-Alive\r\n" : "Connection: close\r\n",
                     cookie, auth, hdrs);
         } else {
-            request = String.format("POST %s HTTP/1.1\r\n%s%s%sContent-length: %d\r\nContent-type: %s\r\n",
+            request = String.format("POST %s HTTP/1.1\r%n%s%s%sContent-length: %d\r%nContent-type: %s\r%n",
                     (isproxy) ? fullurl : path,
                     keepalive ? "Connection: Keep-Alive\r\n" : "Connection: close\r\n",
                     cookie, auth,
@@ -159,66 +159,54 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
     private void bufferRead(HttpContext context, IoBuffer origin) {
         //logger.debug("{} Read", context.getClass().getSimpleName());
         IoBuffer buffer = origin == null ? context.getBuffer() : origin;
+        //buffer.compact();
         buffer.flip();
-        int pos = context.getReadpos();
-        StringBuffer line = new StringBuffer();
-        int start = pos;
-        int stop = start;
+        //buffer.rewind();
+        //StringBuffer line = new StringBuffer();
+        //int pos = buffer.position();
+        //int start = pos;
+        //int stop = start;
         //int dupCRLF = 0;
         // 解析http-header
         while(!context.hasHeader && buffer.hasRemaining()) {
-            byte ch = buffer.get();
-            switch (ch) {
-                case '\r':
-                    // 跳过
-                    //dupCRLF ++;
-                    break;
-                case '\n':
-                    //dupCRLF ++;
-                    // 处理内容
-                    if(start == stop) {
-                        // header域结束, 下面是body
-                        //logger.debug("Body start...");
-                        context.hasHeader = true;
-                        String cl = context.getHeader("Content-Length");
-                        int len = Api.valueOf(int.class, cl);
-                        context.contentLength = len;
-                        //logger.debug("contentLength={}", len);
-                        break;
-                    } else {
-                        // header域
-                        //dupCRLF = 0;
-                        context.addHeader(line.toString());
-                        line.setLength(0);
-                        stop = start = 0;
-                    }
-                    break;
-                default:
-                    // 默认追加内容
-                    stop ++;
-                    line.append((char)ch);
-                    break;
+            byte[] lines = buffer.readLine();
+            if (lines == null) {
+                break;
+            } else if (lines.length == 0) {
+                context.hasHeader = true;
+                break;
+            } else if(lines.length == 2 && lines[0] == '\r' && lines[1] == '\n') {
+                context.hasHeader = true;
+            } else {
+                try {
+                    String tmp = new String(lines, UTF8);
+                    //System.out.println(tmp);
+                    context.addHeader(tmp);
+                    String cl = context.getHeader("Content-Length");
+                    int len = Api.valueOf(int.class, cl);
+                    context.contentLength = len;
+                } catch (UnsupportedEncodingException e) {
+                    //
+                }
             }
-            pos++;
         }
-        int cl = 0;
-        buffer.compact();
+        //buffer.compact();
         if (context.hasHeader) {
-            buffer.flip();
+            //buffer.flip();
             if (!context.chunked) {
-                String tmp = new String(buffer.array(), 0 , buffer.limit());
+                String tmp = new String(buffer.array(), buffer.position() , buffer.limit());
                 StringBuffer body = context.getBody();
                 body.append(tmp);
-                buffer.reset();
+                //buffer.reset();
                 //System.out.println(response);
             } else {
                 // chunked编码
                 ByteBuffer content = ByteBuffer.allocate(1024 * 1024 * 64);
-                int begin = buffer.position();
-                int end = buffer.limit();
-                byte[] data = buffer.array();
-                line.setLength(0);
-                pos = 0;
+                //int begin = buffer.position();
+                //int end = buffer.limit();
+                //byte[] data = buffer.array();
+                //line.setLength(0);
+                //pos = 0;
                 //logger.debug("beigin={}, end={}...start", begin, end);
                 while (buffer.hasRemaining()) { // 封包循环
                     if (context.chunkState == HttpContext.CHUNK_LEN) {
@@ -262,7 +250,10 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                             break;
                         }
                     } else if (context.chunkState == HttpContext.CHUNK_LAST) {
-                        //
+                        if (buffer.position() + 2 <= buffer.limit()) {
+                            buffer.get(new byte[2]);
+                            context.chunkState = HttpContext.CHUNK_LEN;
+                        }
                         break;
                     }
                 }
@@ -334,8 +325,8 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
             try {
                 SocketChannel sc = SocketChannel.open();
                 sc.configureBlocking(false);
-                sc.setOption(StandardSocketOptions.SO_RCVBUF, 128 * 1024);
-                sc.setOption(StandardSocketOptions.SO_SNDBUF, 128 * 1024);
+                sc.setOption(StandardSocketOptions.SO_RCVBUF, kBufferSize);
+                sc.setOption(StandardSocketOptions.SO_SNDBUF, kBufferSize);
                 //sc.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
                 sc.setOption(StandardSocketOptions.SO_REUSEADDR, true);
                 //sc.socket().setSoTimeout(10 * 1000);
@@ -397,7 +388,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
     private void addMultiPart(ByteArrayOutputStream data, String name, byte[] value) {
         String boundary = "";
         String temp = String.format(
-                "--%s\r\nContent-Disposition: form-data; name=\"%s\"\r\n\r\n",
+                "--%s\r%nContent-Disposition: form-data; name=\"%s\"\r%n\r%n",
                 boundary, name);
         try {
             data.write(temp.getBytes(UTF8));

@@ -60,6 +60,7 @@ public abstract class AioContext {
 	public int add(ByteBuffer buf) {
 		if (buf != null) {
 			int len = buf.limit();
+			//buffer.add(buf);
 			buffer.put(buf);
 			length += len;
 		}

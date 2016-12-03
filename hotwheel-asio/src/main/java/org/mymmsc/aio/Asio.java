@@ -26,6 +26,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
     public final static int AE_READ = SelectionKey.OP_READ;
     public final static int AE_WRITE = SelectionKey.OP_WRITE;
     private AioHandler handler = null;
+    protected final static int kBufferSize = 512 * 1024;
 
     /**
      * 选择器
@@ -172,13 +173,13 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
     public void handleRead(SocketChannel sc) {
         SelectionKey sk = keyFor(sc);
         T context = contextFor(sc);
-        int bufferLen = 128 * 1024;
+        int bufferLen = kBufferSize;
         //bufferLen = 1;
         ByteBuffer buf = ByteBuffer.allocate(bufferLen);
         long bytesRead = 0;
         try {
             bytesRead = sc.read(buf);
-            T ctx = contextFor(sc);
+            //T ctx = contextFor(sc);
             if (bytesRead == -1) { // Did the other end close?
                 //onRead(ctx);
                 //onCompleted(context);
@@ -186,14 +187,14 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             } else if (bytesRead == 0) {
                 //sk.interestOps(SelectionKey.OP_READ);
             } else if (bytesRead > 0) {
-                ctx.add((ByteBuffer) buf.flip());
-                onRead(ctx);
+                context.add((ByteBuffer) buf.flip());
+                onRead(context);
                 if(bytesRead >= bufferLen) {
                     //sk.interestOps(SelectionKey.OP_READ);
                 } else {
                     //
                 }
-                if(ctx != null && ctx.completed()){
+                if(context != null && context.completed()){
                     onCompleted(context);
                     handleClosed(sc);
                 } else {
