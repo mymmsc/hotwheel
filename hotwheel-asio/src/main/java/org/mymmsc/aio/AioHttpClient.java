@@ -32,23 +32,25 @@ import java.util.concurrent.Future;
  * Created by wangfeng on 2016/12/2.
  * @since 2.0.37
  */
-public class NHttpClient <T>{
-    private static Logger logger = LoggerFactory.getLogger(NHttpClient.class);
+public class AioHttpClient<T>{
+    private static Logger logger = LoggerFactory.getLogger(AioHttpClient.class);
     private int connectTimeout = 30 * 1000;
     private int readTimeout = 30 * 1000;
     private int concurrency = 100;
     private List<T> list = null;
     private CloseableHttpAsyncClient httpclient = null;
     private static final String UTF_8 = "UTF-8";
-    //private IContextCallBack<T> callBack = null;
+    private HttpCallBack<T> callBack = null;
+    private ScoreBoard scoreBoard = new ScoreBoard();
 
-    public NHttpClient(List<T> list) throws IOReactorException {
+    public AioHttpClient(List<T> list) throws IOReactorException {
         this(list, 100);
     }
 
-    public NHttpClient(List<T> list, int concurrency) throws IOReactorException {
+    public AioHttpClient(List<T> list, int concurrency) throws IOReactorException {
         this.list = list;
         this.concurrency = concurrency;
+        scoreBoard.number = list.size();
         ConnectingIOReactor ioReactor = new DefaultConnectingIOReactor();
         PoolingNHttpClientConnectionManager cm = new PoolingNHttpClientConnectionManager(ioReactor);
         //cm.setMaxTotal(this.concurrency * Runtime.getRuntime().availableProcessors() * 2);
@@ -70,6 +72,7 @@ public class NHttpClient <T>{
         for (int i = 0; i < list.size(); i++) {
             final int sequeueId = i;
             try {
+                scoreBoard.sequeueId = sequeueId;
                 Map<String, Object> map = callBack.getParams((T) list.get(sequeueId));
 
                 final HttpPost httpRequst = new HttpPost(url);
@@ -88,11 +91,12 @@ public class NHttpClient <T>{
                     public void completed(HttpResponse httpResponse) {
                         String body = null;
                         try {
-                            if(httpResponse.getStatusLine().getStatusCode() == 200)
-                            {
+                            if(httpResponse.getStatusLine().getStatusCode() == 200) {
+                                scoreBoard.good++;
                                 HttpEntity httpEntity = httpResponse.getEntity();
                                 body = EntityUtils.toString(httpEntity);//取出应答字符串
-
+                            } else {
+                                scoreBoard.bad ++;
                             }
                         } catch (Exception e) {
                             logger.error("process HttpResponse exception:", e);
@@ -103,11 +107,13 @@ public class NHttpClient <T>{
 
                     @Override
                     public void failed(Exception e) {
+                        scoreBoard.bad ++;
                         callBack.failed(sequeueId, e);
                     }
 
                     @Override
                     public void cancelled() {
+                        scoreBoard.bad ++;
                         callBack.failed(sequeueId, null);
                     }
                 }));
@@ -125,6 +131,7 @@ public class NHttpClient <T>{
         }
         try {
             httpclient.close();
+            callBack.finished(scoreBoard);
         } catch (Exception e) {
             //
         }

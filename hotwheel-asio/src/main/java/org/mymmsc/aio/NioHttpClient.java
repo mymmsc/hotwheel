@@ -20,8 +20,7 @@ import java.util.Map;
  */
 public class NioHttpClient<T> extends Asio<HttpContext>{
     private List<T> list = null;
-    private int sequeueId = 0;
-    private ScoreBoard scoreBoard = new ScoreBoard();
+    //private int sequeueId = 0;
     private long beginTime = System.currentTimeMillis();
     private HttpCallBack<T> callBack = null;
 
@@ -33,14 +32,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
     private int connectTimeout = 30 * 1000;
     private int readTimeout = 30 * 1000;
 
-    // 正在进行中的请求数
-    private volatile int requests = 0;
-    // 完成业务处理的数量
-    private volatile int good = 0;
-    // 失败的数量
-    private volatile int bad = 0;
-    // 关闭socket数量, 总体应该和number-good-bad保持一致
-    private volatile int closed = 0;
+    private final static String CRLF = "\r\n";
 
     private boolean debug = false;
 
@@ -51,7 +43,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
     public NioHttpClient(List<T> list, int concurrency) throws IOException {
         this(list.size(), concurrency);
         this.list = list;
-        number = this.list.size();
+        //number = this.list.size();
 
     }
     public NioHttpClient(int number, int concurrency) throws IOException {
@@ -60,14 +52,14 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
 
     @Override
     public void onClosed(HttpContext context) {
-        closed ++;
-        requests --;
+        scoreBoard.closed ++;
+        scoreBoard.requests --;
         logger.debug("{} closed", context.getClass().getSimpleName());
     }
 
     @Override
     public void onCompleted(HttpContext context) {
-        good ++;
+        scoreBoard.good ++;
         logger.debug("{} Completed", context.getClass().getSimpleName());
         callBack.completed(context.index, context.getStatus(), "", context.getBody().toString());
     }
@@ -79,14 +71,14 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
 
     @Override
     public void onError(HttpContext context) {
-        bad ++;
+        scoreBoard.bad ++;
         logger.debug("{} Error", context.getClass().getSimpleName());
     }
 
     @Override
     public void onTimeout(HttpContext context) {
         // 超时后, 失败请求数+1
-        bad++;
+        scoreBoard.bad++;
         logger.debug("{} Timeout", context.getClass().getSimpleName());
     }
 
@@ -115,9 +107,10 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         String cookie = "";
         String auth = "";
 
-        String hdrs = "application/x-www-form-urlencoded; charset=utf-8\r\n" + String.format("Host: %s\r%n", host);
-        hdrs += "User-Agent: HttpBench/1.0.1\r\n";
-        //hdrs += "Accept: */*\r\n";
+        String hdrs = "application/x-www-form-urlencoded; charset=utf-8" + CRLF;
+        hdrs += String.format("Host: %s", host) + CRLF;
+        hdrs += "User-Agent: HttpBench/1.0.1" + CRLF;
+        //hdrs += "Accept: */*" + CRLF;
 
         // 已连接server端, 超时改用读写超时参数
         context.setTimeout(readTimeout);
@@ -129,13 +122,13 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         }
 		/* setup request */
         if (posting <= 0) {
-            request = String.format("%s %s HTTP/1.1\r%n%s%s%s%s\r%n",
+            request = String.format("%s %s HTTP/1.1\r\n%s%s%s%s\r\n",
                     (posting == 0) ? "GET" : "HEAD",
                     (isproxy) ? fullurl : path,
                     keepalive ? "Connection: Keep-Alive\r\n" : "Connection: close\r\n",
                     cookie, auth, hdrs);
         } else {
-            request = String.format("POST %s HTTP/1.1\r%n%s%s%sContent-length: %d\r%nContent-type: %s\r%n",
+            request = String.format("POST %s HTTP/1.1\r\n%s%s%sContent-length: %d\r\nContent-type: %s\r\n",
                     (isproxy) ? fullurl : path,
                     keepalive ? "Connection: Keep-Alive\r\n" : "Connection: close\r\n",
                     cookie, auth,
@@ -320,8 +313,8 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         //logger.debug("channel-number=" + selector.keys().size());
         if (debug) System.out.println("channel-number=" + selector.keys().size());
         //logger.debug("Compact: number={},request={},good={},bad={}.", number,requests, good, bad);
-        if (debug) System.out.println(String.format("Compact: number=%d,request=%d,good=%d,bad=%d.", number,requests, good, bad));
-        while(sequeueId < number && (/*number < 0 || */number > good + bad + requests) && concurrency > requests) {
+        if (debug) System.out.println(String.format("Compact: number=%d,request=%d,good=%d,bad=%d.", number,scoreBoard.requests, scoreBoard.good, scoreBoard.bad));
+        while(scoreBoard.sequeueId < number && (/*number < 0 || */number > scoreBoard.good + scoreBoard.bad + scoreBoard.requests) && concurrency > scoreBoard.requests) {
             // 如果未达到并发限制数量, 新增加一个请求
             try {
                 SocketChannel sc = SocketChannel.open();
@@ -347,22 +340,18 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 sc.register(selector,
                         SelectionKey.OP_READ | SelectionKey.OP_WRITE | SelectionKey.OP_CONNECT,
                         ctx);
-                ctx.index = sequeueId ++;
-                requests ++;
+                ctx.index = scoreBoard.sequeueId ++;
+                scoreBoard.requests ++;
                 ctx.setUrl(httpUrl.toExternalForm());
             } catch (IOException e) {
                 logger.error("SocketChannel.connect failed: ", e);
             }
         }/* else */
-        if(number <= good + bad) {
+        if(number <= scoreBoard.good + scoreBoard.bad) {
             done = false;
-            logger.debug("number={},request={},good={},bad={}.", number, requests, good, bad);
+            logger.debug("number={},request={},good={},bad={}.", number, scoreBoard.requests, scoreBoard.good, scoreBoard.bad);
             scoreBoard.acrossTime = System.currentTimeMillis() - beginTime;
-            scoreBoard.bad = bad;
-            scoreBoard.good = good;
             scoreBoard.number = number;
-            scoreBoard.requests = requests;
-            scoreBoard.sequeueId = sequeueId;
             callBack.finished(scoreBoard);
         }
     }
@@ -395,7 +384,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
     private void addMultiPart(ByteArrayOutputStream data, String name, byte[] value) {
         String boundary = "";
         String temp = String.format(
-                "--%s\r%nContent-Disposition: form-data; name=\"%s\"\r%n\r%n",
+                "--%s\r\nContent-Disposition: form-data; name=\"%s\"\r\n\r\n",
                 boundary, name);
         try {
             data.write(temp.getBytes(UTF8));
@@ -453,29 +442,5 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         }
         path = httpUrl.getFile();
         this.callBack = callBack;
-    }
-
-    public int getGood() {
-        return good;
-    }
-
-    public void setGood(int good) {
-        this.good = good;
-    }
-
-    public int getBad() {
-        return bad;
-    }
-
-    public void setBad(int bad) {
-        this.bad = bad;
-    }
-
-    public int getRequests() {
-        return requests;
-    }
-
-    public void setRequests(int requests) {
-        this.requests = requests;
     }
 }

@@ -27,6 +27,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
     public final static int AE_WRITE = SelectionKey.OP_WRITE;
     private AioHandler handler = null;
     protected final static int kBufferSize = 512 * 1024;
+    protected ScoreBoard scoreBoard = new ScoreBoard();
 
     /**
      * 选择器
@@ -40,6 +41,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
     public Asio(int number, int concurrency) throws IOException{
         super(number, concurrency);
         selector = Selector.open();
+        scoreBoard.number = number;
     }
 
     public Selector getSelector() {
