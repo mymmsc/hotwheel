@@ -61,7 +61,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
     public void onCompleted(HttpContext context) {
         scoreBoard.good ++;
         logger.debug("{} Completed", context.getClass().getSimpleName());
-        callBack.completed(context.index, context.getStatus(), "", context.getBody().toString());
+        callBack.completed(context);
     }
 
     @Override
@@ -337,10 +337,10 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                     //
                 }
                 HttpContext ctx = new HttpContext(sc, connectTimeout);
+                ctx.index = scoreBoard.sequeueId ++;
                 sc.register(selector,
                         SelectionKey.OP_READ | SelectionKey.OP_WRITE | SelectionKey.OP_CONNECT,
                         ctx);
-                ctx.index = scoreBoard.sequeueId ++;
                 scoreBoard.requests ++;
                 ctx.setUrl(httpUrl.toExternalForm());
             } catch (IOException e) {

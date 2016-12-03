@@ -50,6 +50,11 @@ public class HttpContext extends AioContext {
 	// 请求参数
 	private StringBuffer params = new StringBuffer();
 
+	public HttpContext() {
+		super();
+		//
+	}
+
 	public HttpContext(SocketChannel channel, int timeout) throws IOException {
 		super(channel, timeout);
 	}
@@ -173,6 +178,11 @@ public class HttpContext extends AioContext {
 
 	public void setBody(StringBuffer body) {
 		this.body = body;
+	}
+
+	public void setBody(String body) {
+		this.body.setLength(0);
+		this.body.append(body);
 	}
 
 	public void setParams(String params) {
