@@ -7,11 +7,16 @@ package org.mymmsc.aio;
  * @since 2.1.1
  */
 public class ScoreBoard {
-    public long sequeueId;
-    public long number = 0;
-    public long good = 0;
-    public long bad = 0;
-    public long requests = 0;
-
+    public int sequeueId = 0;
+    public int number = 0;
+    // 正在进行中的请求数
+    public int requests = 0;
+    // 完成业务处理的数量
+    public int good = 0;
+    // 失败的数量
+    public int bad = 0;
+    // 关闭socket数量, 总体应该和number-good-bad保持一致
+    public int closed = 0;
+    // 耗时统计
     public long acrossTime = 0;
 }

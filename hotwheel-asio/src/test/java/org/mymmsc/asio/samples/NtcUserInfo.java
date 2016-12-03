@@ -1,7 +1,7 @@
 package org.mymmsc.asio.samples;
 
+import org.mymmsc.aio.AioHttpClient;
 import org.mymmsc.aio.HttpCallBack;
-import org.mymmsc.aio.NHttpClient;
 import org.mymmsc.aio.ScoreBoard;
 import org.mymmsc.api.assembly.Api;
 
@@ -55,11 +55,11 @@ public class NtcUserInfo {
         try {
             final Integer[] number = {0};
             tm = System.currentTimeMillis();
-            NHttpClient<String> httpClient = new NHttpClient<String>(list, concurrency);
+            AioHttpClient<String> httpClient = new AioHttpClient<String>(list, concurrency);
             httpClient.post(url, new HttpCallBack<String>() {
                 @Override
-                public void finished(ScoreBoard scoreBoard) {
-
+                public void finished(ScoreBoard ntc) {
+                    System.out.println("number="+ntc.number+",request="+ntc.requests+",good="+ntc.good+",bad="+ntc.bad +".");
                 }
 
                 @Override
