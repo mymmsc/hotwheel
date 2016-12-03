@@ -51,7 +51,7 @@ public class NHttpClient <T>{
         this.concurrency = concurrency;
         ConnectingIOReactor ioReactor = new DefaultConnectingIOReactor();
         PoolingNHttpClientConnectionManager cm = new PoolingNHttpClientConnectionManager(ioReactor);
-        //cm.setMaxTotal(this.concurrency);
+        //cm.setMaxTotal(this.concurrency * Runtime.getRuntime().availableProcessors() * 2);
         cm.setDefaultMaxPerRoute(this.concurrency);
         HttpAsyncClientBuilder clientBuilder = HttpAsyncClients.custom();
         RequestConfig.Builder requestConfig = RequestConfig.custom();
@@ -80,6 +80,7 @@ public class NHttpClient <T>{
                     params.add(new BasicNameValuePair(entry.getKey(), value));
                 }
                 httpRequst.setEntity(new UrlEncodedFormEntity(params, UTF_8));
+
                 respList.add(httpclient.execute(httpRequst, new FutureCallback<HttpResponse>(){
 
                     @Override
@@ -90,7 +91,6 @@ public class NHttpClient <T>{
                                 HttpEntity httpEntity = httpResponse.getEntity();
                                 String result = EntityUtils.toString(httpEntity);//取出应答字符串
                                 callBack.completed(result);
-                                //System.out.println(result);
                             }
                         } catch (Exception e) {
                             logger.error("process HttpResponse exception:", e);
