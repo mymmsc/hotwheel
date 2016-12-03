@@ -31,5 +31,10 @@ public interface HttpCallBack<T> {
      */
     void completed(int sequeueId, int status, String message, String body);
 
+    /**
+     * 失败的请求
+     * @param sequeueId
+     * @param e
+     */
     void failed(int sequeueId, Exception e);
 }
