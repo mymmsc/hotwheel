@@ -199,7 +199,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 //System.out.println(response);
             } else {
                 // chunked编码
-                ByteBuffer content = ByteBuffer.allocate(1024 * 1024 * 64);
+                //ByteBuffer content = ByteBuffer.allocate(1024 * 1024 * 64);
                 //int begin = buffer.position();
                 //int end = buffer.limit();
                 //byte[] data = buffer.array();
@@ -235,8 +235,17 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                         if (context.position() + context.chunkSize <= context.limit()) {
                             byte[] strs = new byte[context.chunkSize];
                             context.get(strs);
-                            content.put(strs);
+                            //content.put(strs);
                             context.chunkState = HttpContext.CHUNK_CRLF;
+
+                            //logger.debug("beigin={}, end={}...stop", begin, end);
+                            //content.flip();
+                            String tmp = new String(strs);
+                            StringBuffer body = context.getBody();
+                            body.append(tmp);
+                            //cl = body.length();
+                            //logger.debug(tmp);
+                            //content.clear();
                         } else {
                             break;
                         }
@@ -255,14 +264,6 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                         break;
                     }
                 }
-                //logger.debug("beigin={}, end={}...stop", begin, end);
-                content.flip();
-                String tmp = new String(content.array(), 0, content.limit());
-                StringBuffer body = context.getBody();
-                body.append(tmp);
-                //cl = body.length();
-                //logger.debug(tmp);
-                content.clear();
             }
         }
         /*
