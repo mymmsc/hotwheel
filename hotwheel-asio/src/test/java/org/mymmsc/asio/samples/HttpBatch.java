@@ -2,7 +2,6 @@ package org.mymmsc.asio.samples;
 
 import org.mymmsc.aio.Asio;
 import org.mymmsc.aio.HttpContext;
-import org.mymmsc.aio.IoBuffer;
 import org.mymmsc.api.assembly.Api;
 
 import java.io.IOException;
@@ -225,9 +224,9 @@ public class HttpBatch extends Asio<HttpContext> {
 
     @Override
     public void onRead(HttpContext context) {
-        IoBuffer buffer = context.getBuffer();
+        ByteBuffer buffer = context.getBuffer();
         buffer.flip();
-        int pos = context.getReadpos();
+        int pos = 0;
         StringBuffer line = new StringBuffer();
         int start = pos;
         int stop = start;

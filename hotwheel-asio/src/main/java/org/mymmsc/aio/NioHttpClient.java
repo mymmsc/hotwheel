@@ -150,11 +150,13 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         }
     }
 
-    private void bufferRead(HttpContext context, IoBuffer origin) {
+    private void bufferRead(HttpContext context) {
         //logger.debug("{} Read", context.getClass().getSimpleName());
-        IoBuffer buffer = origin == null ? context.getBuffer() : origin;
+        ByteBuffer buffer = context.getBuffer();
         //buffer.compact();
         buffer.flip();
+        //buffer.slice();
+        //buffer.mark();
         //buffer.rewind();
         //StringBuffer line = new StringBuffer();
         //int pos = buffer.position();
@@ -162,19 +164,32 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         //int stop = start;
         //int dupCRLF = 0;
         // 解析http-header
-        while(!context.hasHeader && buffer.hasRemaining()) {
-            byte[] lines = buffer.readLine();
+        while(!context.hasHeader || context.eof/* && buffer.hasRemaining()*/) {
+            byte[] lines = context.readLine();
             if (lines == null) {
+                //buffer.reset();
                 break;
             } else if (lines.length == 0) {
-                context.hasHeader = true;
+                //context.readLine();
+                if(context.eof) {
+                    context.reset();
+                    context.hasHeader = true;
+                } else {
+                    //context.reset();
+                    //context.hasHeader = true;
+                    context.eof = true;
+                    if (context.eof) {
+                        //return;
+                    }
+                }
+
                 break;
             } else if(lines.length == 2 && lines[0] == '\r' && lines[1] == '\n') {
                 context.hasHeader = true;
             } else {
                 try {
                     String tmp = new String(lines, UTF8);
-                    //System.out.println(tmp);
+                    System.out.println(tmp);
                     context.addHeader(tmp);
                     String cl = context.getHeader("Content-Length");
                     int len = Api.valueOf(int.class, cl);
@@ -185,7 +200,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
             }
         }
         //buffer.compact();
-        if (context.hasHeader) {
+        if (context.hasHeader && context.eof) {
             //buffer.flip();
             if (!context.chunked) {
                 String tmp = new String(buffer.array(), buffer.position() , buffer.limit());
@@ -204,7 +219,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 //logger.debug("beigin={}, end={}...start", begin, end);
                 while (buffer.hasRemaining()) { // 封包循环
                     if (context.chunkState == HttpContext.CHUNK_LEN) {
-                        byte[] nums = buffer.readLine();
+                        byte[] nums = context.readLine();
                         if (nums == null) {
                             break;
                         }
@@ -297,7 +312,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
     public void onRead(HttpContext context) {
         try {
             //streamRead(context);
-            bufferRead(context, null);
+            bufferRead(context);
         } catch (Exception e) {
             logger.error("read failed: ", e);
         }

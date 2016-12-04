@@ -1063,8 +1063,8 @@ public final class IoBuffer {
         int begin = position();
         int pos = begin;
         byte[] data = array();
-        while(pos < data.length) {
-            if (pos + 1 < data.length && data[pos] == '\r' && data[pos + 1] == '\n') {
+        while(pos < remaining()) {
+            if (pos + 1 < remaining() && data[pos] == '\r' && data[pos + 1] == '\n') {
                 bRet = new byte[pos - begin];
                 get(bRet);
                 get(new byte[2]);

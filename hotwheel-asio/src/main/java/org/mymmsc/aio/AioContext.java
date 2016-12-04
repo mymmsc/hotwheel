@@ -14,16 +14,19 @@ import java.nio.channels.SocketChannel;
  * 异步IO关联上下文
  * 
  * @author WangFeng(wangfeng@yeah.net)
- * @version 6.3.9 09/10/02
- * @since mymmsc-api 6.3.9
+ * @since 2.1.0
  */
 public abstract class AioContext {
 	private final static int kBufferSize = 128 * 1024;
 	private SocketChannel channel = null;
 	private int timeout = 0;
 	private long startTime = 0;
-	private IoBuffer buffer = null;
+	//private IoBuffer buffer = null;
+	private ByteBuffer buffer = null;
 	public int length = 0;
+	// 接收到字节数
+	private int recviced = 0;
+	private int readpos = 0;
 
 	public AioContext() {
 		//
@@ -43,7 +46,8 @@ public abstract class AioContext {
 		if (this.channel != null) {
 			this.channel.configureBlocking(false);
 		}
-		this.buffer = IoBuffer.allocate(kBufferSize);
+		//this.buffer = IoBuffer.allocate(kBufferSize);
+		this.buffer = ByteBuffer.allocate(kBufferSize);
 		this.buffer.clear();
 	}
 
@@ -59,25 +63,25 @@ public abstract class AioContext {
 		}
 	}
 
-	public IoBuffer getBuffer() {
+	public ByteBuffer getBuffer() {
 		return buffer;
 	}
 
-	public int add(ByteBuffer buf) {
-		if (buf != null) {
-			int len = buf.limit();
+	public int add(ByteBuffer src) {
+		if (src != null) {
+			int pos = recviced;
+			int limit = buffer.capacity() - recviced;
+			if(limit > 0) {
+				buffer.limit(limit);
+				buffer.position(recviced);
+			}
+			//buffer.rewind();
+			int len = src.remaining();
 			//buffer.add(buf);
-			buffer.put(buf);
+			buffer.put(src);
+			recviced += len;
 			length += len;
-		}
-		return buffer.position();
-	}
 
-	public int add(IoBuffer buf) {
-		if (buf != null) {
-			int len = buf.limit();
-			buffer.put(buf);
-			length += len;
 		}
 		return buffer.position();
 	}
@@ -149,4 +153,52 @@ public abstract class AioContext {
 	}
 
 	public abstract boolean completed();
+
+	/**
+	 * 读取一行
+	 * @return
+	 */
+	public byte[] readLine() {
+		byte[] bRet = null;
+		int begin = readpos;
+		int pos = begin;
+		byte[] data = buffer.array();
+		while(pos < buffer.remaining()) {
+			/*if (pos + 1 < buffer.remaining() && data[pos] == '\r' && data[pos + 1] == '\n'
+					&& data[pos + 2] == '\r' && data[pos + 3] == '\n') {
+				//readpos += pos - begin;
+				bRet = new byte[pos - begin];
+				buffer.get(bRet);
+				recviced -= pos - begin;
+				buffer.get(new byte[2]);
+				recviced -= 2;
+				//readpos += 2;
+				break;
+			} else*/ if (pos + 1 < buffer.remaining() && data[pos] == '\r' && data[pos + 1] == '\n') {
+				//readpos += pos - begin;
+				/*if (pos == begin) {
+					break;
+				}*/
+				bRet = new byte[pos - begin];
+				buffer.get(bRet);
+				recviced -= pos - begin;
+				buffer.get(new byte[2]);
+				recviced -= 2;
+				//readpos += 2;
+				break;
+			} else {
+				pos++;
+			}
+		}
+
+		return bRet;
+	}
+
+	public void reset() {
+		int limit = buffer.capacity() - recviced;
+		if(limit > 0) {
+			buffer.limit(limit);
+			buffer.position(recviced);
+		}
+	}
 }
