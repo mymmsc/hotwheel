@@ -240,12 +240,14 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
 
                             //logger.debug("beigin={}, end={}...stop", begin, end);
                             //content.flip();
-                            String tmp = new String(strs);
-                            StringBuffer body = context.getBody();
-                            body.append(tmp);
-                            //cl = body.length();
-                            //logger.debug(tmp);
-                            //content.clear();
+                            String tmp = null;
+                            try {
+                                tmp = new String(strs, context.getCharset());
+                                StringBuffer body = context.getBody();
+                                body.append(tmp);
+                            } catch (UnsupportedEncodingException e) {
+                                logger.error("chunked encode failed: ", e);
+                            }
                         } else {
                             break;
                         }

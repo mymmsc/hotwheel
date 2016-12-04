@@ -200,4 +200,12 @@ public class HttpContext extends AioContext {
 		String request = getParams(params);
 		this.params.append(request);
 	}
+
+	public String getCharset() {
+		return charset;
+	}
+
+	public void setCharset(String charset) {
+		this.charset = charset;
+	}
 }
