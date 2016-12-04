@@ -323,8 +323,10 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         if (debug) System.out.println(String.format("Compact: number=%d,request=%d,good=%d,bad=%d.", number,scoreBoard.requests, scoreBoard.good, scoreBoard.bad));
         while(scoreBoard.sequeueId < number && (/*number < 0 || */number > scoreBoard.good + scoreBoard.bad + scoreBoard.requests) && concurrency > scoreBoard.requests) {
             // 如果未达到并发限制数量, 新增加一个请求
+            SocketChannel sc = null;
+            HttpContext ctx = null;
             try {
-                SocketChannel sc = SocketChannel.open();
+                sc = SocketChannel.open();
                 sc.configureBlocking(false);
                 sc.setOption(StandardSocketOptions.SO_RCVBUF, kBufferSize);
                 sc.setOption(StandardSocketOptions.SO_SNDBUF, kBufferSize);
@@ -336,6 +338,14 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 //sc.setOption(StandardSocketOptions.SO_LINGER, 10 * 1000);
                 //socket.setSoTimeout(connectTimeout);
                 sc.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
+
+                ctx = new HttpContext(sc, connectTimeout);
+                ctx.index = scoreBoard.sequeueId ++;
+                scoreBoard.requests ++;
+                ctx.setUrl(httpUrl.toExternalForm());
+
+                sc.register(selector,SelectionKey.OP_READ | SelectionKey.OP_WRITE | SelectionKey.OP_CONNECT, ctx);
+
                 InetSocketAddress sa = new InetSocketAddress(host, port);
                 boolean ret = sc.connect(sa);
                 if (ret) {
@@ -343,15 +353,9 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 } else {
                     //
                 }
-                HttpContext ctx = new HttpContext(sc, connectTimeout);
-                ctx.index = scoreBoard.sequeueId ++;
-                sc.register(selector,
-                        SelectionKey.OP_READ | SelectionKey.OP_WRITE | SelectionKey.OP_CONNECT,
-                        ctx);
-                scoreBoard.requests ++;
-                ctx.setUrl(httpUrl.toExternalForm());
-            } catch (IOException e) {
+            } catch (Exception e) {
                 logger.error("SocketChannel.connect failed: ", e);
+                handleError(sc);
             }
         }/* else */
         if(number <= scoreBoard.good + scoreBoard.bad) {

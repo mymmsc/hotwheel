@@ -19,6 +19,7 @@ public class NtcUserInfo {
 
     public static void main(String[] args){
         String url = "http://100.73.18.11/mybankv21/phppassport/v2/passport/inner/get-user-basic-info";
+        //url = "http://notice.dev.jiedaibao.com/mybankv21/phppassport/v2/passport/inner/get-user-basic-info";
         final String productId = "5413757966488781180001";
         final String userId = "538522734200627281";
         final int concurrency = 20;
