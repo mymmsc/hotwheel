@@ -151,37 +151,24 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
     }
 
     private void bufferRead(HttpContext context) {
-        //logger.debug("{} Read", context.getClass().getSimpleName());
-        ByteBuffer buffer = context.getBuffer();
-        //buffer.compact();
-        buffer.flip();
-        //buffer.slice();
-        //buffer.mark();
-        //buffer.rewind();
-        //StringBuffer line = new StringBuffer();
-        //int pos = buffer.position();
-        //int start = pos;
-        //int stop = start;
-        //int dupCRLF = 0;
         // 解析http-header
-        while(!context.hasHeader || context.eof/* && buffer.hasRemaining()*/) {
+        while(!context.hasHeader/* && buffer.hasRemaining()*/) {
             byte[] lines = context.readLine();
             if (lines == null) {
                 //buffer.reset();
                 break;
             } else if (lines.length == 0) {
                 //context.readLine();
-                if(context.eof) {
-                    context.reset();
+                //if(context.eof) {
                     context.hasHeader = true;
-                } else {
+                //} else {
                     //context.reset();
                     //context.hasHeader = true;
                     context.eof = true;
                     if (context.eof) {
                         //return;
                     }
-                }
+                //}
 
                 break;
             } else if(lines.length == 2 && lines[0] == '\r' && lines[1] == '\n') {
@@ -189,11 +176,13 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
             } else {
                 try {
                     String tmp = new String(lines, UTF8);
-                    System.out.println(tmp);
+                    //System.out.println(tmp);
                     context.addHeader(tmp);
-                    String cl = context.getHeader("Content-Length");
-                    int len = Api.valueOf(int.class, cl);
-                    context.contentLength = len;
+                    if (context.contentLength == 0) {
+                        String cl = context.getHeader("Content-Length");
+                        int len = Api.valueOf(int.class, cl);
+                        context.contentLength = len;
+                    }
                 } catch (UnsupportedEncodingException e) {
                     //
                 }
@@ -203,7 +192,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         if (context.hasHeader && context.eof) {
             //buffer.flip();
             if (!context.chunked) {
-                String tmp = new String(buffer.array(), buffer.position() , buffer.limit());
+                String tmp = new String(context.array(), context.position() , context.limit());
                 StringBuffer body = context.getBody();
                 body.append(tmp);
                 //buffer.reset();
@@ -217,7 +206,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 //line.setLength(0);
                 //pos = 0;
                 //logger.debug("beigin={}, end={}...start", begin, end);
-                while (buffer.hasRemaining()) { // 封包循环
+                while (context.hasRemaining()) { // 封包循环
                     if (context.chunkState == HttpContext.CHUNK_LEN) {
                         byte[] nums = context.readLine();
                         if (nums == null) {
@@ -243,24 +232,24 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                             logger.error("Bad chunk header: " + lineBuffer);
                         }
                     } else if (context.chunkState == HttpContext.CHUNK_DATA) {
-                        if (buffer.position() + context.chunkSize <= buffer.limit()) {
+                        if (context.position() + context.chunkSize <= context.limit()) {
                             byte[] strs = new byte[context.chunkSize];
-                            buffer.get(strs);
+                            context.get(strs);
                             content.put(strs);
                             context.chunkState = HttpContext.CHUNK_CRLF;
                         } else {
                             break;
                         }
                     } else if (context.chunkState == HttpContext.CHUNK_CRLF) {
-                        if (buffer.position() + 2 <= buffer.limit()) {
-                            buffer.get(new byte[2]);
+                        if (context.position() + 2 <= context.limit()) {
+                            context.get(new byte[2]);
                             context.chunkState = HttpContext.CHUNK_LEN;
                         } else {
                             break;
                         }
                     } else if (context.chunkState == HttpContext.CHUNK_LAST) {
-                        if (buffer.position() + 2 <= buffer.limit()) {
-                            buffer.get(new byte[2]);
+                        if (context.position() + 2 <= context.limit()) {
+                            context.get(new byte[2]);
                             context.chunkState = HttpContext.CHUNK_LEN;
                         }
                         break;

@@ -60,7 +60,9 @@ public class HttpContext extends AioContext {
 
 	@Override
 	public boolean completed() {
-		return contentLength > 0 && contentLength >= body.length();
+		boolean b1 = !chunked && eof && contentLength == 0 && body.length() == 0;
+		boolean b2 = eof && contentLength > 0 && body.length() > 0 && contentLength >= body.length();
+		return b1 || b2;
 	}
 
 	/**
