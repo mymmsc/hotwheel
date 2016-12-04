@@ -176,7 +176,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
         SelectionKey sk = keyFor(sc);
         T context = contextFor(sc);
         int bufferLen = kBufferSize;
-        //bufferLen = 100;
+        //bufferLen = 1;
         ByteBuffer buf = ByteBuffer.allocate(bufferLen);
         long bytesRead = 0;
         try {
