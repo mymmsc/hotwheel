@@ -28,11 +28,10 @@ public class HttpContext extends AioContext {
 	private String url = null;
 	// 状态码
 	private int status = 900;
-	// 接收到字节数
-	private int recviced = 0;
-	private int readpos = 0;
-	//
+
+	// 是否完成http头部解析
 	public boolean hasHeader = false;
+	public boolean eof = false;
 	public boolean chunked = false;
 	public boolean chunkedFinished = false;
 	public int chunkState = CHUNK_UNKNOW;
@@ -144,24 +143,8 @@ public class HttpContext extends AioContext {
 		return status;
 	}
 
-	public int getRecviced() {
-		return recviced;
-	}
-
-	public int getReadpos() {
-		return readpos;
-	}
-
 	public void setStatus(int status) {
 		this.status = status;
-	}
-
-	public void setRecviced(int recviced) {
-		this.recviced = recviced;
-	}
-
-	public void setReadpos(int readpos) {
-		this.readpos = readpos;
 	}
 
 	public String getUrl() {
