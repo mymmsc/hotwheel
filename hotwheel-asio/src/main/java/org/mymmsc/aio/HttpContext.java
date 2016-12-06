@@ -60,9 +60,14 @@ public class HttpContext extends AioContext {
 
 	@Override
 	public boolean completed() {
-		boolean b1 = !chunked && eof && contentLength == 0 && body.length() == 0;
-		boolean b2 = eof && contentLength > 0 && body.length() > 0 && contentLength >= body.length();
-		return b1 || b2;
+		// 修复非chunked编码获取body长度不准确的bug
+		// 第一种情况, body有长度, 头信息中长度和body长度相仿
+		boolean b1 = !chunked && eof && contentLength > 0 && body.length() > 0 && contentLength >= body.length();
+		// 第二种情况, body为空的正常响应
+		boolean b2 = !chunked && eof && contentLength == 0 && body.length() == 0;
+		// 第三种情况, chuanked长度相仿
+		boolean c1 = eof && contentLength > 0 && body.length() > 0 && contentLength >= body.length();
+		return b1 || b2 || c1;
 	}
 
 	/**

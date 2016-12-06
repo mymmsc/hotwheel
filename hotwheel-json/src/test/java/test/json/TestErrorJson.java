@@ -1,6 +1,7 @@
 package test.json;
 
 import org.mymmsc.api.context.JsonAdapter;
+import test.json.bean.BigDataResult;
 import test.json.bean.CreditInfo;
 
 import java.lang.reflect.Field;
@@ -76,11 +77,12 @@ public class TestErrorJson {
         return fieldClazz;
     }
     public static void main(String[] args) {
-        String body = "{\"error\":{\"returnCode\":\"0\",\"returnMessage\":\"操作成功\",\"returnUserMessage\":\"\"},\"data\":{}}";
+        String body = "{\"responseHeader\":{\"status\":0,\"QTime\":6,\"params\":{\"fl\":\"uname,rmobile,label\",\"indent\":\"true\",\"q\":\"uid:496752913570345010\",\"wt\":\"json\"}},\"response\":{\"numFound\":1,\"start\": 0,\"maxScore\":3.862201,\"docs\":[{\"rmobile\":\"18636369664\",\"uname\":\"张振宇\",\"label\":\"\"}]}}";
         JsonAdapter json = null;
         try {
             json = JsonAdapter.parse(body);
             if (json != null) {
+                BigDataResult result = json.get(BigDataResult.class);
                 //TypeReference<InnerApiResult<CreditInfo[]>> clazz = new TypeReference<InnerApiResult<CreditInfo[]>>(){};
                 //InnerApiResult<CreditInfo[]> obj = new InnerApiResult<CreditInfo[]>();
                 //System.out.println(obj.getClass().getName());

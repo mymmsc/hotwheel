@@ -192,7 +192,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         if (context.hasHeader && context.eof) {
             //buffer.flip();
             if (!context.chunked) {
-                String tmp = new String(context.array(), context.position() , context.limit());
+                String tmp = new String(context.array(), context.position() , context.limit() - context.position());
                 StringBuffer body = context.getBody();
                 body.append(tmp);
                 //buffer.reset();
