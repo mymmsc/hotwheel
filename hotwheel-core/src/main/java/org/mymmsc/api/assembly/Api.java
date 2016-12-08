@@ -1324,6 +1324,22 @@ public final class Api {
     private final static Class<?> classGenericType = sun.reflect.generics.reflectiveObjects.TypeVariableImpl.class;
 
     /**
+     * 实例化一个对象
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public static  <T> T newInstance(Class<T> clazz) {
+        T obj = null;
+        try {
+            obj = clazz.newInstance();
+        } catch (Exception e) {
+            logger.error("", e);
+        }
+        return obj;
+    }
+
+    /**
      * 判断字段是否泛型类型
      *
      * @param field 类成员变量字段
