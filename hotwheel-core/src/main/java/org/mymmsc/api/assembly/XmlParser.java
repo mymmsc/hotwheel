@@ -26,7 +26,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,11 +52,11 @@ import java.util.List;
 public class XmlParser {
     private static Logger logger = LoggerFactory.getLogger(XmlParser.class);
     @SuppressWarnings("unused")
-    private static String xmlFactory = "javax.xml.parsers.DocumentBuilderFactory";
-    private static String xmlFactoryImpl = "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl";
+    private final static String xmlFactory = "javax.xml.parsers.DocumentBuilderFactory";
+    private final static String xmlFactoryImpl = "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl";
     @SuppressWarnings("unused")
-    private static String xpathFactory = "javax.xml.xpath.XPathFactory";
-    private static String xpathFactoryImpl = "com.sun.org.apache.xpath.internal.jaxp.XPathFactoryImpl";
+    private final static String xpathFactory = "javax.xml.xpath.XPathFactory";
+    private final static String xpathFactoryImpl = "com.sun.org.apache.xpath.internal.jaxp.XPathFactoryImpl";
     private DocumentBuilderFactory m_builderFactory = null;
     private DocumentBuilder m_documentBuilder = null;
     /**
@@ -155,7 +154,7 @@ public class XmlParser {
             transformer.transform(source, result);
         } catch (Exception ex) {
             flag = false;
-            ex.printStackTrace();
+            logger.error("", ex);
         }
         return flag;
     }
@@ -164,7 +163,9 @@ public class XmlParser {
      * 关闭XML解析器
      */
     public void close() {
-        //
+        if (m_is != null) {
+            // InputStream 没有close方法
+        }
     }
 
     /**
@@ -377,63 +378,22 @@ public class XmlParser {
      * @return
      * @throws XPathExpressionException
      */
-    public <T> T valueOf(String expression, Class<T> clazz)
-            throws XPathExpressionException {
+    public <T> T valueOf(String expression, Class<T> clazz) throws XPathExpressionException {
         // 初始状态为null
         T obj = null;
-        // 取得clazz类的成员变量列表
-        Field[] fields = clazz.getDeclaredFields();
-        Field field = null;
         // 查询XML节点
         NodeList list = query(expression);
         if (list != null) {
             Node node = null;
             String nodeName = null;
             String nodeValue = null;
-            boolean isAccessible = false;
             for (int i = 0; i < list.getLength(); i++) {
                 // 读取一个节点
                 node = list.item(i);
-                nodeName = node.getNodeName().trim();
-                // nodeValue = node.getNodeValue().trim();
-                nodeValue = node.getTextContent().trim();
-                // 遍历所有类成员变量, 为赋值作准备
-                for (int j = 0; j < fields.length; j++) {
-                    field = fields[j];
-                    // 忽略字段名大小写
-                    if (field.getName().equalsIgnoreCase(nodeName)) {
-                        // 得到类成员变量数据类型
-                        Class<?> cClass = field.getType();
-                        Object objValue = Api.valueOf(cClass, nodeValue);
-                        if (obj == null) {
-                            try {
-                                obj = clazz.newInstance();
-                            } catch (InstantiationException e) {
-                                logger.error("", e);
-                            } catch (IllegalAccessException e) {
-                                logger.error("", e);
-                            }
-                        }
-                        if (obj != null) {
-                            // 保存现在的字段存储"权限"(对于不同属性的类成员变量)状态
-                            isAccessible = field.isAccessible();
-                            // 设定为可存取
-                            field.setAccessible(true);
-                            try {
-                                // 对象字段赋值
-                                field.set(obj, objValue);
-                            } catch (IllegalArgumentException e) {
-                                logger.error("", e);
-                            } catch (IllegalAccessException e) {
-                                logger.error("", e);
-                            } finally {
-                                // 恢复之前的存储权限状态
-                                field.setAccessible(isAccessible);
-                            }
-                        }
-                        break;
-                    }
+                if(obj == null) {
+                    obj = Api.newInstance(clazz);
                 }
+                setValue(obj, node);
             }
         }
         return obj;
@@ -452,65 +412,53 @@ public class XmlParser {
         List<T> objList = new ArrayList<T>();
         // 初始状态为null
         T obj = null;
-        // 取得clazz类的成员变量列表
-        Field[] fields = clazz.getDeclaredFields();
-        Field field = null;
         // 查询XML节点
         NodeList list = query(expression);
         for (int k = 0; list != null && k < list.getLength(); k++) {
             Node node = null;
-            String nodeName = null;
-            String nodeValue = null;
-            boolean isAccessible = false;
             obj = null;
             NodeList list2 = list.item(k).getChildNodes();
             for (int i = 0; i < list2.getLength(); i++) {
                 // 读取一个节点
                 node = list2.item(i);
-                nodeName = node.getNodeName().trim();
-                // nodeValue = node.getNodeValue().trim();
-                nodeValue = node.getTextContent().trim();
-                // 遍历所有类成员变量, 为赋值作准备
-                for (int j = 0; j < fields.length; j++) {
-                    field = fields[j];
-                    // 忽略字段名大小写
-                    if (field.getName().equalsIgnoreCase(nodeName)) {
-                        // 得到类成员变量数据类型
-                        Class<?> cClass = field.getType();
-                        Object objValue = Api.valueOf(cClass, nodeValue);
-                        if (obj == null) {
-                            try {
-                                obj = clazz.newInstance();
-                            } catch (InstantiationException e) {
-                                logger.error("", e);
-                            } catch (IllegalAccessException e) {
-                                logger.error("", e);
-                            }
-                        }
-                        if (obj != null) {
-                            // 保存现在的字段存储"权限"(对于不同属性的类成员变量)状态
-                            isAccessible = field.isAccessible();
-                            // 设定为可存取
-                            field.setAccessible(true);
-                            try {
-                                // 对象字段赋值
-                                field.set(obj, objValue);
-                            } catch (IllegalArgumentException e) {
-                                logger.error("", e);
-                            } catch (IllegalAccessException e) {
-                                logger.error("", e);
-                            } finally {
-                                // 恢复之前的存储权限状态
-                                field.setAccessible(isAccessible);
-                            }
-                        }
-                        break;
-                    }
-                }
+                obj = valueOf(node, clazz);
             }
-            objList.add(obj);
+            if (obj != null) {
+                objList.add(obj);
+            }
         }
         return objList;
+    }
+
+    public <T> T valueOf(Node node, Class<T> clazz) {
+        T obj = null;
+        if (node != null && clazz != null) {
+            String nodeName = null;
+            String nodeValue = null;
+            nodeName = node.getNodeName().trim();
+            nodeValue = node.getTextContent().trim();
+
+            obj = Api.newInstance(clazz);
+            if (obj == null) {
+                //
+            } else {
+                boolean bAccess = Api.setValue(obj, nodeName, nodeValue);
+                // 如果赋值失败, object返回null
+                if(!bAccess) {
+                    obj = null;
+                }
+            }
+        }
+        return obj;
+    }
+
+    private void setValue(Object obj, Node node) {
+        if (obj != null && node != null) {
+            String nodeName = node.getNodeName().trim();
+            String nodeValue = node.getTextContent().trim();
+            Api.setValue(obj, nodeName, nodeValue);
+
+        }
     }
 
     /**

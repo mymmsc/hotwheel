@@ -4,6 +4,7 @@ import net.sf.cglib.beans.BeanMap;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
+import org.hotwheel.reflect.FieldAccess;
 import org.mymmsc.api.assembly.Api;
 
 import java.lang.reflect.Method;
@@ -17,6 +18,10 @@ import java.util.Set;
 public class TestPerformance {
     public static void main(String[] args)
     {
+        MyBean obj = new MyBean();
+        FieldAccess access = FieldAccess.get(MyBean.class);
+        String name = (String)access.get(obj, "name");
+        //FieldAccess access = FieldAccess.get
         int times = 10000000;
         TestBean(times);//=15
         TestCglib(times);//=516
@@ -153,17 +158,3 @@ class TestMethodInterceptorImpl implements MethodInterceptor
     }
 }
 
-class MyBean
-{
-    private String name;
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-}

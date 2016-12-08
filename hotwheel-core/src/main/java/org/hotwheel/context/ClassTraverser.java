@@ -1,6 +1,3 @@
-/**
- *
- */
 package org.hotwheel.context;
 
 import org.mymmsc.api.assembly.Api;
