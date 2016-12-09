@@ -48,6 +48,7 @@ import java.util.List;
  * @author WangFeng(wangfeng@yeah.net)
  * @version 6.3.9 09/10/02
  * @since mymmsc-api 6.3.9
+ * @since HotWheel 3.0.1
  */
 public class XmlParser {
     private static Logger logger = LoggerFactory.getLogger(XmlParser.class);
@@ -250,8 +251,7 @@ public class XmlParser {
      * @return NodeList
      * @throws XPathExpressionException
      */
-    public NodeList query(String expression)
-            throws XPathExpressionException {
+    public NodeList query(String expression) throws XPathExpressionException {
         return query(null, expression);
     }
 
@@ -262,7 +262,7 @@ public class XmlParser {
      * @return NodeList
      * @throws XPathExpressionException
      */
-    public Node queryOne(String expression)  throws XPathExpressionException {
+    public Node queryOne(String expression) throws XPathExpressionException {
         Node node = null;
         NodeList list = query(null, expression);
         if (list != null && list.getLength() > 0) {
@@ -295,8 +295,7 @@ public class XmlParser {
      * @return NodeList
      * @throws XPathExpressionException
      */
-    public NodeList query(Node node, String expression)
-            throws XPathExpressionException {
+    public NodeList query(Node node, String expression) throws XPathExpressionException {
         NodeList lRet = null;
         // 检测是否被更新
         checkMotified();
@@ -393,7 +392,7 @@ public class XmlParser {
                 if(obj == null) {
                     obj = Api.newInstance(clazz);
                 }
-                setValue(obj, node);
+                assignValue(obj, node);
             }
         }
         return obj;
@@ -407,8 +406,7 @@ public class XmlParser {
      * @return
      * @throws XPathExpressionException
      */
-    public <T> List<T> listOf(String expression, Class<T> clazz)
-            throws XPathExpressionException {
+    public <T> List<T> listOf(String expression, Class<T> clazz) throws XPathExpressionException {
         List<T> objList = new ArrayList<T>();
         // 初始状态为null
         T obj = null;
@@ -452,7 +450,7 @@ public class XmlParser {
         return obj;
     }
 
-    private void setValue(Object obj, Node node) {
+    private void assignValue(Object obj, Node node) {
         if (obj != null && node != null) {
             String nodeName = node.getNodeName().trim();
             String nodeValue = node.getTextContent().trim();
