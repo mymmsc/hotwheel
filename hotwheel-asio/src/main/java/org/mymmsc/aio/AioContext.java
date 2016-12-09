@@ -197,6 +197,7 @@ public abstract class AioContext {
 		byte[] data = buffer.array();
 		int begin = readpos;
 		System.arraycopy(data, begin, dst, 0, len);
+		readpos += len;
 		return len;
 	}
 }
