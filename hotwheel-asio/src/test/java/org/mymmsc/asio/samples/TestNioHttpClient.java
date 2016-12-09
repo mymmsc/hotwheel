@@ -25,7 +25,7 @@ public class TestNioHttpClient {
         final String productId = "5413757966488781180001";
         final String userId = "538522734200627281";
         final int concurrency = 20;
-        int total = 1000;
+        int total = 1;
         float n = total;
         long tm = System.currentTimeMillis();
         List list = new ArrayList();
