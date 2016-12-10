@@ -1345,6 +1345,7 @@ public final class Api {
      * @param field 类成员变量字段
      * @return 是否泛型或者模板
      * @see sun.reflect.generics.reflectiveObjects.TypeVariableImpl
+     * @deprecated 暂未正式启用
      */
     public static boolean isGeneric(Field field) {
         boolean bRet = false;
@@ -1619,6 +1620,11 @@ public final class Api {
         return (T) obj;
     }
 
+    /**
+     * 获取字段别名
+     * @param field
+     * @return
+     */
     private static String getFieldAlias(Field field) {
         String sRet = "";
         Annotation[] anns = null;
@@ -1637,6 +1643,34 @@ public final class Api {
         }
 
         return sRet;
+    }
+
+    /**
+     * 判断字段名是否匹配, 包括注解别名
+     * @param field
+     * @param name
+     * @return
+     * @since 2.1.3
+     */
+    public static boolean fieldMatch(final Field field, final String name) {
+        boolean bFieldMatch = false;
+        boolean bAliasMatch = false;
+        if (field != null && !isEmpty(name)) {
+            bFieldMatch = field.getName().equalsIgnoreCase(name);
+            if (!bFieldMatch) {
+                final String fieldAlias = getFieldAlias(field);
+                if (!isEmpty(fieldAlias)) {
+                    String[] listAlias = fieldAlias.split(",");
+                    for (String alias : listAlias) {
+                        if (!Api.isEmpty(alias) && alias.equalsIgnoreCase(name)) {
+                            bAliasMatch = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return (bFieldMatch || bAliasMatch);
     }
 
     /**
@@ -1667,15 +1701,12 @@ public final class Api {
             }
             fields = clazz.getDeclaredFields();
             field = null;
-            aliasName = null;
             isAccessible = false;
             // 遍历所有类成员变量, 为赋值作准备
             for (int j = 0; j < fields.length; j++) {
                 field = fields[j];
-                aliasName = getFieldAlias(field);
                 // 忽略字段名大小写
-                if (field.getName().equalsIgnoreCase(fieldName)
-                        || stristr(aliasName, fieldName)) {
+                if (fieldMatch(field, fieldName)) {
                     // 保存现在的字段存储"权限"(对于不同属性的类成员变量)状态
                     isAccessible = field.isAccessible();
                     // 设定为可存取
@@ -1715,10 +1746,8 @@ public final class Api {
         // 遍历所有类成员变量, 为赋值作准备
         for (int j = 0; j < fields.length; j++) {
             field = fields[j];
-            aliasName = getFieldAlias(field);
             // 忽略字段名大小写
-            if (field.getName().equalsIgnoreCase(fieldName)
-                    || stristr(aliasName, fieldName)) {
+            if (fieldMatch(field, fieldName)) {
                 // 得到类成员变量数据类型
                 cRet = field.getType();
                 if (cRet == List.class) {
@@ -1791,14 +1820,12 @@ public final class Api {
         Class<?> clazz = null;
         Field[] fields = null;
         Field field = null;
-        String aliasName = null;
         int pos = -1;
         String subName = null;
         if ((pos = fieldName.indexOf('.')) > 0) {
             subName = fieldName.substring(pos + 1);
             fieldName = fieldName.substring(0, pos);
         }
-        boolean isAccessible = false;
         while (!bRet) {
             if (clazz == null) {
                 clazz = obj.getClass();
@@ -1810,14 +1837,11 @@ public final class Api {
             }
             fields = clazz.getDeclaredFields();
             field = null;
-            isAccessible = false;
             // 遍历所有类成员变量, 为赋值作准备
             for (int j = 0; j < fields.length; j++) {
                 field = fields[j];
-                aliasName = getFieldAlias(field);
                 // 忽略字段名大小写
-                if (field.getName().equalsIgnoreCase(fieldName)
-                        || /*stristr(aliasName, fieldName)*/fieldName.equalsIgnoreCase(aliasName)) {
+                if (fieldMatch(field, fieldName)) {
                     // 得到类成员变量数据类型
                     Class<?> cClass = field.getType();
                     Object objValue = null;
@@ -1846,7 +1870,7 @@ public final class Api {
 
                     if (obj != null) {
                         // 保存现在的字段存储"权限"(对于不同属性的类成员变量)状态
-                        isAccessible = field.isAccessible();
+                        boolean isAccessible = field.isAccessible();
                         // 设定为可存取
                         field.setAccessible(true);
                         try {
@@ -1989,7 +2013,8 @@ public final class Api {
     /**
      * 得到现在的时间
      *
-     * @return 毫秒数
+     * @return java.sql.Timestamp
+     * @deprecated SQL类型, 无实际应用意义
      */
     public static Timestamp getNow() {
         Date now = new Date();
@@ -2033,8 +2058,7 @@ public final class Api {
      * @param interval int
      * @return Date
      */
-    public static Date addDate(Date date, int field,
-                                         int interval) {
+    public static Date addDate(Date date, int field, int interval) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(field, interval);
@@ -2049,15 +2073,14 @@ public final class Api {
      * @return 转换结果
      */
     public static String toString(Date date, String format) {
-        /**
-         * 详细设计: 1.theDate为空,则返回"" 2.否则使用theDateFormat格式化
-         */
-        if (date == null) {
-            return "";
+        String sRet = "";
+        // 详细设计: 1.theDate为空,则返回"" 2.否则使用theDateFormat格式化
+        if (date != null/* && date.getTime() > 0*/) {
+            SimpleDateFormat tempFormatter = new SimpleDateFormat(format);
+            sRet = tempFormatter.format(date);
         }
-        SimpleDateFormat tempFormatter = new SimpleDateFormat(
-                format);
-        return tempFormatter.format(date);
+
+        return sRet;
     }
 
     /**
