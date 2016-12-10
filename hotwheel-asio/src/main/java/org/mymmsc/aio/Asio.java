@@ -28,6 +28,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
     private AioHandler handler = null;
     protected final static int kBufferSize = 512 * 1024;
     protected ScoreBoard scoreBoard = new ScoreBoard();
+    protected boolean debug = false;
 
     /**
      * 选择器

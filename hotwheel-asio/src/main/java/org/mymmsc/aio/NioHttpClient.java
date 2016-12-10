@@ -34,8 +34,6 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
 
     private final static String CRLF = "\r\n";
 
-    private boolean debug = false;
-
     public NioHttpClient(List<T> list) throws IOException {
         this(list, 500);
     }
