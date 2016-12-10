@@ -1807,6 +1807,35 @@ public final class Api {
     }
 
     /**
+     * 给对象指定的字段赋值
+     *
+     * @param obj
+     * @param field
+     * @param objValue
+     * @return
+     */
+    public static boolean setValue(Object obj, Field field, Object objValue) {
+        boolean bRet = false;
+        // 保存现在的字段存储"权限"(对于不同属性的类成员变量)状态
+        boolean isAccessible = field.isAccessible();
+        // 设定为可存取
+        field.setAccessible(true);
+        try {
+            // 对象字段赋值
+            field.set(obj, objValue);
+            bRet = true;
+        } catch (IllegalArgumentException e) {
+            logger.error("", e);
+        } catch (IllegalAccessException e) {
+            logger.error("", e);
+        } finally {
+            // 恢复之前的存储权限状态
+            field.setAccessible(isAccessible);
+        }
+        return bRet;
+    }
+
+    /**
      * 给一个对象的成员变量赋值
      *
      * @param obj

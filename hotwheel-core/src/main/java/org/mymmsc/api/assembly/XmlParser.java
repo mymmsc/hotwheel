@@ -415,21 +415,7 @@ public class XmlParser {
                             }
                         }
                         if (obj != null) {
-                            // 保存现在的字段存储"权限"(对于不同属性的类成员变量)状态
-                            boolean isAccessible = field.isAccessible();
-                            // 设定为可存取
-                            field.setAccessible(true);
-                            try {
-                                // 对象字段赋值
-                                field.set(obj, objValue);
-                            } catch (IllegalArgumentException e) {
-                                logger.error("", e);
-                            } catch (IllegalAccessException e) {
-                                logger.error("", e);
-                            } finally {
-                                // 恢复之前的存储权限状态
-                                field.setAccessible(isAccessible);
-                            }
+                            Api.setValue(obj, field, objValue);
                         }
                         break;
                     }
@@ -447,8 +433,7 @@ public class XmlParser {
      * @return
      * @throws XPathExpressionException
      */
-    public <T> List<T> listOf(String expression, Class<T> clazz)
-            throws XPathExpressionException {
+    public <T> List<T> listOf(String expression, Class<T> clazz) throws XPathExpressionException {
         List<T> objList = new ArrayList<T>();
         // 初始状态为null
         T obj = null;
@@ -487,21 +472,7 @@ public class XmlParser {
                             }
                         }
                         if (obj != null) {
-                            // 保存现在的字段存储"权限"(对于不同属性的类成员变量)状态
-                            boolean isAccessible = field.isAccessible();
-                            // 设定为可存取
-                            field.setAccessible(true);
-                            try {
-                                // 对象字段赋值
-                                field.set(obj, objValue);
-                            } catch (IllegalArgumentException e) {
-                                logger.error("", e);
-                            } catch (IllegalAccessException e) {
-                                logger.error("", e);
-                            } finally {
-                                // 恢复之前的存储权限状态
-                                field.setAccessible(isAccessible);
-                            }
+                            Api.setValue(obj, field, objValue);
                         }
                         break;
                     }
