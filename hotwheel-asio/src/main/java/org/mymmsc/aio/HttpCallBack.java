@@ -20,7 +20,7 @@ public interface HttpCallBack<T> {
      * @param obj
      * @return
      */
-    Map<String ,Object> getParams(T obj);
+    Map<String, Object> getParams(T obj);
 
     /**
      * 单个请求完成
