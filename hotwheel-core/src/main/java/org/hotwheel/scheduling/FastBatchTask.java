@@ -110,8 +110,8 @@ public abstract class FastBatchTask<T extends PartitionContext> extends Recursiv
             rightTask.fork();
 
             //等待任务执行结束合并其结果
-            PartitionContext leftResult = (T)leftTask.join();
-            PartitionContext rightResult = (T)rightTask.join();
+            T leftResult = (T)leftTask.join();
+            T rightResult = (T)rightTask.join();
 
             //合并子任务
             if(leftResult.lines != null) {
