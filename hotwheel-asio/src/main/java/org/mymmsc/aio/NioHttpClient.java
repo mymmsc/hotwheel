@@ -326,8 +326,6 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
             try {
                 sc = SocketChannel.open();
                 sc.configureBlocking(false);
-                sc.setOption(StandardSocketOptions.SO_RCVBUF, kBufferSize);
-                sc.setOption(StandardSocketOptions.SO_SNDBUF, kBufferSize);
                 //sc.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
                 sc.setOption(StandardSocketOptions.SO_REUSEADDR, true);
                 //sc.socket().setSoTimeout(10 * 1000);
@@ -335,7 +333,8 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 // SO_LINGGER参数在java不能使用,
                 //sc.setOption(StandardSocketOptions.SO_LINGER, 10 * 1000);
                 //socket.setSoTimeout(connectTimeout);
-                sc.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
+                sc.setOption(StandardSocketOptions.SO_RCVBUF, kBufferSize);
+                sc.setOption(StandardSocketOptions.SO_SNDBUF, kBufferSize);
 
                 ctx = new HttpContext(sc, connectTimeout);
                 ctx.index = scoreBoard.sequeueId ++;

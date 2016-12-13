@@ -263,6 +263,7 @@ public class HttpClient {
         // String msg = "";
         URL httpUrl = null;
         HttpURLConnection httpConn = null;
+        InputStream inputStream = null;
         try {
             httpUrl = new URL(url);
             httpConn = (HttpURLConnection) httpUrl.openConnection();
@@ -371,18 +372,19 @@ public class HttpClient {
                 }
 
                 String ct = contentType.toLowerCase().trim();
+                inputStream = httpConn.getInputStream();
                 if (ct.indexOf("charset") >= 0 || ct.indexOf("text") >= 0
                         || ct.indexOf("xml") >= 0 || ct.indexOf("json") >= 0) {
                     // 接收body
                     String response = DataStream.RecvHttpData(
-                            new DataInputStream(httpConn.getInputStream()),
+                            new DataInputStream(inputStream),
                             charset);
                     hRet.setBody(response);
                 } else {
                     String str = httpConn.getHeaderField("Last-Modified");
                     Date tm = Api.parseDate(str);
                     hRet.setDate(tm);
-                    hRet.setData(DataStream.recv(httpConn.getInputStream()));
+                    hRet.setData(DataStream.recv(inputStream));
                 }
             } else {
                 //
@@ -393,6 +395,13 @@ public class HttpClient {
                 hRet.setStatus(900);
             }
         } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    //
+                }
+            }
             if (httpConn != null) {
                 httpConn.disconnect();
             }
