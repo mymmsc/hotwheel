@@ -529,7 +529,7 @@ public class JsonAdapter {
                     } else if (token == JsonToken.VALUE_TRUE
                             || token == JsonToken.VALUE_FALSE) {
                         tmpObj = Api.valueOf(Boolean.class, fieldValue);
-                    } else if(cls instanceof Object && claee.isArray()) {
+                    } else if(cls instanceof Object && claee != null && claee.isArray()) {
                         Object arr = null;
                         if (fieldValue == null) {
                             arr = Array.newInstance(claee.getComponentType(), 0);
