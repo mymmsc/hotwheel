@@ -93,6 +93,12 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             if (key != null) {
                 key.cancel();
             }
+            sc.shutdownOutput();
+            ByteBuffer buff = ByteBuffer.allocate(4096);
+            while (sc.read(buff) > 0) {
+                //
+            }
+            sc.shutdownInput();
             sc.close();
         } catch (IOException e) {
             logger.error("SocketChannel close failed: ", e);
@@ -313,7 +319,6 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                 }
                 handleCompact(selector);
             } catch (Exception e) {
-                e.printStackTrace();
                 logger.error("Selector.select failed: ", e);
             } finally {
                 //

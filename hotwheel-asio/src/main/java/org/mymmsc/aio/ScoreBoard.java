@@ -7,7 +7,9 @@ package org.mymmsc.aio;
  * @since 2.1.1
  */
 public class ScoreBoard {
+    // 请求序号
     public int sequeueId = 0;
+    // 任务总数
     public int number = 0;
     // 正在进行中的请求数
     public int requests = 0;
