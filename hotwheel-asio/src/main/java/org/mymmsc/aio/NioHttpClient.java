@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
-import java.net.StandardSocketOptions;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -324,6 +323,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
             SocketChannel sc = null;
             HttpContext ctx = null;
             try {
+                /*
                 sc = SocketChannel.open();
                 sc.configureBlocking(false);
                 //sc.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
@@ -336,7 +336,9 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 //socket.setSoTimeout(connectTimeout);
                 sc.setOption(StandardSocketOptions.SO_RCVBUF, kBufferSize);
                 sc.setOption(StandardSocketOptions.SO_SNDBUF, kBufferSize);
-
+                *
+                */
+                sc = createSocket();
                 ctx = new HttpContext(sc, connectTimeout);
                 ctx.index = scoreBoard.sequeueId ++;
                 scoreBoard.requests ++;
