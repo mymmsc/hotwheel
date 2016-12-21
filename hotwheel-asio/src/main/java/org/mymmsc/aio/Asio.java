@@ -95,8 +95,11 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             }
             sc.shutdownOutput();
             ByteBuffer buff = ByteBuffer.allocate(4096);
-            while (sc.read(buff) > 0) {
-                //
+            int recviced = 0;
+            while((recviced = sc.read(buff)) != -1) {
+                if(debug) {
+                    logger.debug("recviced:" + recviced);
+                }
             }
             sc.shutdownInput();
             sc.close();
