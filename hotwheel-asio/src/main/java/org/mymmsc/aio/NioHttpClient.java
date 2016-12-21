@@ -331,7 +331,8 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 //sc.socket().setSoTimeout(10 * 1000);
                 sc.setOption(StandardSocketOptions.TCP_NODELAY, true);
                 // SO_LINGGER参数在java不能使用,
-                //sc.setOption(StandardSocketOptions.SO_LINGER, 10 * 1000);
+                //System.out.println("SO_LINGER:" + sc.getOption(StandardSocketOptions.SO_LINGER));
+                sc.setOption(StandardSocketOptions.SO_LINGER, 0);
                 //socket.setSoTimeout(connectTimeout);
                 sc.setOption(StandardSocketOptions.SO_RCVBUF, kBufferSize);
                 sc.setOption(StandardSocketOptions.SO_SNDBUF, kBufferSize);
@@ -350,6 +351,8 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 } else {
                     //
                 }
+                //int linger = sc.getOption(StandardSocketOptions.SO_LINGER);
+                //System.out.println("SO_LINGER:" + linger);
             } catch (Exception e) {
                 logger.error("SocketChannel.connect failed: ", e);
                 handleError(sc);
