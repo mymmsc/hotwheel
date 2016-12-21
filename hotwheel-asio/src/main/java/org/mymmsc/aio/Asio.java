@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.net.StandardSocketOptions;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -80,6 +81,24 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
     protected T contextFor(SocketChannel sc) {
         SelectionKey sk = keyFor(sc);
         return contextFor(sk);
+    }
+
+    protected SocketChannel createSocket() throws IOException {
+        SocketChannel sc = null;
+        sc = SocketChannel.open();
+        sc.configureBlocking(false);
+        //sc.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
+        sc.setOption(StandardSocketOptions.SO_REUSEADDR, true);
+        //sc.socket().setSoTimeout(10 * 1000);
+        sc.setOption(StandardSocketOptions.TCP_NODELAY, true);
+        // SO_LINGGER参数在java不能使用,
+        //System.out.println("SO_LINGER:" + sc.getOption(StandardSocketOptions.SO_LINGER));
+        sc.setOption(StandardSocketOptions.SO_LINGER, 0);
+        //socket.setSoTimeout(connectTimeout);
+        sc.setOption(StandardSocketOptions.SO_RCVBUF, kBufferSize);
+        sc.setOption(StandardSocketOptions.SO_SNDBUF, kBufferSize);
+
+        return sc;
     }
 
     /**
