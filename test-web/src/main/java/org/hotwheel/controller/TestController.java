@@ -29,6 +29,15 @@ public class TestController extends HttpController {
     @ResponseBody
     public ActionStatus getStatus(String a, String time, String time1) {
         ActionStatus as = new ActionStatus();
+        as.set(0, "SUCCESS");
+
+        return as;
+    }
+
+    @RequestMapping(value = "/v2/mybatis"/*, method = RequestMethod.POST*/)
+    @ResponseBody
+    public ActionStatus testMyBatis(String a, String time, String time1) {
+        ActionStatus as = new ActionStatus();
         boolean bRet = overdueMessage.clearExpired();
         System.out.println("return = " + bRet);
         List<String> listError = overdueError.getAllDirtyAndErrorData();
