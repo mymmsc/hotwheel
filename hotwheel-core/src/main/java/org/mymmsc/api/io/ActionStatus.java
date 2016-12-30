@@ -15,25 +15,17 @@ import java.util.Date;
  * @remark 所有接口的响应都会继承这个类
  */
 public class ActionStatus {
-    /**
-     * 状态码
-     */
+    /**< 版本号 */
+    private String version;
+    /**< 状态码 */
     private int status;
-    /**
-     * 状态描述
-     */
+    /**< 状态描述 */
     private String message;
-    /**
-     * 时间戳
-     */
+    /**< 时间戳 */
     private String timestamp;
-    /**
-     * 主机信息
-     */
+    /**< 主机信息 */
     private String host;
-    /**
-     * 耗时毫秒
-     */
+    /**< 耗时毫秒 */
     private long acrossTime;
 
     public ActionStatus() {
@@ -127,5 +119,13 @@ public class ActionStatus {
      */
     public void setAcrossTime(long acrossTime) {
         this.acrossTime = acrossTime;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 }

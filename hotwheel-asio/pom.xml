@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.mymmsc.hotwheel</groupId>
         <artifactId>hotwheel-framework</artifactId>
-        <version>2.1.7</version>
+        <version>2.1.8</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -60,4 +60,18 @@
         </dependency>
         <!-- Apache Http Components end -->
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <hotwheel-asio-Version>${project.version}</hotwheel-asio-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

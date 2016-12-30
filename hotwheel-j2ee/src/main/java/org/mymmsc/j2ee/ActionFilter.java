@@ -16,7 +16,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.hotwheel.beans.factory.annotation.Autowired;
 import org.hotwheel.ibatis.builder.SqlApplicationContext;
 import org.hotwheel.j2ee.HotWheel;
+import org.hotwheel.j2ee.util.manifests.ServletMfs;
 import org.hotwheel.protocol.Http11Status;
+import org.hotwheel.util.manifests.Manifests;
 import org.mymmsc.api.Environment;
 import org.mymmsc.api.adapter.BaseObject;
 import org.mymmsc.api.assembly.Api;
@@ -59,6 +61,7 @@ import java.util.*;
  * @since mymmsc-struts 6.3.9
  * @since mymmsc-struts 6.9.29 去掉对action扩展名的支持
  * @since 6.11.0
+ * @since hotwheel-j2ee 2.1.8
  */
 @WebFilter(filterName = "MyMMSC-HotWheel(J2EE)-Filter", urlPatterns = {"*.cgi"}, asyncSupported = true)
 public class ActionFilter extends BaseObject implements Filter {
@@ -66,6 +69,8 @@ public class ActionFilter extends BaseObject implements Filter {
      * 是否已经初始化
      */
     private volatile static boolean isInit = false;
+    private static Manifests manifests = null;
+    private static String appVersion = "Unknown";
     private static String project = null;
     private static String webPath = null;
     private static XmlParser xmlParser = null;
@@ -74,6 +79,10 @@ public class ActionFilter extends BaseObject implements Filter {
     private ServletContext context = null;
     private String expire = null;
     private static SqlApplicationContext applicationContext;
+
+    static {
+        //
+    }
 
     public ActionFilter() {
         super();
@@ -220,6 +229,9 @@ public class ActionFilter extends BaseObject implements Filter {
                         obj = exec.invoke(action, params);
                     }
                     if (!Api.isBaseType(obj)) {
+                        if (obj instanceof ActionStatus) {
+                            ((ActionStatus)obj).setVersion(appVersion);
+                        }
                         data = JsonAdapter.get(obj, false).getBytes(action.getCharset());
                     } else {
                         String str = Api.toString(obj);
@@ -360,6 +372,14 @@ public class ActionFilter extends BaseObject implements Filter {
         // 已经初始化, 直接返回
         if (isInit) {
             // return;
+        }
+        ServletMfs servletMfs = new ServletMfs(config.getServletContext());
+        try {
+            manifests = new Manifests();
+            manifests.append(servletMfs);
+            appVersion = manifests.get("App-Revision");
+        } catch (Exception e) {
+            logger.error("#read() META-INF failed: ", e);
         }
         System.setProperty("Log4jContextSelector", "org.apache.logging.log4j.core.async.AsyncLoggerContextSelector");
         // 读取工程路径
