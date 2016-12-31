@@ -1,7 +1,6 @@
 package org.hotwheel.maven;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -55,12 +54,6 @@ public class GitDescribeMojo extends AbstractMojo {
      */
     @Component
     private MavenProject mavenProject;
-
-    /**
-     * The maven session.
-     */
-    @Parameter( defaultValue = "${session}", required = true, readonly = true )
-    private MavenSession session;
 
     /**
      * Maven Settings
@@ -182,12 +175,6 @@ public class GitDescribeMojo extends AbstractMojo {
             properties.setProperty(this.gitDescribe, revision);
             properties.put(this.gitDescribe, revision);
             this.getLog().info("[" + this.gitDescribe + "]: " + revision);
-
-            for ( MavenProject project : session.getProjectDependencyGraph().getSortedProjects() ) {
-                getLog().debug( "Storing timestamp property in project " + project.getId() );
-                project.getProperties().setProperty( this.gitDescribe, revision );
-                project.getProperties().put( this.gitDescribe, revision );
-            }
 
             if ( mavenProject != null ) {
 
