@@ -51,9 +51,9 @@
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
 
         <!-- logging begin -->
-        <slf4j.version>1.7.21</slf4j.version>
+        <slf4j.version>1.7.22</slf4j.version>
 
-        <log4j2.version>2.6.2</log4j2.version>
+        <log4j2.version>2.7</log4j2.version>
         <log4j2.disruptor.version>3.3.0</log4j2.disruptor.version>
 
         <logback.version>1.0.13</logback.version>
