@@ -373,7 +373,8 @@ public class ActionFilter extends BaseObject implements Filter {
         if (isInit) {
             // return;
         }
-        ServletMfs servletMfs = new ServletMfs(config.getServletContext());
+        ServletContext servletContext = config.getServletContext();
+        ServletMfs servletMfs = new ServletMfs(servletContext);
         try {
             manifests = new Manifests();
             manifests.append(servletMfs);
