@@ -152,6 +152,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <gitDescribe>git.describe</gitDescribe>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -177,7 +180,7 @@
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
                         <manifestEntries>
-                            <App-Revision>${git.describe}</App-Revision>
+                            <App-Revision>${gitDescribe}</App-Revision>
                         </manifestEntries>
                     </archive>
                 </configuration>
