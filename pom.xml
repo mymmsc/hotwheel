@@ -26,7 +26,6 @@
     </scm>
     <!-- ==================== 子模块设置 =========================== -->
     <modules>
-        <module>hotwheel-maven-git-plugin</module>
         <module>hotwheel-asio</module>
         <module>hotwheel-core</module>
         <module>hotwheel-j2ee</module>
