@@ -180,7 +180,7 @@
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
                         <manifestEntries>
-                            <App-Revision>${gitDescribe}</App-Revision>
+                            <App-Revision>${git.describe}</App-Revision>
                         </manifestEntries>
                     </archive>
                 </configuration>
