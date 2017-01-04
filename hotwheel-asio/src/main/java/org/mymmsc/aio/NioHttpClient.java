@@ -40,7 +40,6 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
     public NioHttpClient(List<T> list, int concurrency) throws IOException {
         this(list.size(), concurrency);
         this.list = list;
-        //number = this.list.size();
 
     }
     public NioHttpClient(int number, int concurrency) throws IOException {
