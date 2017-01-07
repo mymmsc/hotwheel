@@ -354,14 +354,6 @@ public class ActionFilter extends BaseObject implements Filter {
             out.close();
         }
     }
-/*
-    private void initLog4jV2(String filename) throws IOException {
-        File config = new File(filename);
-        ConfigurationSource source = null;
-        source = new ConfigurationSource(new FileInputStream(config), config);
-        Configurator.initialize(null, source);
-    }
-*/
 
     /*
      * (non-Javadoc)

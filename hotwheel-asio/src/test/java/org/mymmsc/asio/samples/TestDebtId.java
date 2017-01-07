@@ -1,9 +1,9 @@
 package org.mymmsc.asio.samples;
 
-import org.mymmsc.aio.HttpCallBack;
-import org.mymmsc.aio.HttpContext;
-import org.mymmsc.aio.NioHttpClient;
-import org.mymmsc.aio.ScoreBoard;
+import org.hotwheel.asio.HttpCallBack;
+import org.hotwheel.asio.HttpContext;
+import org.hotwheel.asio.NioHttpClient;
+import org.hotwheel.asio.ScoreBoard;
 
 import java.io.IOException;
 import java.util.ArrayList;

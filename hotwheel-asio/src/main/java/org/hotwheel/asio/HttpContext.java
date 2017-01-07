@@ -1,4 +1,4 @@
-package org.mymmsc.aio;
+package org.hotwheel.asio;
 
 import org.mymmsc.api.assembly.Api;
 import org.slf4j.Logger;

@@ -4,7 +4,7 @@
  * Copyright 2009 MyMMSC Software Foundation (MSF), Inc. All rights reserved.
  * MSF PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-package org.mymmsc.aio;
+package org.hotwheel.asio;
 
 import org.hotwheel.asio.util.ByteArrayBuffer;
 
