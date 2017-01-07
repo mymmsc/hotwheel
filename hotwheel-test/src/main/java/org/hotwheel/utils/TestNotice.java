@@ -1,9 +1,9 @@
 package org.hotwheel.utils;
 
-import org.mymmsc.aio.HttpCallBack;
-import org.mymmsc.aio.HttpContext;
-import org.mymmsc.aio.NioHttpClient;
-import org.mymmsc.aio.ScoreBoard;
+import org.hotwheel.asio.HttpCallBack;
+import org.hotwheel.asio.HttpContext;
+import org.hotwheel.asio.NioHttpClient;
+import org.hotwheel.asio.ScoreBoard;
 import org.mymmsc.api.context.JsonAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
