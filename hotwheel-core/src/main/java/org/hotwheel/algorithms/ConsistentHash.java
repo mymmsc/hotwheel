@@ -94,7 +94,7 @@ public class ConsistentHash<T> {
      * MurMurHash算法, 是非加密HASH算法, 性能很高, 比传统的CRC32,MD5, SHA-1（这两个算法都是加密HASH算法,
      * 复杂度本身就很高, 带来的性能上的损害也不可避免） 等HASH算法要快很多, 而且据说这个算法的碰撞率很低.
      *
-     * @see http://murmurhash.googlepages.com/
+     * @see <url>http://murmurhash.googlepages.com/</url>
      */
     @SuppressWarnings("unused")
     private Long hash64(String key) {
