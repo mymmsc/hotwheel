@@ -35,6 +35,7 @@
         <module>hotwheel-daemon</module>
         <module>hotwheel-test</module>
         <module>test-web</module>
+        <module>hotwheel-spring</module>
     </modules>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
