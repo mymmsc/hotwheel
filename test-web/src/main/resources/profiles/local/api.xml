@@ -10,13 +10,6 @@
 	</api>
 	<!-- ===================== 各业务系统的安全验证 =========================== -->
 	<safe-token>
-		<!-- 测试id -->
-		<app id="test" appkey="5d9fbfb6-9ddf-4988-bee0-addbb9871ae5" md5key="jdb-dsmp-20160909"/>
-		<!-- 人人催 -->
-		<app id="rrc" appkey="3cd3e805-ff0a-4dda-b3b6-1353f0dd3ab7" md5key="jdb-dsmp-20160910"/>
-		<!-- 客服 -->
-		<app id="crm" appkey="f1e64190-d191-4b3b-8f54-5144d78c7345" md5key="jdb-dsmp-crm-20160927"/>
-		<!-- 诉讼 -->
-		<app id="law" appkey="b60c533d-42bf-4dbe-b8d6-49a05b19a4ed" md5key="jdb-dsmp-law-20160927"/>
+
 	</safe-token>
 </application>
