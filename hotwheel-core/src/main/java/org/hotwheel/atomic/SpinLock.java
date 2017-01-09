@@ -16,7 +16,7 @@ public class SpinLock {
     /**
      * 用一个计数器 来做 重入锁获取次数的计数
      */
-    private volatile int count = 0;
+    private int count = 0;
 
     public void lock() {
         Thread cur = Thread.currentThread();
