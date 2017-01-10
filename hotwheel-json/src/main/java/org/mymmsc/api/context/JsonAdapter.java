@@ -157,11 +157,11 @@ public class JsonAdapter {
         if (obj != null) {
             Class<?> clazz = obj.getClass();
             if (Api.isInterface(clazz, List.class)) {
-                sRet = '[' + getList((List<?>) obj, true) + ']';
+                sRet = '[' + getList((List<?>) obj, false) + ']';
             } else if (clazz.isArray()) {
-                sRet = '[' + getArray(obj, true) + ']';
+                sRet = '[' + getArray(obj, false) + ']';
             } else {
-                sRet = get(obj, true);
+                sRet = get(obj, false);
             }
         }
         return sRet;
