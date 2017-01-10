@@ -105,7 +105,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
 
         String hdrs = "application/x-www-form-urlencoded; charset=utf-8" + CRLF;
         hdrs += String.format("Host: %s", host) + CRLF;
-        hdrs += "User-Agent: HttpBench/1.0.1" + CRLF;
+        hdrs += "User-Agent: HttpBench/3.0" + CRLF;
         //hdrs += "Accept: */*" + CRLF;
 
         // 已连接server端, 超时改用读写超时参数
