@@ -1493,6 +1493,7 @@ public final class Api {
                 sRet = ((Double) obj).toString();
             } else if(clazz == BigDecimal.class) {
                 sRet = ((BigDecimal)obj).toString();
+                //sRet = BigDecimalUtils.of((BigDecimal)obj).toMoneyString(2);
             } else if (clazz == String.class) {
                 sRet = (String) obj;
             } /*else if(obj instanceof Date) {

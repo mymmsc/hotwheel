@@ -1,6 +1,3 @@
-/**
- *
- */
 package org.mymmsc.api.assembly;
 
 import java.lang.annotation.ElementType;
