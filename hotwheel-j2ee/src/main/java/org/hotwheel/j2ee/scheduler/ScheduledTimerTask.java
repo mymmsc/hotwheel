@@ -113,23 +113,27 @@ public abstract class ScheduledTimerTask extends BaseContext implements ServletC
     }
 
     protected void sessionInitialized() {
-        sqlSessionList = new ArrayList<SqlSession>();
-        Class clazz = getClass();
-        Field[] fields = clazz.getDeclaredFields();
-        for (Field field : fields) {
-            Autowired autowired = field.getAnnotation(Autowired.class);
-            if (autowired != null) {
-                Class<?> contextClass = field.getType();
-                SqlSession session = applicationContext.getSesseion(contextClass);
-                Api.setValue(this, field.getName(), session.getMapper(contextClass));
-                sqlSessionList.add(session);
+        if (applicationContext != null) {
+            sqlSessionList = new ArrayList<SqlSession>();
+            Class clazz = getClass();
+            Field[] fields = clazz.getDeclaredFields();
+            for (Field field : fields) {
+                Autowired autowired = field.getAnnotation(Autowired.class);
+                if (autowired != null) {
+                    Class<?> contextClass = field.getType();
+                    SqlSession session = applicationContext.getSesseion(contextClass);
+                    Api.setValue(this, field.getName(), session.getMapper(contextClass));
+                    sqlSessionList.add(session);
+                }
             }
         }
     }
 
     protected void sessionDestroyed() {
-        for (SqlSession session : sqlSessionList) {
-            session.close();
+        if (sqlSessionList != null) {
+            for (SqlSession session : sqlSessionList) {
+                session.close();
+            }
         }
     }
 }
