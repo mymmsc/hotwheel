@@ -16,6 +16,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.hotwheel.beans.factory.annotation.Autowired;
 import org.hotwheel.ibatis.builder.SqlApplicationContext;
 import org.hotwheel.j2ee.HotWheel;
+import org.hotwheel.j2ee.scheduler.AbstractTask;
 import org.hotwheel.j2ee.util.manifests.ServletMfs;
 import org.hotwheel.protocol.Http11Status;
 import org.hotwheel.util.manifests.Manifests;
@@ -621,6 +622,7 @@ public class ActionFilter extends BaseObject implements Filter {
             String location = xmlParser.valueOf(node, "resource");
             applicationContext = new SqlApplicationContext(location);
             applicationContext.parse();
+            AbstractTask.setApplicationContext(applicationContext);
         } catch (XPathExpressionException e) {
             logger.error("", e);
         } catch (IOException e) {

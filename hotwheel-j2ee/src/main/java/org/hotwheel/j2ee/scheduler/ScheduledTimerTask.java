@@ -1,14 +1,20 @@
 package org.hotwheel.j2ee.scheduler;
 
+import org.apache.ibatis.session.SqlSession;
+import org.hotwheel.beans.factory.annotation.Autowired;
 import org.hotwheel.core.BaseContext;
+import org.hotwheel.ibatis.builder.SqlApplicationContext;
 import org.mymmsc.api.assembly.Api;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -19,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  * Created by wangfeng on 16/7/30.
  */
 public abstract class ScheduledTimerTask extends BaseContext implements ServletContextListener{
-
+    protected static SqlApplicationContext applicationContext = null;
     private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     /**< 任务 是否正在运行 */
     protected volatile boolean isRunning = false;
@@ -31,6 +37,7 @@ public abstract class ScheduledTimerTask extends BaseContext implements ServletC
     /**< 任务停止时间 */
     protected String taskEndTime = null;
 
+    private List<SqlSession> sqlSessionList = null;
 
     //protected abstract String getFixedTime();
     protected abstract AbstractTask getTask();
@@ -94,5 +101,35 @@ public abstract class ScheduledTimerTask extends BaseContext implements ServletC
     protected void error(Exception e) {
         String prefix = String.format("Task[%s]", taskName);
         logger.error(prefix + "关闭定时器失败", e);
+    }
+
+
+    public static SqlApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
+
+    public static void setApplicationContext(SqlApplicationContext applicationContext) {
+        AbstractTask.applicationContext = applicationContext;
+    }
+
+    protected void sessionInitialized() {
+        sqlSessionList = new ArrayList<SqlSession>();
+        Class clazz = getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            Autowired autowired = field.getAnnotation(Autowired.class);
+            if (autowired != null) {
+                Class<?> contextClass = field.getType();
+                SqlSession session = applicationContext.getSesseion(contextClass);
+                Api.setValue(this, field.getName(), session.getMapper(contextClass));
+                sqlSessionList.add(session);
+            }
+        }
+    }
+
+    protected void sessionDestroyed() {
+        for (SqlSession session : sqlSessionList) {
+            session.close();
+        }
     }
 }

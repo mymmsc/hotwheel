@@ -24,11 +24,13 @@ public abstract class AbstractTask extends ScheduledTimerTask implements TaskRun
             logger.info("{} start.", taskName);
             try {
                 isRunning = true;
+                sessionInitialized();
                 doTask();
             } catch (Exception e) {
                 logger.error("{} 失败:", e);
             } finally {
                 isRunning = false;
+                sessionDestroyed();
             }
 
             logger.info("{} end", taskName);
