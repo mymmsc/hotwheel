@@ -1,6 +1,8 @@
 package org.hotwheel.context;
 
 import org.hotwheel.util.ClassUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -13,6 +15,7 @@ import java.util.Set;
  * Created by wangfeng on 2016/11/12.
  */
 public class ContextLoader extends ClassLoader implements InvocationHandler {
+    private static Logger logger = LoggerFactory.getLogger(ContextLoader.class);
     private Set<String> list = new HashSet<>();
     private ClassLoader classLoader;
 
@@ -46,7 +49,7 @@ public class ContextLoader extends ClassLoader implements InvocationHandler {
 
     @Override
     public Class<?> loadClass(String name) throws ClassNotFoundException {
-        System.out.println("loadClass name is " + name);
+        logger.debug("loadClass name is " + name);
         return ClassUtils.forName(name, ContextLoader.class.getClassLoader());
         //return ClassUtils.forName(name, classLoader);
         //Connection cn = (Connection) Proxy.newProxyInstance(m_conn.getClass().getClassLoader(), new Class[]{Connection.class}, this);
@@ -54,13 +57,13 @@ public class ContextLoader extends ClassLoader implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println("method is " + method.getName());
+        logger.debug("method is " + method.getName());
         return proxy;
     }
 
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
-        System.out.println("findClass name is " + name);
+        logger.debug("findClass name is " + name);
         return super.findClass(name);
     }
 
