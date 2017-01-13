@@ -19,13 +19,13 @@ public class ContextLoader extends ClassLoader implements InvocationHandler {
     public ContextLoader(ClassLoader parent) {
         super(parent);
         classLoader = parent;
-        System.setProperty("java.system.class.loader", ContextLoader.class.getName());
+        //System.setProperty("java.system.class.loader", ContextLoader.class.getName());
         Thread.currentThread().setContextClassLoader(classLoader);
     }
 
     public ContextLoader() {
         classLoader = this;
-        System.setProperty("java.system.class.loader", ContextLoader.class.getName());
+        //System.setProperty("java.system.class.loader", ContextLoader.class.getName());
         Thread.currentThread().setContextClassLoader(classLoader);
         /*
         Map<Thread, StackTraceElement[]> map =  Thread.getAllStackTraces();
