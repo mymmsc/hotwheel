@@ -2,7 +2,6 @@ package org.hotwheel.j2ee.scheduler;
 
 import org.apache.ibatis.session.SqlSession;
 import org.hotwheel.beans.factory.annotation.Autowired;
-import org.hotwheel.context.ContextLoader;
 import org.hotwheel.core.BaseContext;
 import org.hotwheel.ibatis.builder.SqlApplicationContext;
 import org.mymmsc.api.assembly.Api;
@@ -45,10 +44,10 @@ public abstract class ScheduledTimerTask extends BaseContext implements ServletC
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        {
+        /*{
             ContextLoader contextLoader = new ContextLoader();
             Thread.currentThread().setContextClassLoader(contextLoader);
-        }
+        }*/
         long msNow = System.currentTimeMillis();
         long msStart = getTimeMillis(taskStartTime);
         long msEnd = getTimeMillis(taskEndTime);
