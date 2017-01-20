@@ -21,4 +21,15 @@ public class PartitionContext {
     public PartitionContext() {
         this.lines = new ArrayList<>();
     }
+
+    /**
+     * 合并结果集
+     *
+     * @param context
+     * @return
+     */
+    public boolean merge(PartitionContext context) {
+        lines.addAll(context.lines);
+        return true;
+    }
 }
