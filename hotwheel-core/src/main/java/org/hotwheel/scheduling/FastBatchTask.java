@@ -99,7 +99,7 @@ public abstract class FastBatchTask<T extends PartitionContext> extends Recursiv
             //return ret;
         } else if(remaining == 1 || remaining <= threshold) {
             logger.info(taskName + ": " + start + "->" + end + ": 2");
-            execute(ret.lines);
+            execute(ret);
         } else {
             // 如果任务大于阈值，就分裂成两个子任务计算
             int middle = (start + end) / 2;
