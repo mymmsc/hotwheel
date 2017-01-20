@@ -1,7 +1,5 @@
 package org.hotwheel.scheduling;
 
-import java.util.List;
-
 /**
  * 任务上下文
  *
@@ -13,8 +11,8 @@ public interface TaskContext<T> {
 
     /**
      * 执行数据操作
-     * @param data
+     * @param context
      * @return
      */
-    boolean execute(List<String> data);
+    boolean execute(T context);
 }
