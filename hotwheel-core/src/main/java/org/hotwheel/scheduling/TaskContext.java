@@ -15,4 +15,12 @@ public interface TaskContext<T> {
      * @return
      */
     boolean execute(T context);
+
+    /**
+     * 合并结果集
+     *
+     * @param context
+     * @return
+     */
+    //boolean merge(T context);
 }

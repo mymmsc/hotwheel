@@ -115,10 +115,12 @@ public abstract class FastBatchTask<T extends PartitionContext> extends Recursiv
 
             //合并子任务
             if(leftResult.lines != null) {
-                ret.lines.addAll(leftResult.lines);
+                //ret.lines.addAll(leftResult.lines);
+                ret.merge(leftResult);
             }
             if(rightResult.lines != null) {
-                ret.lines.addAll(rightResult.lines);
+                //ret.lines.addAll(rightResult.lines);
+                ret.merge(rightResult);
             }
             logger.info(taskName + ": " + start + "->" + end + ": 3");
         }
