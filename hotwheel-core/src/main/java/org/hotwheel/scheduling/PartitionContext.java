@@ -8,7 +8,7 @@ import java.util.List;
  * 批量上下文
  * Created by wangfeng on 2016/10/26.
  */
-public class PartitionContext<T> {
+public class PartitionContext<T> implements FastContext{
     /** 任务名称 */
     public String taskName = null;
     /** CSV文件名 */
@@ -28,6 +28,7 @@ public class PartitionContext<T> {
      * @param context
      * @return
      */
+    @Override
     public boolean merge(PartitionContext context) {
         rows.addAll(context.rows);
         return true;
