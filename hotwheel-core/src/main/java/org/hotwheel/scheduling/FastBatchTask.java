@@ -12,7 +12,7 @@ import java.util.concurrent.RecursiveTask;
  * Created by wangfeng on 2016/11/15.
  * @since 2.0.15
  */
-public abstract class FastBatchTask<T extends PartitionContext> extends RecursiveTask<T> implements TaskContext<T>{
+public abstract class FastBatchTask<T extends FastContext> extends RecursiveTask<T> implements TaskContext<T>{
     protected static final String PROP_THRESHOLD = "threshold";
     protected static final String PROP_THREADNUM = "threadNum";
     protected static final String PROP_BATCHSIZE = "batchSize";
@@ -86,7 +86,7 @@ public abstract class FastBatchTask<T extends PartitionContext> extends Recursiv
     @Override
     protected T compute() {
         T ret = getContext();
-        ret.taskName = taskName;
+        //ret.taskName = taskName;
         //ret.file = data.file;
         //ret.fields = data.fields;
         numberOfThread++;
@@ -121,10 +121,12 @@ public abstract class FastBatchTask<T extends PartitionContext> extends Recursiv
             if(leftResult != null) {
                 //ret.lines.addAll(leftResult.lines);
                 ret.merge(leftResult);
+                //merge(leftResult);
             }
             if(rightResult != null) {
                 //ret.lines.addAll(rightResult.lines);
                 ret.merge(rightResult);
+                //merge(rightResult);
             }
             logger.info(taskName + ": " + start + "->" + end + ": 3");
         }
