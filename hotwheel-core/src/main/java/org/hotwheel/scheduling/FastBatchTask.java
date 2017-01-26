@@ -132,4 +132,12 @@ public abstract class FastBatchTask<T extends FastContext> extends RecursiveTask
         }
         return ret;
     }
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
 }
