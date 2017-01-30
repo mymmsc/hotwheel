@@ -114,8 +114,8 @@ public abstract class FastBatchTask<T extends FastContext> extends RecursiveTask
             rightTask.fork();
 
             //等待任务执行结束合并其结果
-            T leftResult = (T)leftTask.join();
-            T rightResult = (T)rightTask.join();
+            FastContext leftResult = (FastContext) leftTask.join();
+            FastContext rightResult = (FastContext) rightTask.join();
 
             //合并子任务
             if(leftResult != null) {
