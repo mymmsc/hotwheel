@@ -86,14 +86,10 @@ public abstract class FastBatchTask<T extends FastContext> extends RecursiveTask
     @Override
     protected T compute() {
         T ret = getContext();
-        //ret.taskName = taskName;
-        //ret.file = data.file;
-        //ret.fields = data.fields;
         numberOfThread++;
         logger.info(taskName + ": " + start + "->" + end + ": 1");
         //如果任务足够小就计算任务
         int remaining = (end - start);
-        //boolean canCompute = (end - start) <= threshold;
         if (remaining <= 0) {
             // 不执行
             //return ret;
@@ -119,14 +115,10 @@ public abstract class FastBatchTask<T extends FastContext> extends RecursiveTask
 
             //合并子任务
             if(leftResult != null) {
-                //ret.lines.addAll(leftResult.lines);
                 ret.merge(leftResult);
-                //merge(leftResult);
             }
             if(rightResult != null) {
-                //ret.lines.addAll(rightResult.lines);
                 ret.merge(rightResult);
-                //merge(rightResult);
             }
             logger.info(taskName + ": " + start + "->" + end + ": 3");
         }
