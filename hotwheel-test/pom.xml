@@ -5,13 +5,13 @@
     <parent>
         <artifactId>hotwheel-framework</artifactId>
         <groupId>org.mymmsc.hotwheel</groupId>
-        <version>3.1.0</version>
+        <version>3.1.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.mymmsc.hotwheel</groupId>
     <artifactId>hotwheel-test</artifactId>
-    <version>3.1.0</version>
+    <version>${hotwheel.version}</version>
 
     <build>
         <plugins>

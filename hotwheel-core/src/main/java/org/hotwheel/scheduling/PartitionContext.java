@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * 批量上下文
  * Created by wangfeng on 2016/10/26.
+ * @since 3.1.1
  */
 public abstract class PartitionContext<T, V> implements FastContext<V>{
     /** 任务名称 */
