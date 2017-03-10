@@ -54,6 +54,7 @@
         <javax.mail.version>1.4.4</javax.mail.version>
         <!-- others end -->
     </properties>
+
     <!-- ==================== 依赖jar 设置 =========================== -->
     <dependencies>
         <!-- j2ee start -->
