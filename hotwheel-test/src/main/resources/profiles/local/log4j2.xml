@@ -4,7 +4,7 @@
     <Properties>
         <!-- 配置日志文件输出目录 -->
         <Property name="logs.home">/data/runtime/logs</Property>
-        <Property name="logs.project">exchange</Property>
+        <Property name="logs.project">stock</Property>
     </Properties>
 
     <Appenders>
