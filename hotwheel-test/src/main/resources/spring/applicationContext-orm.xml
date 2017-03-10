@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+    <bean id="ermasDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${ermas.jdbc.url}" />
+        <property name="username" value="${ermas.jdbc.username}" />
+        <property name="password" value="${ermas.jdbc.password}" />
+        <property name="initialSize" value="${pool.initialPoolSize}" />
+        <property name="maxActive" value="${pool.maxPoolSize}" />
+        <property name="maxIdle" value="${pool.maxIdle}"/>
+        <property name="minIdle" value="${pool.minIdle}" />
+        <property name="timeBetweenEvictionRunsMillis" value="${pool.timeBetweenEvictionRunsMillis}" />
+        <property name="minEvictableIdleTimeMillis" value="${pool.minEvictableIdleTimeMillis}" />
+        <property name="removeAbandoned" value="${pool.removeAbandoned}" />
+        <property name="removeAbandonedTimeout" value="${pool.removeAbandonedTimeout}" />
+        <property name="maxWait" value="${pool.maxWait}" />
+        <property name="validationQuery" value="SELECT 1" />
+        <property name="testOnBorrow" value="${pool.testOnBorrow}" />
+        <property name="testWhileIdle" value="${pool.testWhileIdle}" />
+        <property name="jdbcInterceptors" value="${pool.jdbcInterceptors}"/>
+    </bean>
+
+    <!--mybatis start-->
+    <bean id="ermasSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="ermasDataSource" />
+        <property name="configLocation" value="classpath:/mybatis/config.xml" />
+        <property name="typeAliasesPackage" value="com.jiedaibao.exchange.model" />
+        <property name="mapperLocations" value="classpath*:mybatis/ermas/*.xml" />
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.jiedaibao.exchange.dao.ermas" />
+        <property name="sqlSessionFactoryBeanName" value="ermasSessionFactory" />
+    </bean>
+
+    <!--mybatis end-->
+
+    <aop:aspectj-autoproxy />
+
+</beans>
