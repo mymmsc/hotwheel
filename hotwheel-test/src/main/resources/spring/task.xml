@@ -16,27 +16,11 @@
     </bean>
 
     <!-- ==================== 业务数据 =========================== -->
-    <bean id="CollectServiceTask" class="com.jiedaibao.exchange.task.CollectionTask">
-        <property name="taskSwitch" value="${task.overdue}"/>
-        <property name="taskName" value="${task.overdue.name}"/>
+    <bean id="historyDataTask" class="org.hotwheel.stock.task.HistoryDataTask">
+        <property name="taskSwitch" value="${task.history}"/>
+        <property name="taskName" value="${task.history.name}"/>
     </bean>
     <task:scheduled-tasks>
-        <task:scheduled ref="CollectServiceTask" method="doTask" cron="${batch.cron}" />
-    </task:scheduled-tasks>
-
-    <bean id="OverdueServiceTask" class="com.jiedaibao.exchange.task.DebtServiceTask">
-        <property name="taskSwitch" value="${task.service}"/>
-        <property name="taskName" value="${task.service.name}"/>
-    </bean>
-    <task:scheduled-tasks>
-        <task:scheduled ref="OverdueServiceTask" method="doTask" cron="${batch.cron}" />
-    </task:scheduled-tasks>
-    <!-- ==================== 修复数据 =========================== -->
-    <bean id="fixDataTask" class="com.jiedaibao.exchange.task.FixDataTask">
-        <property name="taskSwitch" value="${task.fixData}"/>
-        <property name="taskName" value="${task.fixData.name}"/>
-    </bean>
-    <task:scheduled-tasks>
-        <task:scheduled ref="fixDataTask" method="doTask" cron="${batch.cron}" />
+        <task:scheduled ref="historyDataTask" method="doTask" cron="${batch.cron}" />
     </task:scheduled-tasks>
 </beans>
