@@ -4,7 +4,7 @@
  * Copyright 2000-2010 MyMMSC Software Foundation (MSF), Inc. All rights reserved.
  * MyMMSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-package org.mymmsc.j2ee;
+package org.hotwheel.j2ee;
 
 /**
  * FireStruts 返回码常量

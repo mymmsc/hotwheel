@@ -4,7 +4,7 @@
  * Copyright 2000-2010 MyMMSC Software Foundation (MSF), Inc. All rights reserved.
  * MyMMSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-package org.mymmsc.j2ee;
+package org.hotwheel.j2ee;
 
 // log4j
 //import org.apache.log4j.xml.DOMConfigurator;
@@ -23,21 +23,20 @@ import org.hotwheel.context.template.Templator;
 import org.hotwheel.context.template.VariableNotDefinedException;
 import org.hotwheel.ibatis.builder.SqlApplicationContext;
 import org.hotwheel.io.ActionStatus;
-import org.hotwheel.j2ee.HotWheel;
+import org.hotwheel.j2ee.annotation.Controller;
+import org.hotwheel.j2ee.annotation.RequestMapping;
+import org.hotwheel.j2ee.annotation.ResponseBody;
+import org.hotwheel.j2ee.annotation.WebAction;
+import org.hotwheel.j2ee.http.Category;
+import org.hotwheel.j2ee.http.HttpCookie;
+import org.hotwheel.j2ee.http.HttpParameter;
 import org.hotwheel.j2ee.scheduler.AbstractTask;
+import org.hotwheel.j2ee.util.PackageUtil;
 import org.hotwheel.j2ee.util.manifests.ServletMfs;
 import org.hotwheel.json.JsonAdapter;
 import org.hotwheel.protocol.Http11Status;
 import org.hotwheel.redis.RedisApi;
 import org.hotwheel.util.manifests.Manifests;
-import org.mymmsc.j2ee.annotation.Controller;
-import org.mymmsc.j2ee.annotation.RequestMapping;
-import org.mymmsc.j2ee.annotation.ResponseBody;
-import org.mymmsc.j2ee.annotation.WebAction;
-import org.mymmsc.j2ee.http.Category;
-import org.mymmsc.j2ee.http.HttpCookie;
-import org.mymmsc.j2ee.http.HttpParameter;
-import org.mymmsc.j2ee.util.PackageUtil;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 

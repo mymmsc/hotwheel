@@ -1,7 +1,7 @@
 /**
  *
  */
-package org.mymmsc.j2ee.http;
+package org.hotwheel.j2ee.http;
 
 /**
  * HTTP/HTTPs网络令牌

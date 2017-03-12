@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.mymmsc.j2ee.annotation;
+package org.hotwheel.j2ee.annotation;
 
 /**
  * Java 5 enumeration of HTTP request methods. Intended for use

@@ -1,6 +1,6 @@
-package org.mymmsc.j2ee;
+package org.hotwheel.j2ee;
 
-import org.mymmsc.j2ee.annotation.RequestMethod;
+import org.hotwheel.j2ee.annotation.RequestMethod;
 
 import java.lang.reflect.Method;
 

@@ -4,9 +4,9 @@
  * Copyright 2000-2010 MyMMSC Software Foundation (MSF), Inc. All rights reserved.
  * MyMMSC PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-package org.mymmsc.j2ee.http;
+package org.hotwheel.j2ee.http;
 
-import org.mymmsc.j2ee.http.adapter.Element;
+import org.hotwheel.j2ee.http.adapter.Element;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
