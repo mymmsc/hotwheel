@@ -1,4 +1,4 @@
-package org.mymmsc.j2ee;
+package org.hotwheel.j2ee;
 
 public interface IAction {
 

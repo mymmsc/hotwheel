@@ -1,4 +1,4 @@
-package org.mymmsc.j2ee.util;
+package org.hotwheel.j2ee.util;
 
 import org.hotwheel.assembly.Api;
 import org.objectweb.asm.*;

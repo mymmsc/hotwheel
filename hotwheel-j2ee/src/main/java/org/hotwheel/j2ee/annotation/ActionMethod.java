@@ -1,4 +1,4 @@
-package org.mymmsc.j2ee.annotation;
+package org.hotwheel.j2ee.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

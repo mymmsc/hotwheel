@@ -1,7 +1,7 @@
 /**
  *
  */
-package org.mymmsc.j2ee;
+package org.hotwheel.j2ee;
 
 import org.hotwheel.assembly.XmlParser;
 

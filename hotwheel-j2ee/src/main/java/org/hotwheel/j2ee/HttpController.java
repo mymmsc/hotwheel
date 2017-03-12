@@ -1,4 +1,4 @@
-package org.mymmsc.j2ee;
+package org.hotwheel.j2ee;
 
 import org.hotwheel.adapter.BaseObject;
 import org.hotwheel.assembly.Api;
@@ -7,9 +7,9 @@ import org.hotwheel.context.template.BlockNotDefinedException;
 import org.hotwheel.context.template.TemplateSyntaxException;
 import org.hotwheel.context.template.Templator;
 import org.hotwheel.context.template.VariableNotDefinedException;
+import org.hotwheel.j2ee.http.HttpCookie;
+import org.hotwheel.j2ee.http.HttpParameter;
 import org.hotwheel.redis.RedisApi;
-import org.mymmsc.j2ee.http.HttpCookie;
-import org.mymmsc.j2ee.http.HttpParameter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
