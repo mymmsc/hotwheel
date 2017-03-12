@@ -3,8 +3,8 @@
  */
 package org.mymmsc.j2ee.http;
 
+import org.hotwheel.json.JsonAdapter;
 import org.mymmsc.api.assembly.Api;
-import org.mymmsc.api.context.JsonAdapter;
 import org.mymmsc.api.crypto.ThreeDES;
 
 /**
