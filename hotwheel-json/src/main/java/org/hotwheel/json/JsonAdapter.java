@@ -346,7 +346,7 @@ public class JsonAdapter {
      * @param <T>   数组的元素类
      * @param clazz 数组元素类
      */
-    public <T> List<T> parseList(Class<T> clazz) {
+    private <T> List<T> parseList(Class<T> clazz) {
         List<T> list = null;
         try {
             JsonToken token = null;
