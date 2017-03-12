@@ -88,7 +88,11 @@ public final class HttpApi {
 				as.set(errCode + 10, "调用接口失败");
 			} else {
 				try {
-					obj = (T) json.get(clazz, subClass);
+				    if (subClass == null) {
+				        obj = (T) json.get(clazz);
+                    } else {
+                        obj = (T) json.get(clazz, subClass);
+                    }
 					if (obj == null) {
 						as.set(errCode + 11, "接口返回内容不能匹配");
 					} else {
