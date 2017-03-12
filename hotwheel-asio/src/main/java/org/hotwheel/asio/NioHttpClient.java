@@ -1,6 +1,6 @@
 package org.hotwheel.asio;
 
-import org.mymmsc.api.assembly.Api;
+import org.hotwheel.assembly.Api;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

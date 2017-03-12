@@ -1,10 +1,10 @@
 package org.hotwheel.j2ee.scheduler;
 
 import org.apache.ibatis.session.SqlSession;
+import org.hotwheel.assembly.Api;
 import org.hotwheel.beans.factory.annotation.Autowired;
 import org.hotwheel.core.BaseContext;
 import org.hotwheel.ibatis.builder.SqlApplicationContext;
-import org.mymmsc.api.assembly.Api;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

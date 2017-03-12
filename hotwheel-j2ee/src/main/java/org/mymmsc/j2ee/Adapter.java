@@ -3,7 +3,7 @@
  */
 package org.mymmsc.j2ee;
 
-import org.mymmsc.api.assembly.XmlParser;
+import org.hotwheel.assembly.XmlParser;
 
 /**
  * 适配器

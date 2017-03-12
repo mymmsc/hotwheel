@@ -6,7 +6,7 @@
  */
 package org.mymmsc.j2ee.http;
 
-import org.mymmsc.api.assembly.Api;
+import org.hotwheel.assembly.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

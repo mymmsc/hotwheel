@@ -1,6 +1,6 @@
 package org.mymmsc.j2ee.util;
 
-import org.mymmsc.api.assembly.Api;
+import org.hotwheel.assembly.Api;
 import org.objectweb.asm.*;
 
 import java.io.File;

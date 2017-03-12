@@ -3,8 +3,8 @@
  */
 package org.mymmsc.j2ee.http;
 
-import org.mymmsc.api.redis.RedisApi;
-import org.mymmsc.api.redis.RedisSyncMethod;
+import org.hotwheel.redis.RedisApi;
+import org.hotwheel.redis.RedisSyncMethod;
 
 /**
  * @author WangFeng
