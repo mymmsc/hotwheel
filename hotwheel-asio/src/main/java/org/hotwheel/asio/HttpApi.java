@@ -82,21 +82,14 @@ public final class HttpApi {
 			as.set(errCode + 2, String.format("调用接口成功, 但是: %d, %s", hRet.getStatus(), hRet.getError()));
 		} else if(hRet.getBody() == null){
 			as.set(errCode + 3, "HTTP接口返回BODY为空");
-		} else {
+        } else {
 			JsonAdapter json = JsonAdapter.parse(hRet.getBody());
 			if(json == null) {
 				as.set(errCode + 10, "调用接口失败");
 			} else {
 				try {
-				    if (subClass == null) {
-				        if (clazz.isArray()) {
-				            subClass = clazz.getComponentType();
-                        }
-				        obj = (T) json.get(clazz);
-                    } else {
-                        obj = (T) json.get(clazz, subClass);
-                    }
-					if (obj == null) {
+				    obj = (T) json.get(clazz, subClass);
+                    if (obj == null) {
 						as.set(errCode + 11, "接口返回内容不能匹配");
 					} else {
 						as.set(0, "接口成功");
