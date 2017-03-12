@@ -402,7 +402,10 @@ public class JsonAdapter {
         T obj = null;
         if (clazz.isArray()) {
             Class cls = clazz.getComponentType();
-            obj = (T) parseList(cls);
+            List list = (List) parseList(cls);
+            if (list != null) {
+                obj = (T) list.toArray();
+            }
         } else {
             obj = get(clazz, null);
         }
