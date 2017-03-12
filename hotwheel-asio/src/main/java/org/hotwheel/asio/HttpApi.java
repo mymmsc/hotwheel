@@ -89,6 +89,9 @@ public final class HttpApi {
 			} else {
 				try {
 				    if (subClass == null) {
+				        if (clazz.isArray()) {
+				            subClass = clazz.getComponentType();
+                        }
 				        obj = (T) json.get(clazz);
                     } else {
                         obj = (T) json.get(clazz, subClass);
