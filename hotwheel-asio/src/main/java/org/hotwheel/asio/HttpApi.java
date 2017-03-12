@@ -1,10 +1,10 @@
 package org.hotwheel.asio;
 
+import org.hotwheel.assembly.Api;
+import org.hotwheel.io.ActionStatus;
+import org.hotwheel.io.HttpClient;
+import org.hotwheel.io.HttpResult;
 import org.hotwheel.json.JsonAdapter;
-import org.mymmsc.api.assembly.Api;
-import org.mymmsc.api.io.ActionStatus;
-import org.mymmsc.api.io.HttpClient;
-import org.mymmsc.api.io.HttpResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

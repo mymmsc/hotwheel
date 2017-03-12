@@ -1,13 +1,13 @@
 package org.mymmsc.j2ee;
 
-import org.mymmsc.api.adapter.BaseObject;
-import org.mymmsc.api.assembly.Api;
-import org.mymmsc.api.category.Encoding;
-import org.mymmsc.api.context.BlockNotDefinedException;
-import org.mymmsc.api.context.TemplateSyntaxException;
-import org.mymmsc.api.context.Templator;
-import org.mymmsc.api.context.VariableNotDefinedException;
-import org.mymmsc.api.redis.RedisApi;
+import org.hotwheel.adapter.BaseObject;
+import org.hotwheel.assembly.Api;
+import org.hotwheel.category.Encoding;
+import org.hotwheel.context.template.BlockNotDefinedException;
+import org.hotwheel.context.template.TemplateSyntaxException;
+import org.hotwheel.context.template.Templator;
+import org.hotwheel.context.template.VariableNotDefinedException;
+import org.hotwheel.redis.RedisApi;
 import org.mymmsc.j2ee.http.HttpCookie;
 import org.mymmsc.j2ee.http.HttpParameter;
 

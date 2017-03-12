@@ -22,7 +22,7 @@ public final class JsonReadContext
     /*
     /**********************************************************
     /* Simple instance reuse slots; speeds up things
-    /* a bit (10-15%) for org.mymmsc.api.io.docs with lots of small
+    /* a bit (10-15%) for org.hotwheel.io.docs with lots of small
     /* arrays/objects (for which allocation was
     /* visible in profile stack frames)
     /**********************************************************
