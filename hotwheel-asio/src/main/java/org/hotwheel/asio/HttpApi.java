@@ -1,7 +1,7 @@
 package org.hotwheel.asio;
 
+import org.hotwheel.json.JsonAdapter;
 import org.mymmsc.api.assembly.Api;
-import org.mymmsc.api.context.JsonAdapter;
 import org.mymmsc.api.io.ActionStatus;
 import org.mymmsc.api.io.HttpClient;
 import org.mymmsc.api.io.HttpResult;
