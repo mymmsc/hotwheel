@@ -29,6 +29,11 @@
             <artifactId>hotwheel-core</artifactId>
             <version>${hotwheel.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.mymmsc.hotwheel</groupId>
+            <artifactId>hotwheel-json</artifactId>
+            <version>${hotwheel.version}</version>
+        </dependency>
         <!-- log4j2 begin -->
         <dependency>
             <groupId>org.slf4j</groupId>
