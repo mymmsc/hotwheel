@@ -399,7 +399,15 @@ public class JsonAdapter {
     }
 
     public <T> T get(Class<T> clazz) {
-        return get(clazz, null);
+        T obj = null;
+        if (clazz.isArray()) {
+            Class cls = clazz.getComponentType();
+            obj = (T) parseList(cls);
+        } else {
+            obj = get(clazz, null);
+        }
+
+        return obj;
     }
 
     /**
