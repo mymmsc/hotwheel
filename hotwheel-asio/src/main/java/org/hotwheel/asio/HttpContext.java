@@ -183,26 +183,8 @@ public class HttpContext extends AioContext {
 		return params.toString();
 	}
 
-	public static String getParams(Map<String, Object> params) {
-		String sRet = "{";
-		StringBuffer sb = new StringBuffer();
-		for (Map.Entry<String, Object> entry : params.entrySet()) {
-			String key = entry.getKey();
-
-			String value = Api.toString(entry.getValue());
-			String str = String.format("&%s=%s", key, value);
-			sb.append(str);
-		}
-		if (sb.length() > 0) {
-
-			sRet += sb.substring(1);
-		}
-		sRet += "}";
-		return sRet;
-	}
-
 	public void setParams(Map<String, Object> params) {
-		String request = getParams(params);
+		String request = HttpApi.getParams(params);
 		this.params.append(request);
 	}
 
