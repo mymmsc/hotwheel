@@ -2583,6 +2583,10 @@ public final class Api {
      * @return
      */
     public static boolean isInteger(String number) {
-        return match(CNUMBER_PATTERN, number);
+        boolean bRet = false;
+        if (!isEmpty(number)) {
+            bRet = match(CNUMBER_PATTERN, number);
+        }
+        return bRet;
     }
 }
