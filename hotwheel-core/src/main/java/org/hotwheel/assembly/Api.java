@@ -2557,4 +2557,32 @@ public final class Api {
         data[0] = (byte) n;
         return data;
     }
+
+    private static final String NUMBER_PATTERN = "^[0-9]+(.[0-9]{0,1})?$";// 判断小数点后一位的数字的正则表达式
+    private static final String CNUMBER_PATTERN = "^[0-9]*$";// 判断数字的正则表达式
+
+    /**
+     * 执行正则表达式
+     *
+     * @param pattern
+     *            表达式
+     * @param str
+     *            待验证字符串
+     * @return 返回 <b>true </b>,否则为 <b>false </b>
+     */
+    private static boolean match(String pattern, String str) {
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(str);
+        return m.find();
+    }
+
+    /**
+     * 验证是不是数字(没有小数点)
+     *
+     * @param number
+     * @return
+     */
+    public static boolean isInteger(String number) {
+        return match(CNUMBER_PATTERN, number);
+    }
 }
