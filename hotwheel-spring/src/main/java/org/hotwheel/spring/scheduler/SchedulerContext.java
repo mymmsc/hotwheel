@@ -1,7 +1,5 @@
 package org.hotwheel.spring.scheduler;
 
-//import org.hotwheel.stock.exchange.context.BaseContext;
-
 import org.hotwheel.assembly.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
