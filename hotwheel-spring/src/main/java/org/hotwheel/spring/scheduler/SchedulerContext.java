@@ -2,8 +2,11 @@ package org.hotwheel.spring.scheduler;
 
 //import org.hotwheel.stock.exchange.context.BaseContext;
 
+import org.hotwheel.assembly.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Date;
 
 /**
  * 调度上下文, 负责任务控制
@@ -25,6 +28,23 @@ public abstract class SchedulerContext implements TaskContext {
 
     protected void setTaskException(boolean haveException) {
         isTaskException = haveException;
+    }
+
+    /**
+     * 是否定时器运行周期内
+     * @return
+     */
+    protected boolean isTimerCycle() {
+        boolean bRet = false;
+        Date date = new Date();
+        String now = Api.toString(date, "HH:mm:ss");
+        if(now.compareTo(taskStartTime) >= 0 && now.compareTo(taskEndTime) < 0) {
+            bRet = true;
+        } else {
+            bRet = false;
+        }
+
+        return bRet;
     }
 
     /**
@@ -76,13 +96,10 @@ public abstract class SchedulerContext implements TaskContext {
      * @param taskSwitch
      */
     public void setTaskSwitch(boolean taskSwitch) {
-        //EValue ev = new EValue(taskSwitch);
-        //this.taskSwitch = ev.toBoolean();
         this.taskSwitch = taskSwitch;
     }
 
     public boolean getTaskSwitch() {
-        //return String.valueOf(taskSwitch);
         return taskSwitch;
     }
 
