@@ -38,8 +38,21 @@ public abstract class SchedulerContext implements TaskContext {
         String now = Api.toString(date, "HH:mm:ss");
         if(now.compareTo(taskStartTime) >= 0 && now.compareTo(taskEndTime) < 0) {
             bRet = true;
-        } else {
-            bRet = false;
+        }
+
+        return bRet;
+    }
+
+    /**
+     * 是否过期
+     * @return
+     */
+    protected boolean isTimeExpire() {
+        boolean bRet = false;
+        Date date = new Date();
+        String now = Api.toString(date, "HH:mm:ss");
+        if(now.compareTo(taskEndTime) > 0) {
+            bRet = true;
         }
 
         return bRet;
