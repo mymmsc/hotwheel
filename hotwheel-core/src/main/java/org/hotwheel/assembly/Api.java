@@ -475,6 +475,34 @@ public final class Api {
     /******************** < 基本数据类型APIs > ********************/
 
     /**
+     * 关闭文件输入流
+     * @param inputStream
+     */
+    public static void closeQuietly(InputStream inputStream) {
+        if (inputStream != null) {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                //
+            }
+        }
+    }
+
+    /**
+     * 关闭文件输入流
+     * @param outputStream
+     */
+    public static void closeQuietly(OutputStream outputStream) {
+        if (outputStream != null) {
+            try {
+                outputStream.close();
+            } catch (IOException e) {
+                //
+            }
+        }
+    }
+
+    /**
      * 创建目录
      *
      * @param path String
