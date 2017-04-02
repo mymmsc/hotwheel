@@ -406,7 +406,7 @@ public class HttpClient {
                 httpConn.disconnect();
             }
         }
-
+        hRet.finished();
         return hRet;
     }
 }

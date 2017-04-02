@@ -3,6 +3,8 @@
  */
 package org.hotwheel.io;
 
+import org.hotwheel.assembly.Api;
+
 import java.util.Date;
 
 /**
@@ -36,6 +38,24 @@ public class HttpResult {
      * 文本内容
      */
     private String body = null;
+
+    private String timestamp;
+    /**
+     * 耗时
+     */
+    private long acrossTime;
+
+    public HttpResult() {
+        acrossTime = -1;
+        status = 900;
+        timestamp = Api.toString(new Date(), "yyyy-MM-dd HH:mm:ss.SSS");
+    }
+
+    public void finished() {
+        Date t1 = Api.toDate(timestamp, "yyyy-MM-dd HH:mm:ss.SSS");
+        Date t2 = new Date();
+        acrossTime = t2.getTime() - t1.getTime();
+    }
 
     public int getStatus() {
         return status;
@@ -105,7 +125,14 @@ public class HttpResult {
         this.type = type;
     }
 
-	/*
+    public long getAcrossTime() {
+        return acrossTime;
+    }
+
+    public void setAcrossTime(long acrossTime) {
+        this.acrossTime = acrossTime;
+    }
+/*
     String RFC1123_DATE_PATTERN = "EEE, dd MMM yyyy HH:mm:ss zzz";
     SimpleDateFormat dateFormat = new SimpleDateFormat(RFC1123_DATE_PATTERN);
 
