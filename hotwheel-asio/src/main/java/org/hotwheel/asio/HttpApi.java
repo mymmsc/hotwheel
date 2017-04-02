@@ -50,8 +50,7 @@ public final class HttpApi {
 		T tRet = null;
 		HttpClient hc = new HttpClient(url, 30);
 		HttpResult hRet = hc.post(headers, body);
-		System.out.println(
-				"http-status=[" + hRet.getStatus() + "], body=[" + hRet.getBody() + "], message=" + hRet.getError());
+		logger.debug("http-status=[" + hRet.getStatus() + "], body=[" + hRet.getBody() + "], message=" + hRet.getError());
 		if (hRet.getStatus() == 200 && hRet.getBody() != null) {
 			JsonAdapter json = JsonAdapter.parse(hRet.getBody());
 			if (json != null) {
