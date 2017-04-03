@@ -40,6 +40,9 @@ public class HttpResult {
     private String body = null;
 
     private String timestamp;
+
+    private String cookies = "";
+
     /**
      * 耗时
      */
@@ -144,4 +147,12 @@ public class HttpResult {
     System.out.println("str="+str);
     System.out.println("date2="+date2+"; "+date2.getTime());
 	*/
+
+    public String getCookies() {
+        return cookies;
+    }
+
+    public void setCookies(String cookies) {
+        this.cookies = cookies;
+    }
 }

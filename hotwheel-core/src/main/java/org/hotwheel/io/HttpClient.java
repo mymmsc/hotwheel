@@ -365,6 +365,7 @@ public class HttpClient {
                 String cookie = getSession(httpConn);
                 if (!Api.isEmpty(cookie) && cookiePath != null) {
                     session.put(cookiePath, cookie);
+                    hRet.setCookies(cookie);
                 }
 
                 if (Api.isEmpty(contentType)) {
