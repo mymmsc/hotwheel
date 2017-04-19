@@ -173,7 +173,7 @@
     <!-- ==================== Nexus私服设置 =========================== -->
     <repositories>
         <repository>
-            <id>nexus_public</id>
+            <id>nexus-release2</id>
             <url>http://mvn.jdb-dev.com/content/repositories/public/</url>
             <releases>
                 <enabled>false</enabled>
