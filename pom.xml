@@ -9,7 +9,7 @@
     <groupId>org.mymmsc.hotwheel</groupId>
     <artifactId>hotwheel-framework</artifactId>
     <packaging>pom</packaging>
-    <version>3.0.2</version>
+    <version>3.0.3</version>
 
     <contributors>
         <contributor>
@@ -44,15 +44,15 @@
         <javac.encoding>UTF-8</javac.encoding>
 
         <!-- MyMMSC-HotWheel组件 版本设置 -->
-        <hotwheel.version>3.0.2</hotwheel.version>
+        <hotwheel.version>3.0.3</hotwheel.version>
 
         <!-- J2EE 版本 -->
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
 
         <!-- logging begin -->
-        <slf4j.version>1.7.22</slf4j.version>
+        <slf4j.version>1.7.25</slf4j.version>
 
-        <log4j2.version>2.7</log4j2.version>
+        <log4j2.version>2.8.2</log4j2.version>
         <log4j2.disruptor.version>3.3.0</log4j2.disruptor.version>
 
         <logback.version>1.0.13</logback.version>
@@ -180,17 +180,17 @@
     </repositories>
     <!-- ==================== 发布 =========================== -->
     <distributionManagement>
+        <!--
         <repository>
             <id>nexus-releases</id>
             <name>Local Nexus Repository</name>
             <url>http://100.73.17.2:8081/repository/public/</url>
         </repository>
-        <!--
+        -->
         <repository>
             <id>nexus-release2</id>
             <name>Local Nexus Repository</name>
             <url>http://mvn.jdb-dev.com/content/repositories/releases/</url>
         </repository>
-        -->
     </distributionManagement>
 </project>
