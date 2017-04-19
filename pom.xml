@@ -173,6 +173,16 @@
     <!-- ==================== Nexus私服设置 =========================== -->
     <repositories>
         <repository>
+            <id>nexus_public</id>
+            <url>http://mvn.jdb-dev.com/content/repositories/public/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
             <id>nexus-release</id>
             <name>Local Nexus Repository</name>
             <url>http://100.73.17.2:8081/repository/public/</url>
