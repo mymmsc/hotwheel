@@ -171,11 +171,6 @@
     <!-- ==================== Nexus私服设置 =========================== -->
     <repositories>
         <repository>
-            <id>nexus-release2</id>
-            <name>Local Nexus Repository2</name>
-            <url>http://mvn.jdb-dev.com/content/repositories/public/</url>
-        </repository>
-        <repository>
             <id>nexus-releases</id>
             <name>Local Nexus Repository</name>
             <url>http://100.73.17.2:8081/repository/public/</url>
@@ -183,17 +178,10 @@
     </repositories>
     <!-- ==================== 发布 =========================== -->
     <distributionManagement>
-        <!--
         <repository>
             <id>nexus-releases</id>
             <name>Local Nexus Repository</name>
             <url>http://100.73.17.2:8081/repository/public/</url>
-        </repository>
-        -->
-        <repository>
-            <id>nexus-release2</id>
-            <name>Local Nexus Repository2</name>
-            <url>http://mvn.jdb-dev.com/content/repositories/releases/</url>
         </repository>
     </distributionManagement>
 </project>
