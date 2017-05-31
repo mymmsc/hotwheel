@@ -450,6 +450,7 @@ public class JsonAdapter {
                 }
                 Class<?> cls = Api.getClass(clazz, fieldName);
                 if (cls == null) {
+                    parser.skipChildren();
                     continue;
                 } else if (cls == List.class) {
                     cls = claee;
