@@ -1,7 +1,7 @@
 package org.hotwheel.ibatis.datasource;
 
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSourceFactory;
-import org.mymmsc.api.assembly.Api;
+import org.hotwheel.assembly.Api;
 import org.mymmsc.sql.jdbc.pool.DataSource;
 import org.mymmsc.sql.jdbc.pool.PoolProperties;
 

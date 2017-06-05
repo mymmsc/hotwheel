@@ -12,7 +12,7 @@ import java.util.concurrent.RecursiveTask;
  * Created by wangfeng on 2016/11/15.
  * @since 2.0.15
  */
-public abstract class FastBatchTask<T extends PartitionContext> extends RecursiveTask<T> implements TaskContext<T>{
+public abstract class FastBatchTask<T extends FastContext> extends RecursiveTask<T> implements TaskContext<T>{
     protected static final String PROP_THRESHOLD = "threshold";
     protected static final String PROP_THREADNUM = "threadNum";
     protected static final String PROP_BATCHSIZE = "batchSize";
@@ -86,20 +86,20 @@ public abstract class FastBatchTask<T extends PartitionContext> extends Recursiv
     @Override
     protected T compute() {
         T ret = getContext();
-        ret.taskName = taskName;
-        //ret.file = data.file;
-        //ret.fields = data.fields;
         numberOfThread++;
         logger.info(taskName + ": " + start + "->" + end + ": 1");
         //如果任务足够小就计算任务
         int remaining = (end - start);
-        //boolean canCompute = (end - start) <= threshold;
         if (remaining <= 0) {
             // 不执行
             //return ret;
         } else if(remaining == 1 || remaining <= threshold) {
             logger.info(taskName + ": " + start + "->" + end + ": 2");
-            execute(ret.lines);
+            try {
+                execute(ret);
+            } catch (Exception e) {
+                logger.error("{}#excute failed: ", taskName, e);
+            }
         } else {
             // 如果任务大于阈值，就分裂成两个子任务计算
             int middle = (start + end) / 2;
@@ -110,18 +110,26 @@ public abstract class FastBatchTask<T extends PartitionContext> extends Recursiv
             rightTask.fork();
 
             //等待任务执行结束合并其结果
-            T leftResult = (T)leftTask.join();
-            T rightResult = (T)rightTask.join();
+            FastContext leftResult = (FastContext) leftTask.join();
+            FastContext rightResult = (FastContext) rightTask.join();
 
             //合并子任务
-            if(leftResult.lines != null) {
-                ret.lines.addAll(leftResult.lines);
+            if(leftResult != null) {
+                ret.merge(leftResult);
             }
-            if(rightResult.lines != null) {
-                ret.lines.addAll(rightResult.lines);
+            if(rightResult != null) {
+                ret.merge(rightResult);
             }
             logger.info(taskName + ": " + start + "->" + end + ": 3");
         }
         return ret;
+    }
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 }

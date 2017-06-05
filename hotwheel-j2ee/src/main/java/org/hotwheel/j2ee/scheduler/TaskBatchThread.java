@@ -1,6 +1,6 @@
 package org.hotwheel.j2ee.scheduler;
 
-import org.mymmsc.api.assembly.Api;
+import org.hotwheel.assembly.Api;
 
 import java.io.File;
 

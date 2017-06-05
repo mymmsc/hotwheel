@@ -7,8 +7,9 @@ import java.util.List;
 /**
  * 批量上下文
  * Created by wangfeng on 2016/10/26.
+ * @since 3.1.1
  */
-public class PartitionContext {
+public abstract class PartitionContext<T, V> implements FastContext<V>{
     /** 任务名称 */
     public String taskName = null;
     /** CSV文件名 */
@@ -16,9 +17,9 @@ public class PartitionContext {
     /** 字段列表 */
     public String[] fields = null;
     /** 输出文件行 */
-    public List<String> lines = null;
+    public List<T> rows = null;
 
     public PartitionContext() {
-        this.lines = new ArrayList<>();
+        this.rows = new ArrayList<>();
     }
 }

@@ -1,6 +1,6 @@
 package org.hotwheel.beans;
 
-import org.mymmsc.api.assembly.Api;
+import org.hotwheel.assembly.Api;
 
 /**
  * 多态值

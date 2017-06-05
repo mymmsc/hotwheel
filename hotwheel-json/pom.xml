@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.mymmsc.hotwheel</groupId>
         <artifactId>hotwheel-framework</artifactId>
-        <version>3.0.7</version>
+        <version>3.2.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -25,5 +25,10 @@
             <version>${hotwheel.version}</version>
         </dependency>
         <!-- hotwheel-core end -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.28</version>
+        </dependency>
     </dependencies>
 </project>
