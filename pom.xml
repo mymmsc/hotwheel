@@ -9,7 +9,7 @@
     <groupId>org.mymmsc.hotwheel</groupId>
     <artifactId>hotwheel-framework</artifactId>
     <packaging>pom</packaging>
-    <version>3.0.7</version>
+    <version>3.2.2</version>
 
     <contributors>
         <contributor>
@@ -35,6 +35,7 @@
         <module>hotwheel-daemon</module>
         <module>hotwheel-spring</module>
         <module>hotwheel-test</module>
+        <module>hotwheel-cluster</module>
     </modules>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
@@ -44,7 +45,7 @@
         <javac.encoding>UTF-8</javac.encoding>
 
         <!-- MyMMSC-HotWheel组件 版本设置 -->
-        <hotwheel.version>3.0.7</hotwheel.version>
+        <hotwheel.version>3.2.2</hotwheel.version>
 
         <!-- J2EE 版本 -->
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>

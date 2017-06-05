@@ -1,6 +1,6 @@
 package test.json;
 
-import org.mymmsc.api.context.JsonAdapter;
+import org.hotwheel.json.JsonAdapter;
 import test.json.bean.BigDataResult;
 import test.json.bean.CreditInfo;
 

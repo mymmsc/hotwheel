@@ -17,7 +17,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.nio.reactor.ConnectingIOReactor;
 import org.apache.http.nio.reactor.IOReactorException;
 import org.apache.http.util.EntityUtils;
-import org.mymmsc.api.assembly.Api;
+import org.hotwheel.assembly.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

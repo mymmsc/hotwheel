@@ -1,7 +1,7 @@
 package org.hotwheel.j2ee.scheduler;
 
-import org.mymmsc.api.assembly.Api;
-import org.mymmsc.api.assembly.ResourceApi;
+import org.hotwheel.assembly.Api;
+import org.hotwheel.assembly.ResourceApi;
 
 import java.util.Date;
 import java.util.ResourceBundle;
