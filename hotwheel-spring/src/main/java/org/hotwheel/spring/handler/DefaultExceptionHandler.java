@@ -1,6 +1,7 @@
 package org.hotwheel.spring.handler;
 
 import com.alibaba.fastjson.support.spring.FastJsonJsonView;
+import org.hotwheel.assembly.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -8,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,11 +28,17 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
         // 使用FastJson提供的FastJsonJsonView视图返回, 不需要捕获异常
         FastJsonJsonView view = new FastJsonJsonView();
         Map<String, Object> attributes = new HashMap<String, Object>();
-        attributes.put("code", "1000001");
-        attributes.put("msg", ex.getMessage());
+        //"version":null,"status":0,"message":"SUCCES","timestamp":"2017-06-07 13:45:29.633",
+        // "host":"100.67.25.169","acrossTime":2745,"data"
+        attributes.put("version", "3.2.3");
+        attributes.put("status", 99000);
+        attributes.put("message", ex.getMessage());
+        attributes.put("timestamp", Api.toString(new Date(), "yyyy-MM-dd HH:mm:ss.SSS"));
+        attributes.put("host", Api.getLocalIp());
+        attributes.put("acrossTime", 1);
         view.setAttributesMap(attributes);
         mv.setView(view);
-        logger.error("异常: " + ex.getMessage(), ex);
+        logger.error("{}异常: " + ex.getMessage(), httpServletRequest.getRequestURI(), ex);
         return mv;
     }
 }
