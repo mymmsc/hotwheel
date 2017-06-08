@@ -32,13 +32,17 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
         // "host":"100.67.25.169","acrossTime":2745,"data"
         attributes.put("version", "3.2.3");
         attributes.put("status", 99000);
-        attributes.put("message", ex.getMessage());
+        String message = ex.getMessage();
+        if (Api.isEmpty(message)) {
+            message = "Unknown error.";
+        }
+        attributes.put("message", message);
         attributes.put("timestamp", Api.toString(new Date(), "yyyy-MM-dd HH:mm:ss.SSS"));
         attributes.put("host", Api.getLocalIp());
         attributes.put("acrossTime", 1);
         view.setAttributesMap(attributes);
         mv.setView(view);
-        logger.error("{}异常: " + ex.getMessage(), httpServletRequest.getRequestURI(), ex);
+        logger.error("{}异常: " + message, httpServletRequest.getRequestURI(), ex);
         return mv;
     }
 }
