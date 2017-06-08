@@ -30,7 +30,7 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
         Map<String, Object> attributes = new HashMap<String, Object>();
         //"version":null,"status":0,"message":"SUCCES","timestamp":"2017-06-07 13:45:29.633",
         // "host":"100.67.25.169","acrossTime":2745,"data"
-        attributes.put("version", "3.2.3");
+        attributes.put("version", "hotwheel-3.2.5");
         attributes.put("status", 99000);
         String message = ex.getMessage();
         if (Api.isEmpty(message)) {
