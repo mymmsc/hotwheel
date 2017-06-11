@@ -11,9 +11,13 @@ import org.hotwheel.category.Encoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.io.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -158,8 +162,8 @@ public final class Api {
      * @param uri
      * @return
      */
-    public static Map<String, String> getParams(String uri) {
-        Map<String, String> oRet = null;
+    public static Map<String, Object> getParams(String uri) {
+        Map<String, Object> oRet = null;
         String exp = "(([^=&]+)=([^&]*))";
         Pattern p = Pattern.compile(exp, Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(uri);
@@ -168,7 +172,7 @@ public final class Api {
         String value = null;
         while (m.find()) {
             if (oRet == null) {
-                oRet = new HashMap<String, String>();
+                oRet = new HashMap<String, Object>();
             }
             key = m.group(offset);
             value = m.group(offset + 1);
@@ -187,9 +191,9 @@ public final class Api {
         return oRet;
     }
 
-    public static <T> T valueOf(Map<String, String> map, Class<T> clazz) {
+    public static <T> T valueOf(Map<String, Object> map, Class<T> clazz) {
         T tRet = null;
-        Iterator<Entry<String, String>> iter = map.entrySet().iterator();
+        Iterator<Entry<String, Object>> iter = map.entrySet().iterator();
         while (iter.hasNext()) {
             if (tRet == null) {
                 try {
@@ -202,12 +206,72 @@ public final class Api {
                     break;
                 }
             }
-            Entry<String, String> entry = iter.next();
+            Entry<String, Object> entry = iter.next();
             String key = entry.getKey();
-            String value = entry.getValue();
+            Object value = entry.getValue();
             setValue(tRet, key, value);
         }
         return tRet;
+    }
+
+    /**
+     * Map --> Bean 1: 利用Introspector,PropertyDescriptor实现 Map --> Bean
+     * @param map
+     * @param obj
+     */
+    public static void map2Bean(Map<String, Object> map, Object obj) {
+        try {
+            BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
+            PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+
+            for (PropertyDescriptor property : propertyDescriptors) {
+                String key = property.getName();
+
+                if (map.containsKey(key)) {
+                    Object value = map.get(key);
+                    // 得到property对应的setter方法
+                    Method setter = property.getWriteMethod();
+                    setter.invoke(obj, value);
+                }
+            }
+
+        } catch (Exception e) {
+            //System.out.println("transMap2Bean Error " + e);
+        }
+        return;
+    }
+
+    /**
+     * Bean --> Map 1: 利用Introspector和PropertyDescriptor 将Bean --> Map
+     * @param obj
+     * @return
+     */
+    public static Map<String, Object> bean2Map(Object obj) {
+        Map<String, Object> map = null;
+        if(obj != null) {
+            map = new HashMap<String, Object>();
+            try {
+                BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
+                PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+                for (PropertyDescriptor property : propertyDescriptors) {
+                    String key = property.getName();
+
+                    // 过滤class属性
+                    if (!key.equals("class")) {
+                        // 得到property对应的getter方法
+                        Method getter = property.getReadMethod();
+                        Object value = getter.invoke(obj);
+
+                        map.put(key, value);
+                    }
+
+                }
+            } catch (Exception e) {
+                //System.out.println("transBean2Map Error " + e);
+            }
+        }
+        return map;
+
     }
 
     /**
@@ -219,7 +283,7 @@ public final class Api {
      */
     public static <T> T parseParams(String string, Class<T> clazz) {
         T tRet = null;
-        Map<String, String> map = getParams(string);
+        Map<String, Object> map = getParams(string);
         if (map != null && map.size() > 0) {
             tRet = valueOf(map, clazz);
         }
