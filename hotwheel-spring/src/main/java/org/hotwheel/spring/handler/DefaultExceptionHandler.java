@@ -3,6 +3,7 @@ package org.hotwheel.spring.handler;
 import com.alibaba.fastjson.support.spring.FastJsonJsonView;
 import org.hotwheel.assembly.Api;
 import org.hotwheel.exception.ApiError;
+import org.hotwheel.spring.HotWheelSpring;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -33,7 +34,7 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
         } else {
             params.put("status", 99000);
         }
-        params.put("version", "hotwheel-3.2.6");
+        params.put("version", HotWheelSpring.getVersion());
         String message = ex.getMessage();
         if (Api.isEmpty(message)) {
             message = "Unknown error.";

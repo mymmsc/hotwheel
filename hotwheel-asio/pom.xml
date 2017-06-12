@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.mymmsc.hotwheel</groupId>
         <artifactId>hotwheel-framework</artifactId>
-        <version>5.0.1</version>
+        <version>5.0.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -72,7 +72,8 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <hotwheel-asio-Version>${project.version}</hotwheel-asio-Version>
+                            <Implementation-Title>${project.artifactId}</Implementation-Title>
+                            <Implementation-Title>${project.version}</Implementation-Title>
                         </manifestEntries>
                     </archive>
                 </configuration>

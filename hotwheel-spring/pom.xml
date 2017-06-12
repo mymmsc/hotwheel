@@ -7,7 +7,7 @@
     <parent>
         <artifactId>hotwheel-framework</artifactId>
         <groupId>org.mymmsc.hotwheel</groupId>
-        <version>5.0.1</version>
+        <version>5.0.2</version>
         <relativePath>../</relativePath>
     </parent>
 
@@ -248,5 +248,22 @@
             <version>${fastjson.version}</version>
         </dependency>
     </dependencies>
-
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Implementation-Title>${project.artifactId}</Implementation-Title>
+                            <!--
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            -->
+                            <Implementation-Version>${project.artifactId}/${project.version} SpringMVC/${springframework.version}</Implementation-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
