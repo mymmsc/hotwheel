@@ -9,7 +9,7 @@
     <groupId>org.mymmsc.hotwheel</groupId>
     <artifactId>hotwheel-framework</artifactId>
     <packaging>pom</packaging>
-    <version>3.2.6</version>
+    <version>5.0.0</version>
 
     <contributors>
         <contributor>
@@ -40,12 +40,12 @@
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
     <properties>
+        <!-- MyMMSC-HotWheel组件 版本设置 -->
+        <hotwheel.version>5.0.0</hotwheel.version>
+
         <!-- JDK设置 -->
         <javac.version>1.7</javac.version>
         <javac.encoding>UTF-8</javac.encoding>
-
-        <!-- MyMMSC-HotWheel组件 版本设置 -->
-        <hotwheel.version>3.2.6</hotwheel.version>
 
         <!-- J2EE 版本 -->
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
@@ -65,7 +65,7 @@
         <druid.version>1.0.25</druid.version>
         <tomcat.jdbc-pool.version>7.0.72</tomcat.jdbc-pool.version>
         <!-- jdbc end -->
-
+        <fastjson.version>1.2.33</fastjson.version>
         <!-- spring begin -->
         <mybatis.version>3.4.1</mybatis.version>
         <cglib.version>3.2.4</cglib.version>
@@ -75,6 +75,7 @@
         <!-- sftp-tooles begin -->
         <jsch.version>0.1.53</jsch.version>
         <!-- sftp-tooles end -->
+
         <!-- maven plugins begin -->
         <maven-compiler.version>3.5.1</maven-compiler.version>
         <maven-source.version>3.0.1</maven-source.version>
@@ -90,31 +91,7 @@
 
     <!-- ==================== 依赖jar 设置 =========================== -->
     <dependencies>
-        <!--
-        <dependency>
-            <groupId>org.mymmsc</groupId>
-            <artifactId>mymmsc-api</artifactId>
-            <version>${mymmsc.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mymmsc</groupId>
-            <artifactId>mymmsc-j2ee</artifactId>
-            <version>${mymmsc.version}</version>
-        </dependency>
 
-        <dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-jdbc</artifactId>
-			<version>${tomcat.jdbc-pool.version}</version>
-		</dependency>
-
-		dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${jdbc.mysql.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        -->
     </dependencies>
 
     <!-- ==================== 编译设置 =========================== -->
