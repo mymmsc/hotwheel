@@ -6,7 +6,7 @@
     <parent>
         <artifactId>hotwheel-framework</artifactId>
         <groupId>org.mymmsc.hotwheel</groupId>
-        <version>3.2.6</version>
+        <version>5.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -21,44 +21,10 @@
         <!-- JDK设置 -->
         <javac.version>1.7</javac.version>
         <javac.encoding>UTF-8</javac.encoding>
-        <!-- MyMMSC组件 版本设置 -->
-        <hotwheel.version>3.1.3</hotwheel.version>
-        <!-- DSMP 版本设置 -->
-        <jdb.dsmp.version>3.0.3</jdb.dsmp.version>
 
         <!-- J2EE 版本 -->
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
         <guava.version>20.0</guava.version>
-
-        <!-- logging start -->
-        <slf4j.version>1.7.21</slf4j.version>
-        <log4j2.version>2.6.2</log4j2.version>
-        <logback.version>1.0.13</logback.version>
-        <!-- logging end -->
-        <jedis.version>2.9.0</jedis.version>
-
-        <!-- jdbc start -->
-        <druid.version>1.0.25</druid.version>
-        <jdbc.mysql.version>5.1.39</jdbc.mysql.version>
-        <!-- jdbc end -->
-
-        <!-- json start -->
-        <jackson.version>2.8.5</jackson.version>
-        <jackson.databind.version>2.8.5</jackson.databind.version>
-
-        <fastjson.version>1.2.22</fastjson.version>
-        <!-- json end -->
-
-        <!-- spring start -->
-        <springframework.version>4.0.4.RELEASE</springframework.version>
-        <mybatis.version>3.4.1</mybatis.version>
-        <mybatis.spring.version>1.3.0</mybatis.spring.version>
-        <cglib.version>3.2.4</cglib.version>
-        <asm.version>5.1</asm.version>
-        <aspectj.version>1.6.12</aspectj.version>
-
-        <spring-data-redis.version>1.5.0.RELEASE</spring-data-redis.version>
-        <!-- spring end -->
 
         <!-- CACHE 版本 -->
         <ehcache.version>3.1.1</ehcache.version>
@@ -102,66 +68,6 @@
             <artifactId>hotwheel-spring</artifactId>
             <version>${hotwheel.version}</version>
         </dependency>
-        <!--spring related start -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-            <version>${springframework.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${springframework.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>${springframework.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${springframework.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${springframework.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>${springframework.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${springframework.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-            <version>${spring-data-redis.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${springframework.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-        <!--spring related end -->
 
         <!-- log4j2 start -->
         <dependency>
@@ -200,80 +106,6 @@
             <version>${log4j2.version}</version>
         </dependency>
         <!-- log4j2 end -->
-        <!--db related start -->
-        <!---
-        <dependency>
-            <groupId>org.mymmsc</groupId>
-            <artifactId>mymmsc-jdbc</artifactId>
-            <version>${mymmsc.version}</version>
-        </dependency>
-        -->
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-jdbc</artifactId>
-            <version>7.0.72</version>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${jdbc.mysql.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>${mybatis.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-spring</artifactId>
-            <version>${mybatis.spring.version}</version>
-        </dependency>
-        <!--db related end -->
-
-        <!-- aspectj start -->
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
-            <version>${aspectj.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspectj.version}</version>
-        </dependency>
-        <!--aspectj end -->
-
-        <!-- cglib start -->
-        <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib-nodep</artifactId>
-            <version>${cglib.version}</version>
-        </dependency>
-        <!-- cglib end -->
-        <dependency>
-            <groupId>com.jcraft</groupId>
-            <artifactId>jsch</artifactId>
-            <version>${jsch.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-        </dependency>
     </dependencies>
 
 
