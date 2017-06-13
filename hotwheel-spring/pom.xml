@@ -36,6 +36,7 @@
         <aspectj.version>1.6.12</aspectj.version>
 
         <spring-data-redis.version>1.5.0.RELEASE</spring-data-redis.version>
+        <spring-fileupload.version>1.2.1</spring-fileupload.version>
         <!-- spring end -->
 
         <!-- CACHE 版本 -->
@@ -127,7 +128,7 @@
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
-            <version>1.2.1</version>
+            <version>${spring-fileupload.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -184,7 +185,7 @@
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-jdbc</artifactId>
-            <version>7.0.72</version>
+            <version>${tomcat.jdbc-pool.version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -247,6 +248,18 @@
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
         </dependency>
+        <!-- validation begin -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.0.0.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator-annotation-processor</artifactId>
+            <version>4.1.0.Final</version>
+        </dependency>
+        <!-- validation end -->
     </dependencies>
     <build>
         <plugins>
