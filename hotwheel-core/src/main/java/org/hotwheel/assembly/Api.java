@@ -73,8 +73,8 @@ public final class Api {
     static {
         /* Create Date Formats */
         final String[] possibleDateFormats = {
-                //"yyyy-MM-dd HH:mm:ss.SSS",
-                //"yyyy-MM-dd HH:mm:ss",
+                "yyyy-MM-dd HH:mm:ss.SSS",
+                "yyyy-MM-dd HH:mm:ss",
                 //"yyyyMMddHHmmss",
         /* RFC 1123 with 2-digit Year */"EEE, dd MMM yy HH:mm:ss z",
         /* RFC 1123 with 4-digit Year */"EEE, dd MMM yyyy HH:mm:ss z",
@@ -2084,9 +2084,10 @@ public final class Api {
         }
         Date result = null;
         strdate = strdate.trim();
+        /*
         if (strdate.length() > 10) {
 
-			/* Open: deal with +4:00 (no zero before hour) */
+			// Open: deal with +4:00 (no zero before hour)
             if ((strdate.substring(strdate.length() - 5).indexOf("+") == 0 || strdate.substring(strdate.length() - 5).indexOf("-") == 0) && strdate.substring(strdate.length() - 5).indexOf(":") == 2) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 String sign = strdate.substring(strdate.length() - 5,
                         strdate.length() - 4);
@@ -2096,11 +2097,8 @@ public final class Api {
 
             String dateEnd = strdate.substring(strdate.length() - 6);
 
-			/*
-			 * try to deal with -05:00 or +02:00 at end of date replace with
-			 * -0500 or +0200
-			 */
-            if ((dateEnd.indexOf("-") == 0 || dateEnd.indexOf("+") == 0) && dateEnd.indexOf(":") == 3) { //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+			// try to deal with -05:00 or +02:00 at end of date replace with  -0500 or +0200
+			if ((dateEnd.indexOf("-") == 0 || dateEnd.indexOf("+") == 0) && dateEnd.indexOf(":") == 3) { //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
                 if (!"GMT".equals(strdate.substring(strdate.length() - 9, strdate.length() - 6))) { //$NON-NLS-1$
                     String oldDate = strdate;
                     String newEnd = dateEnd.substring(0, 3)
@@ -2110,7 +2108,7 @@ public final class Api {
                 }
             }
         }
-
+        */
 		/* Try to parse the date */
         int i = 0;
         while (i < CUSTOM_DATE_FORMATS.length) {
