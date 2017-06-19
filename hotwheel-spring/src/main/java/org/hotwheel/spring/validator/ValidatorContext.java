@@ -1,16 +1,23 @@
 package org.hotwheel.spring.validator;
 
+import org.hotwheel.reflect.TypeReference;
+import org.springframework.validation.Validator;
+
 /**
  * 验证上下文
  * Created by wangfeng on 2017/6/6.
- * @version 3.2.3
+ * @version 5.0.3
  */
-public interface ValidatorContext {
+public abstract class ValidatorContext<T extends Object> implements Validator {
 
-    /**
-     * 验证
-     * @return 验证通过返回true
-     * @throws IllegalArgumentException
-     */
-    public boolean validate() throws IllegalArgumentException;
+    @Override
+    public boolean supports(Class<?> clazz) {
+        boolean bRet = false;
+        Class theClass = new TypeReference<T>(){}.getType().getClass();
+        if (theClass == clazz) {
+            bRet = true;
+        }
+
+        return bRet;
+    }
 }
