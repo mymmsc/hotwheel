@@ -72,8 +72,8 @@ public class EncryptablePropertyholder extends PropertyPlaceholderConfigurer {
     }
 
     public static void main(String... strings) {
-        String username = "cuishou_rw";
-        String password = "cuishouzdxxndt0";
+        String username = "abc";
+        String password = "abc";
         String hexString = "";
 
         byte[] out = DESedeHelper.encrypt(username, key);
