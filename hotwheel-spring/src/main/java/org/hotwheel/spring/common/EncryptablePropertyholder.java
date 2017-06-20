@@ -67,28 +67,4 @@ public class EncryptablePropertyholder extends PropertyPlaceholderConfigurer {
         */
         super.processProperties(beanFactoryToProcess, props);
     }
-
-    public static void main(String... strings) {
-        String username = "abc";
-        String password = "abc";
-        String hexString = "";
-
-        byte[] out = DESedeHelper.encrypt(username, key);
-        hexString = DESedeHelper.parseByte2HexStr(out);
-        System.out.println("username.encrypt=[" + hexString + "]");
-
-        out = DESedeHelper.encrypt(password, key);
-        hexString = DESedeHelper.parseByte2HexStr(out);
-        System.out.println("password.encrypt=[" + hexString + "]");
-
-
-        String strUsername = "8EB917F28193D3DDCB58A862DA0F74E2";
-        byte[] dec = DESedeHelper.decrypt(DESedeHelper.parseHexStr2Byte(strUsername), key);
-
-        System.out.println("uid="+new String(dec));
-
-        String strPassword = "BADA9749B4A2C51807D1C2042C52B46F2FC371E1FC53CA151C9DBDD98835ED43";
-        dec = DESedeHelper.decrypt(DESedeHelper.parseHexStr2Byte(strPassword), key);
-        System.out.println("pswd="+new String(dec));
-    }
 }
