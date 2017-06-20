@@ -5,7 +5,6 @@ import java.lang.annotation.*;
 /**
  * 注解需要验证的参数
  *
- * Created by wangfeng on 2017/6/20.
  * <pre>
  *  @NotNull | 引用类型 | 注解元素必须非空
  *  @Null | 引用类型 |元素为空
@@ -102,7 +101,9 @@ import java.lang.annotation.*;
  *  \nm         标识一个八进制转义码或反向引用.如果 \nm 前面至少有 nm 个捕获子表达式, 那么 nm 是反向引用.如果 \nm 前面至少有 n 个捕获, 则 n 是反向引用, 后面跟有字符 m.如果两种前面的情况都不存在, 则 \nm 匹配八进制值 nm, 其中 n 和 m 是八进制数字 (0-7).
  *  \nml        当 n 是八进制数 (0-3), m 和 l 是八进制数 (0-7) 时, 匹配八进制转义码 nml.
  * </pre>
- * @version 1.0.0
+ *
+ * Created by wangfeng on 2017/6/20.
+ * @version 5.0.8
  * @see <url>http://www.cnblogs.com/pixy/p/5306567.html</url>
  */
 @Target({ElementType.TYPE, ElementType.METHOD, ElementType.PARAMETER})

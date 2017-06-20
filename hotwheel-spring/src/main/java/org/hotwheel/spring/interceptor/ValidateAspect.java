@@ -21,9 +21,9 @@ import java.util.Set;
 
 /**
  * 验证注解处理类
- * Created by wangfeng on 2017/6/6.
  *
- * @version 1.0.0
+ * Created by wangfeng on 2017/6/6.
+ * @version 5.0.8
  */
 @Aspect
 @Component
