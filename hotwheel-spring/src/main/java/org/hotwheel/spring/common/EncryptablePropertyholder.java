@@ -93,16 +93,5 @@ public class EncryptablePropertyholder extends PropertyPlaceholderConfigurer {
         String strPassword = "BADA9749B4A2C51807D1C2042C52B46F2FC371E1FC53CA151C9DBDD98835ED43";
         dec = DESedeHelper.decrypt(DESedeHelper.parseHexStr2Byte(strPassword), key);
         System.out.println("pswd="+new String(dec));
-
-/*
-        System.out.println(DESedeHelper.parseByte2HexStr(DESedeHelper.encrypt("jdb", key)));
-        System.out.println(DESedeHelper.parseByte2HexStr(DESedeHelper.encrypt("60Hjw5CqfEia", key)));
-
-        System.out.println(DESedeHelper.parseByte2HexStr(DESedeHelper.encrypt("userjy1", key)));
-        System.out.println(DESedeHelper.parseByte2HexStr(DESedeHelper.encrypt("JdbM1507", key)));
-
-        System.out.println(DESedeHelper.parseByte2HexStr(DESedeHelper.encrypt("jdb", key)));
-        System.out.println(DESedeHelper.parseByte2HexStr(DESedeHelper.encrypt("kmV4JTXc7trS", key)));
-*/
     }
 }
