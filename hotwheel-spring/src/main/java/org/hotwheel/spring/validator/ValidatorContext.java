@@ -6,7 +6,7 @@ import org.springframework.validation.Validator;
 /**
  * 验证上下文
  * Created by wangfeng on 2017/6/6.
- * @version 5.0.3
+ * @version 5.0.8
  */
 public abstract class ValidatorContext<T extends Object> implements Validator {
 
