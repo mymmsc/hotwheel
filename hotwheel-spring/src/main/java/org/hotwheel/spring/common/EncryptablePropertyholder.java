@@ -9,9 +9,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 
-/**
- * Created by YG on 15/7/30.
- */
 public class EncryptablePropertyholder extends PropertyPlaceholderConfigurer {
 
     private static final String key = "12h4*&^%RTGHJNKLMKHTR^T&YIOJL123k(^&#%$%*&&>NJ$%W#$%^&:?MS%$%";
