@@ -8,11 +8,13 @@ package org.hotwheel.io;
 
 import org.hotwheel.assembly.Api;
 import org.hotwheel.assembly.RegExp;
+import org.hotwheel.protocol.Http11Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
@@ -390,6 +392,9 @@ public class HttpClient {
             } else {
                 //
             }
+        } catch (SocketTimeoutException e) {
+            hRet.setStatus(HttpURLConnection.HTTP_GATEWAY_TIMEOUT);
+            hRet.setError(Http11Status.getStatus(HttpURLConnection.HTTP_GATEWAY_TIMEOUT));
         } catch (IOException e) {
             hRet.setError(e.getMessage());
             if (hRet.getStatus() != 200) {
