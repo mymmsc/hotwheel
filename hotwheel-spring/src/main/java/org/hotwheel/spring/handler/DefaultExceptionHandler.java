@@ -51,6 +51,7 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception ex) {
         ModelAndView mv = new ModelAndView();
+        mv.setViewName("exception");
         // 使用FastJson提供的FastJsonJsonView视图返回, 不需要捕获异常
         FastJsonJsonView view = new FastJsonJsonView();
         Map<String, Object> attributes = getExceptionMap(ex);
