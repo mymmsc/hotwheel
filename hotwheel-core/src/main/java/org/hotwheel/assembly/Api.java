@@ -76,6 +76,7 @@ public final class Api {
                 "yyyy-MM-dd HH:mm:ss.SSS",
                 "yyyy-MM-dd HH:mm:ss",
                 //"yyyyMMddHHmmss",
+                "EEE MMM dd HH:mm:ss zzz yyyy",
         /* RFC 1123 with 2-digit Year */"EEE, dd MMM yy HH:mm:ss z",
         /* RFC 1123 with 4-digit Year */"EEE, dd MMM yyyy HH:mm:ss z",
 		/* RFC 1123 with no Timezone */"EEE, dd MMM yy HH:mm:ss",
