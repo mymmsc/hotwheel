@@ -59,6 +59,9 @@ public final class Api {
     private static final DateFormat[] CUSTOM_DATE_FORMATS;
     /* The Default Timezone to be used */
     private static final TimeZone TIMEZONE = TimeZone.getTimeZone("UTC"); //$NON-NLS-1$
+    private static final TimeZone ChinaTimeZone = TimeZone.getTimeZone("Asia/Shanghai"); // ShangHai
+    private static final TimeZone DefaultTimeZone = TimeZone.getDefault();
+    private static final Locale DefaultLocale = Locale.getDefault();
     /******************** < 随机 APIs > ********************/
     private static final String O3CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -105,8 +108,8 @@ public final class Api {
 
         for (int i = 0; i < possibleDateFormats.length; i++) {
             CUSTOM_DATE_FORMATS[i] = new SimpleDateFormat(
-                    possibleDateFormats[i], Locale.ENGLISH);
-            CUSTOM_DATE_FORMATS[i].setTimeZone(TIMEZONE);
+                    possibleDateFormats[i], DefaultLocale);
+            CUSTOM_DATE_FORMATS[i].setTimeZone(DefaultTimeZone);
         }
     }
 
