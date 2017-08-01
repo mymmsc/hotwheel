@@ -88,16 +88,6 @@ public class ValidateAspect {
     }
 
     private void validate(final List<Object> objs) {
-        /**
-          // 判断正则
-         if (arg instanceof String) {
-         if (!((String) arg).matches(validateFiled.regex())) {
-         return false;
-         }
-         } else {
-         return false;
-         }
-         */
         ValidatorFactory vf = Validation.buildDefaultValidatorFactory();
         javax.validation.Validator validator = vf.getValidator();
         for (Object obj : objs) {
