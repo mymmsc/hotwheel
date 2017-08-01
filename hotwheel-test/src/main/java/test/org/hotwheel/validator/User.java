@@ -1,6 +1,8 @@
 package test.org.hotwheel.validator;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * 用户信息
@@ -12,6 +14,8 @@ public class User {
 
     private int age;
 
+    @NotNull
+    @Size(min = 2)
     private String username;
 
     private String password;
@@ -36,6 +40,7 @@ public class User {
         return username + ", " + password;
     }
 
+    @NotNull
     @Min(value=8, message="年龄不能小于8岁")
     public int getAge() {
         return age;
