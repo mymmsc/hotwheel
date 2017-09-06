@@ -1661,19 +1661,18 @@ public final class Api {
     @SuppressWarnings("unchecked")
     public static <T> T valueOf(Class<T> cls, String value) {
         Object obj = null;
-        if (value == null) {
-            if(cls.equals(boolean.class) ||
-                    cls.equals(char.class)||
-                    cls.equals(byte.class) ||
-                    cls.equals(int.class) ||
-                    cls.equals(short.class) ||
-                    cls.equals(long.class) ||
-                    cls.equals(double.class) ||
-                    cls.equals(float.class) ) {
-                value = "";
-            } else {
-                return null;
-            }
+        boolean isBaseClass = (cls == boolean.class ||
+                cls == char.class ||
+                cls == byte.class ||
+                cls == int.class ||
+                cls == short.class ||
+                cls == long.class ||
+                cls == double.class ||
+                cls == float.class || cls == String.class);
+        if (Api.isEmpty(value) && isBaseClass) {
+            value = "";
+        } else if(Api.isEmpty(value)) {
+            return null;
         } else {
             value = value.trim();
         }
