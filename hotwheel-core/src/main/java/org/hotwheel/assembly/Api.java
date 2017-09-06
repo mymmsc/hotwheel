@@ -1662,7 +1662,18 @@ public final class Api {
     public static <T> T valueOf(Class<T> cls, String value) {
         Object obj = null;
         if (value == null) {
-            value = "";
+            if(cls.equals(boolean.class) ||
+                    cls.equals(char.class)||
+                    cls.equals(byte.class) ||
+                    cls.equals(int.class) ||
+                    cls.equals(short.class) ||
+                    cls.equals(long.class) ||
+                    cls.equals(double.class) ||
+                    cls.equals(float.class) ) {
+                value = "";
+            } else {
+                return null;
+            }
         } else {
             value = value.trim();
         }
