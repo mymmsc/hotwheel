@@ -95,7 +95,7 @@ public class HttpContext extends AioContext {
 		} else if (headerCount >= headers.length) {
 			headers = Arrays.copyOf(headers, headers.length + 1);
 		}
-		logger.debug(header);
+		if (logger.isDebugEnabled()) logger.debug(header);
 		headers[headerCount++] = header;
 
 		if (status == 900) {
@@ -109,7 +109,7 @@ public class HttpContext extends AioContext {
 					str = str.substring(0, pos);
 				}
 				status = Api.valueOf(int.class, str);
-				logger.debug("Status={}", status);
+				if (logger.isDebugEnabled()) logger.debug("Status={}", status);
 			}
 		}
 		if (contentType == null) {
@@ -122,7 +122,7 @@ public class HttpContext extends AioContext {
 			if (pos >= 0) {
 				charset = contentType.substring(pos + key.length());
 				charset = charset.trim();
-				logger.debug("Content-Type={}, charset={}", contentType, charset);
+				if (logger.isDebugEnabled()) logger.debug("Content-Type={}, charset={}", contentType, charset);
 			}
 		}
 		if (transferEncoding == null) {
@@ -131,7 +131,7 @@ public class HttpContext extends AioContext {
 			if (transferEncoding != null && transferEncoding.equalsIgnoreCase("chunked")) {
 				chunked = true;
 				chunkState = CHUNK_LEN;
-				logger.debug("{} is chunked", key);
+				if (logger.isDebugEnabled()) logger.debug("{} is chunked", key);
 			}
 		}
 	}

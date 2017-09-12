@@ -117,7 +117,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             int recviced = 0;
             while((recviced = sc.read(buff)) != -1) {
                 if(debug) {
-                    logger.debug("recviced:" + recviced);
+                    if (logger.isDebugEnabled()) logger.debug("recviced:" + recviced);
                 }
             }
             sc.shutdownInput();
