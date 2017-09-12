@@ -50,32 +50,32 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
     public void onClosed(HttpContext context) {
         scoreBoard.closed ++;
         scoreBoard.requests --;
-        logger.debug("{} closed", context.getClass().getSimpleName());
+        if (logger.isDebugEnabled()) logger.debug("{} closed", context.getClass().getSimpleName());
     }
 
     @Override
     public void onCompleted(HttpContext context) {
         scoreBoard.good ++;
-        logger.debug("{} Completed", context.getClass().getSimpleName());
+        if (logger.isDebugEnabled()) logger.debug("{} Completed", context.getClass().getSimpleName());
         callBack.completed(context);
     }
 
     @Override
     public void onAccepted(HttpContext context) {
-        logger.debug("{} Accepted", context.getClass().getSimpleName());
+        if (logger.isDebugEnabled()) logger.debug("{} Accepted", context.getClass().getSimpleName());
     }
 
     @Override
     public void onError(HttpContext context) {
         scoreBoard.bad ++;
-        logger.debug("{} Error", context.getClass().getSimpleName());
+        if (logger.isDebugEnabled()) logger.debug("{} Error", context.getClass().getSimpleName());
     }
 
     @Override
     public void onTimeout(HttpContext context) {
         // 超时后, 失败请求数+1
         scoreBoard.bad++;
-        logger.debug("{} Timeout", context.getClass().getSimpleName());
+        if (logger.isDebugEnabled()) logger.debug("{} Timeout", context.getClass().getSimpleName());
     }
 
     @Override
@@ -83,7 +83,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         // HTTP-Body区域的二进制数据
         ByteArrayOutputStream data = new ByteArrayOutputStream();
         int index = context.index;
-        logger.debug("list.index=" + index);
+        if (logger.isDebugEnabled()) logger.debug("list.index=" + index);
         //System.out.println("list.index=" + index);
         Map<String, Object> params = callBack.getParams(list.get(index));
         for (Map.Entry<String, Object> entry : params.entrySet()) {
@@ -201,7 +201,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 //byte[] data = buffer.array();
                 //line.setLength(0);
                 //pos = 0;
-                //logger.debug("beigin={}, end={}...start", begin, end);
+                //if (logger.isDebugEnabled()) logger.debug("beigin={}, end={}...start", begin, end);
                 while (context.hasRemaining()) { // 封包循环
                     if (context.chunkState == HttpContext.CHUNK_LEN) {
                         byte[] nums = context.readLine();
@@ -234,7 +234,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                             //content.put(strs);
                             context.chunkState = HttpContext.CHUNK_CRLF;
 
-                            //logger.debug("beigin={}, end={}...stop", begin, end);
+                            //if (logger.isDebugEnabled()) logger.debug("beigin={}, end={}...stop", begin, end);
                             //content.flip();
                             String tmp = null;
                             try {
@@ -282,7 +282,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
             // 数据处理完毕, 关闭socket
             //onClosed(context);
         }*/
-        //logger.debug("----------------------------------");
+        //if (logger.isDebugEnabled()) logger.debug("----------------------------------");
     }
 
     /*
@@ -308,14 +308,14 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
 
     @Override
     public void onWrite(HttpContext context) {
-        logger.debug("{} Write", context.getClass().getSimpleName());
+        if (logger.isDebugEnabled()) logger.debug("{} Write", context.getClass().getSimpleName());
     }
 
     @Override
     public void onCompact(HttpContext context) {
-        //logger.debug("channel-number=" + selector.keys().size());
+        //if (logger.isDebugEnabled()) logger.debug("channel-number=" + selector.keys().size());
         if (debug) System.out.println("channel-number=" + selector.keys().size());
-        //logger.debug("Compact: number={},request={},good={},bad={}.", number,requests, good, bad);
+        //if (logger.isDebugEnabled()) logger.debug("Compact: number={},request={},good={},bad={}.", number,requests, good, bad);
         if (debug) System.out.println(String.format("Compact: number=%d,request=%d,good=%d,bad=%d.", number,scoreBoard.requests, scoreBoard.good, scoreBoard.bad));
         while(scoreBoard.sequeueId < number && (/*number < 0 || */number > scoreBoard.good + scoreBoard.bad + scoreBoard.requests) && concurrency > scoreBoard.requests) {
             // 如果未达到并发限制数量, 新增加一个请求
@@ -361,7 +361,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         }/* else */
         if(number <= scoreBoard.good + scoreBoard.bad) {
             done = false;
-            logger.debug("number={},request={},good={},bad={}.", number, scoreBoard.requests, scoreBoard.good, scoreBoard.bad);
+            if (logger.isDebugEnabled()) logger.debug("number={},request={},good={},bad={}.", number, scoreBoard.requests, scoreBoard.good, scoreBoard.bad);
             scoreBoard.acrossTime = System.currentTimeMillis() - beginTime;
             scoreBoard.number = number;
             callBack.finished(scoreBoard);
