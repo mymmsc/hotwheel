@@ -66,7 +66,8 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
     }
 
     @Override
-    public void onError(HttpContext context) {
+    public void onError(HttpContext context, Exception e) {
+        callBack.failed(context.index, e);
         scoreBoard.bad ++;
         if (logger.isDebugEnabled()) logger.debug("{} Error", context.getClass().getSimpleName());
     }
@@ -355,8 +356,8 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 //int linger = sc.getOption(StandardSocketOptions.SO_LINGER);
                 //System.out.println("SO_LINGER:" + linger);
             } catch (Exception e) {
-                logger.error("SocketChannel.connect failed: ", e);
-                handleError(sc);
+                //logger.error("SocketChannel.connect failed: ", e);
+                handleError(sc, e);
             }
         }/* else */
         if(number <= scoreBoard.good + scoreBoard.bad) {

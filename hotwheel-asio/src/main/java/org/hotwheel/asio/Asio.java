@@ -7,10 +7,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.net.StandardSocketOptions;
 import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
+import java.nio.channels.*;
 import java.util.Iterator;
 
 /**
@@ -112,6 +109,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             if (key != null) {
                 key.cancel();
             }
+            //System.out.println(sc.isConnected());
             sc.shutdownOutput();
             ByteBuffer buff = ByteBuffer.allocate(4096);
             int recviced = 0;
@@ -122,8 +120,8 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             }
             sc.shutdownInput();
             sc.close();
-        } catch (IOException e) {
-            logger.error("SocketChannel close failed: ", e);
+        } catch (Exception e) {
+            //logger.error("SocketChannel close failed: ", e);
         } finally {
             //
         }
@@ -153,9 +151,9 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
     }
 
     @Override
-    public void handleError(SocketChannel sc) {
+    public void handleError(SocketChannel sc, Exception e) {
         T context = contextFor(sc);
-        onError(context);
+        onError(context, e);
         handleClosed(sc);
     }
 
@@ -191,7 +189,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
         } catch (IOException e) {
             handleError(sc);
         }*/ catch (Exception e) {
-            handleError(sc);
+            handleError(sc, e);
         }
     }
 
@@ -214,7 +212,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             if (bytesRead == -1) { // Did the other end close?
                 //onRead(ctx);
                 //onCompleted(context);
-                handleError(sc);
+                handleError(sc, new NotYetConnectedException());
             } else {
                 context.add((ByteBuffer) buf.flip());
                 onRead(context);
@@ -232,7 +230,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             }
         } catch (Exception e) {
             logger.error("read error: ", e);
-            handleError(sc);
+            handleError(sc, e);
         }
     }
 
@@ -330,7 +328,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                         } else {
                             // 一般情况下不太可能到达这个位置
                             //System.out.print('P');
-                            handleError(channel);
+                            handleError(channel, new Exception("未知异常"));
                         }
                         // 更新时间
                         if (context != null) {
