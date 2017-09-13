@@ -18,7 +18,7 @@ public abstract interface CompletionHandler<T extends AioContext> {
 
 	public abstract void onConnected(T context);
 
-	public abstract void onError(T context);
+	public abstract void onError(T context, Exception e);
 
 	public abstract void onRead(T context);
 

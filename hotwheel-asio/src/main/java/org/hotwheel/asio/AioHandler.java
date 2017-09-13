@@ -42,7 +42,7 @@ public abstract interface AioHandler {
 	 * socket发生错误
 	 * @param sc
      */
-	public abstract void handleError(SocketChannel sc);
+	public abstract void handleError(SocketChannel sc, Exception e);
 
 	/**
 	 * 读事件处理
