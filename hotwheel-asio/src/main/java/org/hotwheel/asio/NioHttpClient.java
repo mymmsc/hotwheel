@@ -42,8 +42,17 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         this.list = list;
 
     }
+
     public NioHttpClient(int number, int concurrency) throws IOException {
         super(number, concurrency);
+    }
+
+    public void add(T data) {
+        if (list != null) {
+            list.add(data);
+            setNumber(list.size());
+            scoreBoard.number = list.size();
+        }
     }
 
     @Override

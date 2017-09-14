@@ -20,7 +20,7 @@ import java.util.TreeMap;
  */
 public class TestNio {
 
-    private final static String url = "http://vip.stock.finance1.sina.com.cn/quotes_service/api/json_v2.php/MoneyFlow.ssi_ssfx_flzjtj";
+    private final static String url = "http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/MoneyFlow.ssi_ssfx_flzjtj";
 
     public static void main(String[] args) {
         try {

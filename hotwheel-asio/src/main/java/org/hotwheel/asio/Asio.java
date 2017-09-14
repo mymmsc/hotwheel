@@ -111,15 +111,17 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             }
             //System.out.println(sc.isConnected());
             sc.shutdownOutput();
-            ByteBuffer buff = ByteBuffer.allocate(4096);
-            int recviced = 0;
-            while((recviced = sc.read(buff)) != -1) {
-                if(debug) {
-                    if (logger.isDebugEnabled()) logger.debug("recviced:" + recviced);
+            if (sc.isConnected()) {
+                ByteBuffer buff = ByteBuffer.allocate(4096);
+                int recviced = 0;
+                while ((recviced = sc.read(buff)) != -1) {
+                    if (debug) {
+                        if (logger.isDebugEnabled()) logger.debug("recviced:" + recviced);
+                    }
                 }
+                sc.shutdownInput();
+                sc.close();
             }
-            sc.shutdownInput();
-            sc.close();
         } catch (Exception e) {
             //logger.error("SocketChannel close failed: ", e);
         } finally {
