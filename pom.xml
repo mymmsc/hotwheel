@@ -151,7 +151,7 @@
     <repositories>
         <repository>
             <id>hotwheel-dev</id>
-            <name>HotWheel Nexus Repository2</name>
+            <name>HotWheel Nexus Repository</name>
             <url>http://mvn.mymmsc.org/content/groups/public</url>
         </repository>
     </repositories>
@@ -182,7 +182,7 @@
     <distributionManagement>
         <repository>
             <id>hotwheel-releases</id>
-            <name>Local Nexus Repository2</name>
+            <name>Local Nexus Repository</name>
             <url>http://mvn.mymmsc.org/content/repositories/releases/</url>
         </repository>
     </distributionManagement>
