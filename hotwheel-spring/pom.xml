@@ -175,13 +175,6 @@
         </dependency>
         <!-- log4j2 end -->
         <!--db related start -->
-        <!---
-        <dependency>
-            <groupId>org.mymmsc</groupId>
-            <artifactId>mymmsc-jdbc</artifactId>
-            <version>${mymmsc.version}</version>
-        </dependency>
-        -->
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-jdbc</artifactId>
