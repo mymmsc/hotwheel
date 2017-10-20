@@ -22,10 +22,21 @@ import java.util.Map;
  */
 public class TraceInterceptor implements HandlerInterceptor {
     private static final Logger log = LoggerFactory.getLogger(TraceInterceptor.class);
+    private final static String mdcStartTime = "MDC_START_TIME";
+    private final static String mdcRequest = "MDC_REQUEST";
+    private final static String mdcHeaderRequest = "MDC_HEADER_REQUEST";
+    private final static String mdcHeaderResponse = "MDC_HEADER_RESPONSE";
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        MDC.put("MDC_START_TIME", String.valueOf(System.currentTimeMillis()));
+        MDC.put(mdcStartTime, String.valueOf(System.currentTimeMillis()));
+        String uri = httpServletRequest.getRequestURI();
+        String requestHeader = getHeader(httpServletRequest);
+        MDC.put(mdcHeaderRequest, requestHeader);
+        String requestParams = getParams(httpServletRequest.getParameterMap());
+        MDC.put(mdcRequest, requestParams);
+        log.debug("url={},request-header=[{}],params=[{}]",
+                uri, requestHeader, requestParams);
         return true;
     }
 
@@ -69,10 +80,10 @@ public class TraceInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-        String startTime = MDC.get("MDC_START_TIME");
         String uri = httpServletRequest.getRequestURI();
-        String requestHeader = getHeader(httpServletRequest);
-        String requestParams = getParams(httpServletRequest.getParameterMap());
+        String startTime = MDC.get(mdcStartTime);
+        String requestHeader = MDC.get(mdcHeaderRequest);
+        String requestParams = MDC.get(mdcRequest);
         String responseHeader = getHeader(httpServletResponse);
         long tm = System.currentTimeMillis() - Long.parseLong(startTime);
         log.debug("url={},request-header=[{}],params=[{}],response=[{}], cost time {} ms.",
