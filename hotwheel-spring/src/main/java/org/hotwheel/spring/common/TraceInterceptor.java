@@ -67,7 +67,7 @@ public class TraceInterceptor implements HandlerInterceptor {
         for (Map.Entry<String, String[]> entry : params.entrySet()) {
             String key = entry.getKey();
             String[] values = entry.getValue();
-            String value = values.length > 0 ? values[0] : "N/A";
+            String value = values != null && values.length > 0 ? values[0] : "N/A";
             String str = String.format("&%s=%s", key, value);
             sb.append(str);
         }
