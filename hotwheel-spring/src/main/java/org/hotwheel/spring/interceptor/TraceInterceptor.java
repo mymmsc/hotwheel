@@ -1,6 +1,8 @@
 package org.hotwheel.spring.interceptor;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hotwheel.assembly.Api;
+import org.hotwheel.spring.util.RequestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -23,11 +25,14 @@ import java.util.Map;
  */
 public class TraceInterceptor implements HandlerInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(TraceInterceptor.class);
+
     private final static String mdcIp = "MDC_IP";
     private final static String mdcStartTime = "MDC_START_TIME";
     private final static String mdcRequest = "MDC_REQUEST";
     private final static String mdcHeaderRequest = "MDC_HEADER_REQUEST";
-    private final static String mdcHeaderResponse = "MDC_HEADER_RESPONSE";
+    //private final static String mdcHeaderResponse = "MDC_HEADER_RESPONSE";
+    // 日志跟踪tradeId的header域名称
+    private String httpTraceIdName = null;
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
@@ -38,13 +43,7 @@ public class TraceInterceptor implements HandlerInterceptor {
         String requestParams = getParams(httpServletRequest.getParameterMap());
         MDC.put(mdcRequest, requestParams);
         // 验证IP地址
-        String ip = null;
-        String xip = httpServletRequest.getHeader("X-Forwarded-For");
-        if(xip == null) {
-            ip = httpServletRequest.getRemoteAddr();
-        } else {
-            ip = xip;
-        }
+        String ip = RequestUtil.getClientIp(httpServletRequest);
         MDC.put(mdcIp, ip);
         logger.info("ip={},url={},request-header=[{}],params=[{}]", ip, uri, requestHeader, requestParams);
         return true;
@@ -99,6 +98,16 @@ public class TraceInterceptor implements HandlerInterceptor {
         long tm = System.currentTimeMillis() - Api.valueOf(long.class, startTime);
         logger.info("ip={},url={},request-header=[{}],params=[{}],response-header=[{}], cost time {} ms.",
                 ip,uri, requestHeader, requestParams, responseHeader, tm);
+
+        if (StringUtils.isNotBlank(MDC.get(mdcStartTime))) {
+            MDC.remove(mdcStartTime);
+        }
+        if (StringUtils.isNotBlank(MDC.get(mdcHeaderRequest))) {
+            MDC.remove(mdcHeaderRequest);
+        }
+        if (StringUtils.isNotBlank(MDC.get(mdcRequest))) {
+            MDC.remove(mdcRequest);
+        }
     }
 
     private String getHttpHeader(HttpServletRequest httpServletRequest) {
@@ -129,5 +138,13 @@ public class TraceInterceptor implements HandlerInterceptor {
         }
 
         return getHeaders(headers);
+    }
+
+    public String getHttpTraceIdName() {
+        return httpTraceIdName;
+    }
+
+    public void setHttpTraceIdName(String httpTraceIdName) {
+        this.httpTraceIdName = httpTraceIdName;
     }
 }
