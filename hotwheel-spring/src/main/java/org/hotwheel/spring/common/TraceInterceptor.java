@@ -32,7 +32,7 @@ public class TraceInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         MDC.put(mdcStartTime, String.valueOf(System.currentTimeMillis()));
         String uri = httpServletRequest.getRequestURI();
-        String requestHeader = getHeader(httpServletRequest);
+        String requestHeader = getHttpHeader(httpServletRequest);
         MDC.put(mdcHeaderRequest, requestHeader);
         String requestParams = getParams(httpServletRequest.getParameterMap());
         MDC.put(mdcRequest, requestParams);
@@ -93,14 +93,14 @@ public class TraceInterceptor implements HandlerInterceptor {
         String startTime = MDC.get(mdcStartTime);
         String requestHeader = MDC.get(mdcHeaderRequest);
         String requestParams = MDC.get(mdcRequest);
-        String responseHeader = getHeader(httpServletResponse);
+        String responseHeader = getHttpHeader(httpServletResponse);
         String ip = MDC.get(mdcIp);
         long tm = System.currentTimeMillis() - Api.valueOf(long.class, startTime);
         logger.info("ip={},url={},request-header=[{}],params=[{}],response-header=[{}], cost time {} ms.",
                 ip,uri, requestHeader, requestParams, responseHeader, tm);
     }
 
-    private String getHeader(HttpServletRequest httpServletRequest) {
+    private String getHttpHeader(HttpServletRequest httpServletRequest) {
         // 通过枚举类型获取请求文件的头部信息集
         Map<String, Object> headers = new HashMap<String, Object>();
         Enumeration headerNames = httpServletRequest.getHeaderNames();
@@ -116,7 +116,7 @@ public class TraceInterceptor implements HandlerInterceptor {
         return getHeaders(headers);
     }
 
-    private String getHeader(HttpServletResponse httpServletResponse) {
+    private String getHttpHeader(HttpServletResponse httpServletResponse) {
         // 通过枚举类型获取请求文件的头部信息集
         Map<String, Object> headers = new HashMap<String, Object>();
         Collection<String> headerNames = httpServletResponse.getHeaderNames();
