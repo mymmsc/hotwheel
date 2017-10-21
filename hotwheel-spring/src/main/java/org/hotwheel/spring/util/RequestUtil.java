@@ -47,9 +47,10 @@ public class RequestUtil {
      */
     public static String genTraceId() {
         StringBuffer sb = new StringBuffer();
-        long tm = System.currentTimeMillis() / MSEC_PER_SEC;
+        Date now = new Date();
+        long tm = now.getTime() / MSEC_PER_SEC;
         testInitTraceId(tm);
-        Date now = new Date(tm);
+
         sb.append(kPrefixTraceId).append('/');
         sb.append(Api.toString(now, DDL));
         sn = atomicLong.incrementAndGet();
