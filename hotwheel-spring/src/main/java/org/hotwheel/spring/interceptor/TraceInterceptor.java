@@ -18,6 +18,7 @@ import java.util.Map;
  * 耗时监控
  *
  * Created by pasta on 15/11/4.
+ * @version 5.2.3
  * @since 1.0.1 性能监控
  */
 public class TraceInterceptor implements HandlerInterceptor {
