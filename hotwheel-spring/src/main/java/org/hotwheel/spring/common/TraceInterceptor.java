@@ -21,7 +21,8 @@ import java.util.Map;
  * @since 1.0.1 性能监控
  */
 public class TraceInterceptor implements HandlerInterceptor {
-    private static final Logger log = LoggerFactory.getLogger(TraceInterceptor.class);
+    private static final Logger logger = LoggerFactory.getLogger(TraceInterceptor.class);
+    private final static String mdcIp = "MDC_IP";
     private final static String mdcStartTime = "MDC_START_TIME";
     private final static String mdcRequest = "MDC_REQUEST";
     private final static String mdcHeaderRequest = "MDC_HEADER_REQUEST";
@@ -35,8 +36,16 @@ public class TraceInterceptor implements HandlerInterceptor {
         MDC.put(mdcHeaderRequest, requestHeader);
         String requestParams = getParams(httpServletRequest.getParameterMap());
         MDC.put(mdcRequest, requestParams);
-        log.debug("url={},request-header=[{}],params=[{}]",
-                uri, requestHeader, requestParams);
+        // 验证IP地址
+        String ip = null;
+        String xip = httpServletRequest.getHeader("X-Forwarded-For");
+        if(xip == null) {
+            ip = httpServletRequest.getRemoteAddr();
+        } else {
+            ip = xip;
+        }
+        MDC.put(mdcIp, ip);
+        logger.info("ip={},url={},request-header=[{}],params=[{}]", ip, uri, requestHeader, requestParams);
         return true;
     }
 
@@ -85,9 +94,10 @@ public class TraceInterceptor implements HandlerInterceptor {
         String requestHeader = MDC.get(mdcHeaderRequest);
         String requestParams = MDC.get(mdcRequest);
         String responseHeader = getHeader(httpServletResponse);
-        long tm = System.currentTimeMillis() - Long.parseLong(startTime);
-        log.debug("url={},request-header=[{}],params=[{}],response=[{}], cost time {} ms.",
-                uri, requestHeader, requestParams, responseHeader, tm);
+        String ip = MDC.get(mdcIp);
+        long tm = System.currentTimeMillis() - Api.valueOf(long.class, startTime);
+        logger.info("ip={},url={},request-header=[{}],params=[{}],response-header=[{}], cost time {} ms.",
+                ip,uri, requestHeader, requestParams, responseHeader, tm);
     }
 
     private String getHeader(HttpServletRequest httpServletRequest) {
