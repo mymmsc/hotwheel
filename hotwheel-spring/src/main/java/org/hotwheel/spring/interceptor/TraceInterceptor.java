@@ -96,6 +96,7 @@ public class TraceInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
         String uri = httpServletRequest.getRequestURI();
         String traceId = MDC.get(httpTraceIdName);
+        httpServletResponse.setHeader(httpTraceIdName, traceId);
         String startTime = MDC.get(mdcStartTime);
         String requestHeader = MDC.get(mdcHeaderRequest);
         String requestParams = MDC.get(mdcRequest);
