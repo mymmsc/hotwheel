@@ -42,6 +42,7 @@ public class TraceInterceptor implements HandlerInterceptor {
             traceId = RequestUtil.genTraceId();
         }
         MDC.put(httpTraceIdName, traceId);
+        httpServletResponse.setHeader(httpTraceIdName, traceId);
         String uri = httpServletRequest.getRequestURI();
         String requestHeader = getHttpHeader(httpServletRequest);
         MDC.put(mdcHeaderRequest, requestHeader);
@@ -56,8 +57,7 @@ public class TraceInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        String traceId = MDC.get(httpTraceIdName);
-        httpServletResponse.setHeader(httpTraceIdName, traceId);
+        //
     }
 
     public static String getHeaders(Map<String, Object> params) {
