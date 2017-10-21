@@ -37,6 +37,11 @@ public class TraceInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         MDC.put(mdcStartTime, String.valueOf(System.currentTimeMillis()));
+        String traceId = MDC.get(httpTraceIdName);
+        if (Api.isEmpty(traceId)) {
+            traceId = RequestUtil.genTraceId();
+        }
+        MDC.put(httpTraceIdName, traceId);
         String uri = httpServletRequest.getRequestURI();
         String requestHeader = getHttpHeader(httpServletRequest);
         MDC.put(mdcHeaderRequest, requestHeader);
@@ -45,7 +50,7 @@ public class TraceInterceptor implements HandlerInterceptor {
         // 验证IP地址
         String ip = RequestUtil.getClientIp(httpServletRequest);
         MDC.put(mdcIp, ip);
-        logger.info("ip={},url={},request-header=[{}],params=[{}]", ip, uri, requestHeader, requestParams);
+        logger.info("traceId={},ip={},url={},request-header=[{}],params=[{}]", traceId, ip, uri, requestHeader, requestParams);
         return true;
     }
 
@@ -90,14 +95,15 @@ public class TraceInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
         String uri = httpServletRequest.getRequestURI();
+        String traceId = MDC.get(httpTraceIdName);
         String startTime = MDC.get(mdcStartTime);
         String requestHeader = MDC.get(mdcHeaderRequest);
         String requestParams = MDC.get(mdcRequest);
         String responseHeader = getHttpHeader(httpServletResponse);
         String ip = MDC.get(mdcIp);
         long tm = System.currentTimeMillis() - Api.valueOf(long.class, startTime);
-        logger.info("ip={},url={},request-header=[{}],params=[{}],response-header=[{}], cost time {} ms.",
-                ip,uri, requestHeader, requestParams, responseHeader, tm);
+        logger.info("traceId={},ip={},url={},request-header=[{}],params=[{}],response-header=[{}], cost time {} ms.",
+                traceId, ip, uri, requestHeader, requestParams, responseHeader, tm);
 
         if (StringUtils.isNotBlank(MDC.get(mdcStartTime))) {
             MDC.remove(mdcStartTime);
@@ -107,6 +113,9 @@ public class TraceInterceptor implements HandlerInterceptor {
         }
         if (StringUtils.isNotBlank(MDC.get(mdcRequest))) {
             MDC.remove(mdcRequest);
+        }
+        if (StringUtils.isNotBlank(MDC.get(httpTraceIdName))) {
+            MDC.remove(httpTraceIdName);
         }
     }
 
