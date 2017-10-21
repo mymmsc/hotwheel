@@ -9,7 +9,7 @@
     <groupId>org.mymmsc.hotwheel</groupId>
     <artifactId>hotwheel-framework</artifactId>
     <packaging>pom</packaging>
-    <version>5.2.9</version>
+    <version>5.2.10</version>
 
     <contributors>
         <contributor>
@@ -41,7 +41,7 @@
     <!-- ==================== 依赖jar版本 设置 =========================== -->
     <properties>
         <!-- MyMMSC-HotWheel组件 版本设置 -->
-        <hotwheel.version>5.2.9</hotwheel.version>
+        <hotwheel.version>5.2.10</hotwheel.version>
 
         <!-- JDK设置 -->
         <javac.version>1.7</javac.version>

@@ -41,7 +41,7 @@ public class RequestUtil {
             atomicLong.getAndSet(0);
         }
         Date now = new Date();
-        sb.append(kPrefixTraceId).append('.');
+        sb.append(kPrefixTraceId).append('/');
         sb.append(Api.toString(now, DDL));
         sn = atomicLong.getAndIncrement();
         String tmp = String.valueOf(kTraceMax + sn);
