@@ -30,20 +30,29 @@ public class RequestUtil {
     private static final long kTraceMax = 1000000L;
 
     /**
+     * 试图将计数器重置为0
+     * @param tm
+     */
+    private synchronized static void testInitTraceId(long tm) {
+        if (timestamp < tm) {
+            timestamp = tm;
+            // 以原子方式设置当前值为newValue, 并返回旧值
+            atomicLong.getAndSet(0);
+        }
+    }
+
+    /**
      * 接口请求的跟踪标识
      * @return
      */
     public static String genTraceId() {
         StringBuffer sb = new StringBuffer();
         long tm = System.currentTimeMillis() / MSEC_PER_SEC;
-        if (timestamp < tm) {
-            timestamp = tm;
-            atomicLong.getAndSet(0);
-        }
-        Date now = new Date();
+        testInitTraceId(tm);
+        Date now = new Date(tm);
         sb.append(kPrefixTraceId).append('/');
         sb.append(Api.toString(now, DDL));
-        sn = atomicLong.getAndIncrement();
+        sn = atomicLong.incrementAndGet();
         String tmp = String.valueOf(kTraceMax + sn);
         sb.append(tmp.substring(1));
         return sb.toString();
