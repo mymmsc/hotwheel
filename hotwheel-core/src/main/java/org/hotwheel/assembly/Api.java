@@ -26,7 +26,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -56,12 +55,7 @@ public final class Api {
      */
     public static final long WEEK = 7 * DAY;
     /* An array of custom date formats */
-    private static final DateFormat[] CUSTOM_DATE_FORMATS;
-    /* The Default Timezone to be used */
-    private static final TimeZone TIMEZONE = TimeZone.getTimeZone("UTC"); //$NON-NLS-1$
-    private static final TimeZone ChinaTimeZone = TimeZone.getTimeZone("Asia/Shanghai"); // ShangHai
-    private static final TimeZone DefaultTimeZone = TimeZone.getDefault();
-    private static final Locale DefaultLocale = Locale.getDefault();
+    private static final SimpleDateFormat[] CUSTOM_DATE_FORMATS;
     /******************** < 随机 APIs > ********************/
     private static final String O3CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -107,9 +101,9 @@ public final class Api {
         CUSTOM_DATE_FORMATS = new SimpleDateFormat[possibleDateFormats.length];
 
         for (int i = 0; i < possibleDateFormats.length; i++) {
-            CUSTOM_DATE_FORMATS[i] = new SimpleDateFormat(
-                    possibleDateFormats[i], DefaultLocale);
-            CUSTOM_DATE_FORMATS[i].setTimeZone(DefaultTimeZone);
+            //CUSTOM_DATE_FORMATS[i] = new SimpleDateFormat(possibleDateFormats[i], DefaultLocale);
+            //CUSTOM_DATE_FORMATS[i].setTimeZone(DefaultTimeZone);
+            CUSTOM_DATE_FORMATS[i] = FastDateFormat.getDateFormat(possibleDateFormats[i]);
         }
     }
 
@@ -1615,7 +1609,7 @@ public final class Api {
 
     public static boolean isDate(String strDate, String sign) {
         boolean bRet = true;
-        SimpleDateFormat sdf = new SimpleDateFormat(sign);
+        SimpleDateFormat sdf = FastDateFormat.getDateFormat(sign);
         try {
             sdf.parse(strDate);
         } catch (ParseException e) {
@@ -2127,14 +2121,13 @@ public final class Api {
         int i = 0;
         while (i < CUSTOM_DATE_FORMATS.length) {
             try {
-
 				/*
 				 * This Block needs to be synchronized, because the parse-Method
 				 * in SimpleDateFormat is not Thread-Safe.
 				 */
-                synchronized (CUSTOM_DATE_FORMATS[i]) {
+                //synchronized (CUSTOM_DATE_FORMATS[i]) {
                     return CUSTOM_DATE_FORMATS[i].parse(strdate);
-                }
+                //}
             } catch (ParseException e) {
                 i++;
             } catch (NumberFormatException e) {
@@ -2152,8 +2145,7 @@ public final class Api {
      */
     public static Timestamp getNow() {
         Date now = new Date();
-        String szNow = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
-                .format(now);
+        String szNow = FastDateFormat.getDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(now);
         return Timestamp.valueOf(szNow);
     }
 
@@ -2210,7 +2202,7 @@ public final class Api {
         String sRet = "";
         // 详细设计: 1.theDate为空,则返回"" 2.否则使用theDateFormat格式化
         if (date != null/* && date.getTime() > 0*/) {
-            SimpleDateFormat tempFormatter = new SimpleDateFormat(format);
+            SimpleDateFormat tempFormatter = FastDateFormat.getDateFormat(format);
             sRet = tempFormatter.format(date);
         }
 
@@ -2227,7 +2219,7 @@ public final class Api {
      */
     public static Date toDate(String text, String fotmat) {
         Date dRet = new Date(0);
-        SimpleDateFormat sft = new SimpleDateFormat(fotmat);
+        SimpleDateFormat sft = FastDateFormat.getDateFormat(fotmat);
         try {
             dRet = sft.parse(text);
         } catch (ParseException e) {

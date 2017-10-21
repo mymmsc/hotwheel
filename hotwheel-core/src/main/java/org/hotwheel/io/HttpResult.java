@@ -137,7 +137,7 @@ public class HttpResult {
     }
 /*
     String RFC1123_DATE_PATTERN = "EEE, dd MMM yyyy HH:mm:ss zzz";
-    SimpleDateFormat dateFormat = new SimpleDateFormat(RFC1123_DATE_PATTERN);
+    SimpleDateFormat dateFormat = FastDateFormat.getDateFormat(RFC1123_DATE_PATTERN);
 
     Date date = new Date(1234);
     String str = dateFormat.format(date);

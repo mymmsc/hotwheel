@@ -2,6 +2,7 @@ package org.hotwheel.j2ee.scheduler;
 
 import org.apache.ibatis.session.SqlSession;
 import org.hotwheel.assembly.Api;
+import org.hotwheel.assembly.FastDateFormat;
 import org.hotwheel.beans.factory.annotation.Autowired;
 import org.hotwheel.core.BaseContext;
 import org.hotwheel.ibatis.builder.SqlApplicationContext;
@@ -11,7 +12,6 @@ import javax.servlet.ServletContextListener;
 import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -92,8 +92,8 @@ public abstract class ScheduledTimerTask extends BaseContext implements ServletC
     private long getTimeMillis(String time) {
         long lRet = 0;
         try {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            DateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat dateFormat = FastDateFormat.getDateFormat("yyyy-MM-dd HH:mm:ss");
+            DateFormat dayFormat = FastDateFormat.getDateFormat("yyyy-MM-dd");
             Date curDate = dateFormat.parse(dayFormat.format(new Date()) + " " + time);
             lRet = curDate.getTime();
         } catch (ParseException e) {
