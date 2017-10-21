@@ -1,4 +1,4 @@
-package org.hotwheel.spring.common;
+package org.hotwheel.spring.interceptor;
 
 import org.hotwheel.assembly.Api;
 import org.slf4j.Logger;
