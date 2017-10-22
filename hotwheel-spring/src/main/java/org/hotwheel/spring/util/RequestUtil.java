@@ -1,15 +1,13 @@
 package org.hotwheel.spring.util;
 
-import org.hotwheel.assembly.Api;
 import org.hotwheel.util.CaseInsensitiveMap;
+import org.hotwheel.util.TraceId;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * http请求相关的工具类
@@ -19,45 +17,6 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class RequestUtil {
 
-    /** number of milliseconds per second */
-    public final static long MSEC_PER_SEC = 1000L;
-    public final static String DDL         = "yyyyMMddHHmmss";
-    private static volatile long sn = 0;
-    private static volatile long timestamp = 0;
-
-    private static final String kPrefixTraceId = Api.getLocalIp();
-    private static AtomicLong atomicLong = new AtomicLong(0);
-    private static final long kTraceMax = 1000000L;
-
-    /**
-     * 试图将计数器重置为0
-     * @param tm
-     */
-    private synchronized static void testInitTraceId(long tm) {
-        if (timestamp < tm) {
-            timestamp = tm;
-            // 以原子方式设置当前值为newValue, 并返回旧值
-            atomicLong.getAndSet(0);
-        }
-    }
-
-    /**
-     * 接口请求的跟踪标识
-     * @return
-     */
-    public static String genTraceId() {
-        StringBuffer sb = new StringBuffer();
-        Date now = new Date();
-        long tm = now.getTime() / MSEC_PER_SEC;
-        testInitTraceId(tm);
-
-        sb.append(kPrefixTraceId).append('/');
-        sb.append(Api.toString(now, DDL));
-        sn = atomicLong.incrementAndGet();
-        String tmp = String.valueOf(kTraceMax + sn);
-        sb.append(tmp.substring(1));
-        return sb.toString();
-    }
     public static Map<String, String> getHeaderMap(HttpServletRequest httpServletRequest) {
         // 通过枚举类型获取请求文件的头部信息集
         Map<String, String> headers = new CaseInsensitiveMap<>();
@@ -110,5 +69,9 @@ public class RequestUtil {
             ip = ip.substring(0, ip.indexOf(","));
         }
         return ip;
+    }
+
+    public static String genTraceId() {
+        return TraceId.genTraceId();
     }
 }

@@ -22,12 +22,12 @@ public class FastDateFormat {
     private static final ThreadLocal<Map<String, SimpleDateFormat>> cacheContext = new ThreadLocal<>();
 
     private static Map<String, SimpleDateFormat> getCacheContext() {
-        Map<String, SimpleDateFormat> map = cacheContext.get();
-        if (map == null) {
-            map = new ConcurrentHashMap<>();
-            cacheContext.set(map);
+        Map<String, SimpleDateFormat> cache = cacheContext.get();
+        if (cache == null) {
+            cache = new ConcurrentHashMap<>();
+            cacheContext.set(cache);
         }
-        return map;
+        return cache;
     }
 
     public static SimpleDateFormat getDateFormat(String format) {
