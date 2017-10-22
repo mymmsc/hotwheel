@@ -15,11 +15,12 @@ public class TestApi {
 
     public static void main(String[] args) {
         long tm = System.currentTimeMillis();
+        String s = TraceId.genTraceId();
+        System.out.println(s);
         for (int i = 0; i < 1000000; i ++) {
-            String s = TraceId.genTraceId();
-            //System.out.println(s);
+            s = TraceId.genTraceId();
         }
-
+        System.out.println(s);
         System.out.println("crossTime: " + (System.currentTimeMillis() - tm));
         String dateStr = "2017-06-15T03:12:47.048Z";
         Date date = Api.parseDate(dateStr);
