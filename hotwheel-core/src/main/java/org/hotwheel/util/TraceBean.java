@@ -1,5 +1,7 @@
 package org.hotwheel.util;
 
+import org.hotwheel.assembly.Api;
+
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 
@@ -10,21 +12,30 @@ import java.lang.management.RuntimeMXBean;
  * @version 5.2.15
  */
 public class TraceBean {
+    private String prefix = null;
     private long sequenceId = 0;
     private long pid = 0;
     private long threadId = 0;
+
+    private long timestamp = 0;
 
     public TraceBean() {
         sequenceId = 0;
         pid = getProcessId();
         threadId = getThreadId0();
+        byte[] ipas = ipToBytesByReg(Api.getLocalIp());
+        prefix = Api.MemToHex(ipas) + '-' + pid + '-' + threadId;
     }
 
     /**
      * 序列号+1
      * @return
      */
-    public long increment() {
+    public long incr(long tm) {
+        if (timestamp < tm) {
+            timestamp = tm;
+            sequenceId = 0;
+        }
         sequenceId += 1;
         return sequenceId;
     }
@@ -49,6 +60,25 @@ public class TraceBean {
         }
     }
 
+    /**
+     * 把IP地址转化为int
+     * @param ipAddr
+     * @return int
+     */
+    public static byte[] ipToBytesByReg(String ipAddr) {
+        byte[] ret = new byte[4];
+        try {
+            String[] ipArr = ipAddr.split("\\.");
+            ret[0] = (byte) (Integer.parseInt(ipArr[0]) & 0xFF);
+            ret[1] = (byte) (Integer.parseInt(ipArr[1]) & 0xFF);
+            ret[2] = (byte) (Integer.parseInt(ipArr[2]) & 0xFF);
+            ret[3] = (byte) (Integer.parseInt(ipArr[3]) & 0xFF);
+        } catch (Exception e) {
+            //throw new IllegalArgumentException(ipAddr + " is invalid IP");
+        }
+        return ret;
+    }
+
     public long getSequenceId() {
         return sequenceId;
     }
@@ -71,5 +101,13 @@ public class TraceBean {
 
     public void setThreadId(long threadId) {
         this.threadId = threadId;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
     }
 }
