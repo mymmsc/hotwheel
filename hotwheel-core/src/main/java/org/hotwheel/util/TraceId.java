@@ -12,7 +12,6 @@ public final class TraceId {
     private final static String kTraceIdVersion = "10";
     // 线程内序列号
     private static final ThreadLocal<TraceBean> kTraceSequence = new ThreadLocal<>();
-
     private static final String PROCESS_UUID;
     private static final long traceIdMax;
 
@@ -46,6 +45,7 @@ public final class TraceId {
             kTraceSequence.set(tb);
         }
         long sn = tb.incr(tm);
+        //kTraceSequence.set(tb);
         // 第一段, ip地址的16进制, 第二段, 进程id, 第三段, 线程id
         sb.append(tb.getPrefix()).append('-');
         // 第四段, 时间戳, 秒
@@ -54,5 +54,32 @@ public final class TraceId {
         String tmp = String.valueOf(kTraceMax + sn);
         sb.append(tmp.substring(1));
         return sb.toString();
+    }
+
+    /**
+     * 获取指定位数随机整数
+     *
+     * @param len
+     * @return
+     */
+    public static String getRandomString(int len) {
+        return String.valueOf((long) ((Math.random() * 9 + 1) * Math.pow(10, len - 1)));
+    }
+
+    /**
+     * 获取traceId
+     *
+     * @return
+     */
+    public static String createTraceId() {
+        return getRandomString(15);
+    }
+
+    /**
+     * 接口请求的跟踪标识
+     * @return
+     */
+    public static String genTraceIdV2() {
+        return createTraceId();
     }
 }

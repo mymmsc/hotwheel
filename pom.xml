@@ -8,7 +8,7 @@
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc.hotwheel</groupId>
     <artifactId>hotwheel-framework</artifactId>
-    <version>5.2.16</version>
+    <version>5.2.17</version>
     <packaging>pom</packaging>
 
     <contributors>
@@ -41,7 +41,7 @@
     <!-- ==================== 依赖jar版本 设置 =========================== -->
     <properties>
         <!-- MyMMSC-HotWheel组件 版本设置 -->
-        <hotwheel.version>5.2.16</hotwheel.version>
+        <hotwheel.version>5.2.17</hotwheel.version>
 
         <!-- JDK设置 -->
         <javac.version>1.7</javac.version>
