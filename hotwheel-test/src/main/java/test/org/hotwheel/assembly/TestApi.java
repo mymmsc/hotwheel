@@ -15,8 +15,9 @@ public class TestApi {
 
     public static void main(String[] args) {
         long tm = System.currentTimeMillis();
-        for (int i = 0; i < 1000; i ++) {
-            System.out.println(TraceId.genTraceId());
+        for (int i = 0; i < 1000000; i ++) {
+            String s = TraceId.genTraceId();
+            //System.out.println(s);
         }
 
         System.out.println("crossTime: " + (System.currentTimeMillis() - tm));
