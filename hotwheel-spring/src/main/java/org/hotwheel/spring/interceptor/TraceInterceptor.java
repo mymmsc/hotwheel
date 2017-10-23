@@ -37,7 +37,7 @@ public class TraceInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         MDC.put(mdcStartTime, String.valueOf(System.currentTimeMillis()));
-        String traceId = MDC.get(httpTraceIdName);
+        String traceId = httpServletRequest.getHeader(httpTraceIdName);
         if (Api.isEmpty(traceId)) {
             traceId = RequestUtil.genTraceId();
         }
