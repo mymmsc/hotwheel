@@ -4,6 +4,7 @@ import java.util.UUID;
 
 /**
  * TraceId生成器
+ * JDK 提供的UUID 多线程并发, 会造成重复, 故采用主机ip+进程号+线程号+时间戳+秒内序列号的格式输出
  * Created by wangfeng on 2017/10/22.
  * @version 5.2.13
  */

@@ -42,6 +42,7 @@ public class TraceInterceptor implements HandlerInterceptor {
             traceId = RequestUtil.genTraceId();
         }
         MDC.put(httpTraceIdName, traceId);
+        // 将跟踪码回传给客户端
         httpServletResponse.setHeader(httpTraceIdName, traceId);
         String uri = httpServletRequest.getRequestURI();
         String requestHeader = getHttpHeader(httpServletRequest);
@@ -51,7 +52,7 @@ public class TraceInterceptor implements HandlerInterceptor {
         // 验证IP地址
         String ip = RequestUtil.getClientIp(httpServletRequest);
         MDC.put(mdcIp, ip);
-        logger.info("traceId={},ip={},url={},request-header=[{}],params=[{}]", traceId, ip, uri, requestHeader, requestParams);
+        logger.info("{}={},ip={},url={},request-header=[{}],params=[{}]", httpTraceIdName, traceId, ip, uri, requestHeader, requestParams);
         return true;
     }
 
@@ -103,8 +104,8 @@ public class TraceInterceptor implements HandlerInterceptor {
         String responseHeader = getHttpHeader(httpServletResponse);
         String ip = MDC.get(mdcIp);
         long tm = System.currentTimeMillis() - Api.valueOf(long.class, startTime);
-        logger.info("traceId={},ip={},url={},request-header=[{}],params=[{}],response-header=[{}], cost time {} ms.",
-                traceId, ip, uri, requestHeader, requestParams, responseHeader, tm);
+        logger.info("{}={},ip={},url={},request-header=[{}],params=[{}],response-header=[{}], cost time {} ms.",
+                httpTraceIdName, traceId, ip, uri, requestHeader, requestParams, responseHeader, tm);
 
         if (StringUtils.isNotBlank(MDC.get(mdcStartTime))) {
             MDC.remove(mdcStartTime);
