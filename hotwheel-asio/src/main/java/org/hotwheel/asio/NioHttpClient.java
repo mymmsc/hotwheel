@@ -147,6 +147,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
             sc.write(ByteBuffer.wrap(data.toByteArray()));
         } catch (IOException e) {
             logger.error("SocketChannel.write failed: ", e);
+            handleError(context.getChannel(), e);
         } finally {
             try {
                 data.close();
