@@ -44,13 +44,14 @@ public class TemplatorCache {
 
     private static String generateCacheKey(TemplateSpecification templateSpec) {
         StringBuilder key = new StringBuilder(128);
-        if (templateSpec.templateText != null)
+        if (templateSpec.templateText != null) {
             key.append(templateSpec.templateText);
-        else if (templateSpec.templateFileName != null)
+        } else if (templateSpec.templateFileName != null) {
             key.append(templateSpec.templateFileName);
-        else
+        } else {
             throw new IllegalArgumentException(
                     "No templateFileName or templateText specified.");
+        }
         if (templateSpec.conditionFlags != null) {
             for (String flag : templateSpec.conditionFlags) {
                 key.append('|');

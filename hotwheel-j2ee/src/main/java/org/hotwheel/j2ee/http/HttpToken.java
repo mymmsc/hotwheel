@@ -40,11 +40,13 @@ public class HttpToken implements Token {
 
     }
 
+    @Override
     public boolean init(String key) {
         des3 = new ThreeDES();
         return des3.init(key);
     }
 
+    @Override
     public String encode(Object obj) {
         String str = null;
         if (obj instanceof String) {
@@ -58,6 +60,7 @@ public class HttpToken implements Token {
         return token;
     }
 
+    @Override
     public <T> T decode(Class<T> clazz) {
         T obj = null;
         byte[] buff = des3.decode(Api.HexToMem(token));

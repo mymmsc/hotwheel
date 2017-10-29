@@ -708,8 +708,7 @@ public final class SQLApi {
     public static int insert(Connection conn, String sql, Object... args) {
         // -1 为失败
         int nRet = -1;
-        Pattern pattern = Pattern.compile("^\\s*insert\\s+into\\s+",
-                Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile("^\\s*insert\\s+into\\s+", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(sql);
         if (matcher.find()) {
             PreparedStatement pstmt = null;

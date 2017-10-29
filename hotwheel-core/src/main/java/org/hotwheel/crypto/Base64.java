@@ -88,8 +88,9 @@ public class Base64 {
             if (iSrcIdx < byteData.length - 1) {
                 byteDest[iDestIdx++] = (byte) ((byteData[iSrcIdx + 1] >>> 4) & 017 | (byteData[iSrcIdx] << 4) & 077);
                 byteDest[iDestIdx++] = (byte) ((byteData[iSrcIdx + 1] << 2) & 077);
-            } else
+            } else {
                 byteDest[iDestIdx++] = (byte) ((byteData[iSrcIdx] << 4) & 077);
+            }
         }
 
         /*
@@ -97,21 +98,23 @@ public class Base64 {
          * alphabet is completely documented in RFC 1521.)
          */
         for (iSrcIdx = 0; iSrcIdx < iDestIdx; iSrcIdx++) {
-            if (byteDest[iSrcIdx] < 26)
+            if (byteDest[iSrcIdx] < 26) {
                 byteDest[iSrcIdx] = (byte) (byteDest[iSrcIdx] + 'A');
-            else if (byteDest[iSrcIdx] < 52)
+            } else if (byteDest[iSrcIdx] < 52) {
                 byteDest[iSrcIdx] = (byte) (byteDest[iSrcIdx] + 'a' - 26);
-            else if (byteDest[iSrcIdx] < 62)
+            } else if (byteDest[iSrcIdx] < 62) {
                 byteDest[iSrcIdx] = (byte) (byteDest[iSrcIdx] + '0' - 52);
-            else if (byteDest[iSrcIdx] < 63)
+            } else if (byteDest[iSrcIdx] < 63) {
                 byteDest[iSrcIdx] = '+';
-            else
+            } else {
                 byteDest[iSrcIdx] = '/';
+            }
         }
 
         /* Pad any unused bytes in the destination string with '=' characters. */
-        for (; iSrcIdx < byteDest.length; iSrcIdx++)
+        for (; iSrcIdx < byteDest.length; iSrcIdx++) {
             byteDest[iSrcIdx] = '=';
+        }
 
         return byteDest;
     }
@@ -187,16 +190,17 @@ public class Base64 {
          * do all of this in a new array so as not to edit the original input
          */
         for (iSrcIdx = 0; iSrcIdx < reviSrcIdx; iSrcIdx++) {
-            if (byteData[iSrcIdx] == '+')
+            if (byteData[iSrcIdx] == '+') {
                 byteTemp[iSrcIdx] = 62;
-            else if (byteData[iSrcIdx] == '/')
+            } else if (byteData[iSrcIdx] == '/') {
                 byteTemp[iSrcIdx] = 63;
-            else if (byteData[iSrcIdx] < '0' + 10)
+            } else if (byteData[iSrcIdx] < '0' + 10) {
                 byteTemp[iSrcIdx] = (byte) (byteData[iSrcIdx] + 52 - '0');
-            else if (byteData[iSrcIdx] < ('A' + 26))
+            } else if (byteData[iSrcIdx] < ('A' + 26)) {
                 byteTemp[iSrcIdx] = (byte) (byteData[iSrcIdx] - 'A');
-            else if (byteData[iSrcIdx] < 'a' + 26)
+            } else if (byteData[iSrcIdx] < 'a' + 26) {
                 byteTemp[iSrcIdx] = (byte) (byteData[iSrcIdx] + 26 - 'a');
+            }
         }
 
         /*

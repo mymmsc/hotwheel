@@ -766,19 +766,22 @@ public class Templator {
                     return;
                 case 1: { // variable
                     VarRefTabRec vrtr = mtp.varRefTab[varRefNo];
-                    if (vrtr.blockNo != blockNo)
+                    if (vrtr.blockNo != blockNo) {
                         throw new Error();
+                    }
                     String variableValue = bitr.blockVarTab[vrtr.blockVarNo];
-                    if (variableValue != null)
+                    if (variableValue != null) {
                         out.append(variableValue);
+                    }
                     tPos = vrtr.tPosEnd;
                     varRefNo++;
                     break;
                 }
                 case 2: { // sub block
                     BlockTabRec subBtr = mtp.blockTab[subBlockNo];
-                    if (subBtr.parentBlockNo != blockNo)
+                    if (subBtr.parentBlockNo != blockNo) {
                         throw new Error();
+                    }
                     writeBlockInstances(out, subBlockNo, bitr.instanceLevel); // recursive
                     // call
                     tPos = subBtr.tPosEnd;

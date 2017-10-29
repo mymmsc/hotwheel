@@ -69,6 +69,7 @@ public class ThreeDES extends AbstractCrypto implements InterfaceCrypto {
     /**
      * 初始化KEY, keys长度必须是24
      */
+    @Override
     public boolean init(byte[] keys) {
         key = new byte[24];
         Api.arrayCopy(key, keys);
@@ -116,6 +117,7 @@ public class ThreeDES extends AbstractCrypto implements InterfaceCrypto {
      * @param src     为被加密的数据缓冲区（源）
      * @return
      */
+    @Override
     public byte[] encode(byte[] src) {
         byte[] bsRet = null;
         try {
@@ -133,6 +135,7 @@ public class ThreeDES extends AbstractCrypto implements InterfaceCrypto {
         return bsRet;
     }
 
+    @Override
     public byte[] decode(byte[] src) {
         byte[] bsRet = null;
         try {

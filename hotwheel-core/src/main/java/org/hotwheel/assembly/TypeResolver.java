@@ -86,12 +86,14 @@ public final class TypeResolver {
      */
     public static Class<?> resolveRawArgument(Type genericType, Class<?> subType) {
         Class<?>[] arguments = resolveRawArguments(genericType, subType);
-        if (arguments == null)
+        if (arguments == null) {
             return Unknown.class;
+        }
 
-        if (arguments.length != 1)
+        if (arguments.length != 1) {
             throw new IllegalArgumentException("Expected 1 type argument on generic type " + genericType
                     + " but found " + arguments.length);
+        }
 
         return arguments[0];
     }
@@ -129,8 +131,9 @@ public final class TypeResolver {
             ParameterizedType paramType = (ParameterizedType) genericType;
             Type[] arguments = paramType.getActualTypeArguments();
             result = new Class[arguments.length];
-            for (int i = 0; i < arguments.length; i++)
+            for (int i = 0; i < arguments.length; i++) {
                 result[i] = resolveRawClass(arguments[i], subType);
+            }
         } else if (genericType instanceof TypeVariable) {
             result = new Class[1];
             result[0] = resolveRawClass(genericType, subType);
@@ -149,26 +152,33 @@ public final class TypeResolver {
      */
     public static Type resolveGenericType(Class<?> type, Type subType) {
         Class<?> rawType;
-        if (subType instanceof ParameterizedType)
+        if (subType instanceof ParameterizedType) {
             rawType = (Class<?>) ((ParameterizedType) subType).getRawType();
-        else
+        } else {
             rawType = (Class<?>) subType;
+        }
 
-        if (type.equals(rawType))
+        if (type.equals(rawType)) {
             return subType;
+        }
 
         Type result;
         if (type.isInterface()) {
-            for (Type superInterface : rawType.getGenericInterfaces())
-                if (superInterface != null && !superInterface.equals(Object.class))
-                    if ((result = resolveGenericType(type, superInterface)) != null)
+            for (Type superInterface : rawType.getGenericInterfaces()) {
+                if (superInterface != null && !superInterface.equals(Object.class)) {
+                    if ((result = resolveGenericType(type, superInterface)) != null) {
                         return result;
+                    }
+                }
+            }
         }
 
         Type superClass = rawType.getGenericSuperclass();
-        if (superClass != null && !superClass.equals(Object.class))
-            if ((result = resolveGenericType(type, superClass)) != null)
+        if (superClass != null && !superClass.equals(Object.class)) {
+            if ((result = resolveGenericType(type, superClass)) != null) {
                 return result;
+            }
+        }
 
         return null;
     }
@@ -214,8 +224,9 @@ public final class TypeResolver {
             Type genericType = targetType.getGenericSuperclass();
             Class<?> type = targetType.getSuperclass();
             while (type != null && !Object.class.equals(type)) {
-                if (genericType instanceof ParameterizedType)
+                if (genericType instanceof ParameterizedType) {
                     buildTypeVariableMap((ParameterizedType) genericType, map);
+                }
                 buildTypeVariableMap(type.getGenericInterfaces(), map);
 
                 genericType = type.getGenericSuperclass();
@@ -226,14 +237,16 @@ public final class TypeResolver {
             type = targetType;
             while (type.isMemberClass()) {
                 genericType = type.getGenericSuperclass();
-                if (genericType instanceof ParameterizedType)
+                if (genericType instanceof ParameterizedType) {
                     buildTypeVariableMap((ParameterizedType) genericType, map);
+                }
 
                 type = type.getEnclosingClass();
             }
 
-            if (cacheEnabled)
+            if (cacheEnabled) {
                 typeVariableCache.put(targetType, new WeakReference<Map<TypeVariable<?>, Type>>(map));
+            }
         }
 
         return map;
@@ -248,8 +261,9 @@ public final class TypeResolver {
                 ParameterizedType parameterizedType = (ParameterizedType) type;
                 buildTypeVariableMap(parameterizedType, map);
                 Type rawType = parameterizedType.getRawType();
-                if (rawType instanceof Class)
+                if (rawType instanceof Class) {
                     buildTypeVariableMap(((Class<?>) rawType).getGenericInterfaces(), map);
+                }
             } else if (type instanceof Class) {
                 buildTypeVariableMap(((Class<?>) type).getGenericInterfaces(), map);
             }
@@ -279,8 +293,9 @@ public final class TypeResolver {
                 } else if (typeArgument instanceof TypeVariable) {
                     TypeVariable<?> typeVariableArgument = (TypeVariable<?>) typeArgument;
                     Type resolvedType = typeVariableMap.get(typeVariableArgument);
-                    if (resolvedType == null)
+                    if (resolvedType == null) {
                         resolvedType = resolveBound(typeVariableArgument);
+                    }
                     typeVariableMap.put(variable, resolvedType);
                 }
             }
@@ -293,12 +308,14 @@ public final class TypeResolver {
      */
     public static Type resolveBound(TypeVariable<?> typeVariable) {
         Type[] bounds = typeVariable.getBounds();
-        if (bounds.length == 0)
+        if (bounds.length == 0) {
             return Unknown.class;
+        }
 
         Type bound = bounds[0];
-        if (bound instanceof TypeVariable)
+        if (bound instanceof TypeVariable) {
             bound = resolveBound((TypeVariable<?>) bound);
+        }
 
         return bound == Object.class ? Unknown.class : bound;
     }

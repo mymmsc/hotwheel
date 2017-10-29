@@ -430,10 +430,11 @@ public class TemplatorParser {
     }
 
     private void insertSubtemplate(String subtemplateName, int tPos1, int tPos2) {
-        if (templateText.length() > maxInclTemplateSize)
+        if (templateText.length() > maxInclTemplateSize) {
             throw new RuntimeException(
                     "Subtemplate include aborted because the internal template string is longer than "
                             + maxInclTemplateSize + " characters.");
+        }
         String subtemplate;
         try {
             subtemplate = templator.loadSubtemplate(subtemplateName);
@@ -541,9 +542,10 @@ public class TemplatorParser {
     private void processElseCmd(String parms, int cmdTPosBegin, int cmdTPosEnd)
             throws TemplateSyntaxException {
         excludeTemplateRange(cmdTPosBegin, cmdTPosEnd);
-        if (parms.trim().length() != 0)
+        if (parms.trim().length() != 0) {
             throw new TemplateSyntaxException(
                     "Invalid parameters for else command.");
+        }
         if (condLevel < 0) {
             throw new TemplateSyntaxException("else without matching if.");
         }

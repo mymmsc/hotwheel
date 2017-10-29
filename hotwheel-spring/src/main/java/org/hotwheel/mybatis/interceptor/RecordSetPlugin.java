@@ -22,6 +22,7 @@ import java.util.Properties;
         method = "handleResultSets",
         args = {Statement.class})})
 public class RecordSetPlugin implements Interceptor {
+    @Override
     public Object intercept(Invocation invocation) throws Throwable {
         Object obj = null;
         ResultSetHandler resultSetHandler = (ResultSetHandler) invocation.getTarget();
@@ -49,10 +50,12 @@ public class RecordSetPlugin implements Interceptor {
         return obj;
     }
 
+    @Override
     public Object plugin(Object target) {
         return Plugin.wrap(target, this);
     }
 
+    @Override
     public void setProperties(Properties properties) {
     }
 }

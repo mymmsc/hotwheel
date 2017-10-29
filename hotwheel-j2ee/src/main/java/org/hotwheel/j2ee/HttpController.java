@@ -93,6 +93,7 @@ public abstract class HttpController extends BaseObject {
         super();
     }
 
+    @Override
     public void close() {
         //
     }

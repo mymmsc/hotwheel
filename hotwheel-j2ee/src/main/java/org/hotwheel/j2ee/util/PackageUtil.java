@@ -49,12 +49,16 @@ public class PackageUtil {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         loader = PackageUtil.class.getClassLoader();
         String packagePath = packageName.replace(".", "/");
-        if (debug) System.out.println(packagePath);
+        if (debug) {
+            System.out.println(packagePath);
+        }
 
         URL url = loader.getResource(packagePath);
         if (url != null) {
             String type = url.getProtocol();
-            if (debug) System.out.println(type);
+            if (debug) {
+                System.out.println(type);
+            }
             if (type.equals("file")) {
                 fileNames = getClassNameByFile(url.getPath(), childPackage);
             } else if (type.equals("jar")) {
@@ -95,13 +99,19 @@ public class PackageUtil {
                     myClassName.addAll(getClassNameByFile(childFile.getPath(), childPackage));
                 }
             } else {
-                if (debug) System.out.println("childFile: " + childFile.getPath());
+                if (debug) {
+                    System.out.println("childFile: " + childFile.getPath());
+                }
                 String childFilePath = fixpath(childFile.getPath());
-                if (debug) System.out.println("childFile: " + childFilePath);
+                if (debug) {
+                    System.out.println("childFile: " + childFilePath);
+                }
                 if (childFilePath.endsWith(".class")) {
                     childFilePath = childFilePath.substring(childFilePath.indexOf("/classes") + 9, childFilePath.lastIndexOf("."));
                     childFilePath = childFilePath.replace("/", ".");
-                    if (debug) System.out.println("childFile: " + childFilePath);
+                    if (debug) {
+                        System.out.println("childFile: " + childFilePath);
+                    }
                     myClassName.add(childFilePath);
                 }
             }

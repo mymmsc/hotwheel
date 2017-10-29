@@ -963,7 +963,7 @@ public final class Api {
     @SuppressWarnings("unused")
     private static boolean Utf8codeCheck(String text) {
         String sign = "";
-        if (text.startsWith("%e"))
+        if (text.startsWith("%e")) {
             for (int i = 0, p = 0; p != -1; i++) {
                 p = text.indexOf("%", p);
                 if (p != -1) {
@@ -971,6 +971,7 @@ public final class Api {
                 }
                 sign += p;
             }
+        }
         return sign.equals("147-1");
     }
 
@@ -1350,10 +1351,10 @@ public final class Api {
         str = str.toUpperCase();
         ByteArrayOutputStream baos = new ByteArrayOutputStream(str.length() / 2);
         // 将每2位16进制整数组装成一个字节
-        for (int i = 0; i < str.length(); i += 2)
+        for (int i = 0; i < str.length(); i += 2) {
             baos.write((hexString.indexOf(str.charAt(i)) << 4 | hexString
                     .indexOf(str.charAt(i + 1))));
-        // return new String(baos.toByteArray());
+        }
         return baos.toByteArray();
     }
 
