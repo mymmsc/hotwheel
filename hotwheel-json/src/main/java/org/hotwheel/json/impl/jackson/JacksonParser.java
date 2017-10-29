@@ -793,8 +793,12 @@ public abstract class JacksonParser
     public boolean getBooleanValue()
             throws IOException, JsonParseException {
         JsonToken t = getCurrentToken();
-        if (t == JsonToken.VALUE_TRUE) return true;
-        if (t == JsonToken.VALUE_FALSE) return false;
+        if (t == JsonToken.VALUE_TRUE) {
+            return true;
+        }
+        if (t == JsonToken.VALUE_FALSE) {
+            return false;
+        }
         throw new JsonParseException("Current token (" + t + ") not of boolean type", getCurrentLocation());
     }
 

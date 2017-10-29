@@ -258,10 +258,12 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
         return this.amount.setScale(6, DEFAULT_ROUNDING);
     }
 
+    @Override
     public int compareTo(BigDecimalUtils o) {
         return this.amount.compareTo(o.amount);
     }
 
+    @Override
     public boolean equals(Object other) {
         if(this == other) {
             return true;
@@ -273,10 +275,12 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
         }
     }
 
+    @Override
     public int hashCode() {
         return 7 * this.amount.hashCode();
     }
 
+    @Override
     public String toString() {
         return this.amount.toString();
     }

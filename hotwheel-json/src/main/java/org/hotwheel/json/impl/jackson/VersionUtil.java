@@ -165,7 +165,9 @@ public class VersionUtil {
         int number = 0;
         for (int i = 0; i < len; ++i) {
             char c = partStr.charAt(i);
-            if (c > '9' || c < '0') break;
+            if (c > '9' || c < '0') {
+                break;
+            }
             number = (number * 10) + (c - '0');
         }
         return number;

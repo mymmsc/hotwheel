@@ -302,6 +302,7 @@ public class ActionFilter extends BaseObject implements Filter {
      * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest,
      * javax.servlet.ServletResponse, javax.servlet.FilterChain)
      */
+    @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
@@ -360,6 +361,7 @@ public class ActionFilter extends BaseObject implements Filter {
      *
      * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
      */
+    @Override
     public void init(FilterConfig config) throws ServletException {
         // 已经初始化, 直接返回
         if (isInit) {
@@ -541,6 +543,7 @@ public class ActionFilter extends BaseObject implements Filter {
      *
      * @see javax.servlet.Filter#destroy()
      */
+    @Override
     public void destroy() {
         if (xmlParser != null) {
             xmlParser.close();

@@ -37,6 +37,7 @@ public abstract class HttpElement implements Element {
      */
     //@SuppressWarnings("unchecked")
     //@Override
+    @Override
     public boolean init(HttpServletRequest request, HttpServletResponse response) {
         m_request = request;
         m_response = response;

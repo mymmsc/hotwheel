@@ -36,6 +36,7 @@ public class HttpCookie extends HttpElement {
      * @see org.mymmsc.j2ee.http.InterfaceHttpObject#get(java.lang.String,
      * java.lang.Object)
      */
+    @Override
     @SuppressWarnings("unchecked")
     public <T> T get(String name, T defaultValue) {
         T value = defaultValue;
@@ -60,6 +61,7 @@ public class HttpCookie extends HttpElement {
      * @see org.mymmsc.j2ee.http.InterfaceHttpObject#set(java.lang.String,
      * java.lang.Object)
      */
+    @Override
     public <T> boolean set(String name, T value) {
         String tmpValue = (String) value;
         return set(null, name, tmpValue, -1);
@@ -93,6 +95,7 @@ public class HttpCookie extends HttpElement {
      *
      * @see org.mymmsc.j2ee.http.InterfaceHttpObject#remove(java.lang.String)
      */
+    @Override
     public boolean remove(String name) {
         Cookie c = new Cookie(name, null);
         c.setMaxAge(0);

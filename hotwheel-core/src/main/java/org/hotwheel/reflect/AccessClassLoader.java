@@ -38,8 +38,9 @@ class AccessClassLoader extends ClassLoader {
 		if (selfContextParentClassLoader.equals(parent)) {
 			if (selfContextAccessClassLoader == null) {
 				synchronized (accessClassLoaders) { // DCL with volatile semantics
-					if (selfContextAccessClassLoader == null)
+					if (selfContextAccessClassLoader == null) {
 						selfContextAccessClassLoader = new AccessClassLoader(selfContextParentClassLoader);
+					}
 				}
 			}
 			return selfContextAccessClassLoader;
@@ -49,10 +50,11 @@ class AccessClassLoader extends ClassLoader {
 			WeakReference<AccessClassLoader> ref = accessClassLoaders.get(parent);
 			if (ref != null) {
 				AccessClassLoader accessClassLoader = ref.get();
-				if (accessClassLoader != null)
+				if (accessClassLoader != null) {
 					return accessClassLoader;
-				else
+				} else {
 					accessClassLoaders.remove(parent); // the value has been GC-reclaimed, but still not the key (defensive sanity)
+				}
 			}
 			AccessClassLoader accessClassLoader = new AccessClassLoader(parent);
 			accessClassLoaders.put(parent, new WeakReference<AccessClassLoader>(accessClassLoader));
@@ -74,7 +76,9 @@ class AccessClassLoader extends ClassLoader {
 
 	public static int activeAccessClassLoaders () {
 		int sz = accessClassLoaders.size();
-		if (selfContextAccessClassLoader != null) sz++;
+		if (selfContextAccessClassLoader != null) {
+			sz++;
+		}
 		return sz;
 	}
 
@@ -82,12 +86,21 @@ class AccessClassLoader extends ClassLoader {
 		super(parent);
 	}
 
+	@Override
 	protected Class<?> loadClass (String name, boolean resolve) throws ClassNotFoundException {
 		// These classes come from the classloader that loaded AccessClassLoader.
-		if (name.equals(FieldAccess.class.getName())) return FieldAccess.class;
-		if (name.equals(MethodAccess.class.getName())) return MethodAccess.class;
-		if (name.equals(ConstructorAccess.class.getName())) return ConstructorAccess.class;
-		if (name.equals(PublicConstructorAccess.class.getName())) return PublicConstructorAccess.class;
+		if (name.equals(FieldAccess.class.getName())) {
+			return FieldAccess.class;
+		}
+		if (name.equals(MethodAccess.class.getName())) {
+			return MethodAccess.class;
+		}
+		if (name.equals(ConstructorAccess.class.getName())) {
+			return ConstructorAccess.class;
+		}
+		if (name.equals(PublicConstructorAccess.class.getName())) {
+			return PublicConstructorAccess.class;
+		}
 		// All other classes come from the classloader that loaded the type we are accessing.
 		return super.loadClass(name, resolve);
 	}
@@ -124,7 +137,9 @@ class AccessClassLoader extends ClassLoader {
 
 	private static ClassLoader getParentClassLoader (Class type) {
 		ClassLoader parent = type.getClassLoader();
-		if (parent == null) parent = ClassLoader.getSystemClassLoader();
+		if (parent == null) {
+			parent = ClassLoader.getSystemClassLoader();
+		}
 		return parent;
 	}
 	

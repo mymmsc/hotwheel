@@ -72,11 +72,17 @@ public class StatementCache extends StatementDecoratorInterceptor {
     public void setProperties(Map<String, InterceptorProperty> properties) {
         super.setProperties(properties);
         InterceptorProperty p = properties.get("prepared");
-        if (p!=null) cachePrepared = p.getValueAsBoolean(cachePrepared);
+        if (p!=null) {
+            cachePrepared = p.getValueAsBoolean(cachePrepared);
+        }
         p = properties.get("callable");
-        if (p!=null) cacheCallable = p.getValueAsBoolean(cacheCallable);
+        if (p!=null) {
+            cacheCallable = p.getValueAsBoolean(cacheCallable);
+        }
         p = properties.get("max");
-        if (p!=null) maxCacheSize = p.getValueAsInt(maxCacheSize);
+        if (p!=null) {
+            maxCacheSize = p.getValueAsInt(maxCacheSize);
+        }
         if (cachePrepared && cacheCallable) {
             this.types = ALL_TYPES;
         } else if (cachePrepared) {
@@ -143,7 +149,9 @@ public class StatementCache extends StatementDecoratorInterceptor {
     }
 
     public void closeStatement(CachedStatement st) {
-        if (st==null) return;
+        if (st==null) {
+            return;
+        }
         st.forceClose();
     }
 

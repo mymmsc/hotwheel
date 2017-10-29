@@ -38,6 +38,7 @@ public abstract class AbstractScript extends BaseObject implements ScriptParser 
         m_hmTables = new HashMap<String, TableObject>();
     }
 
+    @Override
     public void close() {
         try {
             m_file_in.close();
@@ -57,6 +58,7 @@ public abstract class AbstractScript extends BaseObject implements ScriptParser 
         super.finalize();
     }
 
+    @Override
     public boolean open(String filename) {
         boolean bRet = false;
         m_file = new File(filename);
@@ -123,6 +125,7 @@ public abstract class AbstractScript extends BaseObject implements ScriptParser 
         return m_hmTables.get(name);
     }
 
+    @Override
     public int getTableNumber() {
         return m_hmTables.size();
     }

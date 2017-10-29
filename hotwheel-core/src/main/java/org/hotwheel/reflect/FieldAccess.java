@@ -32,14 +32,20 @@ public abstract class FieldAccess {
 	private Field[] fields;
 
 	public int getIndex (String fieldName) {
-		for (int i = 0, n = fieldNames.length; i < n; i++)
-			if (fieldNames[i].equals(fieldName)) return i;
+		for (int i = 0, n = fieldNames.length; i < n; i++) {
+			if (fieldNames[i].equals(fieldName)) {
+				return i;
+			}
+		}
 		throw new IllegalArgumentException("Unable to find non-private field: " + fieldName);
 	}
 
 	public int getIndex (Field field) {
-		for (int i = 0, n = fields.length; i < n; i++)
-			if (fields[i].equals(field)) return i;
+		for (int i = 0, n = fields.length; i < n; i++) {
+			if (fields[i].equals(field)) {
+				return i;
+			}
+		}
 		throw new IllegalArgumentException("Unable to find non-private field: " + field);
 	}
 
@@ -117,8 +123,12 @@ public abstract class FieldAccess {
 			for (int i = 0, n = declaredFields.length; i < n; i++) {
 				Field field = declaredFields[i];
 				int modifiers = field.getModifiers();
-				if (Modifier.isStatic(modifiers)) continue;
-				if (Modifier.isPrivate(modifiers)) continue;
+				if (Modifier.isStatic(modifiers)) {
+					continue;
+				}
+				if (Modifier.isPrivate(modifiers)) {
+					continue;
+				}
 				fields.add(field);
 			}
 			nextClass = nextClass.getSuperclass();
@@ -133,7 +143,9 @@ public abstract class FieldAccess {
 
 		String className = type.getName();
 		String accessClassName = className + "FieldAccess";
-		if (accessClassName.startsWith("java.")) accessClassName = "reflectasm." + accessClassName;
+		if (accessClassName.startsWith("java.")) {
+			accessClassName = "reflectasm." + accessClassName;
+		}
 		Class accessClass = null;
 
 		AccessClassLoader loader = AccessClassLoader.get(type);
@@ -205,8 +217,9 @@ public abstract class FieldAccess {
 		if (!fields.isEmpty()) {
 			maxStack--;
 			Label[] labels = new Label[fields.size()];
-			for (int i = 0, n = labels.length; i < n; i++)
+			for (int i = 0, n = labels.length; i < n; i++) {
 				labels[i] = new Label();
+			}
 			Label defaultLabel = new Label();
 			mv.visitTableSwitchInsn(0, labels.length - 1, defaultLabel, labels);
 
@@ -282,8 +295,9 @@ public abstract class FieldAccess {
 		if (!fields.isEmpty()) {
 			maxStack--;
 			Label[] labels = new Label[fields.size()];
-			for (int i = 0, n = labels.length; i < n; i++)
+			for (int i = 0, n = labels.length; i < n; i++) {
 				labels[i] = new Label();
+			}
 			Label defaultLabel = new Label();
 			mv.visitTableSwitchInsn(0, labels.length - 1, defaultLabel, labels);
 
@@ -347,9 +361,9 @@ public abstract class FieldAccess {
 			Label labelForInvalidTypes = new Label();
 			boolean hasAnyBadTypeLabel = false;
 			for (int i = 0, n = labels.length; i < n; i++) {
-				if (fields.get(i).getType().equals(String.class))
+				if (fields.get(i).getType().equals(String.class)) {
 					labels[i] = new Label();
-				else {
+				} else {
 					labels[i] = labelForInvalidTypes;
 					hasAnyBadTypeLabel = true;
 				}
@@ -440,9 +454,9 @@ public abstract class FieldAccess {
 			Label labelForInvalidTypes = new Label();
 			boolean hasAnyBadTypeLabel = false;
 			for (int i = 0, n = labels.length; i < n; i++) {
-				if (Type.getType(fields.get(i).getType()).equals(primitiveType))
+				if (Type.getType(fields.get(i).getType()).equals(primitiveType)) {
 					labels[i] = new Label();
-				else {
+				} else {
 					labels[i] = labelForInvalidTypes;
 					hasAnyBadTypeLabel = true;
 				}
@@ -530,9 +544,9 @@ public abstract class FieldAccess {
 			Label labelForInvalidTypes = new Label();
 			boolean hasAnyBadTypeLabel = false;
 			for (int i = 0, n = labels.length; i < n; i++) {
-				if (Type.getType(fields.get(i).getType()).equals(primitiveType))
+				if (Type.getType(fields.get(i).getType()).equals(primitiveType)) {
 					labels[i] = new Label();
-				else {
+				} else {
 					labels[i] = labelForInvalidTypes;
 					hasAnyBadTypeLabel = true;
 				}

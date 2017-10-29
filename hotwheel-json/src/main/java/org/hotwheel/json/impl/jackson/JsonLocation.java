@@ -114,14 +114,24 @@ public class JsonLocation
 
     @Override
     public boolean equals(Object other) {
-        if (other == this) return true;
-        if (other == null) return false;
-        if (!(other instanceof JsonLocation)) return false;
+        if (other == this) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
+        if (!(other instanceof JsonLocation)) {
+            return false;
+        }
         JsonLocation otherLoc = (JsonLocation) other;
 
         if (_sourceRef == null) {
-            if (otherLoc._sourceRef != null) return false;
-        } else if (!_sourceRef.equals(otherLoc._sourceRef)) return false;
+            if (otherLoc._sourceRef != null) {
+                return false;
+            }
+        } else if (!_sourceRef.equals(otherLoc._sourceRef)) {
+            return false;
+        }
 
         return (_lineNr == otherLoc._lineNr)
                 && (_columnNr == otherLoc._columnNr)

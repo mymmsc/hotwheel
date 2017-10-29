@@ -237,7 +237,9 @@ public final class ByteArrayBuilder
                 _currBlockPtr += toCopy;
                 len -= toCopy;
             }
-            if (len <= 0) break;
+            if (len <= 0) {
+                break;
+            }
             _allocMore();
         }
     }

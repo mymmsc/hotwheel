@@ -11,12 +11,14 @@ public class Dog implements Animal {
 	private String ownername;
 	
 	private String type;
+	@Override
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
+	@Override
 	public String getOwnerName() {
 		return ownername;
 	}

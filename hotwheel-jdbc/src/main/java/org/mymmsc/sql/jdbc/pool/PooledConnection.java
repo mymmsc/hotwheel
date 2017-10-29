@@ -136,10 +136,16 @@ public class PooledConnection {
     }
 
     public boolean checkUser(String username, String password) {
-        if (!getPoolProperties().isAlternateUsernameAllowed()) return true;
+        if (!getPoolProperties().isAlternateUsernameAllowed()) {
+            return true;
+        }
 
-        if (username==null) username = poolProperties.getUsername();
-        if (password==null) password = poolProperties.getPassword();
+        if (username==null) {
+            username = poolProperties.getUsername();
+        }
+        if (password==null) {
+            password = poolProperties.getPassword();
+        }
 
         String storedUsr = (String)getAttributes().get(PROP_USER);
         String storedPwd = (String)getAttributes().get(PROP_PASSWORD);
@@ -149,8 +155,16 @@ public class PooledConnection {
 
         result = result && ((password==null && storedPwd==null) || (password!=null && password.equals(storedPwd)));
 
-        if (username==null)  getAttributes().remove(PROP_USER); else getAttributes().put(PROP_USER, username);
-        if (password==null)  getAttributes().remove(PROP_PASSWORD); else getAttributes().put(PROP_PASSWORD, password);
+        if (username==null) {
+            getAttributes().remove(PROP_USER);
+        } else {
+            getAttributes().put(PROP_USER, username);
+        }
+        if (password==null) {
+            getAttributes().remove(PROP_PASSWORD);
+        } else {
+            getAttributes().put(PROP_PASSWORD, password);
+        }
 
         return result;
     }
@@ -165,7 +179,9 @@ public class PooledConnection {
      * {@link java.sql.Connection#setTransactionIsolation(int)} or {@link java.sql.Connection#setReadOnly(boolean)} fails.
      */
     public void connect() throws SQLException {
-        if (released.get()) throw new SQLException("A connection once released, can't be reestablished.");
+        if (released.get()) {
+            throw new SQLException("A connection once released, can't be reestablished.");
+        }
         if (connection != null) {
             try {
                 this.disconnect(false);
@@ -186,10 +202,18 @@ public class PooledConnection {
         //set up the default state, unless we expect the interceptor to do it
         if (poolProperties.getJdbcInterceptors()==null || poolProperties.getJdbcInterceptors().indexOf(ConnectionState.class.getName())<0 ||
                 poolProperties.getJdbcInterceptors().indexOf(ConnectionState.class.getSimpleName())<0) {
-            if (poolProperties.getDefaultTransactionIsolation()!=DataSourceFactory.UNKNOWN_TRANSACTIONISOLATION) connection.setTransactionIsolation(poolProperties.getDefaultTransactionIsolation());
-            if (poolProperties.getDefaultReadOnly()!=null) connection.setReadOnly(poolProperties.getDefaultReadOnly().booleanValue());
-            if (poolProperties.getDefaultAutoCommit()!=null) connection.setAutoCommit(poolProperties.getDefaultAutoCommit().booleanValue());
-            if (poolProperties.getDefaultCatalog()!=null) connection.setCatalog(poolProperties.getDefaultCatalog());
+            if (poolProperties.getDefaultTransactionIsolation()!=DataSourceFactory.UNKNOWN_TRANSACTIONISOLATION) {
+                connection.setTransactionIsolation(poolProperties.getDefaultTransactionIsolation());
+            }
+            if (poolProperties.getDefaultReadOnly()!=null) {
+                connection.setReadOnly(poolProperties.getDefaultReadOnly().booleanValue());
+            }
+            if (poolProperties.getDefaultAutoCommit()!=null) {
+                connection.setAutoCommit(poolProperties.getDefaultAutoCommit().booleanValue());
+            }
+            if (poolProperties.getDefaultCatalog()!=null) {
+                connection.setCatalog(poolProperties.getDefaultCatalog());
+            }
         }
         this.discarded = false;
         this.lastConnected = System.currentTimeMillis();
@@ -272,8 +296,12 @@ public class PooledConnection {
             getAttributes().put(PROP_PASSWORD, pwd);
         }
         Properties properties = PoolUtilities.clone(poolProperties.getDbProperties());
-        if (usr != null) properties.setProperty(PROP_USER, usr);
-        if (pwd != null) properties.setProperty(PROP_PASSWORD, pwd);
+        if (usr != null) {
+            properties.setProperty(PROP_USER, usr);
+        }
+        if (pwd != null) {
+            properties.setProperty(PROP_PASSWORD, pwd);
+        }
 
         try {
             connection = driver.connect(driverURL, properties);
@@ -342,7 +370,9 @@ public class PooledConnection {
         connection = null;
         xaConnection = null;
         lastConnected = -1;
-        if (finalize) parent.finalize(this);
+        if (finalize) {
+            parent.finalize(this);
+        }
     }
 
 
@@ -369,22 +399,23 @@ public class PooledConnection {
      */
     private boolean doValidate(int action) {
         if (action == PooledConnection.VALIDATE_BORROW &&
-            poolProperties.isTestOnBorrow())
+            poolProperties.isTestOnBorrow()) {
             return true;
-        else if (action == PooledConnection.VALIDATE_RETURN &&
-                 poolProperties.isTestOnReturn())
+        } else if (action == PooledConnection.VALIDATE_RETURN &&
+                 poolProperties.isTestOnReturn()) {
             return true;
-        else if (action == PooledConnection.VALIDATE_IDLE &&
-                 poolProperties.isTestWhileIdle())
+        } else if (action == PooledConnection.VALIDATE_IDLE &&
+                 poolProperties.isTestWhileIdle()) {
             return true;
-        else if (action == PooledConnection.VALIDATE_INIT &&
-                 poolProperties.isTestOnConnect())
+        } else if (action == PooledConnection.VALIDATE_INIT &&
+                 poolProperties.isTestOnConnect()) {
             return true;
-        else if (action == PooledConnection.VALIDATE_INIT &&
-                 poolProperties.getInitSQL()!=null)
-           return true;
-        else
+        } else if (action == PooledConnection.VALIDATE_INIT &&
+                 poolProperties.getInitSQL()!=null) {
+            return true;
+        } else {
             return false;
+        }
     }
 
     /**Returns true if the object is still valid. if not
@@ -468,8 +499,11 @@ public class PooledConnection {
             } else if (log.isDebugEnabled()) {
                 log.debug("Unable to validate object:",ex);
             }
-            if (stmt!=null)
-                try { stmt.close();} catch (Exception ignore2){/*NOOP*/}
+            if (stmt!=null) {
+                try {
+                    stmt.close();
+                } catch (Exception ignore2) {/*NOOP*/}
+            }
         }
         return false;
     } //validate
@@ -546,7 +580,9 @@ public class PooledConnection {
      * @throws IllegalStateException if this method is called with the value false and the value true has already been set.
      */
     public void setDiscarded(boolean discarded) {
-        if (this.discarded && !discarded) throw new IllegalStateException("Unable to change the state once the connection has been discarded");
+        if (this.discarded && !discarded) {
+            throw new IllegalStateException("Unable to change the state once the connection has been discarded");
+        }
         this.discarded = discarded;
     }
 

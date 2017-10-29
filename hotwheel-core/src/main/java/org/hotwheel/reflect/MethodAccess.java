@@ -42,22 +42,31 @@ public abstract class MethodAccess {
 
 	/** Returns the index of the first method with the specified name. */
 	public int getIndex (String methodName) {
-		for (int i = 0, n = methodNames.length; i < n; i++)
-			if (methodNames[i].equals(methodName)) return i;
+		for (int i = 0, n = methodNames.length; i < n; i++) {
+			if (methodNames[i].equals(methodName)) {
+				return i;
+			}
+		}
 		throw new IllegalArgumentException("Unable to find non-private method: " + methodName);
 	}
 
 	/** Returns the index of the first method with the specified name and param types. */
 	public int getIndex (String methodName, Class... paramTypes) {
-		for (int i = 0, n = methodNames.length; i < n; i++)
-			if (methodNames[i].equals(methodName) && Arrays.equals(paramTypes, parameterTypes[i])) return i;
+		for (int i = 0, n = methodNames.length; i < n; i++) {
+			if (methodNames[i].equals(methodName) && Arrays.equals(paramTypes, parameterTypes[i])) {
+				return i;
+			}
+		}
 		throw new IllegalArgumentException("Unable to find non-private method: " + methodName + " " + Arrays.toString(paramTypes));
 	}
 
 	/** Returns the index of the first method with the specified name and the specified number of arguments. */
 	public int getIndex (String methodName, int paramsCount) {
-		for (int i = 0, n = methodNames.length; i < n; i++)
-			if (methodNames[i].equals(methodName) && parameterTypes[i].length == paramsCount) return i;
+		for (int i = 0, n = methodNames.length; i < n; i++) {
+			if (methodNames[i].equals(methodName) && parameterTypes[i].length == paramsCount) {
+				return i;
+			}
+		}
 		throw new IllegalArgumentException("Unable to find non-private method: " + methodName + " with " + paramsCount + " params.");
 	}
 
@@ -99,7 +108,9 @@ public abstract class MethodAccess {
 
 		String className = type.getName();
 		String accessClassName = className + "MethodAccess";
-		if (accessClassName.startsWith("java.")) accessClassName = "reflectasm." + accessClassName;
+		if (accessClassName.startsWith("java.")) {
+			accessClassName = "reflectasm." + accessClassName;
+		}
 		Class accessClass;
 
 		AccessClassLoader loader = AccessClassLoader.get(type);
@@ -138,18 +149,20 @@ public abstract class MethodAccess {
 	
 							mv.visitVarInsn(ILOAD, 2);
 							Label[] labels = new Label[n];
-							for (int i = 0; i < n; i++)
+							for (int i = 0; i < n; i++) {
 								labels[i] = new Label();
+							}
 							Label defaultLabel = new Label();
 							mv.visitTableSwitchInsn(0, labels.length - 1, defaultLabel, labels);
 	
 							StringBuilder buffer = new StringBuilder(128);
 							for (int i = 0; i < n; i++) {
 								mv.visitLabel(labels[i]);
-								if (i == 0)
-									mv.visitFrame(Opcodes.F_APPEND, 1, new Object[] {classNameInternal}, 0, null);
-								else
+								if (i == 0) {
+									mv.visitFrame(Opcodes.F_APPEND, 1, new Object[]{classNameInternal}, 0, null);
+								} else {
 									mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+								}
 								mv.visitVarInsn(ALOAD, 4);
 	
 								buffer.setLength(0);
@@ -208,12 +221,13 @@ public abstract class MethodAccess {
 								buffer.append(')');
 								buffer.append(Type.getDescriptor(returnType));
 								int invoke;
-								if (isInterface)
+								if (isInterface) {
 									invoke = INVOKEINTERFACE;
-								else if (Modifier.isStatic(methods.get(i).getModifiers()))
+								} else if (Modifier.isStatic(methods.get(i).getModifiers())) {
 									invoke = INVOKESTATIC;
-								else
+								} else {
 									invoke = INVOKEVIRTUAL;
+								}
 								mv.visitMethodInsn(invoke, classNameInternal, methodNames[i], buffer.toString());
 	
 								switch (Type.getType(returnType).getSort()) {
@@ -289,7 +303,9 @@ public abstract class MethodAccess {
 			Method method = declaredMethods[i];
 			int modifiers = method.getModifiers();
 			// if (Modifier.isStatic(modifiers)) continue;
-			if (Modifier.isPrivate(modifiers)) continue;
+			if (Modifier.isPrivate(modifiers)) {
+				continue;
+			}
 			methods.add(method);
 		}
 	}

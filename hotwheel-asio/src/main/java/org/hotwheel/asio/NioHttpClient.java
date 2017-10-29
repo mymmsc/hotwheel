@@ -59,33 +59,43 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
     public void onClosed(HttpContext context) {
         scoreBoard.closed ++;
         scoreBoard.requests --;
-        if (logger.isDebugEnabled()) logger.debug("{} closed", context.getClass().getSimpleName());
+        if (logger.isDebugEnabled()) {
+            logger.debug("{} closed", context.getClass().getSimpleName());
+        }
     }
 
     @Override
     public void onCompleted(HttpContext context) {
         scoreBoard.good ++;
-        if (logger.isDebugEnabled()) logger.debug("{} Completed", context.getClass().getSimpleName());
+        if (logger.isDebugEnabled()) {
+            logger.debug("{} Completed", context.getClass().getSimpleName());
+        }
         callBack.completed(context);
     }
 
     @Override
     public void onAccepted(HttpContext context) {
-        if (logger.isDebugEnabled()) logger.debug("{} Accepted", context.getClass().getSimpleName());
+        if (logger.isDebugEnabled()) {
+            logger.debug("{} Accepted", context.getClass().getSimpleName());
+        }
     }
 
     @Override
     public void onError(HttpContext context, Exception e) {
         callBack.failed(context.index, e);
         scoreBoard.bad ++;
-        if (logger.isDebugEnabled()) logger.debug("{} Error", context.getClass().getSimpleName());
+        if (logger.isDebugEnabled()) {
+            logger.debug("{} Error", context.getClass().getSimpleName());
+        }
     }
 
     @Override
     public void onTimeout(HttpContext context) {
         // 超时后, 失败请求数+1
         scoreBoard.bad++;
-        if (logger.isDebugEnabled()) logger.debug("{} Timeout", context.getClass().getSimpleName());
+        if (logger.isDebugEnabled()) {
+            logger.debug("{} Timeout", context.getClass().getSimpleName());
+        }
     }
 
     @Override
@@ -93,7 +103,9 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         // HTTP-Body区域的二进制数据
         ByteArrayOutputStream data = new ByteArrayOutputStream();
         int index = context.index;
-        if (logger.isDebugEnabled()) logger.debug("list.index=" + index);
+        if (logger.isDebugEnabled()) {
+            logger.debug("list.index=" + index);
+        }
         //System.out.println("list.index=" + index);
         Map<String, Object> params = callBack.getParams(list.get(index));
         for (Map.Entry<String, Object> entry : params.entrySet()) {
@@ -319,15 +331,21 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
 
     @Override
     public void onWrite(HttpContext context) {
-        if (logger.isDebugEnabled()) logger.debug("{} Write", context.getClass().getSimpleName());
+        if (logger.isDebugEnabled()) {
+            logger.debug("{} Write", context.getClass().getSimpleName());
+        }
     }
 
     @Override
     public void onCompact(HttpContext context) {
         //if (logger.isDebugEnabled()) logger.debug("channel-number=" + selector.keys().size());
-        if (debug) System.out.println("channel-number=" + selector.keys().size());
+        if (debug) {
+            System.out.println("channel-number=" + selector.keys().size());
+        }
         //if (logger.isDebugEnabled()) logger.debug("Compact: number={},request={},good={},bad={}.", number,requests, good, bad);
-        if (debug) System.out.println(String.format("Compact: number=%d,request=%d,good=%d,bad=%d.", number,scoreBoard.requests, scoreBoard.good, scoreBoard.bad));
+        if (debug) {
+            System.out.println(String.format("Compact: number=%d,request=%d,good=%d,bad=%d.", number,scoreBoard.requests, scoreBoard.good, scoreBoard.bad));
+        }
         while(scoreBoard.sequeueId < number && (/*number < 0 || */number > scoreBoard.good + scoreBoard.bad + scoreBoard.requests) && concurrency > scoreBoard.requests) {
             // 如果未达到并发限制数量, 新增加一个请求
             SocketChannel sc = null;
@@ -372,7 +390,9 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         }/* else */
         if(number <= scoreBoard.good + scoreBoard.bad) {
             done = false;
-            if (logger.isDebugEnabled()) logger.debug("number={},request={},good={},bad={}.", number, scoreBoard.requests, scoreBoard.good, scoreBoard.bad);
+            if (logger.isDebugEnabled()) {
+                logger.debug("number={},request={},good={},bad={}.", number, scoreBoard.requests, scoreBoard.good, scoreBoard.bad);
+            }
             scoreBoard.acrossTime = System.currentTimeMillis() - beginTime;
             scoreBoard.number = number;
             callBack.finished(scoreBoard);

@@ -101,9 +101,15 @@ public class Version
 
     @Override
     public boolean equals(Object o) {
-        if (o == this) return true;
-        if (o == null) return false;
-        if (o.getClass() != getClass()) return false;
+        if (o == this) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+        if (o.getClass() != getClass()) {
+            return false;
+        }
         Version other = (Version) o;
         return (other._majorVersion == _majorVersion)
                 && (other._minorVersion == _minorVersion)
@@ -115,7 +121,9 @@ public class Version
 
     //  @Override
     public int compareTo(Version other) {
-        if (other == this) return 0;
+        if (other == this) {
+            return 0;
+        }
 
         int diff = _groupId.compareTo(other._groupId);
         if (diff == 0) {
