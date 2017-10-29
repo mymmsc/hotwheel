@@ -48,6 +48,8 @@ public class TestAio {
                 public void failed(int sequeueId, Exception e) {
                     if (e instanceof java.nio.channels.UnresolvedAddressException) {
                         System.out.println("服务器地址错误");
+                    } else if (e instanceof java.net.ConnectException) {
+                        System.out.println("服务器拒绝连接" + e.getMessage());
                     }
                     e.printStackTrace();
                 }

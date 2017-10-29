@@ -20,7 +20,8 @@ import java.util.TreeMap;
  */
 public class TestNio {
 
-    private final static String url = "http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/MoneyFlow.ssi_ssfx_flzjtj";
+    //private final static String url = "http://vip.stock.finance.sina.com.cn:12345/quotes_service/api/json_v2.php/MoneyFlow.ssi_ssfx_flzjtj";
+    private final static String url = "http://127.0.0.1:12345/quotes_service/api/json_v2.php/MoneyFlow.ssi_ssfx_flzjtj";
 
     public static void main(String[] args) {
         try {
@@ -52,6 +53,8 @@ public class TestNio {
                 public void failed(int sequeueId, Exception e) {
                     if (e instanceof java.nio.channels.UnresolvedAddressException) {
                         System.out.println("服务器地址错误");
+                    } else if (e instanceof java.net.ConnectException) {
+                        System.out.println("服务器拒绝连接" + e.getMessage());
                     }
                     e.printStackTrace();
                 }

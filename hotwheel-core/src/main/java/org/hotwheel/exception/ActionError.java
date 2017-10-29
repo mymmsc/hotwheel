@@ -18,6 +18,9 @@ public enum ActionError implements ApiError {
     SC_ETIMESTAMP1 (10021, "验签ts为空"),
     SC_ETIMESTAMP2 (10022, "验签ts未通过"),
     SC_ESIGN       (10021, "验签sign未通过"),
+    SC_ENETWORK    (70000, "一般性网络错误"),
+    SC_EREFUSE     (70001, "服务器拒绝连接"),
+    SC_ECLOSED     (70002, "服务器主动关闭连接"),
     SC_EUNKNOWN    (99999, "未知错误");
 
     private final int code;

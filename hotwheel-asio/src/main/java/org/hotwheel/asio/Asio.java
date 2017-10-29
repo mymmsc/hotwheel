@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.net.Socket;
 import java.net.StandardSocketOptions;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
@@ -54,6 +55,23 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
         } catch (IOException e) {
             logger.error("Selector close failed: ", e);
         }
+    }
+
+    /**
+     * socket是否关闭
+     *
+     * @param sc
+     * @return
+     */
+    public boolean isClosed(SocketChannel sc) {
+        boolean bRet = true;
+        if (sc != null) {
+            Socket socket = sc.socket();
+            if (socket != null) {
+                bRet = socket.isClosed();
+            }
+        }
+        return bRet;
     }
 
     /**
@@ -109,7 +127,6 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             if (key != null) {
                 key.cancel();
             }
-            //System.out.println(sc.isConnected());
             sc.shutdownOutput();
             if (sc.isConnected()) {
                 ByteBuffer buff = ByteBuffer.allocate(4096);
@@ -183,7 +200,9 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             //if (sc.finishConnect()) {
                 // 处理完后必须吧OP_CONNECT关注去掉, 改为关注OP_READ
                 onConnected(context);
-                sk.interestOps(SelectionKey.OP_READ);
+                //if (!isClosed(sc)) {
+                    sk.interestOps(SelectionKey.OP_READ);
+                //}
             //} else {
             //    handleError(sc);
             //}
@@ -249,7 +268,6 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
      * 检测所有在册的通道超时情况, 并处理
      */
     private void checkTimeout() {
-        boolean bAction = false;
         Iterator<SelectionKey> it = selector.keys().iterator();
         while (it.hasNext()) {
             SelectionKey sk = (SelectionKey) it.next();
@@ -258,11 +276,8 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             if (context.isTimeout()) {
                 handleTimeout(sc);
             }
-            bAction = true;
         }
-        if (!bAction) {
-            //Api.sleep(100);
-        }
+
     }
 
     /**
@@ -277,7 +292,6 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
         done = true;
         // 主流程不允许抛出异常
         while (done) {
-            //System.out.println("---");
             try {
                 // 超时检测
                 num = selector.select(/*timeout*/1);
@@ -313,15 +327,19 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                             // 通道尚未连接到服务端套接字通道
                             handleConnected(channel);
                         }*/else if (isConnectable) {
+                            boolean bError = false;
                             //如果正在连接，则完成连接
                             if(channel.isConnectionPending()){
                                 try {
                                     channel.finishConnect();
                                 } catch (Exception e) {
-                                    //
+                                    bError = true;
+                                    handleError(channel, e);
                                 }
                             }
-                            handleConnected(channel);
+                            if (!bError) {
+                                handleConnected(channel);
+                            }
                         }
                         else if (isReadable) {
                             // 有数据可读, 读取数据字节数小于1, 即客户端断开, 需要关闭socket通道
