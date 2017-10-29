@@ -106,7 +106,6 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         if (logger.isDebugEnabled()) {
             logger.debug("list.index=" + index);
         }
-        //System.out.println("list.index=" + index);
         Map<String, Object> params = callBack.getParams(list.get(index));
         for (Map.Entry<String, Object> entry : params.entrySet()) {
             String key = entry.getKey();
@@ -377,14 +376,13 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 InetSocketAddress sa = new InetSocketAddress(host, port);
                 boolean ret = sc.connect(sa);
                 if (ret) {
-                    //
+                    // 连接成功或者失败, 只能依靠事件来判断
                 } else {
                     //
                 }
                 //int linger = sc.getOption(StandardSocketOptions.SO_LINGER);
                 //System.out.println("SO_LINGER:" + linger);
             } catch (Exception e) {
-                //logger.error("SocketChannel.connect failed: ", e);
                 handleError(sc, e);
             }
         }/* else */
