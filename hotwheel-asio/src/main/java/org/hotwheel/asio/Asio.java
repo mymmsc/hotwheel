@@ -230,6 +230,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
         ByteBuffer buf = ByteBuffer.allocate(bufferLen);
         long bytesRead = 0;
         try {
+            //sc.socket().getInetAddress()
             bytesRead = sc.read(buf);
             //T ctx = contextFor(sc);
             if (bytesRead == -1) { // Did the other end close?
