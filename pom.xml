@@ -69,7 +69,7 @@
         <!-- spring begin -->
         <mybatis.version>3.4.1</mybatis.version>
         <cglib.version>3.2.4</cglib.version>
-        <asm.version>5.1</asm.version>
+        <asm.version>5.2</asm.version>
         <aspectj.version>1.6.12</aspectj.version>
 
         <!-- sftp-tooles begin -->
