@@ -25,7 +25,7 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
     private static Logger logger = LoggerFactory.getLogger(DefaultExceptionHandler.class);
 
     private Map<String, Object> getExceptionMap(final Exception ex) {
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         //"version":null,"status":0,"message":"SUCCES","timestamp":"2017-06-07 13:45:29.633",
         // "host":"100.67.25.169","acrossTime":2745,"data"
         if (ex instanceof ApiError) {
@@ -58,7 +58,7 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
         String message = (String)attributes.get("message");
         view.setAttributesMap(attributes);
         mv.setView(view);
-        logger.error("[{}]异常: {}", httpServletRequest.getRequestURI(), ex, message);
+        logger.error("[{}]异常: {}", httpServletRequest.getRequestURI(), message, ex);
         return mv;
     }
 }
