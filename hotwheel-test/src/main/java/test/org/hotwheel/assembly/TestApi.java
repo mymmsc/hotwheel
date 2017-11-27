@@ -4,6 +4,8 @@ import org.hotwheel.assembly.Api;
 import org.hotwheel.util.TraceId;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 测试基础Api
@@ -15,7 +17,17 @@ public class TestApi {
 
     public static void main(String[] args) {
         long tm = System.currentTimeMillis();
-        String s = TraceId.genTraceId();
+        String s = "${host}1${port}2";
+        String exp = "\\$\\{([\\s\\S]*?)\\}";
+        //exp = "\\$\\{([\\s\\S]*?)\\}[\\s\\S]*?";
+        Pattern pat = Pattern.compile(exp);
+        Matcher mat = pat.matcher(s);
+        int groupCount = 0;
+        while(mat.find()) {
+            groupCount = mat.groupCount();
+            System.out.println(mat.group(1));
+        }
+        s = TraceId.genTraceId();
         System.out.println(s);
         for (int i = 0; i < 1000000; i ++) {
             s = TraceId.genTraceId();
