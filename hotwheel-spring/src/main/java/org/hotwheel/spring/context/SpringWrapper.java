@@ -47,6 +47,7 @@ public class SpringWrapper implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         closed = true;
+        logger.info( "**************app closing***************** ");
     }
 
     public static boolean isClosed() {
