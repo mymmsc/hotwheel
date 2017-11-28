@@ -18,6 +18,7 @@ public class SpringWrapper implements ServletContextListener {
     private static final Logger logger = LoggerFactory.getLogger(SpringWrapper.class);
 
     private static WebApplicationContext springContext;
+    private static boolean closed = true;
 
     public SpringWrapper() {
         super();
@@ -40,11 +41,19 @@ public class SpringWrapper implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         springContext = WebApplicationContextUtils.getWebApplicationContext(sce.getServletContext());
         logger.info( "**************init done***************** ");
+        closed = false;
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        //
+        closed = true;
     }
 
+    public static boolean isClosed() {
+        return closed;
+    }
+
+    public static void setClosed(boolean closed) {
+        SpringWrapper.closed = closed;
+    }
 }
