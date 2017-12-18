@@ -7,7 +7,7 @@
     <parent>
         <artifactId>hotwheel-framework</artifactId>
         <groupId>org.mymmsc.hotwheel</groupId>
-        <version>5.3.7</version>
+        <version>5.3.8</version>
         <relativePath>../</relativePath>
     </parent>
 
