@@ -2543,7 +2543,24 @@ public final class Api {
      * @return 十六进制MD5加密算法字符串
      */
     public static String md5(String s) {
-        byte[] digest = md5(s.getBytes());
+        String sRet = null;
+        try {
+            sRet = md5(s, "utf-8");
+        } catch (Exception e) {
+            //
+        }
+        return sRet;
+    }
+
+    /**
+     * MD5单向散列加密算法
+     *
+     * @param s
+     * @return 十六进制MD5加密算法字符串
+     */
+    public static String md5(String s, String charset) throws UnsupportedEncodingException {
+        byte[] digest = md5(s.getBytes(charset));
+
         StringBuffer sb = new StringBuffer();
         for (byte aDigest : digest) {
             String tmp = Integer.toHexString(0xFF & aDigest);

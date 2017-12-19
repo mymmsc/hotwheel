@@ -16,6 +16,8 @@ public class TestApi {
     private final static String TimeFormat = "yyyy-MM-dd HH:mm:ss";
 
     public static void main(String[] args) {
+        String md5 = Api.md5("diancui|7737d392-51d5-4f3d-873b-d557209bdf63|31|807748768458862594|807748768458862594|看看|1513687573|jdb-dsmp-20170522");
+        System.out.println("md5: " + md5);
         long tm = System.currentTimeMillis();
         String s = "${host}1${port}2";
         String exp = "\\$\\{([\\s\\S]*?)\\}";
