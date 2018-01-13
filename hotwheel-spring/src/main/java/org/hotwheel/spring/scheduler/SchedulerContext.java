@@ -76,32 +76,7 @@ public abstract class SchedulerContext implements TaskContext {
             logger.error("{} execute failed:", taskEndTime, e);
         }
     }
-/*
-    protected long writeToFile(Future<DefaultTaskContext> future) {
-        long lRet = 0;
-        DefaultTaskContext ret = null;
-        try {
-            ret = future.get();
-        } catch (Exception e) {
-            logger.error("FJP get failed.", e);
-            setTaskException(false);
-        }
 
-        if(ret != null && ret.rows != null && ret.file != null) {
-            for (String line : ret.rows) {
-                //logger.info(line);
-                boolean bWrite = BaseContext.writeToFile(ret.file, line);
-                if(!bWrite) {
-                    setTaskException(false);
-                }
-            }
-            logger.info("{}\t==> {} rows.", ret.taskName, ret.rows.size());
-            lRet = ret.rows.size();
-        }
-
-        return lRet;
-    }
-*/
     /**
      * 设置任务开关
      * @param taskSwitch

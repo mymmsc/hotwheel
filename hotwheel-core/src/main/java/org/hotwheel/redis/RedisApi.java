@@ -15,6 +15,7 @@ import java.util.Random;
  * Redis API
  *
  * @author WangFeng
+ * @version 5.3.14
  */
 public class RedisApi extends BaseObject {
     /**
