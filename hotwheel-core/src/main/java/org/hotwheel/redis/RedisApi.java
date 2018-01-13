@@ -45,7 +45,7 @@ public class RedisApi extends BaseObject {
     private String auth = null;
     private ShardedJedisPool redisPool = null;
 
-    private RedisApi(String hostname, int hostport, String name, int db, String pswd, RedisPoolConfig redisConfig) {
+    public RedisApi(String hostname, int hostport, String name, int db, String pswd, RedisPoolConfig redisConfig) {
         this.host = hostname;
         this.port = hostport;
         this.name = name;
