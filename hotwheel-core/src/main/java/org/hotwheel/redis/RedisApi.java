@@ -28,8 +28,8 @@ public class RedisApi extends BaseObject {
     private static final String LOCKED = "TRUE";
     private static final long ONE_MILLI_NANOS = 1000000L;
     // 默认超时时间（毫秒）
-    @SuppressWarnings("unused")
-    private static final long DEFAULT_TIME_OUT = 3000;
+    private static final int DEFAULT_TIME_OUT = 3000;
+    // 随机对象
     private static final Random r = new Random();
     // 锁的超时时间（秒），过期删除
     private static final int EXPIRE = 5 * 60;
@@ -45,6 +45,16 @@ public class RedisApi extends BaseObject {
     private String auth = null;
     private ShardedJedisPool redisPool = null;
 
+    /**
+     * 构造redis连接池
+     *
+     * @param hostname
+     * @param hostport
+     * @param name
+     * @param db
+     * @param pswd
+     * @param redisConfig
+     */
     public RedisApi(String hostname, int hostport, String name, int db, String pswd, RedisPoolConfig redisConfig) {
         this.host = hostname;
         this.port = hostport;
@@ -60,8 +70,8 @@ public class RedisApi extends BaseObject {
         JedisShardInfo info = null;
         // 作为默认参数, 其实是一段废代码, 以备后用
         int timeout = (int)redisConfig.getTimeout();
-        if (timeout < 2000) {
-            timeout = 2000;
+        if (timeout < DEFAULT_TIME_OUT) {
+            timeout = DEFAULT_TIME_OUT;
         }
         if (!Api.isEmpty(host)) {
             host = host.trim();
