@@ -1,14 +1,20 @@
 package org.hotwheel.spring.common;
 
 import org.hotwheel.spring.helper.DESedeHelper;
+import org.hotwheel.spring.util.PropertiesUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * 扩展属性文件加载
+ */
 public class EncryptablePropertyholder extends PropertyPlaceholderConfigurer {
 
     private static final String key = "12h4*&^%RTGHJNKLMKHTR^T&YIOJL123k(^&#%$%*&&>NJ$%W#$%^&:?MS%$%";
@@ -21,6 +27,20 @@ public class EncryptablePropertyholder extends PropertyPlaceholderConfigurer {
             throw new RuntimeException("数据库账号解密失败: ", e);
         }
         return new String(dest);
+    }
+
+    @Override
+    public void setLocations(Resource... locations) {
+        DefaultResourceLoader resourceLoader = new DefaultResourceLoader();
+        for (Resource resource : locations) {
+            PropertiesUtils.loadResource(resource.getFilename());
+            String filename = resource.getFilename();
+            if (filename.startsWith("${") && filename.endsWith("}")) {
+                filename = PropertiesUtils.getString(filename);
+                resource = resourceLoader.getResource(filename);
+            }
+        }
+        super.setLocations(locations);
     }
 
     @Override
