@@ -33,12 +33,12 @@ public class EncryptablePropertyholder extends PropertyPlaceholderConfigurer {
     public void setLocations(Resource... locations) {
         DefaultResourceLoader resourceLoader = new DefaultResourceLoader();
         for (Resource resource : locations) {
-            PropertiesUtils.loadResource(resource.getFilename());
             String filename = resource.getFilename();
             if (filename.startsWith("${") && filename.endsWith("}")) {
                 filename = PropertiesUtils.getString(filename);
                 resource = resourceLoader.getResource(filename);
             }
+            PropertiesUtils.loadResource(filename);
         }
         super.setLocations(locations);
     }
