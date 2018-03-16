@@ -40,7 +40,7 @@ public class EncryptablePropertyholder extends PropertyPlaceholderConfigurer {
                 filename = PropertiesUtils.parseValue(filename);
                 resource = resourceLoader.getResource(filename);
             }
-            newCations[i] = resource;
+            newCations[i++] = resource;
             PropertiesUtils.loadResource(filename);
         }
         super.setLocations(newCations);
