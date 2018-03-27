@@ -6,15 +6,20 @@
     <parent>
         <groupId>org.mymmsc.hotwheel</groupId>
         <artifactId>hotwheel-framework</artifactId>
-        <version>5.3.21</version>
+        <version>5.3.22-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc.hotwheel</groupId>
     <artifactId>hotwheel-core</artifactId>
-    <version>${hotwheel.version}</version>
+    <version>5.3.22-SNAPSHOT</version>
     <packaging>jar</packaging>
+
+    <!-- ==================== 依赖jar版本 设置 =========================== -->
+    <properties>
+        <maven-deploy.skip>false</maven-deploy.skip>
+    </properties>
 
     <!-- ==================== 依赖jar 设置 =========================== -->
     <dependencies>
@@ -22,21 +27,17 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
         </dependency>
         <!-- logger end -->
-
         <!-- redis begin -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>${jedis.version}</version>
         </dependency>
         <!-- redis end -->
         <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm</artifactId>
-            <version>${asm.version}</version>
         </dependency>
     </dependencies>
 </project>

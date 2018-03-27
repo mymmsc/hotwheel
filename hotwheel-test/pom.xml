@@ -6,41 +6,18 @@
     <parent>
         <artifactId>hotwheel-framework</artifactId>
         <groupId>org.mymmsc.hotwheel</groupId>
-        <version>5.3.21</version>
+        <version>5.3.22-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc.hotwheel</groupId>
     <artifactId>hotwheel-test</artifactId>
-    <version>${hotwheel.version}</version>
-
+    <version>5.3.22-SNAPSHOT</version>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
     <properties>
-        <!-- JDK设置 -->
-        <javac.version>1.7</javac.version>
-        <javac.encoding>UTF-8</javac.encoding>
-
-        <!-- J2EE 版本 -->
-        <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
-        <guava.version>20.0</guava.version>
-
-        <!-- CACHE 版本 -->
-        <ehcache.version>3.1.1</ehcache.version>
-
-        <!-- sftp-tooles begin -->
-        <jsch.version>0.1.53</jsch.version>
-        <!-- sftp-tooles end -->
-
-        <!-- apache commons http begin -->
-        <commons-lang3.version>3.5</commons-lang3.version>
-        <httpclient.async.version>4.1.1</httpclient.async.version>
-        <!-- apache commons http end -->
-
-        <!-- others begin -->
-        <javax.mail.version>1.4.4</javax.mail.version>
-        <!-- others end -->
+        <maven-deploy.skip>true</maven-deploy.skip>
     </properties>
 
     <!-- ==================== 依赖jar 设置 =========================== -->
@@ -49,61 +26,53 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>${javax.servlet-api.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- j2ee end -->
         <dependency>
             <groupId>org.mymmsc.hotwheel</groupId>
             <artifactId>hotwheel-asio</artifactId>
-            <version>${hotwheel.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mymmsc.hotwheel</groupId>
             <artifactId>hotwheel-json</artifactId>
-            <version>${hotwheel.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mymmsc.hotwheel</groupId>
             <artifactId>hotwheel-spring</artifactId>
-            <version>${hotwheel.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <!-- log4j2 start -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>${log4j2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>${log4j2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j2.version}</version>
         </dependency>
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
-            <version>3.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-jcl</artifactId>
-            <version>${log4j2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-web</artifactId>
-            <version>${log4j2.version}</version>
         </dependency>
         <!-- log4j2 end -->
     </dependencies>
@@ -173,15 +142,6 @@
             </resource>
         </resources>
         <plugins>
-            <!-- 加入maven deploy插件，当在deploy时，忽略些model-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>${maven-deploy.version}</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

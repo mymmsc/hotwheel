@@ -6,61 +6,63 @@
     <parent>
         <groupId>org.mymmsc.hotwheel</groupId>
         <artifactId>hotwheel-framework</artifactId>
-        <version>5.3.21</version>
+        <version>5.3.22-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc.hotwheel</groupId>
     <artifactId>hotwheel-asio</artifactId>
-    <version>${hotwheel.version}</version>
+    <version>5.3.22-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
     <properties>
-        <httpcore.version>4.4.4</httpcore.version>
-        <httpasyncclient.version>4.1.1</httpasyncclient.version>
+        <maven-deploy.skip>false</maven-deploy.skip>
     </properties>
 
     <!-- ==================== 依赖jar 设置 =========================== -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.mymmsc.hotwheel</groupId>
+                <artifactId>hotwheel-dependencies-bom</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <!--
+            <dependency>
+                <groupId>org.mymmsc.hotwheel</groupId>
+                <artifactId>hotwheel-bom</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            -->
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>org.mymmsc.hotwheel</groupId>
             <artifactId>hotwheel-core</artifactId>
-            <version>${hotwheel.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mymmsc.hotwheel</groupId>
             <artifactId>hotwheel-json</artifactId>
-            <version>${hotwheel.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <!-- log4j2 begin -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
         </dependency>
         <!-- log4j2 end -->
-        <!--
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-            <version>${httpcore.version}</version>
-        </dependency>
-        -->
         <!-- Apache Http Components begin -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpasyncclient</artifactId>
-            <version>${httpasyncclient.version}</version>
-            <!--
-            <scope>test</scope>
-            -->
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpasyncclient-cache</artifactId>
-            <version>${httpasyncclient.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- Apache Http Components end -->
@@ -69,6 +71,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
                 <configuration>
                     <archive>
                         <manifestEntries>
