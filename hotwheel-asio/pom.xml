@@ -28,14 +28,9 @@
                 <groupId>org.mymmsc.hotwheel</groupId>
                 <artifactId>hotwheel-dependencies-bom</artifactId>
                 <version>${project.parent.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
-            <!--
-            <dependency>
-                <groupId>org.mymmsc.hotwheel</groupId>
-                <artifactId>hotwheel-bom</artifactId>
-                <version>${project.parent.version}</version>
-            </dependency>
-            -->
         </dependencies>
     </dependencyManagement>
     <dependencies>
