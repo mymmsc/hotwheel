@@ -6,66 +6,64 @@
     <parent>
         <groupId>org.mymmsc.hotwheel</groupId>
         <artifactId>hotwheel-framework</artifactId>
-        <version>5.3.21</version>
+        <version>5.3.22-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc.hotwheel</groupId>
     <artifactId>hotwheel-j2ee</artifactId>
-    <version>${hotwheel.version}</version>
+    <version>5.3.22-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <!-- ==================== 依赖jar版本 设置 =========================== -->
+    <properties>
+        <maven-deploy.skip>false</maven-deploy.skip>
+    </properties>
     <!-- ==================== 依赖jar 设置 =========================== -->
     <dependencies>
         <!-- j2ee begin -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>${javax.servlet-api.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-web</artifactId>
-            <version>${log4j2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j2.version}</version>
         </dependency>
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
-            <version>${log4j2.disruptor.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-jcl</artifactId>
-            <version>${log4j2.version}</version>
         </dependency>
         <!-- j2ee end -->
         <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm</artifactId>
-            <version>${asm.version}</version>
         </dependency>
         <!-- hotwheel begin -->
         <dependency>
             <groupId>org.mymmsc.hotwheel</groupId>
             <artifactId>hotwheel-core</artifactId>
-            <version>${hotwheel.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mymmsc.hotwheel</groupId>
             <artifactId>hotwheel-json</artifactId>
-            <version>${hotwheel.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mymmsc.hotwheel</groupId>
             <artifactId>hotwheel-mybatis</artifactId>
-            <version>${hotwheel.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <!-- hotwheel end -->
     </dependencies>

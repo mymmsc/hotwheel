@@ -7,53 +7,19 @@
     <parent>
         <artifactId>hotwheel-framework</artifactId>
         <groupId>org.mymmsc.hotwheel</groupId>
-        <version>5.3.21</version>
+        <version>5.3.22-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc.hotwheel</groupId>
     <artifactId>hotwheel-spring</artifactId>
-    <version>${hotwheel.version}</version>
+    <version>5.3.22-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <!-- ==================== 依赖jar版本 设置 =========================== -->
     <properties>
-        <!-- J2EE 版本 -->
-        <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
-        <guava.version>20.0</guava.version>
-
-        <!-- json start -->
-        <jackson.version>2.8.5</jackson.version>
-        <jackson.databind.version>2.8.5</jackson.databind.version>
-        <!-- json end -->
-
-        <!-- spring start -->
-        <springframework.version>4.3.9.RELEASE</springframework.version>
-        <mybatis.version>3.4.1</mybatis.version>
-        <mybatis.spring.version>1.3.0</mybatis.spring.version>
-        <cglib.version>3.2.4</cglib.version>
-        <asm.version>5.1</asm.version>
-        <aspectj.version>1.6.12</aspectj.version>
-
-        <spring-data-redis.version>1.5.0.RELEASE</spring-data-redis.version>
-        <spring-fileupload.version>1.2.1</spring-fileupload.version>
-        <!-- spring end -->
-
-        <!-- CACHE 版本 -->
-        <ehcache.version>3.1.1</ehcache.version>
-
-        <!-- sftp-tooles begin -->
-        <jsch.version>0.1.53</jsch.version>
-        <!-- sftp-tooles end -->
-
-        <!-- apache commons http begin -->
-        <commons-lang3.version>3.5</commons-lang3.version>
-        <httpclient.async.version>4.1.1</httpclient.async.version>
-        <!-- apache commons http end -->
-
-        <!-- others begin -->
-        <javax.mail.version>1.4.4</javax.mail.version>
-        <!-- others end -->
+        <maven-deploy.skip>false</maven-deploy.skip>
     </properties>
 
     <!-- ==================== 依赖jar 设置 =========================== -->
@@ -62,78 +28,66 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>${javax.servlet-api.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- j2ee end -->
         <dependency>
             <groupId>org.mymmsc.hotwheel</groupId>
             <artifactId>hotwheel-asio</artifactId>
-            <version>${hotwheel.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mymmsc.hotwheel</groupId>
             <artifactId>hotwheel-json</artifactId>
-            <version>${hotwheel.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <!--spring related start -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-            <version>${springframework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${springframework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-            <version>${springframework.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>${springframework.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>${springframework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>${springframework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>${springframework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
-            <version>${spring-data-redis.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>${springframework.version}</version>
         </dependency>
 
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
-            <version>${spring-fileupload.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
         </dependency>
         <!--spring related end -->
 
@@ -141,62 +95,51 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>${log4j2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>${log4j2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j2.version}</version>
         </dependency>
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
-            <version>3.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-jcl</artifactId>
-            <version>${log4j2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-web</artifactId>
-            <version>${log4j2.version}</version>
         </dependency>
         <!-- log4j2 end -->
         <!--db related start -->
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-jdbc</artifactId>
-            <version>${tomcat.jdbc-pool.version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>${jdbc.mysql.version}</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
-            <version>${mybatis.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
-            <version>${mybatis.spring.version}</version>
         </dependency>
         <!--db related end -->
 
@@ -204,13 +147,11 @@
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
-            <version>${aspectj.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>${aspectj.version}</version>
         </dependency>
         <!--aspectj end -->
 
@@ -218,39 +159,32 @@
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
-            <version>${cglib.version}</version>
         </dependency>
         <!-- cglib end -->
         <dependency>
             <groupId>com.jcraft</groupId>
             <artifactId>jsch</artifactId>
-            <version>${jsch.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
         </dependency>
         <!-- validation begin -->
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-            <version>1.0.0.GA</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator-annotation-processor</artifactId>
-            <version>4.1.0.Final</version>
         </dependency>
         <!-- validation end -->
     </dependencies>
@@ -258,6 +192,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar.version}</version>
                 <configuration>
                     <archive>
                         <manifestEntries>

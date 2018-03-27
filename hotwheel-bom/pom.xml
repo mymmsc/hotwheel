@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>hotwheel-framework</artifactId>
+        <groupId>org.mymmsc.hotwheel</groupId>
+        <version>5.3.22-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.mymmsc.hotwheel</groupId>
+    <artifactId>hotwheel-bom</artifactId>
+    <version>5.3.22-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <!-- ==================== 依赖jar版本 设置 =========================== -->
+    <properties>
+        <maven-deploy.skip>false</maven-deploy.skip>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.mymmsc.hotwheel</groupId>
+                <artifactId>hotwheel-core</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mymmsc.hotwheel</groupId>
+                <artifactId>hotwheel-asio</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mymmsc.hotwheel</groupId>
+                <artifactId>hotwheel-cluster</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mymmsc.hotwheel</groupId>
+                <artifactId>hotwheel-daemon</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mymmsc.hotwheel</groupId>
+                <artifactId>hotwheel-j2ee</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mymmsc.hotwheel</groupId>
+                <artifactId>hotwheel-jdbc</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mymmsc.hotwheel</groupId>
+                <artifactId>hotwheel-json</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mymmsc.hotwheel</groupId>
+                <artifactId>hotwheel-mybatis</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mymmsc.hotwheel</groupId>
+                <artifactId>hotwheel-spring</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
