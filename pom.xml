@@ -59,20 +59,22 @@
         <plugin-annotations.version>3.2</plugin-annotations.version>
         <maven-project.version>2.0.6</maven-project.version>
         <!-- maven plugins end -->
+        <springframework.version>4.3.9.RELEASE</springframework.version>
     </properties>
     <!-- ==================== 依赖jar 设置 =========================== -->
+    <!--
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.mymmsc.hotwheel</groupId>
                 <artifactId>hotwheel-dependencies-bom</artifactId>
-                <version>5.3.21.1</version>
+                <version>${project.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
-
+    -->
     <dependencies>
     </dependencies>
 

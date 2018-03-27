@@ -19,4 +19,17 @@
     <properties>
         <maven-deploy.skip>false</maven-deploy.skip>
     </properties>
+
+    <!-- ==================== 依赖jar 设置 =========================== -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.mymmsc.hotwheel</groupId>
+                <artifactId>hotwheel-dependencies-bom</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
