@@ -353,12 +353,7 @@
                 <artifactId>asm</artifactId>
                 <version>${asm.version}</version>
             </dependency>
-            <!-- j2ee end -->
-            <dependency>
-                <groupId>org.ow2.asm</groupId>
-                <artifactId>asm</artifactId>
-                <version>${asm.version}</version>
-            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
