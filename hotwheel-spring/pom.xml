@@ -7,14 +7,14 @@
     <parent>
         <artifactId>hotwheel-framework</artifactId>
         <groupId>org.mymmsc.hotwheel</groupId>
-        <version>5.3.22-SNAPSHOT</version>
+        <version>5.3.23</version>
         <relativePath>../</relativePath>
     </parent>
 
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc.hotwheel</groupId>
     <artifactId>hotwheel-spring</artifactId>
-    <version>5.3.22-SNAPSHOT</version>
+    <version>5.3.23</version>
     <packaging>jar</packaging>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
