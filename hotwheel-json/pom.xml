@@ -5,15 +5,15 @@
     <!-- ==================== 顶层设计 =========================== -->
     <parent>
         <groupId>org.mymmsc.hotwheel</groupId>
-        <artifactId>hotwheel-framework</artifactId>
-        <version>5.3.25</version>
+        <artifactId>hotwheel-parent</artifactId>
+        <version>5.4.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc.hotwheel</groupId>
     <artifactId>hotwheel-json</artifactId>
-    <version>5.3.25</version>
+    <version>5.4.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
