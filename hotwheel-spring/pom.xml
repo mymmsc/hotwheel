@@ -5,8 +5,8 @@
     <!-- ==================== 顶层设计 =========================== -->
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>hotwheel-parent</artifactId>
         <groupId>org.mymmsc.hotwheel</groupId>
+        <artifactId>hotwheel-parent</artifactId>
         <version>5.4.0-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
