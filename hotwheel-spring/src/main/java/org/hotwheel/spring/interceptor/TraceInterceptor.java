@@ -3,6 +3,7 @@ package org.hotwheel.spring.interceptor;
 import org.apache.commons.lang3.StringUtils;
 import org.hotwheel.assembly.Api;
 import org.hotwheel.spring.util.RequestUtil;
+import org.hotwheel.util.MdcUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -38,10 +39,7 @@ public class TraceInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         MDC.put(mdcStartTime, String.valueOf(System.currentTimeMillis()));
         String traceId = httpServletRequest.getHeader(httpTraceIdName);
-        if (Api.isEmpty(traceId)) {
-            traceId = RequestUtil.genTraceId();
-        }
-        MDC.put(httpTraceIdName, traceId);
+        traceId = MdcUtils.add(httpTraceIdName, traceId, true);
         // 将跟踪码回传给客户端
         httpServletResponse.setHeader(httpTraceIdName, traceId);
         String uri = httpServletRequest.getRequestURI();
@@ -116,6 +114,7 @@ public class TraceInterceptor implements HandlerInterceptor {
         if (StringUtils.isNotBlank(MDC.get(mdcRequest))) {
             MDC.remove(mdcRequest);
         }
+        MdcUtils.add(httpTraceIdName, traceId, false);
         if (StringUtils.isNotBlank(MDC.get(httpTraceIdName))) {
             MDC.remove(httpTraceIdName);
         }

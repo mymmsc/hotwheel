@@ -106,7 +106,6 @@
         <mybatis.version>3.4.1</mybatis.version>
         <mybatis.spring.version>1.3.0</mybatis.spring.version>
         <cglib.version>3.2.4</cglib.version>
-        <asm.version>5.1</asm.version>
         <aspectj.version>1.6.12</aspectj.version>
 
         <spring-data-redis.version>1.5.0.RELEASE</spring-data-redis.version>
