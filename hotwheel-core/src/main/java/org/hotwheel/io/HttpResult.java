@@ -43,6 +43,8 @@ public class HttpResult {
 
     private String cookies = "";
 
+    private String connection;
+
     /**
      * 耗时
      */
@@ -154,5 +156,21 @@ public class HttpResult {
 
     public void setCookies(String cookies) {
         this.cookies = cookies;
+    }
+
+    public String getConnection() {
+        return connection;
+    }
+
+    public void setConnection(String connection) {
+        this.connection = connection;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 }

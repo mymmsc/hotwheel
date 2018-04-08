@@ -536,6 +536,16 @@ public final class Api {
 
     /******************** < 基本数据类型APIs > ********************/
 
+    public static void closeQuietly(Closeable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (IOException e) {
+                // 不关注关闭异常
+            }
+        }
+    }
+
     /**
      * 关闭文件输入流
      * @param inputStream

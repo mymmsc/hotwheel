@@ -41,13 +41,15 @@ public class HttpClient {
      */
     private static HashMap<String, String> session = null;
     private String url = null;
-    private int timeout = 30; // 默认超时30秒
+    // 默认超时30秒
+    private int timeout = 30;
     private String cookiePath = null;
     private String boundary = null;
-    private ByteArrayOutputStream data = null; // HTTP-Body区域的二进制数据
-    // 获取HTTP-Header域的内容
+    // HTTP-Body区域的二进制数据
+    private ByteArrayOutputStream data = null;
+    // 获取HTTP-Header域的内容, 预备后续比较复杂的应用,
     @SuppressWarnings("unused")
-    private HashMap<String, Object> respHeaders = null; // 预备后续比较复杂的应用,
+    private HashMap<String, Object> respHeaders = null;
     /**
      * HTTP方法
      */
@@ -88,9 +90,9 @@ public class HttpClient {
         // 计算一个boundary
         this.boundary = Api.o3String(14);
         this.data = new ByteArrayOutputStream();
-        this.respHeaders = new HashMap<String, Object>();
+        this.respHeaders = new HashMap<>();
         if (session == null) {
-            session = new HashMap<String, String>();
+            session = new HashMap<>();
         }
         int pos = url.lastIndexOf("/");
         if (pos > 0) {
@@ -173,30 +175,13 @@ public class HttpClient {
      * @param value 值
      */
     private void addMultiPart(String name, byte[] value) {
-        String temp = String.format(
-                "--%s\r\nContent-Disposition: form-data; name=\"%s\"\r\n\r\n",
-                boundary, name);
+        String temp = String.format("--%s\r\nContent-Disposition: form-data; name=\"%s\"\r\n\r\n", boundary, name);
         try {
             data.write(temp.getBytes(charset));
             data.write(value);
             temp = "\r\n";
             data.write(temp.getBytes(charset));
         } catch (IOException e) {
-            logger.error("", e);
-        }
-    }
-
-    /**
-     * 增加一个表单字段
-     *
-     * @param name  字段名
-     * @param value 值, 可以是除了自定义类以外的任何类型的值, 包括基础数据类型或类对象
-     */
-    private void addMultiPart(String name, Object value) {
-        String temp = Api.toString(value);
-        try {
-            addMultiPart(name, temp.getBytes(charset));
-        } catch (UnsupportedEncodingException e) {
             logger.error("", e);
         }
     }
@@ -231,16 +216,13 @@ public class HttpClient {
      * @param buff     文件数据
      */
     public void addFile(String name, String filename, String type, byte[] buff) {
-        String temp = String
-                .format("--%s\r\nContent-Disposition: form-data; name=\"%s\"; filename=\"%s\"\r\n",
-                        boundary, name, filename);
+        String temp = String.format("--%s\r\nContent-Disposition: form-data; name=\"%s\"; filename=\"%s\"\r\n", boundary, name, filename);
         try {
             data.write(temp.getBytes(charset));
             if (type != null) {
                 temp = String.format("Content-Type: %s\r\n\r\n", type);
             } else {
-                temp = String
-                        .format("Content-Type: application/octet-stream\r\nContent-Transfer-Encoding: binary\r\n\r\n");
+                temp = String.format("Content-Type: application/octet-stream\r\nContent-Transfer-Encoding: binary\r\n\r\n");
             }
             data.write(temp.getBytes(charset));
             data.write(buff);
@@ -286,7 +268,6 @@ public class HttpClient {
                     temp = (String) body;
                     data.write(temp.getBytes(charset));
                 } else if (body instanceof Map) {
-                    @SuppressWarnings("unchecked")
                     Map<String, Object> tmpMap = (Map<String, Object>) body;
                     for (String key : tmpMap.keySet()) {
                         Object value = tmpMap.get(key);
@@ -298,28 +279,24 @@ public class HttpClient {
             }
             if (data.size() > 0) {
                 if (body instanceof byte[]) {
-                    httpConn.setRequestProperty("Content-Type",
-                            "application/octet-stream; charset=" + charset);
+                    httpConn.setRequestProperty("Content-Type", "application/octet-stream; charset=" + charset);
                 } else if (body instanceof String) {
                     // 如果body是字符串, 可能是XML或json
-                    if (((String) body).trim().toLowerCase()
-                            .startsWith("<?xml")) {
+                    if (((String) body).trim().toLowerCase().startsWith("<?xml")) {
                         // xml
-                        httpConn.setRequestProperty("Content-Type",
-                                "text/xml; charset=" + charset);
+                        httpConn.setRequestProperty("Content-Type", "text/xml; charset=" + charset);
                     } else {
                         // json
-                        httpConn.setRequestProperty("Content-Type",
-                                "application/json; charset=" + charset);
+                        httpConn.setRequestProperty("Content-Type", "application/json; charset=" + charset);
                     }
                 } else {
                     // 如果body不是字符串, 则认定为表单模式, 添加最后结束标识
                     if (uploadFile) {
                         temp = String.format("--%s--\r\n", boundary);
-                        data.write(temp.getBytes());
+                        // 二进制模式
+                        data.write(temp.getBytes(charset));
                         // 设置Content-Type为form模式
-                        temp = String.format("multipart/form-data; boundary=%s",
-                                boundary);
+                        temp = String.format("multipart/form-data; boundary=%s", boundary);
                     } else {
                         temp = "application/x-www-form-urlencoded; charset=" + charset;
                     }
@@ -341,8 +318,7 @@ public class HttpClient {
                 httpConn.setRequestMethod(method);
             } else if (data.size() > 0) {
                 httpConn.setRequestMethod(METHOD_POST);
-                httpConn.setRequestProperty("Content-Length",
-                        Integer.toString(data.size()));
+                httpConn.setRequestProperty("Content-Length", Integer.toString(data.size()));
             } else {
                 // 如果body为null, 修改HTTP方法为GET, 并试图去掉之前对Content-Type的定义
                 httpConn.setRequestMethod(METHOD_GET);
@@ -361,6 +337,7 @@ public class HttpClient {
             int httpStatus = httpConn.getResponseCode();
             hRet.setStatus(httpStatus);
             hRet.setDate(new Date(httpConn.getDate()));
+            hRet.setConnection(httpConn.getHeaderField("Connection"));
             String contentType = httpConn.getContentType();
             if (httpStatus == 200) {
                 // 保存cookie
@@ -379,9 +356,7 @@ public class HttpClient {
                 if (ct.indexOf("charset") >= 0 || ct.indexOf("text") >= 0
                         || ct.indexOf("xml") >= 0 || ct.indexOf("json") >= 0) {
                     // 接收body
-                    String response = DataStream.RecvHttpData(
-                            new DataInputStream(inputStream),
-                            charset);
+                    String response = DataStream.RecvHttpData(new DataInputStream(inputStream), charset);
                     hRet.setBody(response);
                 } else {
                     String str = httpConn.getHeaderField("Last-Modified");
@@ -401,13 +376,7 @@ public class HttpClient {
                 hRet.setStatus(900);
             }
         } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    //
-                }
-            }
+            Api.closeQuietly(inputStream);
             if (httpConn != null) {
                 httpConn.disconnect();
             }
