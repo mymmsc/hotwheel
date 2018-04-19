@@ -29,7 +29,6 @@
         <module>hotwheel-core</module>
         <module>hotwheel-json</module>
         <module>hotwheel-mybatis</module>
-        <module>hotwheel-daemon</module>
         <module>hotwheel-spring</module>
         <module>hotwheel-test</module>
         <module>hotwheel-cluster</module>
