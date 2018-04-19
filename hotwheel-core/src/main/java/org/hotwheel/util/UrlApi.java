@@ -1,7 +1,7 @@
 /**
  *
  */
-package org.hotwheel.j2ee.http;
+package org.hotwheel.util;
 
 import org.hotwheel.assembly.Api;
 

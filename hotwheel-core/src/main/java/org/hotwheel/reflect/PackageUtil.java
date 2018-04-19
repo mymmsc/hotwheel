@@ -1,4 +1,4 @@
-package org.hotwheel.j2ee.util;
+package org.hotwheel.reflect;
 
 import org.hotwheel.assembly.Api;
 import org.objectweb.asm.*;
@@ -17,7 +17,9 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /**
- * @since 6.10.2
+ * java package工具类
+ *
+ * @since 3.10.2
  */
 public class PackageUtil {
 
