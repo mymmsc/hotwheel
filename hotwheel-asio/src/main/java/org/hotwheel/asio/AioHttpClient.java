@@ -95,7 +95,8 @@ public class AioHttpClient<T>{
                             if(httpResponse.getStatusLine().getStatusCode() == 200) {
                                 scoreBoard.good++;
                                 HttpEntity httpEntity = httpResponse.getEntity();
-                                body = EntityUtils.toString(httpEntity);//取出应答字符串
+                                // 取出应答字符串
+                                body = EntityUtils.toString(httpEntity);
                             } else {
                                 scoreBoard.bad ++;
                             }
