@@ -27,7 +27,6 @@
     <modules>
         <module>hotwheel-asio</module>
         <module>hotwheel-core</module>
-        <module>hotwheel-j2ee</module>
         <module>hotwheel-json</module>
         <module>hotwheel-mybatis</module>
         <module>hotwheel-daemon</module>
