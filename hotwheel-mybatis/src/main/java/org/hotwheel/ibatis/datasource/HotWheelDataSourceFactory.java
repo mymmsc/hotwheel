@@ -1,19 +1,20 @@
 package org.hotwheel.ibatis.datasource;
 
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSourceFactory;
+import org.apache.tomcat.jdbc.pool.DataSource;
+import org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.hotwheel.assembly.Api;
-import org.mymmsc.sql.jdbc.pool.DataSource;
-import org.mymmsc.sql.jdbc.pool.PoolProperties;
 
 import java.util.Map;
 import java.util.Properties;
 
 /**
  * Created by wangfeng on 2016/11/1.
+ * @version 5.5.0
  * @since 1.0
  */
 public class HotWheelDataSourceFactory extends UnpooledDataSourceFactory {
-    protected org.mymmsc.sql.jdbc.pool.DataSource dataSource;
+    protected org.apache.tomcat.jdbc.pool.DataSource dataSource;
 
     public HotWheelDataSourceFactory () {
         this.dataSource = new DataSource();

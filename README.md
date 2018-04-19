@@ -1,6 +1,10 @@
 ## HotWheel Framework
 一个轻量、快速的MVC框架
 
+###5.5.0
+1. 增加对spring-boot的支持
+2. 增加dubbo的支持
+
 ###5.2.1
 1. 增加web日志输出
 
