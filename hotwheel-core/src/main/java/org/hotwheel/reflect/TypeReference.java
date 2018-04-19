@@ -8,6 +8,7 @@ import java.util.List;
  * 类型引用
  *
  * @param <T>
+ * @version 5.5.0
  */
 public class TypeReference<T> {
 

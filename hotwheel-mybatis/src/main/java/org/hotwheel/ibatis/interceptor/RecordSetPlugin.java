@@ -1,4 +1,4 @@
-package org.hotwheel.mybatis.interceptor;
+package org.hotwheel.ibatis.interceptor;
 
 import org.apache.ibatis.executor.resultset.ResultSetHandler;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -57,5 +57,6 @@ public class RecordSetPlugin implements Interceptor {
 
     @Override
     public void setProperties(Properties properties) {
+        //
     }
 }
