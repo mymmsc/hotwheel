@@ -6,14 +6,14 @@
     <parent>
         <groupId>org.mymmsc.hotwheel</groupId>
         <artifactId>hotwheel-parent</artifactId>
-        <version>5.5.0-SNAPSHOT</version>
+        <version>5.5.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc.hotwheel</groupId>
     <artifactId>hotwheel-mybatis</artifactId>
-    <version>5.5.0-SNAPSHOT</version>
+    <version>5.5.0</version>
     <packaging>jar</packaging>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
