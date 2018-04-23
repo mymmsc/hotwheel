@@ -75,6 +75,26 @@
             <artifactId>log4j-web</artifactId>
         </dependency>
         <!-- log4j2 end -->
+
+        <dependency>
+            <groupId>org.mymmsc.hotwheel</groupId>
+            <artifactId>hotwheel-affinity</artifactId>
+            <version>5.5.1-SNAPSHOT</version>
+        </dependency>
+        <!-- OpenHFT Java Thread Affinity library begin -->
+        <dependency>
+            <groupId>net.openhft</groupId>
+            <artifactId>third-party-bom</artifactId>
+            <type>pom</type>
+            <version>3.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>net.openhft</groupId>
+            <artifactId>affinity</artifactId>
+            <version>3.1.1</version>
+        </dependency>
+        <!-- OpenHFT Java Thread Affinity library end -->
+
     </dependencies>
 
 

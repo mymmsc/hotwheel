@@ -33,6 +33,8 @@
         <module>hotwheel-test</module>
         <module>hotwheel-cluster</module>
         <module>hotwheel-bom</module>
+        <module>all</module>
+        <module>hotwheel-affinity</module>
     </modules>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
