@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 import static org.hotwheel.jni.affinity.AffinityStrategies.*;
 
 /**
+ * 测试线程池cpu亲和性
+ *
  * @author wangfeng
  * @date 2018/4/23
  */
@@ -20,7 +22,7 @@ public class AffinityThreadFactoryMain {
             new AffinityThreadFactory("bg", SAME_CORE, DIFFERENT_SOCKET, ANY));
 
     public static void main(String... args) throws InterruptedException {
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 8; i++) {
             ES.submit(new Callable<Void>() {
                 @Override
                 public Void call() throws InterruptedException {
