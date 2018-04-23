@@ -79,7 +79,7 @@
         <dependency>
             <groupId>org.mymmsc.hotwheel</groupId>
             <artifactId>hotwheel-affinity</artifactId>
-            <version>5.5.1-SNAPSHOT</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <!-- OpenHFT Java Thread Affinity library begin -->
         <dependency>
