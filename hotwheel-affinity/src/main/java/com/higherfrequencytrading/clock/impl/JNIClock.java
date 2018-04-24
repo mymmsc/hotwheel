@@ -57,6 +57,7 @@ public enum JNIClock implements IClock {
         START = start;
     }
 
+    @Override
     public long nanoTime() {
         return tscToNano(rdtsc0() - START);
     }

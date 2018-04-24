@@ -75,7 +75,9 @@ public class VanillaCpuLayout implements CpuLayout {
         List<CpuInfo> cpuDetails = new ArrayList<CpuInfo>();
         for (int i = 0; i < MAX_CPUS_SUPPORTED; i++) {
             String line = prop.getProperty("" + i);
-            if (line == null) break;
+            if (line == null) {
+                break;
+            }
             String[] word = line.trim().split(" *, *");
             CpuInfo details = new CpuInfo(parseInt(word[0]),
                     parseInt(word[1]), parseInt(word[2]));
@@ -97,8 +99,9 @@ public class VanillaCpuLayout implements CpuLayout {
             return new FileInputStream(filename);
         } catch (FileNotFoundException e) {
             InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(filename);
-            if (is == null)
+            if (is == null) {
                 throw e;
+            }
             return is;
         }
     }
@@ -114,10 +117,11 @@ public class VanillaCpuLayout implements CpuLayout {
             if (line.trim().isEmpty()) {
                 String key = details.socketId + "," + details.coreId;
                 Integer count = threadCount.get(key);
-                if (count == null)
+                if (count == null) {
                     threadCount.put(key, count = 1);
-                else
+                } else {
                     threadCount.put(key, count += 1);
+                }
                 details.threadId = count - 1;
                 cpuDetails.add(details);
                 details = new CpuInfo();
@@ -125,10 +129,11 @@ public class VanillaCpuLayout implements CpuLayout {
                 continue;
             }
             String[] words = line.split("\\s*:\\s*", 2);
-            if (words[0].equals("physical id"))
+            if (words[0].equals("physical id")) {
                 details.socketId = parseInt(words[1]);
-            else if (words[0].equals("core id"))
+            } else if (words[0].equals("core id")) {
                 details.coreId = parseInt(words[1]);
+            }
         }
         return new VanillaCpuLayout(cpuDetails);
     }
@@ -138,10 +143,12 @@ public class VanillaCpuLayout implements CpuLayout {
         return cpuDetails.size();
     }
 
+    @Override
     public int sockets() {
         return sockets;
     }
 
+    @Override
     public int coresPerSocket() {
         return coresPerSocket;
     }
@@ -178,15 +185,27 @@ public class VanillaCpuLayout implements CpuLayout {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         VanillaCpuLayout that = (VanillaCpuLayout) o;
 
-        if (coresPerSocket != that.coresPerSocket) return false;
-        if (sockets != that.sockets) return false;
-        if (threadsPerCore != that.threadsPerCore) return false;
-        if (!cpuDetails.equals(that.cpuDetails)) return false;
+        if (coresPerSocket != that.coresPerSocket) {
+            return false;
+        }
+        if (sockets != that.sockets) {
+            return false;
+        }
+        if (threadsPerCore != that.threadsPerCore) {
+            return false;
+        }
+        if (!cpuDetails.equals(that.cpuDetails)) {
+            return false;
+        }
 
         return true;
     }
@@ -223,14 +242,24 @@ public class VanillaCpuLayout implements CpuLayout {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
 
             CpuInfo cpuInfo = (CpuInfo) o;
 
-            if (coreId != cpuInfo.coreId) return false;
-            if (socketId != cpuInfo.socketId) return false;
-            if (threadId != cpuInfo.threadId) return false;
+            if (coreId != cpuInfo.coreId) {
+                return false;
+            }
+            if (socketId != cpuInfo.socketId) {
+                return false;
+            }
+            if (threadId != cpuInfo.threadId) {
+                return false;
+            }
 
             return true;
         }
