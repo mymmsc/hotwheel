@@ -72,8 +72,9 @@ public enum WindowsJNAAffinity implements IAffinity {
         try {
 
             final int ret = lib.GetProcessAffinityMask(-1, cpuset1, cpuset2);
-            if (ret < 0)
+            if (ret < 0) {
                 throw new IllegalStateException("sched_getaffinity((" + Long.SIZE / 8 + ") , &(" + cpuset1 + ") ) return " + ret);
+            }
 
             return cpuset1.getValue();
 

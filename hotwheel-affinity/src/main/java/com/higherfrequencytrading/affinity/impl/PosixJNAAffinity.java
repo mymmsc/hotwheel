@@ -76,8 +76,9 @@ public enum PosixJNAAffinity implements IAffinity {
         final LongByReference cpuset = new LongByReference(0L);
         try {
             final int ret = lib.sched_getaffinity(0, Long.SIZE / 8, cpuset);
-            if (ret < 0)
+            if (ret < 0) {
                 throw new IllegalStateException("sched_getaffinity((" + Long.SIZE / 8 + ") , &(" + cpuset + ") ) return " + ret);
+            }
             return cpuset.getValue();
         } catch (LastErrorException e) {
             throw new IllegalStateException("sched_getaffinity((" + Long.SIZE / 8 + ") , &(" + cpuset + ") ) errorNo=" + e.getErrorCode(), e);
