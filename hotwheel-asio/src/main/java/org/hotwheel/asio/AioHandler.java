@@ -10,7 +10,7 @@ import java.nio.channels.SocketChannel;
  * AIO事件接口
  * 
  * @author wangfeng
- * @date 2016年2月7日 上午1:23:23
+ * @since 2016年2月7日 上午1:23:23
  */
 public abstract interface AioHandler {
 	/**

@@ -13,7 +13,7 @@ import java.util.Map;
  * HTTP协议上下文
  * 
  * @author wangfeng
- * @date 2016年2月15日 上午10:43:32
+ * @since 2016年2月15日 上午10:43:32
  */
 public class HttpContext extends AioContext {
 	private static Logger logger = LoggerFactory.getLogger(HttpContext.class);

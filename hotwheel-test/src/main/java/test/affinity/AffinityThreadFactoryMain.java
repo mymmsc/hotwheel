@@ -14,7 +14,7 @@ import static org.hotwheel.jni.affinity.AffinityStrategies.*;
  * 测试线程池cpu亲和性
  *
  * @author wangfeng
- * @date 2018/4/23
+ * @since 2018/4/23
  */
 public class AffinityThreadFactoryMain {
 

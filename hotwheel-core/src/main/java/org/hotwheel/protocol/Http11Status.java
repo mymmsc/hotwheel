@@ -10,7 +10,7 @@ import java.util.Map;
  * HTTP协议
  *
  * @author wangfeng
- * @date 2016年2月21日 下午9:46:30
+ * @since 2016年2月21日 下午9:46:30
  */
 public final class Http11Status {
     public static final String CONTINUE = "100 Continue";
