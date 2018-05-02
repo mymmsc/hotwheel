@@ -4,6 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <!-- ==================== 顶层设计 =========================== -->
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc</groupId>
     <artifactId>hotwheel-parent</artifactId>
@@ -74,16 +79,11 @@
         <maven-project.version>2.0.6</maven-project.version>
         <!-- maven plugins end -->
 
-        <!-- JDK设置 -->
-        <javac.version>1.7</javac.version>
-        <javac.encoding>UTF-8</javac.encoding>
-
         <!-- J2EE 版本 -->
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
 
         <!-- logging begin -->
         <slf4j.version>1.7.25</slf4j.version>
-
         <log4j2.version>2.8.2</log4j2.version>
         <log4j2.disruptor.version>3.3.6</log4j2.disruptor.version>
         <!-- logging end -->
@@ -95,8 +95,6 @@
         <druid.version>1.1.3</druid.version>
         <tomcat.jdbc-pool.version>7.0.86</tomcat.jdbc-pool.version>
         <!-- jdbc end -->
-
-        <fastjson.version>1.2.33</fastjson.version>
 
         <!-- mybatis begin -->
         <mybatis.version>3.4.1</mybatis.version>
@@ -112,6 +110,8 @@
         <guava.version>20.0</guava.version>
 
         <!-- json start -->
+        <fastjson.version>1.2.33</fastjson.version>
+
         <jackson.version>2.8.5</jackson.version>
         <jackson.databind.version>2.8.5</jackson.databind.version>
         <!-- json end -->
