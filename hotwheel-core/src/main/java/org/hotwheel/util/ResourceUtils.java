@@ -31,17 +31,10 @@ import java.net.*;
  * object, which in turn allows one to obtain a {@code java.io.File} in the
  * file system through its {@code getFile()} method.
  *
- * <p>The main reason for these utility methods for resource location handling
- * is to support {@link Log4jConfigurer}, which must be able to resolve
- * resource locations <i>before the logging system has been initialized</i>.
- * Spring's {@code Resource} abstraction in the core package, on the other hand,
- * already expects the logging system to be available.
- *
  * @author Juergen Hoeller
  * @since 1.1.5
  * @see org.hotwheel.core.io.Resource
  * @see org.hotwheel.core.io.ClassPathResource
- * @see org.hotwheel.core.io.FileSystemResource
  * @see org.hotwheel.core.io.UrlResource
  * @see org.hotwheel.core.io.ResourceLoader
  */

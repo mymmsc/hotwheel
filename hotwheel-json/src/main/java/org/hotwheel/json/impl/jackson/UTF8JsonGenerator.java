@@ -651,7 +651,7 @@ public class UTF8JsonGenerator
         }
     }
 
-    // @TODO: rewrite for speed...
+    // <p>: rewrite for speed...
     @Override
     public final void writeRaw(char[] cbuf, int offset, int len)
             throws IOException, JsonGenerationException {

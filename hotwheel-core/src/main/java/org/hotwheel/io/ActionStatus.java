@@ -9,7 +9,7 @@ import java.util.Date;
  *
  * @author wangfeng
  * @version 3.0.1 2012/05/27
- * @remark 所有接口的响应都会继承这个类
+ * <p> 所有接口的响应都会继承这个类
  */
 public class ActionStatus {
     /**< 版本号 */

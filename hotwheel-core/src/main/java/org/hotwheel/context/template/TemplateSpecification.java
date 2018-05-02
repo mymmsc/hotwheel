@@ -29,7 +29,7 @@ public class TemplateSpecification { // template specification
     /**
      * The character set to be used for reading and writing files. This charset
      * is used for reading the template and subtemplate files and for writing
-     * output with {@link #generateOutput(String outputFileName)} . If this
+     * output with (String outputFileName) . If this
      * field is null, the default charset of the Java VM is used.
      */
     public Charset charset;

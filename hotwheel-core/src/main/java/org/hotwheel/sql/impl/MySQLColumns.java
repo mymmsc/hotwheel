@@ -7,7 +7,7 @@ package org.hotwheel.sql.impl;
  * 数据表字段信息
  *
  * @author WangFeng
- * @remark show full columns from order_channel
+ * <p> show full columns from order_channel
  */
 public class MySQLColumns {
     /**

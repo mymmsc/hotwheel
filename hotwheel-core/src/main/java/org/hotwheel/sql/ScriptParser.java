@@ -27,7 +27,7 @@ public interface ScriptParser {
     /**
      * 解析数据库脚本
      *
-     * @remark 如果脚本文件有更新, 则自动在下一次调取时重新解析
+     * <p> 如果脚本文件有更新, 则自动在下一次调取时重新解析
      */
     public void parse();
 

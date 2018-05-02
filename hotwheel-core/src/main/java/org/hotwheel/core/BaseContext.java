@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * Created by wangfeng on 2016/11/10.
  */
 public abstract class BaseContext {
-    /**< 日志记录器 */
+    /** 日志记录器 */
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     /** number of milliseconds per second */
@@ -27,8 +27,8 @@ public abstract class BaseContext {
 
     /**
      * 获得系统环境变量
-     * @param key
-     * @return
+     * @param key 环境变量名称
+     * @return 环境变量值
      */
     public String getSystemEnv(String key) {
         String sRet = null;

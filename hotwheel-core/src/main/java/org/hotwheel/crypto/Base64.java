@@ -11,9 +11,6 @@ import java.io.UnsupportedEncodingException;
  * Base 64encode algorithm at
  * http://www.javaworld.com/javaworld/javatips/jw-javatip36-p2.html
  * allowing me to create the decoding
- * <p>
- * the Base64 encoding can be represented by
- * <img src="http://www.javaworld.com/javaworld/javatips/images/Base64Encoding.gif"/>
  *
  * @author jkyr
  */

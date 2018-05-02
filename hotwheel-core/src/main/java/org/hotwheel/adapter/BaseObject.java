@@ -14,7 +14,7 @@ import java.io.InputStream;
  *
  * @author WangFeng(wangfeng@yeah.net)
  * @version 6.3.9 09/10/02
- * @remark 对象增加Log4j日志功能, 需要有common-logging.jar和log4j.jar
+ * <p> 对象增加Log4j日志功能, 需要有common-logging.jar和log4j.jar
  * @since mymmsc-api 6.3.9
  */
 public abstract class BaseObject {

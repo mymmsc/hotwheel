@@ -14,7 +14,6 @@ import java.util.Map;
 /**
  * A compact template engine for Text files.
  * <p>
- * <p>
  * Template syntax:<br>
  * <pre>
  *    Variables:
@@ -37,7 +36,6 @@ import java.util.Map;
  *    Include a subtemplate:
  *       &lt;!-- include relativeFileName --&gt;</pre>
  * <p>
- * <p>
  * General remarks:</p>
  * <ul>
  * <li>Variable names, block names, condition flags and commands (e.g. "BEGIN") are case-insensitive.</li>
@@ -49,53 +47,10 @@ import java.util.Map;
  * <li>The {@link TemplatorCache} class may be used to cache MiniTemplator objects with parsed templates.</li>
  * </ul>
  * <p>
- * <p>
  * Home page: <a href="http://www.source-code.biz/MiniTemplator">www.source-code.biz/MiniTemplator</a><br>
  * Author: Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland<br>
  * Multi-licensed: EPL/LGPL.
- * <p>
- * <p>
- * Version history:</p>
- * <table cellpadding=3 cellspacing=0 border=1><tbody style="vertical-align:top">
- * <tr><td>2001-10-24<td>chdh<br>(Christian d'Heureuse)<td> VBasic version created.
- * <tr><td>2003-03-25<td>chdh<td> Converted from VB to Java.
- * <tr><td>2003-07-08<td>chdh<td> Method variableExists added.
- * <tr><td>2003-07-16<td>chdh<td> Method setVariable changed to throw an exception when the variable does not exist (instead of returning false).
- * <tr><td>2004-04-07<td>chdh<td> Parameter isOptional added to method setVariable.
- * Licensing changed from GPL to LGPL.
- * <tr><td>2004-04-19<td>chdh<td> Methods blockExists, setVariableEsc and escapeHtml added.
- * <tr><td>2004-10-28<td>chdh<td>
- * Multiple blocks with the same name may now occur within a template.<br>
- * No syntax error exception ("unknown command") is thrown any more, if a HTML comment starts with "${".<br>
- * serialVersionUID added to exception classes (for Java 5 compatibility).
- * <tr><td>2004-11-06<td>chdh<td>
- * Changes for Java 5. (Unfortunately this version of MiniTemplator is no longer compatible with Java 1.4).<br>
- * "include" command implemented. Method loadSubtemplate and a new constructor variant added.<br>
- * Method cloneReset and class MiniTemplatorCache added.<br>
- * <tr><td>2004-11-20<td>chdh<td> "include" command changed so that the command text is not copied to the output file.
- * <tr><td>2006-07-07<td>chdh<td> Extended constructor with <code>charset</code> argument added.
- * <tr><td>2006-10-18<td>chdh<td> New variant of <code>addBlock()</code> added with an <code>isOptional</code> parameter.<br>
- * <tr><td>2007-05-19<td>chdh<td><ul style="margin-top:0; margin-bottom:0">
- * <li>Conditional blocks (if statement) implemented.
- * <li>New nested class {@link Templator.TemplateSpecification}.
- * <li>Old constructors replaced by the new general constructor {@link #MiniTemplator(TemplateSpecification)}.
- * <li>Parameter type of {@link #generateOutput(String)} changed form <code>File</code> to <code>String</code>.
- * </ul>
- * <tr><td>2009-01-22<td>chdh<td> Method {@link #getVariables()} added.
- * <tr><td>2009-01-25<td>chdh<td><ul style="margin-top:0; margin-bottom:0">
- * <li>New constructor {@link #MiniTemplator(String)} added.
- * Note that this constructor is not compatible with the old (prior to 2007-05-19) constructor with the same signature,
- * because the old constructor with that signature expected the template string in the string argument instead of the file name.
- * <li>The nested exceptions ({@link TemplateSyntaxException}, {@link VariableNotDefinedException} and
- * {@link BlockNotDefinedException}) are now derived from <code>RuntimeException</code> instead of
- * <code>Exception</code>, to make them unchecked exceptions that do not have to be catched or declared.
- * <li>Convenience methods added: {@link #setVariableOpt(String, String)}, {@link #setVariableOptEsc(String, String)} and {@link #addBlockOpt(String)}.
- * <li>EPL license added.
- * </ul>
- * <tr><td>2009-04-15<td>chdh<td> The complement ("not") operator "!" may now be used in the flag expressions of the if and elseIf commands.
- * </tbody></table>
- *
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng (wangfeng at yeah.net)
  * @version 6.3.9 09/10/02
  * @since mymmsc-api 6.3.9
  */
@@ -144,7 +99,6 @@ public class Templator {
      * @param templateFileName the file name of the template file.
      * @throws TemplateSyntaxException when a syntax error is detected within the template.
      * @throws IOException             when an i/o error occurs while reading the template.
-     * @see #MiniTemplator(TemplateSpecification)
      */
     public Templator(String templateFileName) throws IOException,
             TemplateSyntaxException {
@@ -167,6 +121,7 @@ public class Templator {
      * name has to be specified.
      *
      * @param templateFileName the file name of the template file.
+     * @param charset          字符集
      * @throws TemplateSyntaxException when a syntax error is detected within the template.
      * @throws IOException             when an i/o error occurs while reading the template.
      * @see #Templator(TemplateSpecification)
@@ -300,7 +255,7 @@ public class Templator {
      * <p>
      * This implementation of the method interprets <code>subtemplateName</code>
      * as a relative file path name and reads the template string from that
-     * file. {@link Templator.TemplateSpecification#subtemplateBasePath} is used
+     * file. {@link TemplateSpecification#subtemplateBasePath} is used
      * to convert the relative path of the subtemplate into an absolute path.
      *
      * @param subtemplateName the name of the subtemplate. Normally a relative file path.
@@ -308,7 +263,8 @@ public class Templator {
      *                        "include" command. If the string has quotes, the quotes are
      *                        removed before this method is called.
      * @return the template text string of the subtemplate.
-     **/
+     * @throws IOException 加载模板文件异常
+     */
     protected String loadSubtemplate(String subtemplateName) throws IOException {
         String fileName = new File(subtemplateBasePath, subtemplateName)
                 .getPath();
@@ -354,6 +310,7 @@ public class Templator {
      * <p>
      * This method is used by the {@link TemplatorCache} class to clone the
      * cached MiniTemplator objects.
+     * @return 模版对象
      */
     public Templator cloneReset() {
         Templator m = new Templator();
@@ -369,8 +326,8 @@ public class Templator {
     /**
      * 设置模版KV对, 忽略变量未定义
      *
-     * @param key
-     * @param value
+     * @param key 关键字
+     * @param value 值
      */
     public void setVariableQuietly(String key, String value) {
         try {
@@ -512,6 +469,7 @@ public class Templator {
     /**
      * Returns a map with the names and current values of the template
      * variables.
+     * @return map
      */
     public Map<String, String> getVariables() {
         HashMap<String, String> map = new HashMap<String, String>(mtp.varTabCnt);

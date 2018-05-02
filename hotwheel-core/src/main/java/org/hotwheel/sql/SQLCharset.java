@@ -20,7 +20,6 @@ import java.util.Hashtable;
  *
  * @author WangFeng(wangfeng@yeah.net)
  * @version 6.3.9 09/10/02
- * @remark 目前只支持MySQL
  * @since mymmsc-api 6.3.9
  */
 public class SQLCharset {
@@ -40,10 +39,9 @@ public class SQLCharset {
     }
 
     /**
-     * 获取字符集列表
+     * 获取字符集列表,只是在需要的时候读取一下列表, 不关闭Connection.
      *
      * @param conn 有效的数据库连接
-     * @remark 只是在需要的时候读取一下列表, 不关闭Connection.
      */
     public void init(Connection conn) {
         PreparedStatement pstmt = null;
