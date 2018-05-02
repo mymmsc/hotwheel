@@ -12,19 +12,20 @@
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc</groupId>
     <artifactId>hotwheel-parent</artifactId>
-    <version>5.5.2</version>
+    <version>5.5.3</version>
     <packaging>pom</packaging>
+    <name>hotwheel</name>
     <description>The parent project of HotWheel</description>
     <url>https://github.com/mymmsc/hotwheel</url>
     <inceptionYear>2002</inceptionYear>
-
+    <!--
     <contributors>
         <contributor>
             <name>Wang Feng</name>
             <email>wangfengxy@sina.cn</email>
         </contributor>
     </contributors>
-
+    -->
     <scm>
         <url>https://github.com/mymmsc/hotwheel</url>
         <connection>scm:git:https://github.com/mymmsc/hotwheel.git</connection>
@@ -56,8 +57,8 @@
     </developers>
 
     <organization>
-        <name>The Apache Software Foundation</name>
-        <url>http://www.apache.org/</url>
+        <name>The MyMMSCs Software Foundation</name>
+        <url>http://www.mymmsc.org/</url>
     </organization>
 
     <issueManagement>
@@ -417,12 +418,15 @@
             <id>release</id>
             <build>
                 <plugins>
+                    <!--
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-release-plugin</artifactId>
                         <version>2.5.2</version>
                     </plugin>
+                    -->
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>${maven-javadoc.version}</version>
                         <executions>
@@ -444,11 +448,18 @@
                             <links>
                                 <link>http://docs.oracle.com/javase/7/docs/api</link>
                             </links>
+                            <!-- 解决 java8 下发布到 maven 中心库时，生成 doc 的异常 -->
+                            <!--
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                            -->
+                            <outputDirectory>${basedir}</outputDirectory>
+                            <reportOutputDirectory>${basedir}</reportOutputDirectory>
                         </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
                         <executions>
                             <execution>
                                 <phase>verify</phase>
@@ -503,6 +514,22 @@
                 </configuration>
             </plugin>
             <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar.version}</version>
+                <configuration>
+                    <archive>
+                        <addMavenDescriptor>true</addMavenDescriptor>
+                        <index>true</index>
+                        <manifestEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <Implementation-Title>${project.artifactId}</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>${maven-deploy.version}</version>
@@ -510,6 +537,7 @@
                     <skip>${maven-deploy.skip}</skip>
                 </configuration>
             </plugin>
+            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -535,6 +563,8 @@
                     </links>
                 </configuration>
             </plugin>
+            -->
+            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
@@ -549,6 +579,7 @@
                     </execution>
                 </executions>
             </plugin>
+            -->
         </plugins>
         <resources>
             <resource>
@@ -583,6 +614,14 @@
         </pluginRepository>
     </pluginRepositories>
     -->
+    <!-- 使用aliyun maven -->
+    <repositories>
+        <repository>
+            <id>aliyun</id>
+            <name>aliyun</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+        </repository>
+    </repositories>
     <!-- ==================== 发布 =========================== -->
     <distributionManagement>
         <!--
@@ -599,11 +638,11 @@
         -->
         <snapshotRepository>
             <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 </project>
