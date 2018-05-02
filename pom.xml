@@ -23,6 +23,20 @@
         <developerConnection>scm:git:ssh://git@github.com/mymmsc/hotwheel.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Wang Feng</name>
+            <email>wangfeng@yeah.net</email>
+            <organization>mymmsc</organization>
+            <organizationUrl>http://www.mymmsc.org</organizationUrl>
+        </developer>
+    </developers>
     <!-- ==================== 子模块设置 =========================== -->
     <modules>
         <module>hotwheel-asio</module>
