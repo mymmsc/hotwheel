@@ -33,8 +33,8 @@ public abstract class BaseObject {
     /**
      * 获取资源文件流
      *
-     * @param name
-     * @return
+     * @param name 资源文件名称
+     * @return 返回资源文件路径
      */
     protected InputStream getResource(String name) {
         return getClass().getResourceAsStream(name);
@@ -43,8 +43,8 @@ public abstract class BaseObject {
     /**
      * 缓存资源文件
      *
-     * @param name
-     * @return
+     * @param name 资源文件名称
+     * @return 返回资源文件路径
      */
     protected String storeResouce(String name) {
         String sRet = null;

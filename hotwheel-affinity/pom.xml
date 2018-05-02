@@ -4,14 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>hotwheel-parent</artifactId>
-        <groupId>org.mymmsc.hotwheel</groupId>
-        <version>5.5.1</version>
+        <groupId>org.mymmsc</groupId>
+        <version>5.5.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.mymmsc.hotwheel</groupId>
+    <groupId>org.mymmsc</groupId>
     <artifactId>hotwheel-affinity</artifactId>
-    <version>5.5.1</version>
+    <version>5.5.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
