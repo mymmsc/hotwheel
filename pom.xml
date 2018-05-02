@@ -9,7 +9,9 @@
     <artifactId>hotwheel-parent</artifactId>
     <version>5.5.2</version>
     <packaging>pom</packaging>
-
+    <description>The parent project of HotWheel</description>
+    <url>https://github.com/mymmsc/hotwheel</url>
+    <inceptionYear>2002</inceptionYear>
     <contributors>
         <contributor>
             <name>Wang Feng</name>
@@ -18,10 +20,9 @@
     </contributors>
 
     <scm>
-        <url>http://github.com/mymmsc/hotwheel</url>
-        <connection>scm:git:ssh://github.com/mymmsc/hotwheel.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/mymmsc/hotwheel.git</developerConnection>
-        <tag>HEAD</tag>
+        <url>https://github.com/mymmsc/hotwheel</url>
+        <connection>scm:git:https://github.com/mymmsc/hotwheel.git</connection>
+        <developerConnection>scm:git:https://github.com/mymmsc/hotwheel.git</developerConnection>
     </scm>
     <licenses>
         <license>
