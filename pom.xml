@@ -5,9 +5,9 @@
     <!-- ==================== 顶层设计 =========================== -->
     <modelVersion>4.0.0</modelVersion>
     <!-- ==================== 项目设置 =========================== -->
-    <groupId>org.mymmsc.hotwheel</groupId>
+    <groupId>org.mymmsc</groupId>
     <artifactId>hotwheel-parent</artifactId>
-    <version>5.5.1</version>
+    <version>5.5.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <contributors>
@@ -64,6 +64,7 @@
         <maven-source.version>3.0.1</maven-source.version>
         <maven-resources.version>2.5</maven-resources.version>
         <maven-deploy.version>2.8.2</maven-deploy.version>
+        <maven-javadoc.version>3.0.0</maven-javadoc.version>
 
         <maven.api.version>3.0</maven.api.version>
         <plugin-api.version>3.0.5</plugin-api.version>
@@ -388,6 +389,51 @@
     </dependencyManagement>
 
     <!-- ==================== 编译设置 =========================== -->
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${maven-javadoc.version}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadoc</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <doclint>none</doclint>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <show>public</show>
+                            <charset>UTF-8</charset>
+                            <encoding>UTF-8</encoding>
+                            <docencoding>UTF-8</docencoding>
+                            <links>
+                                <link>http://docs.oracle.com/javase/7/docs/api</link>
+                            </links>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
     <build>
         <plugins>
             <plugin>
@@ -489,6 +535,7 @@
     </build>
 
     <!-- ==================== Nexus私服设置 =========================== -->
+    <!--
     <repositories>
         <repository>
             <id>hotwheel-dev</id>
@@ -508,6 +555,7 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+    -->
     <!-- ==================== 发布 =========================== -->
     <distributionManagement>
         <!--
@@ -528,7 +576,7 @@
         </snapshotRepository>
         <repository>
             <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
         </repository>
     </distributionManagement>
 </project>

@@ -5,16 +5,16 @@
     <!-- ==================== 顶层设计 =========================== -->
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.mymmsc.hotwheel</groupId>
+        <groupId>org.mymmsc</groupId>
         <artifactId>hotwheel-parent</artifactId>
-        <version>5.5.1</version>
+        <version>5.5.2-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
 
     <!-- ==================== 项目设置 =========================== -->
-    <groupId>org.mymmsc.hotwheel</groupId>
+    <groupId>org.mymmsc</groupId>
     <artifactId>hotwheel-spring</artifactId>
-    <version>5.5.1</version>
+    <version>5.5.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
@@ -32,17 +32,17 @@
         </dependency>
         <!-- j2ee end -->
         <dependency>
-            <groupId>org.mymmsc.hotwheel</groupId>
+            <groupId>org.mymmsc</groupId>
             <artifactId>hotwheel-asio</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.mymmsc.hotwheel</groupId>
+            <groupId>org.mymmsc</groupId>
             <artifactId>hotwheel-json</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.mymmsc.hotwheel</groupId>
+            <groupId>org.mymmsc</groupId>
             <artifactId>hotwheel-mybatis</artifactId>
             <version>${project.parent.version}</version>
         </dependency>

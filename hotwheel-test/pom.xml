@@ -5,15 +5,15 @@
     <!-- ==================== 顶层设计 =========================== -->
     <parent>
         <artifactId>hotwheel-parent</artifactId>
-        <groupId>org.mymmsc.hotwheel</groupId>
-        <version>5.5.1</version>
+        <groupId>org.mymmsc</groupId>
+        <version>5.5.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ==================== 项目设置 =========================== -->
-    <groupId>org.mymmsc.hotwheel</groupId>
+    <groupId>org.mymmsc</groupId>
     <artifactId>hotwheel-test</artifactId>
-    <version>5.5.1</version>
+    <version>5.5.2-SNAPSHOT</version>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
     <properties>
@@ -30,17 +30,17 @@
         </dependency>
         <!-- j2ee end -->
         <dependency>
-            <groupId>org.mymmsc.hotwheel</groupId>
+            <groupId>org.mymmsc</groupId>
             <artifactId>hotwheel-asio</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.mymmsc.hotwheel</groupId>
+            <groupId>org.mymmsc</groupId>
             <artifactId>hotwheel-json</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.mymmsc.hotwheel</groupId>
+            <groupId>org.mymmsc</groupId>
             <artifactId>hotwheel-spring</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
@@ -77,7 +77,7 @@
         <!-- log4j2 end -->
 
         <dependency>
-            <groupId>org.mymmsc.hotwheel</groupId>
+            <groupId>org.mymmsc</groupId>
             <artifactId>hotwheel-affinity</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
