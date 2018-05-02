@@ -13,23 +13,6 @@ import java.util.HashMap;
  * A cache manager for MiniTemplator objects.
  * This class is used to cache MiniTemplator objects in memory, so that
  * each template file is only read and parsed once.
- * <p>
- * <p>
- * Home page: <a href="http://www.source-code.biz/MiniTemplator">www.source-code.biz/MiniTemplator</a><br>
- * Author: Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland<br>
- * Multi-licensed: EPL/LGPL.
- * <p>
- * <p>
- * Version history:</p>
- * <table cellpadding=3 cellspacing=0 border=1><tbody style="vertical-align:top">
- * <tr><td>2004-11-06<td>chdh<td> Module created.
- * <tr><td>2004-11-07<td>chdh<td> Method "clear" added.<br>
- * <tr><td>2006-07-07<td>chdh<td> Extended constructor with <code>charset</code> argument added.
- * <tr><td>2007-05-19<td>chdh<td><ul style="margin-top:0; margin-bottom:0">
- * <li>Second constructor removed.
- * <li>Parameters of get() method changed.
- * </ul>
- * </tbody></table>
  */
 public class TemplatorCache {
 
@@ -61,16 +44,6 @@ public class TemplatorCache {
         return key.toString();
     }
 
-    /**
-     * Returns a cloned MiniTemplator object from the cache. If there is not yet
-     * a MiniTemplator object with the specified <code>templateFileName</code>
-     * in the cache, a new MiniTemplator object is created and stored in the
-     * cache. Then the cached MiniTemplator object is cloned and the clone
-     * object is returned.
-     *
-     * @param templateSpec the template specification.
-     * @return a cloned and reset MiniTemplator object.
-     */
     public synchronized Templator get(TemplateSpecification templateSpec)
             throws IOException, TemplateSyntaxException {
         String key = generateCacheKey(templateSpec);
@@ -89,4 +62,4 @@ public class TemplatorCache {
         cache.clear();
     }
 
-} // end class MiniTemplatorCache
+}

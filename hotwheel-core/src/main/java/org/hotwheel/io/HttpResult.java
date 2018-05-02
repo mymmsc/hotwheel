@@ -11,7 +11,7 @@ import java.util.Date;
  * HttpClient类post方法返回的对象
  *
  * @author wangfeng
- * @remark 默认错误码为404, 如果接口异常, status为900, error为异常消息内容
+ * <p> 默认错误码为404, 如果接口异常, status为900, error为异常消息内容
  */
 public class HttpResult {
     /**

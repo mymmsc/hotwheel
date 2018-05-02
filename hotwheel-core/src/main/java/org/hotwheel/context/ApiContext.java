@@ -41,12 +41,6 @@ public class ApiContext {
         }
     }
 
-    /**
-     * @param <X>
-     * @param name
-     * @return
-     * @throws NamingException
-     */
     @SuppressWarnings("unchecked")
     public static <X> X lookup(String name) throws NamingException {
         init();
@@ -64,9 +58,9 @@ public class ApiContext {
     /**
      * 绑定对象
      *
-     * @param name
-     * @param obj
-     * @throws NamingException
+     * @param name 名称
+     * @param obj 对象
+     * @throws NamingException 如果绑定失败
      */
     public static void bind(String name, Object obj) throws NamingException {
         init();

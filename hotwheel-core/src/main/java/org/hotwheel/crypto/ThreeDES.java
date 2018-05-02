@@ -17,13 +17,7 @@
 package org.hotwheel.crypto;
 
 /**
- * <p>Title: MyMMSC 安全部分</p>
- * <p>
- * <p>Description: 公用基础类 -- 3DES 编码/解码</p>
- * <p>
- * <p>Copyright: Copyright (c) 2000-2009 mymmsc.org</p>
- * <p>
- * <p>Company: MyMMSC Software Foundation (MSF)</p>
+ * MyMMSC 安全部分
  *
  * @author WangFeng(wangfeng@yeah.net)
  * @version 6.3.9
@@ -81,8 +75,8 @@ public class ThreeDES extends AbstractCrypto implements InterfaceCrypto {
     /**
      * 初始化key
      *
-     * @param key
-     * @return
+     * @param key 输入秘钥
+     * @return 初始化是否成功
      */
     public boolean init(String key) {
         return init(key.getBytes());
@@ -91,9 +85,9 @@ public class ThreeDES extends AbstractCrypto implements InterfaceCrypto {
     /**
      * 初始化KEY
      *
-     * @param key
-     * @param charset
-     * @return
+     * @param key 输入秘钥
+     * @param charset 字符集
+     * @return 初始化是否成功
      */
     public boolean init(String key, String charset) {
         boolean bRet = false;
@@ -113,9 +107,8 @@ public class ThreeDES extends AbstractCrypto implements InterfaceCrypto {
     /**
      * encryptMode
      *
-     * @param keybyte 为加密密钥，长度为24字节
-     * @param src     为被加密的数据缓冲区（源）
-     * @return
+     * @param src 为被加密的数据缓冲区（源）
+     * @return 字节数组
      */
     @Override
     public byte[] encode(byte[] src) {

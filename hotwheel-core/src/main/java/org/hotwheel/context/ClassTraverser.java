@@ -12,8 +12,8 @@ import java.util.List;
  * 类成员变量的遍历操作
  *
  * @author WangFeng
- * @remark 遍历类的每一个成员变量
- * @remark Traversal, Traverse
+ * <p> 遍历类的每一个成员变量
+ * <p> Traversal, Traverse
  */
 public abstract class ClassTraverser {
     private static Logger logger = LoggerFactory.getLogger(ClassTraverser.class);
@@ -23,7 +23,7 @@ public abstract class ClassTraverser {
      *
      * @param prefix 字段援引路径, 此处以各级类的字段名的联级表达式
      * @param name   当前字段名
-     * @return
+     * @return 路径
      */
     protected abstract String subpath(String prefix, String name);
 
@@ -47,8 +47,8 @@ public abstract class ClassTraverser {
     /**
      * 遍历List对象
      *
-     * @param prefix
-     * @param list
+     * @param prefix 字段援引路径, 此处以各级类的字段名的联级表达式
+     * @param list 传入集合
      */
     public void transitList(String prefix, List<?> list) {
         if (list != null) {
@@ -66,8 +66,8 @@ public abstract class ClassTraverser {
     /**
      * 遍历数组
      *
-     * @param prefix
-     * @param array
+     * @param prefix 字段援引路径, 此处以各级类的字段名的联级表达式
+     * @param array 数组
      */
     public void transitArray(String prefix, Object array) {
         if (array != null) {
@@ -87,7 +87,6 @@ public abstract class ClassTraverser {
      *
      * @param prefix 字段援引路径, 此处以各级类的字段名的联级表达式
      * @param obj    对象
-     * @return
      */
     public void transit(String prefix, Object obj) {
         // 取得clazz类的成员变量列表

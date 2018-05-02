@@ -360,10 +360,6 @@ public abstract class ObjectUtils {
 		return hash;
 	}
 
-	/**
-	 * Return a hash code based on the contents of the specified array.
-	 * If {@code array} is {@code null}, this method returns 0.
-	 */
 	public static int nullSafeHashCode(byte[] array) {
 		if (array == null) {
 			return 0;
@@ -375,10 +371,6 @@ public abstract class ObjectUtils {
 		return hash;
 	}
 
-	/**
-	 * Return a hash code based on the contents of the specified array.
-	 * If {@code array} is {@code null}, this method returns 0.
-	 */
 	public static int nullSafeHashCode(char[] array) {
 		if (array == null) {
 			return 0;
@@ -390,10 +382,6 @@ public abstract class ObjectUtils {
 		return hash;
 	}
 
-	/**
-	 * Return a hash code based on the contents of the specified array.
-	 * If {@code array} is {@code null}, this method returns 0.
-	 */
 	public static int nullSafeHashCode(double[] array) {
 		if (array == null) {
 			return 0;
@@ -405,10 +393,6 @@ public abstract class ObjectUtils {
 		return hash;
 	}
 
-	/**
-	 * Return a hash code based on the contents of the specified array.
-	 * If {@code array} is {@code null}, this method returns 0.
-	 */
 	public static int nullSafeHashCode(float[] array) {
 		if (array == null) {
 			return 0;
@@ -420,10 +404,6 @@ public abstract class ObjectUtils {
 		return hash;
 	}
 
-	/**
-	 * Return a hash code based on the contents of the specified array.
-	 * If {@code array} is {@code null}, this method returns 0.
-	 */
 	public static int nullSafeHashCode(int[] array) {
 		if (array == null) {
 			return 0;
@@ -435,10 +415,6 @@ public abstract class ObjectUtils {
 		return hash;
 	}
 
-	/**
-	 * Return a hash code based on the contents of the specified array.
-	 * If {@code array} is {@code null}, this method returns 0.
-	 */
 	public static int nullSafeHashCode(long[] array) {
 		if (array == null) {
 			return 0;
@@ -450,10 +426,6 @@ public abstract class ObjectUtils {
 		return hash;
 	}
 
-	/**
-	 * Return a hash code based on the contents of the specified array.
-	 * If {@code array} is {@code null}, this method returns 0.
-	 */
 	public static int nullSafeHashCode(short[] array) {
 		if (array == null) {
 			return 0;
@@ -465,34 +437,18 @@ public abstract class ObjectUtils {
 		return hash;
 	}
 
-	/**
-	 * Return the same value as {@link Boolean#hashCode()}}.
-	 * @see Boolean#hashCode()
-	 */
 	public static int hashCode(boolean bool) {
 		return (bool ? 1231 : 1237);
 	}
 
-	/**
-	 * Return the same value as {@link Double#hashCode()}}.
-	 * @see Double#hashCode()
-	 */
 	public static int hashCode(double dbl) {
 		return hashCode(Double.doubleToLongBits(dbl));
 	}
 
-	/**
-	 * Return the same value as {@link Float#hashCode()}}.
-	 * @see Float#hashCode()
-	 */
 	public static int hashCode(float flt) {
 		return Float.floatToIntBits(flt);
 	}
 
-	/**
-	 * Return the same value as {@link Long#hashCode()}}.
-	 * @see Long#hashCode()
-	 */
 	public static int hashCode(long lng) {
 		return (int) (lng ^ (lng >>> 32));
 	}
@@ -502,12 +458,6 @@ public abstract class ObjectUtils {
 	// Convenience methods for toString output
 	//---------------------------------------------------------------------
 
-	/**
-	 * Return a String representation of an object's overall identity.
-	 * @param obj the object (may be {@code null})
-	 * @return the object's identity as String representation,
-	 * or an empty String if the object was {@code null}
-	 */
 	public static String identityToString(Object obj) {
 		if (obj == null) {
 			return EMPTY_STRING;
@@ -515,24 +465,10 @@ public abstract class ObjectUtils {
 		return obj.getClass().getName() + "@" + getIdentityHexString(obj);
 	}
 
-	/**
-	 * Return a hex String form of an object's identity hash code.
-	 * @param obj the object
-	 * @return the object's identity code in hex notation
-	 */
 	public static String getIdentityHexString(Object obj) {
 		return Integer.toHexString(System.identityHashCode(obj));
 	}
 
-	/**
-	 * Return a content-based String representation if {@code obj} is
-	 * not {@code null}; otherwise returns an empty String.
-	 * <p>Differs from {@link #nullSafeToString(Object)} in that it returns
-	 * an empty String rather than "null" for a {@code null} value.
-	 * @param obj the object to build a display String for
-	 * @return a display String representation of {@code obj}
-	 * @see #nullSafeToString(Object)
-	 */
 	public static String getDisplayString(Object obj) {
 		if (obj == null) {
 			return EMPTY_STRING;
@@ -540,23 +476,10 @@ public abstract class ObjectUtils {
 		return nullSafeToString(obj);
 	}
 
-	/**
-	 * Determine the class name for the given object.
-	 * <p>Returns {@code "null"} if {@code obj} is {@code null}.
-	 * @param obj the object to introspect (may be {@code null})
-	 * @return the corresponding class name
-	 */
 	public static String nullSafeClassName(Object obj) {
 		return (obj != null ? obj.getClass().getName() : NULL_STRING);
 	}
 
-	/**
-	 * Return a String representation of the specified Object.
-	 * <p>Builds a String representation of the contents in case of an array.
-	 * Returns {@code "null"} if {@code obj} is {@code null}.
-	 * @param obj the object to build a String representation for
-	 * @return a String representation of {@code obj}
-	 */
 	public static String nullSafeToString(Object obj) {
 		if (obj == null) {
 			return NULL_STRING;
@@ -595,15 +518,6 @@ public abstract class ObjectUtils {
 		return (str != null ? str : EMPTY_STRING);
 	}
 
-	/**
-	 * Return a String representation of the contents of the specified array.
-	 * <p>The String representation consists of a list of the array's elements,
-	 * enclosed in curly braces ({@code "{}"}). Adjacent elements are separated
-	 * by the characters {@code ", "} (a comma followed by a space). Returns
-	 * {@code "null"} if {@code array} is {@code null}.
-	 * @param array the array to build a String representation for
-	 * @return a String representation of {@code array}
-	 */
 	public static String nullSafeToString(Object[] array) {
 		if (array == null) {
 			return NULL_STRING;
@@ -626,15 +540,6 @@ public abstract class ObjectUtils {
 		return sb.toString();
 	}
 
-	/**
-	 * Return a String representation of the contents of the specified array.
-	 * <p>The String representation consists of a list of the array's elements,
-	 * enclosed in curly braces ({@code "{}"}). Adjacent elements are separated
-	 * by the characters {@code ", "} (a comma followed by a space). Returns
-	 * {@code "null"} if {@code array} is {@code null}.
-	 * @param array the array to build a String representation for
-	 * @return a String representation of {@code array}
-	 */
 	public static String nullSafeToString(boolean[] array) {
 		if (array == null) {
 			return NULL_STRING;
@@ -658,15 +563,6 @@ public abstract class ObjectUtils {
 		return sb.toString();
 	}
 
-	/**
-	 * Return a String representation of the contents of the specified array.
-	 * <p>The String representation consists of a list of the array's elements,
-	 * enclosed in curly braces ({@code "{}"}). Adjacent elements are separated
-	 * by the characters {@code ", "} (a comma followed by a space). Returns
-	 * {@code "null"} if {@code array} is {@code null}.
-	 * @param array the array to build a String representation for
-	 * @return a String representation of {@code array}
-	 */
 	public static String nullSafeToString(byte[] array) {
 		if (array == null) {
 			return NULL_STRING;
@@ -689,15 +585,6 @@ public abstract class ObjectUtils {
 		return sb.toString();
 	}
 
-	/**
-	 * Return a String representation of the contents of the specified array.
-	 * <p>The String representation consists of a list of the array's elements,
-	 * enclosed in curly braces ({@code "{}"}). Adjacent elements are separated
-	 * by the characters {@code ", "} (a comma followed by a space). Returns
-	 * {@code "null"} if {@code array} is {@code null}.
-	 * @param array the array to build a String representation for
-	 * @return a String representation of {@code array}
-	 */
 	public static String nullSafeToString(char[] array) {
 		if (array == null) {
 			return NULL_STRING;
@@ -720,15 +607,6 @@ public abstract class ObjectUtils {
 		return sb.toString();
 	}
 
-	/**
-	 * Return a String representation of the contents of the specified array.
-	 * <p>The String representation consists of a list of the array's elements,
-	 * enclosed in curly braces ({@code "{}"}). Adjacent elements are separated
-	 * by the characters {@code ", "} (a comma followed by a space). Returns
-	 * {@code "null"} if {@code array} is {@code null}.
-	 * @param array the array to build a String representation for
-	 * @return a String representation of {@code array}
-	 */
 	public static String nullSafeToString(double[] array) {
 		if (array == null) {
 			return NULL_STRING;
@@ -752,15 +630,6 @@ public abstract class ObjectUtils {
 		return sb.toString();
 	}
 
-	/**
-	 * Return a String representation of the contents of the specified array.
-	 * <p>The String representation consists of a list of the array's elements,
-	 * enclosed in curly braces ({@code "{}"}). Adjacent elements are separated
-	 * by the characters {@code ", "} (a comma followed by a space). Returns
-	 * {@code "null"} if {@code array} is {@code null}.
-	 * @param array the array to build a String representation for
-	 * @return a String representation of {@code array}
-	 */
 	public static String nullSafeToString(float[] array) {
 		if (array == null) {
 			return NULL_STRING;
@@ -784,15 +653,6 @@ public abstract class ObjectUtils {
 		return sb.toString();
 	}
 
-	/**
-	 * Return a String representation of the contents of the specified array.
-	 * <p>The String representation consists of a list of the array's elements,
-	 * enclosed in curly braces ({@code "{}"}). Adjacent elements are separated
-	 * by the characters {@code ", "} (a comma followed by a space). Returns
-	 * {@code "null"} if {@code array} is {@code null}.
-	 * @param array the array to build a String representation for
-	 * @return a String representation of {@code array}
-	 */
 	public static String nullSafeToString(int[] array) {
 		if (array == null) {
 			return NULL_STRING;
@@ -815,15 +675,6 @@ public abstract class ObjectUtils {
 		return sb.toString();
 	}
 
-	/**
-	 * Return a String representation of the contents of the specified array.
-	 * <p>The String representation consists of a list of the array's elements,
-	 * enclosed in curly braces ({@code "{}"}). Adjacent elements are separated
-	 * by the characters {@code ", "} (a comma followed by a space). Returns
-	 * {@code "null"} if {@code array} is {@code null}.
-	 * @param array the array to build a String representation for
-	 * @return a String representation of {@code array}
-	 */
 	public static String nullSafeToString(long[] array) {
 		if (array == null) {
 			return NULL_STRING;
@@ -846,15 +697,6 @@ public abstract class ObjectUtils {
 		return sb.toString();
 	}
 
-	/**
-	 * Return a String representation of the contents of the specified array.
-	 * <p>The String representation consists of a list of the array's elements,
-	 * enclosed in curly braces ({@code "{}"}). Adjacent elements are separated
-	 * by the characters {@code ", "} (a comma followed by a space). Returns
-	 * {@code "null"} if {@code array} is {@code null}.
-	 * @param array the array to build a String representation for
-	 * @return a String representation of {@code array}
-	 */
 	public static String nullSafeToString(short[] array) {
 		if (array == null) {
 			return NULL_STRING;

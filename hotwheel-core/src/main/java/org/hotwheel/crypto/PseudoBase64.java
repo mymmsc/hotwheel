@@ -5,7 +5,7 @@ package org.hotwheel.crypto;
  *
  * @author wangfeng
  * @version 3.0.2 2012/05/27
- * @remark ying test
+ * <p> ying test
  * @since 1.0.0
  */
 public class PseudoBase64 {

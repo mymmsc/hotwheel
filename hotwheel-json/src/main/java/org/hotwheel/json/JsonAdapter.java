@@ -23,7 +23,7 @@ import java.util.List;
  * JsonAdapter
  *
  * @author WangFeng(wangfeng@yeah.net)
- * @remark 支持较为复杂的嵌套bean的json解析和输出json串
+ * <p> 支持较为复杂的嵌套bean的json解析和输出json串
  * @since mymmsc-api 6.3.9
  */
 public class JsonAdapter {

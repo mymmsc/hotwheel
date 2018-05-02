@@ -213,7 +213,7 @@ public final class Api {
     }
 
     /**
-     * Map --> Bean 1: 利用Introspector,PropertyDescriptor实现 Map --> Bean
+     * Map to Bean 1: 利用Introspector,PropertyDescriptor实现 Map to Bean
      * @param map
      * @param obj
      */
@@ -240,7 +240,7 @@ public final class Api {
     }
 
     /**
-     * Bean --> Map 1: 利用Introspector和PropertyDescriptor 将Bean --> Map
+     * Bean to Map 1: 利用Introspector和PropertyDescriptor 将Bean to Map
      * @param obj
      * @return
      */
@@ -534,7 +534,7 @@ public final class Api {
         return bRet;
     }
 
-    /******************** < 基本数据类型APIs > ********************/
+    /******************** 基本数据类型APIs  ********************/
 
     public static void closeQuietly(Closeable closeable) {
         if (closeable != null) {
@@ -820,13 +820,12 @@ public final class Api {
     }
 
     /**
-     * contains
+     * contains 替换${Keywords}格式的字符串
      *
      * @param s     String
      * @param sKey  String
      * @param sDest String
      * @return String
-     * @remark 替换${Keywords}格式的字符串
      */
     public static String contains(String s, String sKey, String sDest) {
         if (s == null || (s.trim()).length() == 0) {
@@ -1006,7 +1005,6 @@ public final class Api {
      * @param tempDouble double
      * @param tempFormat String
      * @return String
-     * @todo 输出格式化的Double字符串
      */
     public static String DoubleToString(double tempDouble, String tempFormat) {
         String tempString = null;
@@ -1021,7 +1019,6 @@ public final class Api {
      *
      * @param bString String
      * @return String
-     * @todo 二进制字符串到十六进制字符串的转换
      * @author WangFeng
      */
     public static String binaryStringTohexString(String bString) {
@@ -1045,7 +1042,6 @@ public final class Api {
      *
      * @param hexString String
      * @return String
-     * @todo 十六进制字符串到二进制字符串的转换
      * @author WangFeng
      */
     public static String hexStringTobinaryString(String hexString) {
@@ -1079,7 +1075,6 @@ public final class Api {
      *
      * @param args String[]
      * @return String
-     * @todo 连接字符串
      */
     public static String StringCat(String... args) {
         StringBuffer sbuff = new StringBuffer();
@@ -1097,7 +1092,6 @@ public final class Api {
      * @param fmtSrc  String 源字符串编码方式
      * @param fmtDest String 目标编码方式
      * @return String
-     * @todo 字符串编码转换
      */
     public static String iconv(String s, String fmtSrc, String fmtDest) {
         try {
@@ -1490,8 +1484,7 @@ public final class Api {
      * 判断Object类型是否基本数据类型, int, Integer, String等
      *
      * @param obj
-     * @return
-     * @remark obj为null, 返回false
+     * @return obj为null, 返回false
      */
     public static boolean isBaseType(Object obj) {
         boolean bRet = false;
@@ -2052,7 +2045,7 @@ public final class Api {
         return bRet;
     }
 
-    /******************** < 线程APIs > ********************/
+    /********************  线程APIs  ********************/
 
     /**
      * 线程休眠
@@ -2086,7 +2079,7 @@ public final class Api {
         return bRet;
     }
 
-    /******************** < 日期时间APIs > ********************/
+    /********************  日期时间APIs  ********************/
 
     /**
      * Tries different date formats to parse against the given string
@@ -2161,11 +2154,10 @@ public final class Api {
     }
 
     /**
-     * getTimeInMillis
+     * getTimeInMillis 得到unix纪元到日期的毫秒数
      *
      * @param tempDate Date
      * @return long
-     * @todo 得到unix纪元到日期的毫秒数
      */
     public static long getTimeInMillis(Date tempDate) {
         Calendar tempCalendar = Calendar.getInstance();
@@ -2174,12 +2166,11 @@ public final class Api {
     }
 
     /**
-     * getField
+     * getField 得到Date的各域的值
      *
      * @param tempDate          Date
      * @param tempFieldConstant int
      * @return int
-     * @todo 得到Date的各域的值
      */
     public static int getField(Date tempDate, int tempFieldConstant) {
         Calendar tempCalendar = Calendar.getInstance();
@@ -2221,12 +2212,11 @@ public final class Api {
     }
 
     /**
-     * toDate
+     * toDate 字符串到DateTime的转换
      *
      * @param text   String 时间字符串
      * @param fotmat String 时间字符串格式("yyyy-MM-dd HH:mm:ss")
      * @return Date
-     * @todo 字符串到DateTime的转换
      */
     public static Date toDate(String text, String fotmat) {
         Date dRet = new Date(0);
@@ -2240,12 +2230,11 @@ public final class Api {
     }
 
     /**
-     * DiffSeconds
+     * DiffSeconds 得到两个日期相隔的秒数
      *
      * @param prefixDate Date
      * @param suffixDate Date
      * @return long
-     * @todo 得到两个日期相隔的秒数
      */
     public static long diffSeconds(Date prefixDate,
                                    Date suffixDate) {
@@ -2305,12 +2294,11 @@ public final class Api {
     }
 
     /**
-     * DiffDays
+     * DiffDays 得到两个日期相隔的天数
      *
      * @param prefixDate Date
      * @param suffixDate Date
      * @return long
-     * @todo 得到两个日期相隔的天数
      */
     public static long diffDays(Date prefixDate,
                                 Date suffixDate) {
@@ -2361,11 +2349,10 @@ public final class Api {
     }
 
     /**
-     * gerLastDayOfWeek
+     * gerLastDayOfWeek 指定日期的所处星期的最后一天
      *
      * @param date 指定日期
      * @return java.util.Date
-     * @todo 指定日期的所处星期的最后一天
      */
     public static Date getLastDayOfWeek(Date date) {
         /**
@@ -2403,11 +2390,10 @@ public final class Api {
     }
 
     /**
-     * getFirstdayOfMonth
+     * getFirstdayOfMonth 得到一个月的第一天
      *
      * @param tempDate Date
-     * @return int
-     * @todo 得到一个月的第一天
+     * @return Date
      */
     public static Date getFirstDayOfMonth(Date tempDate) {
         int iFirstdayOfMonth = 1;
@@ -2424,8 +2410,7 @@ public final class Api {
      * getLastdayOfMonth
      *
      * @param tempDate Date
-     * @return int
-     * @todo 得到一个月的最后一天
+     * @return int 得到一个月的最后一天
      */
     public static Date getLastDayOfMonth(Date tempDate) {
         int iLastdayOfMonth = 0;
@@ -2482,7 +2467,7 @@ public final class Api {
         return nWeekDay;
     }
 
-    /******************** < 对象序列化 APIs > ********************/
+    /********************  对象序列化 APIs  ********************/
 
     /**
      * 得到对象序列化字节流
@@ -2528,7 +2513,7 @@ public final class Api {
         return obj;
     }
 
-    /******************** < 加解密算法 APIs > ********************/
+    /********************  加解密算法 APIs  ********************/
 
     /**
      * MD5单向散列加密算法
@@ -2668,7 +2653,7 @@ public final class Api {
      *
      * @param n int
      * @return byte[]
-     * @todo int转换成字节数组
+     * <p> int转换成字节数组
      */
     public byte[] IntToByteArray(int n) {
         byte data[] = new byte[4];

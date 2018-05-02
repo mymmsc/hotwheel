@@ -494,7 +494,7 @@ public final class SQLApi {
      * @param clazz
      * @param charsetDatabase
      * @param charsetApp
-     * @return List<T>
+     * @return List
      */
     public static <T> List<T> getRows(ResultSet rs, Class<T> clazz,
                                       String charsetDatabase, String charsetApp) {
@@ -586,15 +586,14 @@ public final class SQLApi {
     }
 
     /**
-     * 执行SQL查询语句, 封装记录字段到T
+     * 执行SQL查询语句, 封装记录字段到T, 支持事务
      *
      * @param <T>
      * @param conn
      * @param clazz
      * @param sql
      * @param args
-     * @return
-     * @remark 支持事务
+     * @return 返回对象
      */
     public static <T> T getOneRow(Connection conn, Class<T> clazz, String sql,
                                   Object... args) {

@@ -6,7 +6,7 @@ import org.hotwheel.assembly.Api;
  * URL短链接
  *
  * @author WangFeng
- * @remark URL短链接算法
+ * <p> URL短链接算法
  * @version 5.5.0
  */
 public class ShortUrl {
