@@ -17,6 +17,7 @@
     <description>The parent project of HotWheel</description>
     <url>https://github.com/mymmsc/hotwheel</url>
     <inceptionYear>2002</inceptionYear>
+
     <contributors>
         <contributor>
             <name>Wang Feng</name>
@@ -35,6 +36,7 @@
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
+    <!--
     <developers>
         <developer>
             <name>Wang Feng</name>
@@ -43,6 +45,25 @@
             <organizationUrl>http://www.mymmsc.org</organizationUrl>
         </developer>
     </developers>
+    -->
+    <developers>
+        <developer>
+            <id>mymmsc.org</id>
+            <name>The HotWheel Project Contributors</name>
+            <email>wangfeng@yeah.net</email>
+            <url>http://mymmsc.org/</url>
+        </developer>
+    </developers>
+
+    <organization>
+        <name>The Apache Software Foundation</name>
+        <url>http://www.apache.org/</url>
+    </organization>
+
+    <issueManagement>
+        <system>Github Issues</system>
+        <url>https://github.com/mymmsc/hotwheel/issues</url>
+    </issueManagement>
     <!-- ==================== 子模块设置 =========================== -->
     <modules>
         <module>hotwheel-asio</module>
@@ -396,6 +417,11 @@
             <id>release</id>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>2.5.2</version>
+                    </plugin>
                     <plugin>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>${maven-javadoc.version}</version>
