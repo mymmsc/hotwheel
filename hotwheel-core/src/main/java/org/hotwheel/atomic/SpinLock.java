@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * 可重入的自旋锁 (重新进入 不会出现死锁)
  *
  * @author wangfeng
- * @date 2016年1月17日 下午6:55:09
+ * @since 2016年1月17日 下午6:55:09
  */
 public class SpinLock {
     /**

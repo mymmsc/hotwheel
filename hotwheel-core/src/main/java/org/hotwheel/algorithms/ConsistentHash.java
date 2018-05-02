@@ -1,6 +1,3 @@
-/**
- *
- */
 package org.hotwheel.algorithms;
 
 import java.nio.ByteBuffer;
@@ -14,7 +11,7 @@ import java.util.TreeMap;
  * 一致性哈希算法
  *
  * @author WangFeng
- * @date 2015年1月1日 下午5:27:41
+ * @since 2015年1月1日 下午5:27:41
  */
 public class ConsistentHash<T> {
     /**

@@ -4,7 +4,7 @@ package test.util;
  * 手势密码连线测试
  *
  * @author wangfeng
- * @date 2018/4/25
+ * @since 2018/4/25
  */
 public class testLines {
 

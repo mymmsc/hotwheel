@@ -4,7 +4,7 @@ package org.hotwheel.asio;
  * 时间完成后回调接口
  * 
  * @author wangfeng
- * @date 2016年2月7日 下午12:02:27
+ * @since 2016年2月7日 下午12:02:27
  */
 public abstract interface CompletionHandler<T extends AioContext> {
 

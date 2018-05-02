@@ -65,6 +65,7 @@
         <maven-resources.version>2.5</maven-resources.version>
         <maven-deploy.version>2.8.2</maven-deploy.version>
         <maven-javadoc.version>3.0.0</maven-javadoc.version>
+        <maven-gpg.version>1.5</maven-gpg.version>
 
         <maven.api.version>3.0</maven.api.version>
         <plugin-api.version>3.0.5</plugin-api.version>
@@ -410,9 +411,9 @@
                         </executions>
                         <configuration>
                             <show>public</show>
-                            <charset>UTF-8</charset>
-                            <encoding>UTF-8</encoding>
-                            <docencoding>UTF-8</docencoding>
+                            <charset>${javac.encoding}</charset>
+                            <encoding>${javac.encoding}</encoding>
+                            <docencoding>${javac.encoding}</docencoding>
                             <links>
                                 <link>http://docs.oracle.com/javase/7/docs/api</link>
                             </links>
@@ -471,7 +472,7 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>${maven-resources.version}</version>
                 <configuration>
-                    <encoding>UTF-8</encoding>
+                    <encoding>${javac.encoding}</encoding>
                 </configuration>
             </plugin>
             <plugin>
@@ -484,34 +485,33 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
+                <version>${maven-javadoc.version}</version>
                 <executions>
                     <execution>
-                        <id>attach-javadocs</id>
+                        <id>attach-javadoc</id>
                         <goals>
                             <goal>jar</goal>
                         </goals>
+                        <configuration>
+                            <doclint>none</doclint>
+                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <show>public</show>
+                    <charset>${javac.encoding}</charset>
+                    <encoding>${javac.encoding}</encoding>
+                    <docencoding>${javac.encoding}</docencoding>
+                    <links>
+                        <link>http://docs.oracle.com/javase/7/docs/api</link>
+                    </links>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.5</version>
+                <version>${maven-gpg.version}</version>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>

@@ -15,7 +15,7 @@ import java.util.TreeMap;
  * http单例接口封装
  *
  * @author wangfeng
- * @date 2016年1月12日 下午1:52:34
+ * @since 2016年1月12日 下午1:52:34
  */
 public final class HttpApi {
 
