@@ -433,6 +433,7 @@
                                 </goals>
                                 <configuration>
                                     <doclint>none</doclint>
+                                    <failOnError>false</failOnError>
                                 </configuration>
                             </execution>
                         </executions>
