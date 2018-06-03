@@ -10,7 +10,7 @@
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc</groupId>
     <artifactId>hotwheel-parent</artifactId>
-    <version>5.5.3</version>
+    <version>5.6.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>hotwheel</name>
     <description>The parent project of HotWheel</description>
@@ -572,41 +572,9 @@
             </plugin>
             -->
         </plugins>
-        <!--
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.tpl</include>
-                    <include>**/*.txt</include>
-                </includes>
-            </resource>
-        </resources>
-        -->
     </build>
 
     <!-- ==================== Nexus私服设置 =========================== -->
-    <!--
-    <repositories>
-        <repository>
-            <id>hotwheel-dev</id>
-            <name>Nexus Release Repository</name>
-            <url>http://mvn.mymmsc.org/content/repositories/public/</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>hotwheel-dev</id>
-            <url>http://mvn.mymmsc.org/content/repositories/public/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-    -->
     <!-- 使用aliyun maven -->
     <repositories>
         <repository>
@@ -617,18 +585,6 @@
     </repositories>
     <!-- ==================== 发布 =========================== -->
     <distributionManagement>
-        <!--
-        <repository>
-            <id>hotwheel-dev</id>
-            <name>Nexus Release Repository</name>
-            <url>http://mvn.mymmsc.org/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>hotwheel-dev</id>
-            <name>Nexus snapshots Repository</name>
-            <url>http://mvn.mymmsc.org/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        -->
         <snapshotRepository>
             <id>ossrh</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
