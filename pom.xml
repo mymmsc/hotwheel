@@ -52,6 +52,12 @@
             <email>wangfeng@yeah.net</email>
             <url>http://mymmsc.org/</url>
         </developer>
+        <developer>
+            <id>mymmsc.org</id>
+            <name>The HotWheel Project Contributors</name>
+            <email>wangfengxy@sina.cn</email>
+            <url>http://mymmsc.org/</url>
+        </developer>
     </developers>
 
     <organization>
