@@ -150,7 +150,7 @@
         <aspectj.version>1.6.12</aspectj.version>
 
         <spring-data-redis.version>1.5.0.RELEASE</spring-data-redis.version>
-        <spring-fileupload.version>1.3.2</spring-fileupload.version>
+        <spring-fileupload.version>1.3.3</spring-fileupload.version>
         <!-- spring end -->
 
         <!-- CACHE 版本 -->
