@@ -4,14 +4,14 @@
     <parent>
         <artifactId>hotwheel-parent</artifactId>
         <groupId>org.mymmsc</groupId>
-        <version>5.6.0</version>
+        <version>5.6.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc</groupId>
     <artifactId>hotwheel-test</artifactId>
-    <version>5.6.0</version>
+    <version>5.6.1</version>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
     <properties>
