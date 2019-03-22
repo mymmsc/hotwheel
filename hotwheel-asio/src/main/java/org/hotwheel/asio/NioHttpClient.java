@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * 异步并发http客户端
  */
-public class NioHttpClient<T> extends Asio<HttpContext>{
+public class NioHttpClient<T> extends Asio<HttpContext> {
     private List<T> list = null;
     //private int sequeueId = 0;
     private long beginTime = System.currentTimeMillis();
@@ -57,8 +57,8 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
 
     @Override
     public void onClosed(HttpContext context) {
-        scoreBoard.closed ++;
-        scoreBoard.requests --;
+        scoreBoard.closed++;
+        scoreBoard.requests--;
         if (logger.isDebugEnabled()) {
             logger.debug("{} closed", context.getClass().getSimpleName());
         }
@@ -66,7 +66,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
 
     @Override
     public void onCompleted(HttpContext context) {
-        scoreBoard.good ++;
+        scoreBoard.good++;
         if (logger.isDebugEnabled()) {
             logger.debug("{} Completed", context.getClass().getSimpleName());
         }
@@ -83,7 +83,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
     @Override
     public void onError(HttpContext context, Exception e) {
         callBack.failed(context.index, e);
-        scoreBoard.bad ++;
+        scoreBoard.bad++;
         if (logger.isDebugEnabled()) {
             logger.debug("{} Error", context.getClass().getSimpleName());
         }
@@ -132,12 +132,12 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         // 已连接server端, 超时改用读写超时参数
         context.setTimeout(readTimeout);
 
-        if(postlen <= 0) {
+        if (postlen <= 0) {
             posting = 0;
         } else {
             posting = 1;
         }
-		/* setup request */
+        /* setup request */
         if (posting <= 0) {
             request = String.format("%s %s HTTP/1.1\r\n%s%s%s%s\r\n",
                     (posting == 0) ? "GET" : "HEAD",
@@ -170,7 +170,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
 
     private void bufferRead(HttpContext context) {
         // 解析http-header
-        while(!context.hasHeader/* && buffer.hasRemaining()*/) {
+        while (!context.hasHeader/* && buffer.hasRemaining()*/) {
             byte[] lines = context.readLine();
             if (lines == null) {
                 //buffer.reset();
@@ -178,18 +178,18 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
             } else if (lines.length == 0) {
                 //context.readLine();
                 //if(context.eof) {
-                    context.hasHeader = true;
+                context.hasHeader = true;
                 //} else {
-                    //context.reset();
-                    //context.hasHeader = true;
-                    context.eof = true;
-                    if (context.eof) {
-                        //return;
-                    }
+                //context.reset();
+                //context.hasHeader = true;
+                context.eof = true;
+                if (context.eof) {
+                    //return;
+                }
                 //}
 
                 break;
-            } else if(lines.length == 2 && lines[0] == '\r' && lines[1] == '\n') {
+            } else if (lines.length == 2 && lines[0] == '\r' && lines[1] == '\n') {
                 context.hasHeader = true;
             } else {
                 try {
@@ -210,7 +210,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         if (context.hasHeader && context.eof) {
             //buffer.flip();
             if (!context.chunked) {
-                String tmp = new String(context.array(), context.position() , context.limit() - context.position());
+                String tmp = new String(context.array(), context.position(), context.limit() - context.position());
                 StringBuffer body = context.getBody();
                 body.append(tmp);
                 //buffer.reset();
@@ -343,9 +343,9 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         }
         //if (logger.isDebugEnabled()) logger.debug("Compact: number={},request={},good={},bad={}.", number,requests, good, bad);
         if (debug) {
-            System.out.println(String.format("Compact: number=%d,request=%d,good=%d,bad=%d.", number,scoreBoard.requests, scoreBoard.good, scoreBoard.bad));
+            System.out.println(String.format("Compact: number=%d,request=%d,good=%d,bad=%d.", number, scoreBoard.requests, scoreBoard.good, scoreBoard.bad));
         }
-        while(scoreBoard.sequeueId < number && (/*number < 0 || */number > scoreBoard.good + scoreBoard.bad + scoreBoard.requests) && concurrency > scoreBoard.requests) {
+        while (scoreBoard.sequeueId < number && (/*number < 0 || */number > scoreBoard.good + scoreBoard.bad + scoreBoard.requests) && concurrency > scoreBoard.requests) {
             // 如果未达到并发限制数量, 新增加一个请求
             SocketChannel sc = null;
             HttpContext ctx = null;
@@ -367,11 +367,11 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 */
                 sc = createSocket();
                 ctx = new HttpContext(sc, connectTimeout);
-                ctx.index = scoreBoard.sequeueId ++;
-                scoreBoard.requests ++;
+                ctx.index = scoreBoard.sequeueId++;
+                scoreBoard.requests++;
                 ctx.setUrl(httpUrl.toExternalForm());
 
-                sc.register(selector,SelectionKey.OP_READ | SelectionKey.OP_WRITE | SelectionKey.OP_CONNECT, ctx);
+                sc.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE | SelectionKey.OP_CONNECT, ctx);
 
                 InetSocketAddress sa = new InetSocketAddress(host, port);
                 boolean ret = sc.connect(sa);
@@ -386,7 +386,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
                 handleError(sc, e);
             }
         }/* else */
-        if(number <= scoreBoard.good + scoreBoard.bad) {
+        if (number <= scoreBoard.good + scoreBoard.bad) {
             done = false;
             if (logger.isDebugEnabled()) {
                 logger.debug("number={},request={},good={},bad={}.", number, scoreBoard.requests, scoreBoard.good, scoreBoard.bad);
@@ -477,7 +477,7 @@ public class NioHttpClient<T> extends Asio<HttpContext>{
         host = httpUrl.getHost();
         port = httpUrl.getPort();
         if (port < 0) {
-            if(httpUrl.getProtocol().equalsIgnoreCase("http")) {
+            if (httpUrl.getProtocol().equalsIgnoreCase("http")) {
                 port = 80;
             }
         }

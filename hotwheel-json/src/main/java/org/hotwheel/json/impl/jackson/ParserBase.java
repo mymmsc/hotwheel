@@ -530,7 +530,7 @@ public abstract class ParserBase
             // Shouldn't get this far but if we do
             return _numberBigDecimal;
         }
-    
+
         /* And then floating point types. But here optimal type
          * needs to be big decimal, to avoid losing any data?
          */
@@ -557,7 +557,7 @@ public abstract class ParserBase
             }
             return NumberType.BIG_INTEGER;
         }
-    
+
         /* And then floating point types. Here optimal type
          * needs to be big decimal, to avoid losing any data?
          * However... using BD is slow, so let's allow returning

@@ -24,6 +24,7 @@ import java.lang.reflect.Field;
 /**
  * @author peter.lawrey
  */
+@SuppressWarnings("all")
 public enum JavaBusyWaiting implements IBusyWaiter {
     INSTANCE;
 

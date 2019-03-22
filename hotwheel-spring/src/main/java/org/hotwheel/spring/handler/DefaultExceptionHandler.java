@@ -17,8 +17,9 @@ import java.util.Map;
 
 /**
  * spring全局异常
- *
+ * <p>
  * Created by wangfeng on 2017/3/14.
+ *
  * @version 3.2.0
  */
 public class DefaultExceptionHandler implements HandlerExceptionResolver {
@@ -55,7 +56,7 @@ public class DefaultExceptionHandler implements HandlerExceptionResolver {
         // 使用FastJson提供的FastJsonJsonView视图返回, 不需要捕获异常
         FastJsonJsonView view = new FastJsonJsonView();
         Map<String, Object> attributes = getExceptionMap(ex);
-        String message = (String)attributes.get("message");
+        String message = (String) attributes.get("message");
         view.setAttributesMap(attributes);
         mv.setView(view);
         logger.error("[{}]异常: {}", httpServletRequest.getRequestURI(), message, ex);

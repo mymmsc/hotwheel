@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * 解析MySQL数据库脚本
  *
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * @version 6.3.9 09/10/02
  * @company MyMMSC Software Foundation (MSF)
  * @since mymmsc-dba 6.3.9

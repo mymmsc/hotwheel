@@ -29,11 +29,12 @@ import java.util.concurrent.Future;
 
 /**
  * 引入Apache 异步组件
- *
+ * <p>
  * Created by wangfeng on 2016/12/2.
+ *
  * @since 2.0.37
  */
-public class AioHttpClient<T>{
+public class AioHttpClient<T> {
     private static Logger logger = LoggerFactory.getLogger(AioHttpClient.class);
     private int connectTimeout = 30 * 1000;
     private int readTimeout = 30 * 1000;
@@ -78,7 +79,7 @@ public class AioHttpClient<T>{
 
                 final HttpPost httpRequst = new HttpPost(url);
                 httpRequst.setHeader("Connection", "close");
-                List <NameValuePair> params = new ArrayList<NameValuePair>();
+                List<NameValuePair> params = new ArrayList<NameValuePair>();
                 for (Map.Entry<String, Object> entry : map.entrySet()) {
                     String key = entry.getKey();
                     String value = Api.toString(entry.getValue());
@@ -86,19 +87,19 @@ public class AioHttpClient<T>{
                 }
                 httpRequst.setEntity(new UrlEncodedFormEntity(params, UTF_8));
 
-                respList.add(httpclient.execute(httpRequst, new FutureCallback<HttpResponse>(){
+                respList.add(httpclient.execute(httpRequst, new FutureCallback<HttpResponse>() {
 
                     @Override
                     public void completed(HttpResponse httpResponse) {
                         String body = null;
                         try {
-                            if(httpResponse.getStatusLine().getStatusCode() == 200) {
+                            if (httpResponse.getStatusLine().getStatusCode() == 200) {
                                 scoreBoard.good++;
                                 HttpEntity httpEntity = httpResponse.getEntity();
                                 // 取出应答字符串
                                 body = EntityUtils.toString(httpEntity);
                             } else {
-                                scoreBoard.bad ++;
+                                scoreBoard.bad++;
                             }
                         } catch (Exception e) {
                             logger.error("process HttpResponse exception:", e);
@@ -116,13 +117,13 @@ public class AioHttpClient<T>{
 
                     @Override
                     public void failed(Exception e) {
-                        scoreBoard.bad ++;
+                        scoreBoard.bad++;
                         callBack.failed(sequeueId, e);
                     }
 
                     @Override
                     public void cancelled() {
-                        scoreBoard.bad ++;
+                        scoreBoard.bad++;
                         callBack.failed(sequeueId, null);
                     }
                 }));

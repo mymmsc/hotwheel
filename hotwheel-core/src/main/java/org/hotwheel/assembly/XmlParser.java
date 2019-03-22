@@ -8,7 +8,12 @@ package org.hotwheel.assembly;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.*;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -21,7 +26,12 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.xpath.*;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+import javax.xml.xpath.XPathFactoryConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,7 +56,7 @@ import java.util.List;
  * 返回a根据b来格式化后的字符串，（c参数的意义没有搞明白）
  * </p>
  *
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * @version 6.3.9 09/10/02
  * @since mymmsc-api 6.3.9
  * @since hotwheel 3.0.1
@@ -262,7 +272,7 @@ public class XmlParser {
      * @return NodeList
      * @throws XPathExpressionException
      */
-    public Node queryOne(String expression)  throws XPathExpressionException {
+    public Node queryOne(String expression) throws XPathExpressionException {
         Node node = null;
         NodeList list = query(null, expression);
         if (list != null && list.getLength() > 0) {
@@ -278,7 +288,7 @@ public class XmlParser {
      * @return NodeList
      * @throws XPathExpressionException
      */
-    public Node queryOne(Node parent, String expression)  throws XPathExpressionException {
+    public Node queryOne(Node parent, String expression) throws XPathExpressionException {
         Node node = null;
         NodeList list = query(parent, expression);
         if (list != null && list.getLength() > 0) {
@@ -370,6 +380,7 @@ public class XmlParser {
         return properties;
     }
 */
+
     /**
      * 类反射得到一个XPATH查询结果的对象 , 此方法适合以节点为主的一组关联属性的读取
      *

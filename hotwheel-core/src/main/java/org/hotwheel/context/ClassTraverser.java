@@ -48,7 +48,7 @@ public abstract class ClassTraverser {
      * 遍历List对象
      *
      * @param prefix 字段援引路径, 此处以各级类的字段名的联级表达式
-     * @param list 传入集合
+     * @param list   传入集合
      */
     public void transitList(String prefix, List<?> list) {
         if (list != null) {
@@ -67,7 +67,7 @@ public abstract class ClassTraverser {
      * 遍历数组
      *
      * @param prefix 字段援引路径, 此处以各级类的字段名的联级表达式
-     * @param array 数组
+     * @param array  数组
      */
     public void transitArray(String prefix, Object array) {
         if (array != null) {

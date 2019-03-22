@@ -9,7 +9,7 @@ package org.hotwheel.category;
 /**
  * 公用基础类 -- 编码方式
  *
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * @version 6.3.9 09/10/02
  * @since mymmsc-api 6.3.9
  */

@@ -8,7 +8,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import static org.hotwheel.jni.affinity.AffinityStrategies.*;
+import static org.hotwheel.jni.affinity.AffinityStrategies.ANY;
+import static org.hotwheel.jni.affinity.AffinityStrategies.DIFFERENT_SOCKET;
+import static org.hotwheel.jni.affinity.AffinityStrategies.SAME_CORE;
 
 /**
  * 测试线程池cpu亲和性

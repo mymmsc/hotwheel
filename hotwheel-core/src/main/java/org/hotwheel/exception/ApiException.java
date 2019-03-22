@@ -5,6 +5,7 @@ import org.hotwheel.assembly.Api;
 /**
  * 业务异常封装
  * Created by wangfeng on 2017/6/7.
+ *
  * @version 5.0.3
  */
 public class ApiException extends RuntimeException implements ApiError {
@@ -12,6 +13,7 @@ public class ApiException extends RuntimeException implements ApiError {
 
     /**
      * 抛出业务异常
+     *
      * @param ae
      */
     public ApiException(ApiError ae) {

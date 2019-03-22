@@ -14,7 +14,7 @@ import java.util.Map.Entry;
 /**
  * 单个字段映射表单对象的属性类
  *
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * @version 6.3.9 09/10/02
  * @since mymmsc-boss 6.3.9
  */

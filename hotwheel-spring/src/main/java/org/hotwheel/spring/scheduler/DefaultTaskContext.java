@@ -4,7 +4,7 @@ import org.hotwheel.scheduling.PartitionContext;
 
 /**
  * 默认任务
- *
+ * <p>
  * Created by wangfeng on 2017/1/21.
  */
 public class DefaultTaskContext extends PartitionContext<String, DefaultTaskContext> {

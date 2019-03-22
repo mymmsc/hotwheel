@@ -69,7 +69,7 @@ public class RedisApi extends BaseObject {
 
         JedisShardInfo info = null;
         // 作为默认参数, 其实是一段废代码, 以备后用
-        int timeout = (int)redisConfig.getTimeout();
+        int timeout = (int) redisConfig.getTimeout();
         if (timeout < DEFAULT_TIME_OUT) {
             timeout = DEFAULT_TIME_OUT;
         }
@@ -91,7 +91,7 @@ public class RedisApi extends BaseObject {
         if (!Api.isEmpty(auth)) {
             info.setPassword(auth);
         }
-        if( databse > 0) {
+        if (databse > 0) {
             Api.setValue(info, "db", databse);
         }
         //info.setTimeout(timeout);
@@ -142,7 +142,7 @@ public class RedisApi extends BaseObject {
             jedis = redisPool.getResource();
             bRet = callback.exec(jedis, key);
         } catch (Exception e) {
-            logger.error("[host=" + host + ",port=" + port +"] command error", e);
+            logger.error("[host=" + host + ",port=" + port + "] command error", e);
         } finally {
             releaseResource(jedis);
         }
@@ -292,7 +292,7 @@ public class RedisApi extends BaseObject {
     }
 
     public void releaseResource(ShardedJedis jedis) {
-        if(jedis != null) {
+        if (jedis != null) {
             //redisPool.returnResource(jedis);
             jedis.close();
         }

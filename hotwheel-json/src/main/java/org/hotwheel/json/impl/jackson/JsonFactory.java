@@ -14,7 +14,16 @@
  */
 package org.hotwheel.json.impl.jackson;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.Writer;
 import java.lang.ref.SoftReference;
 import java.net.URL;
 
@@ -71,11 +80,11 @@ public class JsonFactory implements Versioned {
      */
     final protected static ThreadLocal<SoftReference<BufferRecycler>> _recyclerRef = new ThreadLocal<SoftReference<BufferRecycler>>();
 
-	/*
+    /*
      * /********************************************************** /* Buffer,
-	 * symbol table management
-	 * /**********************************************************
-	 */
+     * symbol table management
+     * /**********************************************************
+     */
     /**
      * Each factory comes equipped with a shared root symbol table. It should
      * not be linked back to the original blueprint, to avoid contents from
@@ -101,10 +110,10 @@ public class JsonFactory implements Versioned {
      */
     protected ObjectCodec _objectCodec;
 
-	/*
+    /*
      * /********************************************************** /*
-	 * Configuration /**********************************************************
-	 */
+     * Configuration /**********************************************************
+     */
     /**
      * Currently enabled factory features.
      */
@@ -146,10 +155,10 @@ public class JsonFactory implements Versioned {
         this(null);
     }
 
-	/*
+    /*
      * /********************************************************** /*
-	 * Construction /**********************************************************
-	 */
+     * Construction /**********************************************************
+     */
 
     public JsonFactory(ObjectCodec oc) {
         _objectCodec = oc;
@@ -163,22 +172,22 @@ public class JsonFactory implements Versioned {
      * will return null for all sub-classes
      */
     public String getFormatName() {
-		/*
-		 * Somewhat nasty check: since we can't make this abstract (due to
-		 * backwards compatibility concerns), need to prevent format name
-		 * "leakage"
-		 */
+        /*
+         * Somewhat nasty check: since we can't make this abstract (due to
+         * backwards compatibility concerns), need to prevent format name
+         * "leakage"
+         */
         if (getClass() == JsonFactory.class) {
             return FORMAT_NAME_JSON;
         }
         return null;
     }
 
-	/*
-	 * /********************************************************** /* Format
-	 * detection functionality (since 1.8)
-	 * /**********************************************************
-	 */
+    /*
+     * /********************************************************** /* Format
+     * detection functionality (since 1.8)
+     * /**********************************************************
+     */
 
     public MatchStrength hasFormat(InputAccessor acc) throws IOException {
         // since we can't keep this abstract, only implement for "vanilla"
@@ -198,11 +207,11 @@ public class JsonFactory implements Versioned {
         return CoreVersion.instance.version();
     }
 
-	/*
-	 * /**********************************************************
-	 * /* Versioned
-	 * /**********************************************************
-	 */
+    /*
+     * /**********************************************************
+     * /* Versioned
+     * /**********************************************************
+     */
 
     /**
      * Method for enabling or disabling specified parser feature (check
@@ -212,11 +221,11 @@ public class JsonFactory implements Versioned {
         return state ? enable(f) : disable(f);
     }
 
-	/*
-	 * /********************************************************** /*
-	 * Configuration, factory features
-	 * /**********************************************************
-	 */
+    /*
+     * /********************************************************** /*
+     * Configuration, factory features
+     * /**********************************************************
+     */
 
     /**
      * Method for enabling specified parser feature (check
@@ -251,11 +260,11 @@ public class JsonFactory implements Versioned {
         return state ? enable(f) : disable(f);
     }
 
-	/*
-	 * /********************************************************** /*
-	 * Configuration, parser configuration
-	 * /**********************************************************
-	 */
+    /*
+     * /********************************************************** /*
+     * Configuration, parser configuration
+     * /**********************************************************
+     */
 
     /**
      * Method for enabling specified parser feature (check
@@ -306,11 +315,11 @@ public class JsonFactory implements Versioned {
         return state ? enable(f) : disable(f);
     }
 
-	/*
-	 * /********************************************************** /*
-	 * Configuration, generator settings
-	 * /**********************************************************
-	 */
+    /*
+     * /********************************************************** /*
+     * Configuration, generator settings
+     * /**********************************************************
+     */
 
     /**
      * Method for enabling specified generator features (check
@@ -374,11 +383,11 @@ public class JsonFactory implements Versioned {
         return _objectCodec;
     }
 
-	/*
-	 * /********************************************************** /*
-	 * Configuration, other
-	 * /**********************************************************
-	 */
+    /*
+     * /********************************************************** /*
+     * Configuration, other
+     * /**********************************************************
+     */
 
     /**
      * Method for associating a {@link ObjectCodec} (typically a
@@ -416,10 +425,10 @@ public class JsonFactory implements Versioned {
         return _createJsonParser(in, ctxt);
     }
 
-	/*
-	 * /********************************************************** /* Reader
-	 * factories /**********************************************************
-	 */
+    /*
+     * /********************************************************** /* Reader
+     * factories /**********************************************************
+     */
 
     /**
      * Method for constructing JSON parser instance to parse contents of
@@ -585,10 +594,10 @@ public class JsonFactory implements Versioned {
         return _createJsonGenerator(w, ctxt);
     }
 
-	/*
-	 * /********************************************************** /* Generator
-	 * factories /**********************************************************
-	 */
+    /*
+     * /********************************************************** /* Generator
+     * factories /**********************************************************
+     */
 
     /**
      * Method for constructing JSON generator for writing JSON content using
@@ -677,11 +686,11 @@ public class JsonFactory implements Versioned {
                 isEnabled(Feature.INTERN_FIELD_NAMES));
     }
 
-	/*
-	 * /********************************************************** /* Factory
-	 * methods used by factory for creating parser instances, /* overridable by
-	 * sub-classes /**********************************************************
-	 */
+    /*
+     * /********************************************************** /* Factory
+     * methods used by factory for creating parser instances, /* overridable by
+     * sub-classes /**********************************************************
+     */
 
     /**
      * Overridable factory method that actually instantiates parser using given
@@ -748,12 +757,12 @@ public class JsonFactory implements Versioned {
         return gen;
     }
 
-	/*
-	 * /********************************************************** /* Factory
-	 * methods used by factory for creating generator instances, /* overridable
-	 * by sub-classes
-	 * /**********************************************************
-	 */
+    /*
+     * /********************************************************** /* Factory
+     * methods used by factory for creating generator instances, /* overridable
+     * by sub-classes
+     * /**********************************************************
+     */
 
     /**
      * Overridable factory method that actually instantiates generator for given
@@ -794,11 +803,11 @@ public class JsonFactory implements Versioned {
         return new IOContext(_getBufferRecycler(), srcRef, resourceManaged);
     }
 
-	/*
-	 * /********************************************************** /* Internal
-	 * factory methods, other
-	 * /**********************************************************
-	 */
+    /*
+     * /********************************************************** /* Internal
+     * factory methods, other
+     * /**********************************************************
+     */
 
     /**
      * Method used by factory to create buffer recycler instances for parsers
@@ -824,12 +833,12 @@ public class JsonFactory implements Versioned {
      */
     protected InputStream _optimizedStreamFromURL(URL url) throws IOException {
         if ("file".equals(url.getProtocol())) {
-			/*
-			 * Can not do this if the path refers to a network drive on windows.
-			 * This fixes the problem; might not be needed on all platforms
-			 * (NFS?), but should not matter a lot: performance penalty of extra
-			 * wrapping is more relevant when accessing local file system.
-			 */
+            /*
+             * Can not do this if the path refers to a network drive on windows.
+             * This fixes the problem; might not be needed on all platforms
+             * (NFS?), but should not matter a lot: performance penalty of extra
+             * wrapping is more relevant when accessing local file system.
+             */
             String host = url.getHost();
             if (host == null || host.length() == 0) {
                 return new FileInputStream(url.getPath());

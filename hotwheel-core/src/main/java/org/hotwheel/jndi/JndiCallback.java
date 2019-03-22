@@ -35,15 +35,16 @@ import javax.naming.NamingException;
  */
 public interface JndiCallback<T> {
 
-	/**
-	 * Do something with the given JNDI context.
-	 * <p>Implementations don't need to worry about error handling
-	 * or cleanup, as the JndiTemplate class will handle this.
-	 * @param ctx the current JNDI context
-	 * @throws NamingException if thrown by JNDI methods
-	 * @return a result object, or {@code null}
-	 */
-	T doInContext(Context ctx) throws NamingException;
+    /**
+     * Do something with the given JNDI context.
+     * <p>Implementations don't need to worry about error handling
+     * or cleanup, as the JndiTemplate class will handle this.
+     *
+     * @param ctx the current JNDI context
+     * @return a result object, or {@code null}
+     * @throws NamingException if thrown by JNDI methods
+     */
+    T doInContext(Context ctx) throws NamingException;
 
 }
 

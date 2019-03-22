@@ -546,9 +546,9 @@ public final class CharsToNameCanonicalizer {
             return null;
         }
 
-    /* 26-Nov-2008, tatu: not used currently; if not used in near future,
-     *   let's just delete it.
-     */
+        /* 26-Nov-2008, tatu: not used currently; if not used in near future,
+         *   let's just delete it.
+         */
         /*
         public String find(String str) {
             String sym = _symbol;

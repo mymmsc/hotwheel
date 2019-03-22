@@ -11,7 +11,7 @@ import org.hotwheel.sql.app.TableObject;
 /**
  * 脚本解析接口
  *
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * @version 6.3.9 09/10/02
  * @since mymmsc-boss 6.3.9
  */

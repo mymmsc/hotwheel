@@ -11,10 +11,11 @@ import java.util.Set;
 
 /**
  * 用户验证
- *
+ * <p>
  * Created by wangfeng on 2017/6/13.
- * @see <url>https://www.ibm.com/developerworks/cn/java/j-lo-beanvalid/index.html</url>
+ *
  * @version 1.0.0
+ * @see <url>https://www.ibm.com/developerworks/cn/java/j-lo-beanvalid/index.html</url>
  */
 public class UserValidator extends ValidatorContext<User> {
 

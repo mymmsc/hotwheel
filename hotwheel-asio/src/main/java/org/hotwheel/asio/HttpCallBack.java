@@ -24,12 +24,14 @@ public interface HttpCallBack<T> {
 
     /**
      * 单个请求完成
+     *
      * @param ctx
      */
     void completed(HttpContext ctx);
 
     /**
      * 失败的请求
+     *
      * @param sequeueId
      * @param e
      */

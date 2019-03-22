@@ -12,6 +12,7 @@ import javax.servlet.ServletContextListener;
 
 /**
  * 初始化spring
+ *
  * @since 1.0.0
  */
 public class SpringWrapper implements ServletContextListener {
@@ -40,14 +41,14 @@ public class SpringWrapper implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         springContext = WebApplicationContextUtils.getWebApplicationContext(sce.getServletContext());
-        logger.info( "**************init done***************** ");
+        logger.info("**************init done***************** ");
         closed = false;
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         closed = true;
-        logger.info( "**************app closing***************** ");
+        logger.info("**************app closing***************** ");
     }
 
     public static boolean isClosed() {

@@ -11,13 +11,19 @@ import org.hotwheel.assembly.Api;
 import org.hotwheel.category.Encoding;
 import org.hotwheel.sql.app.TableObject;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 
 /**
  * 脚本解析抽象类
  *
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * @version 6.3.9 09/10/02
  * @since mymmsc-commons 6.3.9
  */

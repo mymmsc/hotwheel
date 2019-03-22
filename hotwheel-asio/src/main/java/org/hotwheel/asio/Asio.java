@@ -8,7 +8,11 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.StandardSocketOptions;
 import java.nio.ByteBuffer;
-import java.nio.channels.*;
+import java.nio.channels.NotYetConnectedException;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 
 /**
@@ -38,7 +42,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
      */
     protected boolean done = false;
 
-    public Asio(int number, int concurrency) throws IOException{
+    public Asio(int number, int concurrency) throws IOException {
         super(number, concurrency);
         selector = Selector.open();
         scoreBoard.number = number;
@@ -198,11 +202,11 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             // 设置成非阻塞
             //sc.configureBlocking(false);
             //if (sc.finishConnect()) {
-                // 处理完后必须吧OP_CONNECT关注去掉, 改为关注OP_READ
-                onConnected(context);
-                //if (!isClosed(sc)) {
-                    sk.interestOps(SelectionKey.OP_READ);
-                //}
+            // 处理完后必须吧OP_CONNECT关注去掉, 改为关注OP_READ
+            onConnected(context);
+            //if (!isClosed(sc)) {
+            sk.interestOps(SelectionKey.OP_READ);
+            //}
             //} else {
             //    handleError(sc);
             //}
@@ -240,12 +244,12 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
             } else {
                 context.add((ByteBuffer) buf.flip());
                 onRead(context);
-                if(bytesRead >= bufferLen) {
+                if (bytesRead >= bufferLen) {
                     //sk.interestOps(SelectionKey.OP_READ);
                 } else {
                     //
                 }
-                if(context != null && context.completed()){
+                if (context != null && context.completed()) {
                     onCompleted(context);
                     handleClosed(sc);
                 } else {
@@ -327,10 +331,10 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                             // 当前通道选择器产生连接已经准备就绪事件, 并且客户端套接字
                             // 通道尚未连接到服务端套接字通道
                             handleConnected(channel);
-                        }*/else if (isConnectable) {
+                        }*/ else if (isConnectable) {
                             boolean bError = false;
                             //如果正在连接，则完成连接
-                            if(channel.isConnectionPending()){
+                            if (channel.isConnectionPending()) {
                                 try {
                                     channel.finishConnect();
                                 } catch (Exception e) {
@@ -341,8 +345,7 @@ public abstract class Asio<T extends AioContext> extends AioBenchmark
                             if (!bError) {
                                 handleConnected(channel);
                             }
-                        }
-                        else if (isReadable) {
+                        } else if (isReadable) {
                             // 有数据可读, 读取数据字节数小于1, 即客户端断开, 需要关闭socket通道
                             handleRead(channel);
                         } else if (isWritable) {

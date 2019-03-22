@@ -15,7 +15,13 @@
 
 package org.hotwheel.json.impl.jackson;
 
-import java.io.*;
+import java.io.Closeable;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Iterator;
@@ -1231,7 +1237,8 @@ public abstract class JacksonParser
          * Since JSON specification does not allow use of such values,
          * this is a non-standard feature, and as such disabled by default.
          */
-        ALLOW_NON_NUMERIC_NUMBERS(false),;
+        ALLOW_NON_NUMERIC_NUMBERS(false),
+        ;
 
         /**
          * Whether feature is enabled or disabled by default.

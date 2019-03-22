@@ -4,18 +4,24 @@ import java.nio.charset.Charset;
 
 /**
  * HTTP 基准并发
- *
+ * <p>
  * Created by wangfeng on 2016/9/25.
  */
 public abstract class AioBenchmark {
     protected final static String UTF8 = "utf-8";
     protected final static int kConcurrency = 100;
-    /** 并发数 */
+    /**
+     * 并发数
+     */
     protected int concurrency = kConcurrency;
-    /** 总请求数, -1为无限制 */
+    /**
+     * 总请求数, -1为无限制
+     */
     protected volatile int number = -1;
 
-    /** 选择器超时时间 */
+    /**
+     * 选择器超时时间
+     */
     protected int timeout = 30 * 1000;
 
     protected String encoding = System.getProperty("file.encoding");

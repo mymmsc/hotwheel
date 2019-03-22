@@ -1,7 +1,12 @@
 package org.hotwheel.reflect;
 
 import org.hotwheel.assembly.Api;
-import org.objectweb.asm.*;
+import org.hotwheel.asm.ClassReader;
+import org.hotwheel.asm.ClassVisitor;
+import org.hotwheel.asm.Label;
+import org.hotwheel.asm.MethodVisitor;
+import org.hotwheel.asm.Opcodes;
+import org.hotwheel.asm.Type;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,9 +52,7 @@ public class PackageUtil {
      */
     public static List<String> getClassName(String packageName, boolean childPackage) {
         List<String> fileNames = null;
-        PackageUtil.class.getClassLoader();
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        loader = PackageUtil.class.getClassLoader();
+        ClassLoader loader = PackageUtil.class.getClassLoader();
         String packagePath = packageName.replace(".", "/");
         if (debug) {
             System.out.println(packagePath);
@@ -194,15 +197,12 @@ public class PackageUtil {
     }
 
     /**
-     *
      * <p>
      * 比较参数类型是否一致
      * </p>
      *
-     * @param types
-     *            asm的类型({@link Type})
-     * @param clazzes
-     *            java 类型({@link Class})
+     * @param types   asm的类型({@link Type})
+     * @param clazzes java 类型({@link Class})
      * @return
      */
     private static boolean sameType(Type[] types, Class<?>[] clazzes) {
@@ -224,7 +224,6 @@ public class PackageUtil {
     }
 
     /**
-     *
      * <p>
      * 获取方法的参数名
      * </p>
@@ -238,7 +237,7 @@ public class PackageUtil {
         ClassReader cr = null;
         try {
             final String n = clazz.getName();
-            if(path == null) {
+            if (path == null) {
                 cr = new ClassReader(n);
             } else {
                 final String filename = n.replace('.', '/') + ".class";

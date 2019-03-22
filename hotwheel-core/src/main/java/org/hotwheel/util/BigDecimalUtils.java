@@ -39,16 +39,16 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
     }
 
     public static BigDecimalUtils of(String amount, String defaultValue) {
-        return amount != null && amount.trim().length() != 0?new BigDecimalUtils(new BigDecimal(amount)):new BigDecimalUtils(new BigDecimal(defaultValue));
+        return amount != null && amount.trim().length() != 0 ? new BigDecimalUtils(new BigDecimal(amount)) : new BigDecimalUtils(new BigDecimal(defaultValue));
     }
 
     public static BigDecimalUtils total(BigDecimalUtils... monies) {
-        if(monies.length == 0) {
+        if (monies.length == 0) {
             throw new IllegalArgumentException("Money array must not be empty");
         } else {
             BigDecimalUtils total = monies[0];
 
-            for(int i = 1; i < monies.length; ++i) {
+            for (int i = 1; i < monies.length; ++i) {
                 total = total.plus(new BigDecimalUtils[]{monies[i]});
             }
 
@@ -61,7 +61,7 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
     }
 
     private BigDecimalUtils with(BigDecimal newAmount) {
-        return newAmount.equals(this.amount)?this:new BigDecimalUtils(newAmount);
+        return newAmount.equals(this.amount) ? this : new BigDecimalUtils(newAmount);
     }
 
     public boolean isZero() {
@@ -89,7 +89,7 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
         BigDecimalUtils[] arr$ = toAdds;
         int len$ = toAdds.length;
 
-        for(int i$ = 0; i$ < len$; ++i$) {
+        for (int i$ = 0; i$ < len$; ++i$) {
             BigDecimalUtils money = arr$[i$];
             total = total.add(money.amount, DEF_MC);
         }
@@ -98,7 +98,7 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
     }
 
     public BigDecimalUtils plus(BigDecimal amountToAdd) {
-        if(amountToAdd.compareTo(BigDecimal.ZERO) == 0) {
+        if (amountToAdd.compareTo(BigDecimal.ZERO) == 0) {
             return this;
         } else {
             BigDecimal newAmount = this.amount.add(amountToAdd, DEF_MC);
@@ -111,7 +111,7 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
     }
 
     public BigDecimalUtils plus(double amountToAdd) {
-        if(amountToAdd == 0.0D) {
+        if (amountToAdd == 0.0D) {
             return this;
         } else {
             BigDecimal newAmount = this.amount.add(BigDecimal.valueOf(amountToAdd), DEF_MC);
@@ -124,7 +124,7 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
         BigDecimalUtils[] arr$ = accountMoneys;
         int len$ = accountMoneys.length;
 
-        for(int i$ = 0; i$ < len$; ++i$) {
+        for (int i$ = 0; i$ < len$; ++i$) {
             BigDecimalUtils money = arr$[i$];
             total = total.subtract(money.amount, DEF_MC);
         }
@@ -137,7 +137,7 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
     }
 
     public BigDecimalUtils minus(BigDecimal amountToSubtract) {
-        if(amountToSubtract.compareTo(BigDecimal.ZERO) == 0) {
+        if (amountToSubtract.compareTo(BigDecimal.ZERO) == 0) {
             return this;
         } else {
             BigDecimal newAmount = this.amount.subtract(amountToSubtract, DEF_MC);
@@ -146,7 +146,7 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
     }
 
     public BigDecimalUtils minus(double amountToSubtract) {
-        if(amountToSubtract == 0.0D) {
+        if (amountToSubtract == 0.0D) {
             return this;
         } else {
             BigDecimal newAmount = this.amount.subtract(BigDecimal.valueOf(amountToSubtract), DEF_MC);
@@ -155,7 +155,7 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
     }
 
     public BigDecimalUtils minusMajor(long amountToSubtract) {
-        if(amountToSubtract == 0L) {
+        if (amountToSubtract == 0L) {
             return this;
         } else {
             BigDecimal newAmount = this.amount.subtract(BigDecimal.valueOf(amountToSubtract), DEF_MC);
@@ -164,7 +164,7 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
     }
 
     public BigDecimalUtils minusMinor(long amountToSubtract, int scale) {
-        if(amountToSubtract == 0L) {
+        if (amountToSubtract == 0L) {
             return this;
         } else {
             BigDecimal newAmount = this.amount.subtract(BigDecimal.valueOf(amountToSubtract, scale), DEF_MC);
@@ -177,7 +177,7 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
     }
 
     public BigDecimalUtils multiply(BigDecimal valueToMultiplyBy) {
-        if(valueToMultiplyBy.compareTo(BigDecimal.ONE) == 0) {
+        if (valueToMultiplyBy.compareTo(BigDecimal.ONE) == 0) {
             return this;
         } else {
             BigDecimal newAmount = this.amount.multiply(valueToMultiplyBy, DEF_MC);
@@ -186,7 +186,7 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
     }
 
     public BigDecimalUtils multiply(double valueToMultiplyBy) {
-        if(valueToMultiplyBy == 1.0D) {
+        if (valueToMultiplyBy == 1.0D) {
             return this;
         } else {
             BigDecimal newAmount = this.amount.multiply(BigDecimal.valueOf(valueToMultiplyBy), DEF_MC);
@@ -195,7 +195,7 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
     }
 
     public BigDecimalUtils multiply(long valueToMultiplyBy) {
-        if(valueToMultiplyBy == 1L) {
+        if (valueToMultiplyBy == 1L) {
             return this;
         } else {
             BigDecimal newAmount = this.amount.multiply(BigDecimal.valueOf(valueToMultiplyBy), DEF_MC);
@@ -208,7 +208,7 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
     }
 
     public BigDecimalUtils divide(BigDecimal value) {
-        if(value.compareTo(BigDecimal.ONE) == 0) {
+        if (value.compareTo(BigDecimal.ONE) == 0) {
             return this;
         } else {
             BigDecimal newAmount = this.amount.divide(value, DEF_MC);
@@ -217,7 +217,7 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
     }
 
     public BigDecimalUtils divide(double value) {
-        if(value == 1.0D) {
+        if (value == 1.0D) {
             return this;
         } else {
             BigDecimal newAmount = this.amount.divide(BigDecimal.valueOf(value), DEF_MC);
@@ -226,7 +226,7 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
     }
 
     public BigDecimalUtils divide(long value) {
-        if(value == 1L) {
+        if (value == 1L) {
             return this;
         } else {
             BigDecimal newAmount = this.amount.divide(BigDecimal.valueOf(value), DEF_MC);
@@ -235,11 +235,11 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
     }
 
     public BigDecimalUtils negate() {
-        return this.isZero()?this:this.with(this.amount.negate());
+        return this.isZero() ? this : this.with(this.amount.negate());
     }
 
     public BigDecimalUtils abs() {
-        return this.isNegative()?this.negate():this;
+        return this.isNegative() ? this.negate() : this;
     }
 
     public boolean isGreaterThan(BigDecimalUtils other) {
@@ -265,10 +265,10 @@ public class BigDecimalUtils implements Comparable<BigDecimalUtils>, Serializabl
 
     @Override
     public boolean equals(Object other) {
-        if(this == other) {
+        if (this == other) {
             return true;
-        } else if(other instanceof BigDecimalUtils) {
-            BigDecimalUtils otherMoney = (BigDecimalUtils)other;
+        } else if (other instanceof BigDecimalUtils) {
+            BigDecimalUtils otherMoney = (BigDecimalUtils) other;
             return this.amount.equals(otherMoney.amount);
         } else {
             return false;

@@ -26,7 +26,7 @@ public interface IClock {
 
     /**
      * The general contract is same, as {@link System#nanoTime()}:
-     *
+     * <p>
      * Returns the current value of the most precise available system
      * timer, in nanoseconds.
      *

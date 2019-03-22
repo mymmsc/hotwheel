@@ -7,8 +7,9 @@ import java.lang.management.RuntimeMXBean;
 
 /**
  * 跟踪信息
- *
+ * <p>
  * Created by wangfeng on 2017/10/22.
+ *
  * @version 5.2.15
  */
 public class TraceBean {
@@ -29,6 +30,7 @@ public class TraceBean {
 
     /**
      * 序列号+1
+     *
      * @return
      */
     public long incr(long tm) {
@@ -62,6 +64,7 @@ public class TraceBean {
 
     /**
      * 把IP地址转化为int
+     *
      * @param ipAddr
      * @return int
      */

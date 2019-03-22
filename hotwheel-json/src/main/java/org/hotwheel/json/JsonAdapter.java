@@ -15,14 +15,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.lang.reflect.*;
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * JsonAdapter
  *
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * <p> 支持较为复杂的嵌套bean的json解析和输出json串
  * @since mymmsc-api 6.3.9
  */
@@ -169,14 +173,15 @@ public class JsonAdapter {
 
     /**
      * JSON字符串特殊字符处理，比如：“\A1;1300”
+     *
      * @param s
      * @return String
      */
     private static String string2Json(String s) {
         StringBuffer sb = new StringBuffer();
-        for (int i=0; i<s.length(); i++) {
+        for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            switch (c){
+            switch (c) {
                 case '\"':
                     sb.append("\\\"");
                     break;
@@ -308,7 +313,7 @@ public class JsonAdapter {
                                 "\\\\\"");
                         buffer.append(tmpStr);
                         */
-                        buffer.append(string2Json((String)value));
+                        buffer.append(string2Json((String) value));
                         buffer.append("\"");
                     } else if ((!Api.isBaseType(cls)) || !Api.isBaseType(value)) {
                         if (value != null) {
@@ -541,7 +546,7 @@ public class JsonAdapter {
                     } else if (token == JsonToken.VALUE_TRUE
                             || token == JsonToken.VALUE_FALSE) {
                         tmpObj = Api.valueOf(Boolean.class, fieldValue);
-                    } else if(cls instanceof Object && claee != null && claee.isArray()) {
+                    } else if (cls instanceof Object && claee != null && claee.isArray()) {
                         Object arr = null;
                         if (fieldValue == null) {
                             arr = Array.newInstance(claee.getComponentType(), 0);

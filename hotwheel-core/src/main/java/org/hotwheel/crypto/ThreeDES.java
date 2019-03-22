@@ -19,7 +19,7 @@ package org.hotwheel.crypto;
 /**
  * MyMMSC 安全部分
  *
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * @version 6.3.9
  */
 
@@ -85,7 +85,7 @@ public class ThreeDES extends AbstractCrypto implements InterfaceCrypto {
     /**
      * 初始化KEY
      *
-     * @param key 输入秘钥
+     * @param key     输入秘钥
      * @param charset 字符集
      * @return 初始化是否成功
      */

@@ -8,8 +8,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * SimpleDateFormat安全的时间格式化
- *
+ * <p>
  * Created by wangfeng on 2017/10/21.
+ *
  * @version 5.2.5
  */
 public class FastDateFormat {
@@ -34,7 +35,7 @@ public class FastDateFormat {
         Map<String, SimpleDateFormat> cache = getCacheContext();
 
         SimpleDateFormat dateFormat = cache.get(format);
-        if(dateFormat == null){
+        if (dateFormat == null) {
             dateFormat = new SimpleDateFormat(format, DefaultLocale);
             dateFormat.setTimeZone(DefaultTimeZone);
             cache.put(format, dateFormat);

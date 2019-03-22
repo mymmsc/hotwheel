@@ -5,8 +5,9 @@ import java.util.ResourceBundle;
 
 /**
  * 资源文件自动加载
- *
+ * <p>
  * Created by wangfeng on 2016/10/2.
+ *
  * @since v6.10.0.1
  */
 public final class ResourceApi {
@@ -24,7 +25,8 @@ public final class ResourceApi {
 
     /**
      * 资源文件自动加载
-     * @param baseName 资源文件名
+     *
+     * @param baseName    资源文件名
      * @param timeToLieve 自动加载的间隔时间, 单位毫秒
      * @return
      */

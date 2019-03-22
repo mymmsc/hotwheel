@@ -6,8 +6,9 @@ import javax.validation.constraints.Size;
 
 /**
  * 用户信息
- *
+ * <p>
  * Created by wangfeng on 2017/6/13.
+ *
  * @version 1.0.0
  */
 public class User {
@@ -42,7 +43,7 @@ public class User {
     }
 
     @NotNull
-    @Min(value=8, message="年龄不能小于8岁")
+    @Min(value = 8, message = "年龄不能小于8岁")
     public int getAge() {
         return age;
     }

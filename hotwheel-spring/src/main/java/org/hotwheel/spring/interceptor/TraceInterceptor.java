@@ -19,8 +19,9 @@ import java.util.Map;
 
 /**
  * 耗时监控
- *
+ * <p>
  * Created by pasta on 15/11/4.
+ *
  * @version 5.2.3
  * @since 1.0.1 性能监控
  */
@@ -68,7 +69,7 @@ public class TraceInterceptor implements HandlerInterceptor {
             String str = String.format(",%s=%s", key, value);
             sb.append(str);
         }
-        if(sb.length() > 0) {
+        if (sb.length() > 0) {
             sRet += sb.substring(1);
         }
         sRet += "}";
@@ -85,7 +86,7 @@ public class TraceInterceptor implements HandlerInterceptor {
             String str = String.format("&%s=%s", key, value);
             sb.append(str);
         }
-        if(sb.length() > 0) {
+        if (sb.length() > 0) {
             sRet += sb.substring(1);
         }
         sRet += "}";
@@ -125,9 +126,9 @@ public class TraceInterceptor implements HandlerInterceptor {
         Map<String, Object> headers = new HashMap<String, Object>();
         Enumeration headerNames = httpServletRequest.getHeaderNames();
         //遍历头部信息集
-        while(headerNames.hasMoreElements()){
+        while (headerNames.hasMoreElements()) {
             //取出信息名
-            String name = (String)headerNames.nextElement();
+            String name = (String) headerNames.nextElement();
             //取出信息值
             String value = httpServletRequest.getHeader(name);
             headers.put(name, value);

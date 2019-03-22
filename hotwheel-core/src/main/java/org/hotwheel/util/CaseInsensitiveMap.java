@@ -43,7 +43,7 @@ public class CaseInsensitiveMap<K, V> extends ConcurrentHashMap<K, V> {
      * <p>
      * Returns if key is null.
      *
-     * @param key  the key convert
+     * @param key the key convert
      * @return the converted key
      */
     private Object convertKey(final Object key) {
@@ -73,7 +73,7 @@ public class CaseInsensitiveMap<K, V> extends ConcurrentHashMap<K, V> {
     public V put(K key, V value) {
         if (key instanceof Object) {
             Object k = convertKey(key);
-            return super.put((K)k, value);
+            return super.put((K) k, value);
         } else {
             // 这段代码没用, 因为泛型的K和V必须是Object
             return super.put(key, value);

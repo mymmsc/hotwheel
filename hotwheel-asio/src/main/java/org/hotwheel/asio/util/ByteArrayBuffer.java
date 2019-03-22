@@ -64,12 +64,12 @@ public final class ByteArrayBuffer implements Serializable {
      * array starting at index {@code off}. The capacity of the buffer
      * is increased, if necessary, to accommodate all {@code len} bytes.
      *
-     * @param   b        the bytes to be appended.
-     * @param   off      the index of the first byte to append.
-     * @param   len      the number of bytes to append.
+     * @param b   the bytes to be appended.
+     * @param off the index of the first byte to append.
+     * @param len the number of bytes to append.
      * @throws IndexOutOfBoundsException if {@code off} if out of
-     * range, {@code len} is negative, or
-     * {@code off} + {@code len} is out of range.
+     *                                   range, {@code len} is negative, or
+     *                                   {@code off} + {@code len} is out of range.
      */
     public void append(final byte[] b, final int off, final int len) {
         if (b == null) {
@@ -77,7 +77,7 @@ public final class ByteArrayBuffer implements Serializable {
         }
         if ((off < 0) || (off > b.length) || (len < 0) ||
                 ((off + len) < 0) || ((off + len) > b.length)) {
-            throw new IndexOutOfBoundsException("off: "+off+" len: "+len+" b.length: "+b.length);
+            throw new IndexOutOfBoundsException("off: " + off + " len: " + len + " b.length: " + b.length);
         }
         if (len == 0) {
             return;
@@ -94,14 +94,14 @@ public final class ByteArrayBuffer implements Serializable {
      * Appends {@code b} byte to this buffer. The capacity of the buffer
      * is increased, if necessary, to accommodate the additional byte.
      *
-     * @param   b        the byte to be appended.
+     * @param b the byte to be appended.
      */
     public void append(final int b) {
         final int newlen = this.len + 1;
         if (newlen > this.array.length) {
             expand(newlen);
         }
-        this.array[this.len] = (byte)b;
+        this.array[this.len] = (byte) b;
         this.len = newlen;
     }
 
@@ -112,12 +112,12 @@ public final class ByteArrayBuffer implements Serializable {
      * <p>
      * The chars are converted to bytes using simple cast.
      *
-     * @param   b        the chars to be appended.
-     * @param   off      the index of the first char to append.
-     * @param   len      the number of bytes to append.
+     * @param b   the chars to be appended.
+     * @param off the index of the first char to append.
+     * @param len the number of bytes to append.
      * @throws IndexOutOfBoundsException if {@code off} if out of
-     * range, {@code len} is negative, or
-     * {@code off} + {@code len} is out of range.
+     *                                   range, {@code len} is negative, or
+     *                                   {@code off} + {@code len} is out of range.
      */
     public void append(final char[] b, final int off, final int len) {
         if (b == null) {
@@ -125,7 +125,7 @@ public final class ByteArrayBuffer implements Serializable {
         }
         if ((off < 0) || (off > b.length) || (len < 0) ||
                 ((off + len) < 0) || ((off + len) > b.length)) {
-            throw new IndexOutOfBoundsException("off: "+off+" len: "+len+" b.length: "+b.length);
+            throw new IndexOutOfBoundsException("off: " + off + " len: " + len + " b.length: " + b.length);
         }
         if (len == 0) {
             return;
@@ -149,12 +149,12 @@ public final class ByteArrayBuffer implements Serializable {
      * <p>
      * The chars are converted to bytes using simple cast.
      *
-     * @param   b        the chars to be appended.
-     * @param   off      the index of the first char to append.
-     * @param   len      the number of bytes to append.
+     * @param b   the chars to be appended.
+     * @param off the index of the first char to append.
+     * @param len the number of bytes to append.
      * @throws IndexOutOfBoundsException if {@code off} if out of
-     * range, {@code len} is negative, or
-     * {@code off} + {@code len} is out of range.
+     *                                   range, {@code len} is negative, or
+     *                                   {@code off} + {@code len} is out of range.
      */
     public void append(final CharArrayBuffer b, final int off, final int len) {
         if (b == null) {
@@ -188,10 +188,10 @@ public final class ByteArrayBuffer implements Serializable {
      * index. The index argument must be greater than or equal to
      * {@code 0}, and less than the length of this buffer.
      *
-     * @param      i   the index of the desired byte value.
-     * @return     the byte value at the specified index.
-     * @throws IndexOutOfBoundsException  if {@code index} is
-     *             negative or greater than or equal to {@link #length()}.
+     * @param i the index of the desired byte value.
+     * @return the byte value at the specified index.
+     * @throws IndexOutOfBoundsException if {@code index} is
+     *                                   negative or greater than or equal to {@link #length()}.
      */
     public int byteAt(final int i) {
         return this.array[i];
@@ -202,7 +202,7 @@ public final class ByteArrayBuffer implements Serializable {
      * available for newly appended bytes, beyond which an allocation
      * will occur.
      *
-     * @return  the current capacity
+     * @return the current capacity
      */
     public int capacity() {
         return this.array.length;
@@ -211,7 +211,7 @@ public final class ByteArrayBuffer implements Serializable {
     /**
      * Returns the length of the buffer (byte count).
      *
-     * @return  the length of the buffer
+     * @return the length of the buffer
      */
     public int length() {
         return this.len;
@@ -223,8 +223,7 @@ public final class ByteArrayBuffer implements Serializable {
      * array is allocated with greater capacity. If the {@code required}
      * argument is non-positive, this method takes no action.
      *
-     * @param   required   the minimum required capacity.
-     *
+     * @param required the minimum required capacity.
      * @since 4.1
      */
     public void ensureCapacity(final int required) {
@@ -251,14 +250,14 @@ public final class ByteArrayBuffer implements Serializable {
      * less than the current capacity and greater than or equal to
      * {@code 0}.
      *
-     * @param      len   the new length
-     * @throws IndexOutOfBoundsException  if the
-     *               {@code len} argument is greater than the current
-     *               capacity of the buffer or less than {@code 0}.
+     * @param len the new length
+     * @throws IndexOutOfBoundsException if the
+     *                                   {@code len} argument is greater than the current
+     *                                   capacity of the buffer or less than {@code 0}.
      */
     public void setLength(final int len) {
         if (len < 0 || len > this.array.length) {
-            throw new IndexOutOfBoundsException("len: "+len+" < 0 or > buffer len: "+this.array.length);
+            throw new IndexOutOfBoundsException("len: " + len + " < 0 or > buffer len: " + this.array.length);
         }
         this.len = len;
     }
@@ -266,8 +265,9 @@ public final class ByteArrayBuffer implements Serializable {
     /**
      * Returns {@code true} if this buffer is empty, that is, its
      * {@link #length()} is equal to {@code 0}.
+     *
      * @return {@code true} if this buffer is empty, {@code false}
-     *   otherwise.
+     * otherwise.
      */
     public boolean isEmpty() {
         return this.len == 0;
@@ -276,8 +276,9 @@ public final class ByteArrayBuffer implements Serializable {
     /**
      * Returns {@code true} if this buffer is full, that is, its
      * {@link #length()} is equal to its {@link #capacity()}.
+     *
      * @return {@code true} if this buffer is full, {@code false}
-     *   otherwise.
+     * otherwise.
      */
     public boolean isFull() {
         return this.len == this.array.length;
@@ -297,13 +298,12 @@ public final class ByteArrayBuffer implements Serializable {
      * {@link #length()}. If the {@code beginIndex} is greater than
      * the {@code endIndex}, {@code -1} is returned.
      *
-     * @param   b            the byte to search for.
-     * @param   from         the index to start the search from.
-     * @param   to           the index to finish the search at.
-     * @return  the index of the first occurrence of the byte in the buffer
-     *   within the given bounds, or {@code -1} if the byte does
-     *   not occur.
-     *
+     * @param b    the byte to search for.
+     * @param from the index to start the search from.
+     * @param to   the index to finish the search at.
+     * @return the index of the first occurrence of the byte in the buffer
+     * within the given bounds, or {@code -1} if the byte does
+     * not occur.
      * @since 4.1
      */
     public int indexOf(final byte b, final int from, final int to) {
@@ -332,10 +332,9 @@ public final class ByteArrayBuffer implements Serializable {
      * at {@link #length()}. If no such byte occurs in this buffer within
      * those bounds, {@code -1} is returned.
      *
-     * @param   b   the byte to search for.
-     * @return  the index of the first occurrence of the byte in the
-     *   buffer, or {@code -1} if the byte does not occur.
-     *
+     * @param b the byte to search for.
+     * @return the index of the first occurrence of the byte in the
+     * buffer, or {@code -1} if the byte does not occur.
      * @since 4.1
      */
     public int indexOf(final byte b) {
