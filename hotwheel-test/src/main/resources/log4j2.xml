@@ -16,11 +16,11 @@
                                  filePattern="${logs.home}/${logs.project}/runtime.log.%d{yyyy-MM-dd}.gz">
             <Filters>
                 <!-- Now deny warn, error and fatal messages -->
-                <ThresholdFilter level="warn"  onMatch="DENY"   onMismatch="NEUTRAL"/>
-                <ThresholdFilter level="error" onMatch="DENY"   onMismatch="NEUTRAL"/>
-                <ThresholdFilter level="fatal" onMatch="DENY"   onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <!-- This filter accepts info, warn, error, fatal and denies debug/trace -->
-                <ThresholdFilter level="info"  onMatch="ACCEPT" onMismatch="DENY"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
             <!--
                 %d{yyyy-MM-dd HH:mm:ss, SSS} : 日志生产时间
@@ -38,7 +38,7 @@
                 <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%X{jdb-header-rid}] (%F.%M:%L) %m %n</pattern>
             </PatternLayout>
             <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
         </RollingRandomAccessFile>
 
@@ -47,13 +47,13 @@
                                  immediateFlush="false" fileName="${logs.home}/${logs.project}/error.log"
                                  filePattern="${logs.home}/${logs.project}/error.log.%d{yyyy-MM-dd}.gz">
             <Filters>
-                <ThresholdFilter level="WARN" onMatch="ACCEPT" />
+                <ThresholdFilter level="WARN" onMatch="ACCEPT"/>
             </Filters>
             <PatternLayout>
                 <pattern>[%p][%d{yyyy-MM-dd HH:mm:ss.SSS}] [%X{jdb-header-rid}] %l %msg%xEx %n</pattern>
             </PatternLayout>
             <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
         </RollingRandomAccessFile>
 
@@ -69,7 +69,7 @@
                 <pattern>[%p][%d{yyyy-MM-dd HH:mm:ss.SSS}] [%X{jdb-header-rid}] %l %msg%xEx%n</pattern>
             </PatternLayout>
             <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
         </RollingRandomAccessFile>
 
@@ -81,7 +81,7 @@
                 <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%X{jdb-header-rid}] (%F.%M:%L) %m %n</pattern>
             </PatternLayout>
             <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
         </RollingRandomAccessFile>
 
@@ -93,21 +93,21 @@
                 <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%X{jdb-header-rid}] (%F.%M:%L) %m %n</pattern>
             </PatternLayout>
             <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
         </RollingRandomAccessFile>
     </Appenders>
 
     <Loggers>
         <AsyncLogger name="org.mybatis.spring" level="debug" additivity="false" includeLocation="true">
-            <appender-ref ref="${module.mybatis}" />
+            <appender-ref ref="${module.mybatis}"/>
         </AsyncLogger>
         <AsyncLogger name="org.apache.ibatis" level="debug" additivity="false" includeLocation="true">
-            <appender-ref ref="${module.mybatis}" />
+            <appender-ref ref="${module.mybatis}"/>
         </AsyncLogger>
 
         <AsyncLogger name="org.springframework" level="debug" additivity="false" includeLocation="true">
-            <appender-ref ref="${module.spring}" />
+            <appender-ref ref="${module.spring}"/>
         </AsyncLogger>
 
         <!-- 配置日志的根节点 -->

@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 /**
  * 正则表达式
  *
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * @version 6.3.9 09/10/02
  * @since mymmsc-boss 6.3.9
  */

@@ -9,15 +9,15 @@ import java.io.ByteArrayOutputStream;
  * Created by wangfeng on 16/8/29.
  * <p>
  * 算法：
- *
+ * <p>
  * byte转换：
- *
+ * <p>
  * 1、将原byte 由3个，3个分成一组， 不足3个的为一组
  * 2、将3个byte，一次统一右移两位，然后高位补两个0 ， 剩下的补上前一个字节移出来的字符（2个 4个或者6个bit）。这样3个byte一组会统一转成4个byte一组。
  * 3、不足3个的一组 出来的 在4个byte中以‘=’的byte值填充。
- *
+ * <p>
  * 4个一组的byte 到 string的转换：
- *
+ * <p>
  * 1、构造码表（加密表与解密表）
  * 2、加密表构造原则：加密表的长度是64，加密表的值（ascii码值）是解密表的索引
  * 3、解密表构造原则：长度一般为128，解密表的值是加密表的索引
@@ -157,10 +157,10 @@ public class BasicBase64 {
         }
         for (int i = 0; i < kBase64Len; i++) {
             int x = kBase64Len - i;
-            int t=(int)(Math.random()*x);
+            int t = (int) (Math.random() * x);
             char temp = cl[t];
             cl[t] = cl[x - 1];
-            cl[x -1 ] = temp;
+            cl[x - 1] = temp;
         }
         return cl;
     }

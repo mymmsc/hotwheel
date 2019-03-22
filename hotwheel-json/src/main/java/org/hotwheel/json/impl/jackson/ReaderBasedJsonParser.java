@@ -457,10 +457,10 @@ public final class ReaderBasedJsonParser
                 break;
 
             case INT_MINUS:
-            /* Should we have separate handling for plus? Although
-             * it is not allowed per se, it may be erroneously used,
-             * and could be indicate by a more specific error message.
-             */
+                /* Should we have separate handling for plus? Although
+                 * it is not allowed per se, it may be erroneously used,
+                 * and could be indicate by a more specific error message.
+                 */
             case INT_0:
             case INT_1:
             case INT_2:
@@ -671,7 +671,7 @@ public final class ReaderBasedJsonParser
             if (ch == INT_0) {
                 break dummy_loop;
             }
-            
+
             /* First, let's see if the whole number is contained within
              * the input buffer unsplit. This should be the common case;
              * and to simplify processing, we will just reparse contents
@@ -1143,13 +1143,13 @@ public final class ReaderBasedJsonParser
         // Most likely an error, unless we are to allow single-quote-strings
         switch (i) {
             case '\'':
-            /* [JACKSON-173]: allow single quotes. Unlike with regular
-             * Strings, we'll eagerly parse contents; this so that there's
-             * no need to store information on quote char used.
-             *
-             * Also, no separation to fast/slow parsing; we'll just do
-             * one regular (~= slowish) parsing, to keep code simple
-             */
+                /* [JACKSON-173]: allow single quotes. Unlike with regular
+                 * Strings, we'll eagerly parse contents; this so that there's
+                 * no need to store information on quote char used.
+                 *
+                 * Also, no separation to fast/slow parsing; we'll just do
+                 * one regular (~= slowish) parsing, to keep code simple
+                 */
                 if (isEnabled(JacksonParser.Feature.ALLOW_SINGLE_QUOTES)) {
                     return _handleApostropheValue();
                 }

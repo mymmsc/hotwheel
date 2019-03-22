@@ -52,12 +52,12 @@ public class EncryptablePropertyholder extends PropertyPlaceholderConfigurer {
         String value = null;
 
         Iterator itr = props.entrySet().iterator();
-        while (itr.hasNext()){
-            Map.Entry e = (Map.Entry)itr.next();
-            key = (String)e.getKey();
+        while (itr.hasNext()) {
+            Map.Entry e = (Map.Entry) itr.next();
+            key = (String) e.getKey();
             value = props.getProperty(key);
             logger.debug(key + ": " + value);
-            if(key.endsWith("jdbc.username") || key.endsWith("jdbc.password")) {
+            if (key.endsWith("jdbc.username") || key.endsWith("jdbc.password")) {
                 value = decrypt(value);
                 props.setProperty(key, value);
                 logger.debug("  ==>" + key + ": " + value);

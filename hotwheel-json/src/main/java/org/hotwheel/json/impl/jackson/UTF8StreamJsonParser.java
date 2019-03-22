@@ -529,10 +529,10 @@ public final class UTF8StreamJsonParser
                 break;
 
             case INT_MINUS:
-            /* Should we have separate handling for plus? Although
-             * it is not allowed per se, it may be erroneously used,
-             * and could be indicate by a more specific error message.
-             */
+                /* Should we have separate handling for plus? Although
+                 * it is not allowed per se, it may be erroneously used,
+                 * and could be indicate by a more specific error message.
+                 */
             case INT_0:
             case INT_1:
             case INT_2:
@@ -580,10 +580,10 @@ public final class UTF8StreamJsonParser
                 _matchToken("null", 1);
                 return (_currToken = JsonToken.VALUE_NULL);
             case INT_MINUS:
-            /* Should we have separate handling for plus? Although
-             * it is not allowed per se, it may be erroneously used,
-             * and could be indicate by a more specific error message.
-             */
+                /* Should we have separate handling for plus? Although
+                 * it is not allowed per se, it may be erroneously used,
+                 * and could be indicate by a more specific error message.
+                 */
             case INT_0:
             case INT_1:
             case INT_2:

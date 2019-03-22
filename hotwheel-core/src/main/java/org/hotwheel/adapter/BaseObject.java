@@ -12,7 +12,7 @@ import java.io.InputStream;
 /**
  * 全局的一个对象抽象类
  *
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * @version 6.3.9 09/10/02
  * <p> 对象增加Log4j日志功能, 需要有common-logging.jar和log4j.jar
  * @since mymmsc-api 6.3.9

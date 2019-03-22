@@ -9,8 +9,8 @@ import java.security.CodeSource;
  * 类 扩展操作类
  *
  * @author wangfeng
- * @since 2018/3/27
  * @version 5.3.22
+ * @since 2018/3/27
  */
 public class ClassHelper {
     private final static Logger logger = LoggerFactory.getLogger(ClassHelper.class);

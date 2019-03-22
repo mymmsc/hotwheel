@@ -3,7 +3,11 @@ package org.hotwheel.ibatis.interceptor;
 import org.apache.ibatis.executor.resultset.ResultSetHandler;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.ResultMap;
-import org.apache.ibatis.plugin.*;
+import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.plugin.Intercepts;
+import org.apache.ibatis.plugin.Invocation;
+import org.apache.ibatis.plugin.Plugin;
+import org.apache.ibatis.plugin.Signature;
 import org.hotwheel.assembly.Api;
 import org.hotwheel.sql.SQLApi;
 
@@ -15,6 +19,7 @@ import java.util.Properties;
 /**
  * mybatis 结果集类字段映射
  * Created by wangfeng on 2017/7/27.
+ *
  * @version 1.0.6
  */
 @Intercepts({@Signature(
@@ -26,7 +31,7 @@ public class RecordSetPlugin implements Interceptor {
     public Object intercept(Invocation invocation) throws Throwable {
         Object obj = null;
         ResultSetHandler resultSetHandler = (ResultSetHandler) invocation.getTarget();
-        Statement stmt = (Statement)invocation.getArgs()[0];
+        Statement stmt = (Statement) invocation.getArgs()[0];
         //通过java反射获得mappedStatement属性值
         MappedStatement ms = (MappedStatement) Api.getValue(resultSetHandler, "mappedStatement");
 

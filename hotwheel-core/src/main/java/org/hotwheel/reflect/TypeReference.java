@@ -14,7 +14,7 @@ public class TypeReference<T> {
 
     private final Type type;
 
-    protected TypeReference(){
+    protected TypeReference() {
         Type superClass = getClass().getGenericSuperclass();
 
         type = ((ParameterizedType) superClass).getActualTypeArguments()[0];
@@ -24,5 +24,6 @@ public class TypeReference<T> {
         return type;
     }
 
-    public final static Type LIST_STRING = new TypeReference<List<String>>() {}.getType();
+    public final static Type LIST_STRING = new TypeReference<List<String>>() {
+    }.getType();
 }

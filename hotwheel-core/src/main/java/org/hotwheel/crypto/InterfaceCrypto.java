@@ -7,7 +7,7 @@
 package org.hotwheel.crypto;
 
 /**
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * @version 6.3.9 09/10/02
  * @since mymmsc-api 6.3.9
  */

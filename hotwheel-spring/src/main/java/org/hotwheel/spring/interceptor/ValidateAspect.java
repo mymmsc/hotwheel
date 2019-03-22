@@ -21,8 +21,9 @@ import java.util.Set;
 
 /**
  * 验证注解处理类
- *
+ * <p>
  * Created by wangfeng on 2017/6/6.
+ *
  * @version 5.0.8
  */
 @Aspect
@@ -43,16 +44,16 @@ public class ValidateAspect {
         Object target = null;
         String methodName = null;
         //try {
-            methodName = joinPoint.getSignature().getName();
-            target = joinPoint.getTarget();
-            // 得到拦截的方法
-            method = getMethodByClassAndName(target.getClass(), methodName);
-            // 方法的参数
-            args = joinPoint.getArgs();
-            List<Object> params = getParamForValidate(method, args);
-            validate(params);
-            // 验证通过
-            return joinPoint.proceed();
+        methodName = joinPoint.getSignature().getName();
+        target = joinPoint.getTarget();
+        // 得到拦截的方法
+        method = getMethodByClassAndName(target.getClass(), methodName);
+        // 方法的参数
+        args = joinPoint.getArgs();
+        List<Object> params = getParamForValidate(method, args);
+        validate(params);
+        // 验证通过
+        return joinPoint.proceed();
         //} catch (Exception e) {
         //    logger.error("参数验证异常: ", e);
         //    throw new ApiException(MiscError.SC_EVALIDATE, "系统执行参数验证时发生异常");

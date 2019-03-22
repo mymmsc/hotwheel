@@ -11,8 +11,9 @@ import java.util.Map;
 
 /**
  * http请求相关的工具类
- *
+ * <p>
  * Created by wangfeng on 2017/10/21.
+ *
  * @version 5.2.4
  */
 public class RequestUtil {
@@ -22,9 +23,9 @@ public class RequestUtil {
         Map<String, String> headers = new CaseInsensitiveMap<>();
         Enumeration headerNames = httpServletRequest.getHeaderNames();
         //遍历头部信息集
-        while(headerNames.hasMoreElements()){
+        while (headerNames.hasMoreElements()) {
             //取出信息名
-            String name = (String)headerNames.nextElement();
+            String name = (String) headerNames.nextElement();
             //取出信息值
             String value = httpServletRequest.getHeader(name);
             headers.put(name, value);
@@ -48,6 +49,7 @@ public class RequestUtil {
 
     /**
      * 获取Client IP 此方法能够穿透squid和proxy
+     *
      * @param request
      * @return 真实的ip地址
      */
@@ -65,7 +67,7 @@ public class RequestUtil {
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        if(ip.indexOf(",") >  0) {
+        if (ip.indexOf(",") > 0) {
             ip = ip.substring(0, ip.indexOf(","));
         }
         return ip;

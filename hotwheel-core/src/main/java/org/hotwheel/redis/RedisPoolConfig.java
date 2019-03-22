@@ -4,6 +4,7 @@ import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * Redis Pool Config
+ *
  * @since v2.2.0
  */
 public class RedisPoolConfig {

@@ -9,7 +9,7 @@ package org.hotwheel.context.template;
 /**
  * Thrown when a syntax error is encountered within the template.
  *
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * @version 6.3.9 09/10/02
  * @since mymmsc-api 6.3.9
  */

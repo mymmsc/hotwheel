@@ -1068,7 +1068,7 @@ public final class WriterBasedJsonGenerator
             _writeStringASCII(text, offset, len, _maximumNonEscapedChar);
             return;
         }
-        
+
         /* Let's just find longest spans of non-escapable
          * content, and for each see if it makes sense
          * to copy them, or write through

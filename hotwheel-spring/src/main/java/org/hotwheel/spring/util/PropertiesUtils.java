@@ -19,8 +19,9 @@ import java.util.regex.Pattern;
 
 /**
  * 加载资源文件
- *
+ * <p>
  * Created by wangfeng on 2018/1/9.
+ *
  * @version 1.0.20
  */
 public class PropertiesUtils {

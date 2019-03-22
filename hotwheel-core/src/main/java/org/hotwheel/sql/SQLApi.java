@@ -15,7 +15,18 @@ import javax.naming.NamingException;
 import javax.naming.spi.NamingManager;
 import java.io.PrintWriter;
 import java.net.URL;
-import java.sql.*;
+import java.sql.Blob;
+import java.sql.Clob;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -27,14 +38,18 @@ import java.util.regex.Pattern;
  * A collection of JDBC helper methods. This class is thread safe.
  * MyMMSC SQL Mapper Framework for Java
  *
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * @version 6.3.9 09/10/02
  * @since mymmsc-api 6.3.9
  */
 public final class SQLApi {
-    /** JNDI ContextFactory */
+    /**
+     * JNDI ContextFactory
+     */
     public static final String JNDI_CONTEXT_FACTORY = "java.naming.factory.initial";
-    /** JNDI prefix used in a J2EE container */
+    /**
+     * JNDI prefix used in a J2EE container
+     */
     public static final String CONTAINER_PREFIX = "java:comp/env/";
 
     /**
@@ -322,7 +337,7 @@ public final class SQLApi {
      */
     private static void initialContextFactory() {
         String cf = System.getProperty(JNDI_CONTEXT_FACTORY);
-        if(!Api.isEmpty(cf)) {
+        if (!Api.isEmpty(cf)) {
             jndiEnv.put(JNDI_CONTEXT_FACTORY, cf);
         } else {
             cf = "org.hotwheel.context.ApiInitialContextFactoryBuilder";

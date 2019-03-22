@@ -24,7 +24,7 @@ public class JsonParserSequence extends JsonParserDelegate {
      * Index of the next parser in {@link #_parsers}.
      */
     protected int _nextParser;
-    
+
     /*
      *******************************************************
      * Construction
@@ -75,7 +75,7 @@ public class JsonParserSequence extends JsonParserDelegate {
             }
         }
     }
-    
+
     /*
      *******************************************************
      * Overridden methods, needed: cases where default

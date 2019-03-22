@@ -11,7 +11,7 @@ import javax.crypto.SecretKey;
 import java.security.Security;
 
 /**
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * @version 6.3.9 09/10/02
  * @since mymmsc-api 6.3.9
  */

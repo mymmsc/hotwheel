@@ -1,6 +1,11 @@
 package org.hotwheel.json.impl.jackson;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.CharConversionException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 
 /**

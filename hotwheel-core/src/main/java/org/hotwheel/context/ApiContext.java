@@ -9,11 +9,15 @@ package org.hotwheel.context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.naming.*;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NameAlreadyBoundException;
+import javax.naming.NamingException;
+import javax.naming.NoInitialContextException;
 import javax.naming.directory.InvalidAttributesException;
 
 /**
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * @version 6.3.9 09/10/02
  * @since mymmsc-api 6.3.9
  */
@@ -59,7 +63,7 @@ public class ApiContext {
      * 绑定对象
      *
      * @param name 名称
-     * @param obj 对象
+     * @param obj  对象
      * @throws NamingException 如果绑定失败
      */
     public static void bind(String name, Object obj) throws NamingException {

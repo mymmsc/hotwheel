@@ -6,7 +6,16 @@
  */
 package org.hotwheel.context.template;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +59,7 @@ import java.util.Map;
  * Home page: <a href="http://www.source-code.biz/MiniTemplator">www.source-code.biz/MiniTemplator</a><br>
  * Author: Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland<br>
  * Multi-licensed: EPL/LGPL.
+ *
  * @author WangFeng (wangfeng at yeah.net)
  * @version 6.3.9 09/10/02
  * @since mymmsc-api 6.3.9
@@ -310,6 +320,7 @@ public class Templator {
      * <p>
      * This method is used by the {@link TemplatorCache} class to clone the
      * cached MiniTemplator objects.
+     *
      * @return 模版对象
      */
     public Templator cloneReset() {
@@ -326,7 +337,7 @@ public class Templator {
     /**
      * 设置模版KV对, 忽略变量未定义
      *
-     * @param key 关键字
+     * @param key   关键字
      * @param value 值
      */
     public void setVariableQuietly(String key, String value) {
@@ -469,6 +480,7 @@ public class Templator {
     /**
      * Returns a map with the names and current values of the template
      * variables.
+     *
      * @return map
      */
     public Map<String, String> getVariables() {

@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 /**
  * 测试基础Api
- *
+ * <p>
  * Created by wangfeng on 2017/6/16.
  */
 public class TestApi {
@@ -25,13 +25,13 @@ public class TestApi {
         Pattern pat = Pattern.compile(exp);
         Matcher mat = pat.matcher(s);
         int groupCount = 0;
-        while(mat.find()) {
+        while (mat.find()) {
             groupCount = mat.groupCount();
             System.out.println(mat.group(1));
         }
         s = TraceId.genTraceId();
         System.out.println(s);
-        for (int i = 0; i < 1000000; i ++) {
+        for (int i = 0; i < 1000000; i++) {
             s = TraceId.genTraceId();
         }
         System.out.println(s);

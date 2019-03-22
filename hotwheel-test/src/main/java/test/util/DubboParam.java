@@ -1,6 +1,10 @@
 package test.util;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author wangfeng
@@ -11,7 +15,10 @@ import java.lang.annotation.*;
 @Documented
 public @interface DubboParam {
     String name();
+
     boolean isUse() default true;
+
     boolean isMust() default true;
+
     boolean isEmpty() default true;
 }

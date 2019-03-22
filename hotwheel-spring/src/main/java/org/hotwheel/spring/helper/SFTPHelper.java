@@ -81,13 +81,13 @@ public class SFTPHelper {
             //String[] files = uploadDir.list();
             String[] files = listFiles.split(",");
             for (int i = 0; i < files.length; i++) {
-                File uploadFile = new File(uploadDir.getPath()+separator+files[i]);
-                if(!uploadFile.isFile()) {
-                    log.info("{} is not a normal file, sftp ignore.",uploadFile.getName());
+                File uploadFile = new File(uploadDir.getPath() + separator + files[i]);
+                if (!uploadFile.isFile()) {
+                    log.info("{} is not a normal file, sftp ignore.", uploadFile.getName());
                 } else {
-                    log.info("{}, sftp upload...",uploadFile.getName());
+                    log.info("{}, sftp upload...", uploadFile.getName());
                     channelSftp.put(new FileInputStream(uploadFile), uploadFile.getName());
-                    log.info("{}, sftp upload...ok",uploadFile.getName());
+                    log.info("{}, sftp upload...ok", uploadFile.getName());
                 }
             }
         } catch (Exception e) {

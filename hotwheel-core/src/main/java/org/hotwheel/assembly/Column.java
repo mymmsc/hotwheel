@@ -9,8 +9,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * 字段注解
- *
+ * <p>
  * Created by wangfeng on 2017/7/3.
+ *
  * @version 5.1.0
  */
 @Target({METHOD, FIELD})

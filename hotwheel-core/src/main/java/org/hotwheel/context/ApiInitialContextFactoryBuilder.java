@@ -9,7 +9,13 @@ package org.hotwheel.context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.naming.*;
+import javax.naming.Binding;
+import javax.naming.Context;
+import javax.naming.Name;
+import javax.naming.NameClassPair;
+import javax.naming.NameParser;
+import javax.naming.NamingEnumeration;
+import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 import javax.naming.spi.InitialContextFactoryBuilder;
 import javax.naming.spi.NamingManager;
@@ -18,7 +24,7 @@ import java.util.Hashtable;
 /**
  * 上下文工厂
  *
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * @version 6.3.9 09/10/02
  * @since mymmsc-api 6.3.9
  */

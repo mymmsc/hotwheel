@@ -14,22 +14,49 @@ import org.slf4j.LoggerFactory;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.net.*;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -37,7 +64,7 @@ import java.util.regex.PatternSyntaxException;
 /**
  * JAVA API杂类封装
  *
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * @version 6.3.9 09/10/02
  * @since mymmsc-api 6.3.9
  */
@@ -74,30 +101,30 @@ public final class Api {
                 "yyyy-MM-dd HH:mm:ss",
                 //"yyyyMMddHHmmss",
                 "EEE MMM dd HH:mm:ss zzz yyyy",
-        /* RFC 1123 with 2-digit Year */"EEE, dd MMM yy HH:mm:ss z",
-        /* RFC 1123 with 4-digit Year */"EEE, dd MMM yyyy HH:mm:ss z",
-		/* RFC 1123 with no Timezone */"EEE, dd MMM yy HH:mm:ss",
-		/* Variant of RFC 1123 */"EEE, MMM dd yy HH:mm:ss",
-		/* RFC 1123 with no Seconds */"EEE, dd MMM yy HH:mm z",
-		/* Variant of RFC 1123 */"EEE dd MMM yyyy HH:mm:ss",
-		/* RFC 1123 with no Day */"dd MMM yy HH:mm:ss z",
-		/* RFC 1123 with no Day or Seconds */"dd MMM yy HH:mm z",
-		/* ISO 8601 slightly modified */"yyyy-MM-dd'T'HH:mm:ssZ",
-		/* ISO 8601 slightly modified */"yyyy-MM-dd'T'HH:mm:ss'Z'",
-		/* ISO 8601 slightly modified */"yyyy-MM-dd'T'HH:mm:sszzzz",
-		/* ISO 8601 slightly modified */"yyyy-MM-dd'T'HH:mm:ss z",
-		/* ISO 8601 */"yyyy-MM-dd'T'HH:mm:ssz",
-		/* ISO 8601 slightly modified */"yyyy-MM-dd'T'HH:mm:ss.SSSz",
-		/* ISO 8601 slightly modified */"yyyy-MM-dd'T'HHmmss.SSSz",
-		/* ISO 8601 slightly modified */"yyyy-MM-dd'T'HH:mm:ss",
-		/* ISO 8601 w/o seconds */"yyyy-MM-dd'T'HH:mmZ",
-		/* ISO 8601 w/o seconds */"yyyy-MM-dd'T'HH:mm'Z'",
-		/* RFC 1123 without Day Name */"dd MMM yyyy HH:mm:ss z",
-		/* RFC 1123 without Day Name and Seconds */"dd MMM yyyy HH:mm z",
-		/* Simple Date Format */"yyyy-MM-dd",
-		/* Simple Date Format */"MMM dd, yyyy"};
+                /* RFC 1123 with 2-digit Year */"EEE, dd MMM yy HH:mm:ss z",
+                /* RFC 1123 with 4-digit Year */"EEE, dd MMM yyyy HH:mm:ss z",
+                /* RFC 1123 with no Timezone */"EEE, dd MMM yy HH:mm:ss",
+                /* Variant of RFC 1123 */"EEE, MMM dd yy HH:mm:ss",
+                /* RFC 1123 with no Seconds */"EEE, dd MMM yy HH:mm z",
+                /* Variant of RFC 1123 */"EEE dd MMM yyyy HH:mm:ss",
+                /* RFC 1123 with no Day */"dd MMM yy HH:mm:ss z",
+                /* RFC 1123 with no Day or Seconds */"dd MMM yy HH:mm z",
+                /* ISO 8601 slightly modified */"yyyy-MM-dd'T'HH:mm:ssZ",
+                /* ISO 8601 slightly modified */"yyyy-MM-dd'T'HH:mm:ss'Z'",
+                /* ISO 8601 slightly modified */"yyyy-MM-dd'T'HH:mm:sszzzz",
+                /* ISO 8601 slightly modified */"yyyy-MM-dd'T'HH:mm:ss z",
+                /* ISO 8601 */"yyyy-MM-dd'T'HH:mm:ssz",
+                /* ISO 8601 slightly modified */"yyyy-MM-dd'T'HH:mm:ss.SSSz",
+                /* ISO 8601 slightly modified */"yyyy-MM-dd'T'HHmmss.SSSz",
+                /* ISO 8601 slightly modified */"yyyy-MM-dd'T'HH:mm:ss",
+                /* ISO 8601 w/o seconds */"yyyy-MM-dd'T'HH:mmZ",
+                /* ISO 8601 w/o seconds */"yyyy-MM-dd'T'HH:mm'Z'",
+                /* RFC 1123 without Day Name */"dd MMM yyyy HH:mm:ss z",
+                /* RFC 1123 without Day Name and Seconds */"dd MMM yyyy HH:mm z",
+                /* Simple Date Format */"yyyy-MM-dd",
+                /* Simple Date Format */"MMM dd, yyyy"};
 
-		/* Create the dateformats */
+        /* Create the dateformats */
         CUSTOM_DATE_FORMATS = new SimpleDateFormat[possibleDateFormats.length];
 
         for (int i = 0; i < possibleDateFormats.length; i++) {
@@ -214,6 +241,7 @@ public final class Api {
 
     /**
      * Map to Bean 1: 利用Introspector,PropertyDescriptor实现 Map to Bean
+     *
      * @param map
      * @param obj
      */
@@ -241,12 +269,13 @@ public final class Api {
 
     /**
      * Bean to Map 1: 利用Introspector和PropertyDescriptor 将Bean to Map
+     *
      * @param obj
      * @return
      */
     public static Map<String, Object> bean2Map(Object obj) {
         Map<String, Object> map = null;
-        if(obj != null) {
+        if (obj != null) {
             map = new HashMap<String, Object>();
             try {
                 BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
@@ -548,6 +577,7 @@ public final class Api {
 
     /**
      * 关闭文件输入流
+     *
      * @param inputStream
      */
     public static void closeQuietly(InputStream inputStream) {
@@ -562,6 +592,7 @@ public final class Api {
 
     /**
      * 关闭文件输入流
+     *
      * @param outputStream
      */
     public static void closeQuietly(OutputStream outputStream) {
@@ -660,6 +691,7 @@ public final class Api {
 
     /**
      * 获取本地ip
+     *
      * @return
      * @deprecated
      */
@@ -691,9 +723,9 @@ public final class Api {
                 netlist.add(0, ni);
             }
             /*
-			 * 用上述方法获取所有网卡时，得到的顺序与服务器中用ifconfig命令看到的网卡顺序相反，
-			 * 因此，想要从第一块网卡开始遍历时，需要将Enumeration<?>中的元素倒序
-			 */
+             * 用上述方法获取所有网卡时，得到的顺序与服务器中用ifconfig命令看到的网卡顺序相反，
+             * 因此，想要从第一块网卡开始遍历时，需要将Enumeration<?>中的元素倒序
+             */
             for (NetworkInterface list : netlist) {
                 // 遍历每个网卡
                 Enumeration<?> cardipaddress = list.getInetAddresses();
@@ -1420,11 +1452,12 @@ public final class Api {
 
     /**
      * 实例化一个对象
+     *
      * @param clazz
      * @param <T>
      * @return
      */
-    public static  <T> T newInstance(Class<T> clazz) {
+    public static <T> T newInstance(Class<T> clazz) {
         T obj = null;
         try {
             obj = clazz.newInstance();
@@ -1585,14 +1618,14 @@ public final class Api {
                 sRet = ((Float) obj).toString();
             } else if (clazz == double.class || clazz == Double.class) {
                 sRet = ((Double) obj).toString();
-            } else if(clazz == BigDecimal.class) {
-                sRet = ((BigDecimal)obj).toString();
+            } else if (clazz == BigDecimal.class) {
+                sRet = ((BigDecimal) obj).toString();
                 //sRet = BigDecimalUtils.of((BigDecimal)obj).toMoneyString(2);
             } else if (clazz == String.class) {
                 sRet = (String) obj;
             } /*else if(obj instanceof Date) {
                 sRet = toString((Date) obj, "yyyy-MM-dd HH:mm:ss");
-            } */else if (clazz == java.sql.Date.class || clazz == Date.class) {
+            } */ else if (clazz == java.sql.Date.class || clazz == Date.class) {
                 sRet = toString((Date) obj, "yyyy-MM-dd HH:mm:ss");
             } else if (clazz == Time.class) {
                 sRet = ((Time) obj).toString();
@@ -1669,7 +1702,7 @@ public final class Api {
                 cls == float.class || cls == String.class);
         if (Api.isEmpty(value) && isBaseClass) {
             value = "";
-        } else if(Api.isEmpty(value)) {
+        } else if (Api.isEmpty(value)) {
             return null;
         } else {
             value = value.trim();
@@ -1688,7 +1721,7 @@ public final class Api {
             obj = parseDouble(value).floatValue();
         } else if (cls == double.class || cls == Double.class) {
             obj = parseDouble(value).doubleValue();
-        } else if(cls == BigDecimal.class) {
+        } else if (cls == BigDecimal.class) {
             obj = new BigDecimal(value);
         } else if (cls == java.sql.Date.class) {
             String s = RegExp.get(value, "^[0-9]{4}-[0-9]{2}-[0-9]{2}",
@@ -1727,6 +1760,7 @@ public final class Api {
 
     /**
      * 获取字段别名
+     *
      * @param field
      * @return
      */
@@ -1752,6 +1786,7 @@ public final class Api {
 
     /**
      * 判断字段名是否匹配, 包括注解别名
+     *
      * @param field
      * @param name
      * @return
@@ -2090,7 +2125,7 @@ public final class Api {
      */
     public static Date parseDate(String strdate) {
 
-		/* Return in case the string date is not set */
+        /* Return in case the string date is not set */
         if (strdate == null || strdate.length() == 0) {
             return null;
         }
@@ -2121,16 +2156,16 @@ public final class Api {
             }
         }
         */
-		/* Try to parse the date */
+        /* Try to parse the date */
         int i = 0;
         while (i < CUSTOM_DATE_FORMATS.length) {
             try {
-				/*
-				 * This Block needs to be synchronized, because the parse-Method
-				 * in SimpleDateFormat is not Thread-Safe.
-				 */
+                /*
+                 * This Block needs to be synchronized, because the parse-Method
+                 * in SimpleDateFormat is not Thread-Safe.
+                 */
                 //synchronized (CUSTOM_DATE_FORMATS[i]) {
-                    return CUSTOM_DATE_FORMATS[i].parse(strdate);
+                return CUSTOM_DATE_FORMATS[i].parse(strdate);
                 //}
             } catch (ParseException e) {
                 i++;
@@ -2673,10 +2708,8 @@ public final class Api {
     /**
      * 执行正则表达式
      *
-     * @param pattern
-     *            表达式
-     * @param str
-     *            待验证字符串
+     * @param pattern 表达式
+     * @param str     待验证字符串
      * @return 返回 <b>true </b>,否则为 <b>false </b>
      */
     private static boolean match(String pattern, String str) {

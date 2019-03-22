@@ -1077,7 +1077,8 @@ public abstract class JsonGenerator
          * <p>
          * Feature is disabled by default.
          */
-        ESCAPE_NON_ASCII(false),;
+        ESCAPE_NON_ASCII(false),
+        ;
 
         private final boolean _defaultState;
 

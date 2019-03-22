@@ -12,7 +12,12 @@ import org.hotwheel.protocol.Http11Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
@@ -23,7 +28,7 @@ import java.util.Map;
 /**
  * HttpClient
  *
- * @author WangFeng(wangfeng@yeah.net)
+ * @author WangFeng(wangfeng @ yeah.net)
  * @version 6.3.12 2012/05/11
  * <p> 已支持cookie和session, [wangfeng @2012/06/19]
  * <p> 暂时不支持cookie, 主要没考虑完全, 如果是移动终端在调用, cookie怎么保存的问题.
@@ -240,7 +245,7 @@ public class HttpClient {
      *
      * @param headers 头信息map, 允许调用者在headers里面修改Content-Type
      * @param body    消息体HashMap, 允许body为字符串, 例如传输XML或者jSON
-     * <p> 默认为UTF-8编码格式. 如果body为空, 则自动转为GET方式.
+     *                <p> 默认为UTF-8编码格式. 如果body为空, 则自动转为GET方式.
      */
     public HttpResult post(Map<String, String> headers, Object body) {
         HttpResult hRet = new HttpResult();

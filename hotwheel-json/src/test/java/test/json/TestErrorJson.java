@@ -59,7 +59,7 @@ public class TestErrorJson {
 
         Type fc = field.getGenericType(); // 关键的地方，如果是List类型，得到其Generic的类型
         System.out.println(fc.getClass());
-        if(fc.getClass() == classGenericType) {
+        if (fc.getClass() == classGenericType) {
             System.out.println("generics");
         }
         Object[] os = fc.getClass().getSigners();
@@ -76,6 +76,7 @@ public class TestErrorJson {
         System.out.println("----------");
         return fieldClazz;
     }
+
     public static void main(String[] args) {
         String body = "{\"responseHeader\":{\"status\":0,\"QTime\":6,\"params\":{\"fl\":\"uname,rmobile,label\",\"indent\":\"true\",\"q\":\"uid:496752913570345010\",\"wt\":\"json\"}},\"response\":{\"numFound\":1,\"start\": 0,\"maxScore\":3.862201,\"docs\":[{\"rmobile\":\"18636369664\",\"uname\":\"张振宇\",\"label\":\"\"}]}}";
         JsonAdapter json = null;

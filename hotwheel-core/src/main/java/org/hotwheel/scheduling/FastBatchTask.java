@@ -8,11 +8,12 @@ import java.util.concurrent.RecursiveTask;
 
 /**
  * 快速批量任务
- *
+ * <p>
  * Created by wangfeng on 2016/11/15.
+ *
  * @since 2.0.15
  */
-public abstract class FastBatchTask<T extends FastContext> extends RecursiveTask<T> implements TaskContext<T>{
+public abstract class FastBatchTask<T extends FastContext> extends RecursiveTask<T> implements TaskContext<T> {
     protected static final String PROP_THRESHOLD = "threshold";
     protected static final String PROP_THREADNUM = "threadNum";
     protected static final String PROP_BATCHSIZE = "batchSize";
@@ -22,26 +23,35 @@ public abstract class FastBatchTask<T extends FastContext> extends RecursiveTask
             PROP_THREADNUM,
             PROP_BATCHSIZE
     };
-    /** 线程数 */
+    /**
+     * 线程数
+     */
     protected volatile int numberOfThread = 0;
 
     protected int threadNum = Runtime.getRuntime().availableProcessors();
     protected int threshold = 1000;
     protected int batchSize = 100;
 
-    protected Logger logger =  LoggerFactory.getLogger(getClass());
+    protected Logger logger = LoggerFactory.getLogger(getClass());
     protected String taskName = null;
     protected Class<T> contextClass;
 
-    /** 开始行数 */
+    /**
+     * 开始行数
+     */
     protected int start;
-    /** 结束行数 */
+    /**
+     * 结束行数
+     */
     protected int end;
-    /** 传入参数 */
+    /**
+     * 传入参数
+     */
     protected Object[] args = null;
 
     /**
      * 创建批量任务
+     *
      * @param threadNum
      * @param threshold
      * @param batchSize
@@ -72,9 +82,9 @@ public abstract class FastBatchTask<T extends FastContext> extends RecursiveTask
         Constructor<?> constructor = null;
         try {
             //constructor = getClass().getConstructor(new Class[] {int.class, int.class, Object[].class});
-            constructor = getClass().getConstructor(new Class[] {int.class, int.class, int.class, String.class});
-            if(constructor != null) {
-                task = (FastBatchTask)constructor.newInstance(this.threadNum, this.threshold, this.batchSize, this.taskName);
+            constructor = getClass().getConstructor(new Class[]{int.class, int.class, int.class, String.class});
+            if (constructor != null) {
+                task = (FastBatchTask) constructor.newInstance(this.threadNum, this.threshold, this.batchSize, this.taskName);
                 task.init(start, end, args);
             }
         } catch (Exception e) {
@@ -93,7 +103,7 @@ public abstract class FastBatchTask<T extends FastContext> extends RecursiveTask
         if (remaining <= 0) {
             // 不执行
             //return ret;
-        } else if(remaining == 1 || remaining <= threshold) {
+        } else if (remaining == 1 || remaining <= threshold) {
             logger.info(taskName + ": " + start + "->" + end + ": 2");
             try {
                 execute(ret);
@@ -114,10 +124,10 @@ public abstract class FastBatchTask<T extends FastContext> extends RecursiveTask
             FastContext rightResult = (FastContext) rightTask.join();
 
             //合并子任务
-            if(leftResult != null) {
+            if (leftResult != null) {
                 ret.merge(leftResult);
             }
-            if(rightResult != null) {
+            if (rightResult != null) {
                 ret.merge(rightResult);
             }
             logger.info(taskName + ": " + start + "->" + end + ": 3");

@@ -219,7 +219,7 @@ public class TemplatorParser {
         String cmd = cmdLine.substring(p0, p);
         String parms = cmdLine.substring(p);
 
-		/* select */
+        /* select */
         if (cmd.equalsIgnoreCase("BEGIN")) {
             // 块开始
             processBeginBlockCmd(parms, cmdTPosBegin, cmdTPosEnd);

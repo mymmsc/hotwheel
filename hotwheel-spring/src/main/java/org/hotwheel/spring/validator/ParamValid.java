@@ -1,6 +1,10 @@
 package org.hotwheel.spring.validator;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * 注解需要验证的参数
@@ -22,7 +26,7 @@ import java.lang.annotation.*;
  *  @AssertTrue
  *  @DecimalMax(value) 不大于value的数值
  *  @DecimalMin(value) 不小于value的数值
- *  @Digits(integer,fraction) 整数部分不超过integer,小数部分不超过fraction
+ *  @Digits(integer,fraction) 整数部分不超过integer, 小数部分不超过fraction
  *  @Future 将来的日期
  *  @Past 过去的日期
  *  @Max(value) 不大于value的数值
@@ -101,8 +105,9 @@ import java.lang.annotation.*;
  *  \nm         标识一个八进制转义码或反向引用.如果 \nm 前面至少有 nm 个捕获子表达式, 那么 nm 是反向引用.如果 \nm 前面至少有 n 个捕获, 则 n 是反向引用, 后面跟有字符 m.如果两种前面的情况都不存在, 则 \nm 匹配八进制值 nm, 其中 n 和 m 是八进制数字 (0-7).
  *  \nml        当 n 是八进制数 (0-3), m 和 l 是八进制数 (0-7) 时, 匹配八进制转义码 nml.
  * </pre>
- *
+ * <p>
  * Created by wangfeng on 2017/6/20.
+ *
  * @version 5.0.8
  * @see <url>http://www.cnblogs.com/pixy/p/5306567.html</url>
  */

@@ -9,17 +9,26 @@ import java.util.Date;
 /**
  * 调度上下文, 负责任务控制
  * Created by wangfeng on 2017/1/6.
+ *
  * @since 1.0.1
  */
 public abstract class SchedulerContext implements TaskContext {
     private static final Logger logger = LoggerFactory.getLogger(SchedulerContext.class);
-    /**< 任务 名称 */
+    /**
+     * < 任务 名称
+     */
     protected String taskName;
-    /**< 任务 开始时间 */
+    /**
+     * < 任务 开始时间
+     */
     protected String taskStartTime;
-    /**< 任务 结束时间 */
+    /**
+     * < 任务 结束时间
+     */
     protected String taskEndTime;
-    /**< 任务 开关 */
+    /**
+     * < 任务 开关
+     */
     protected boolean taskSwitch = true;
 
     protected static volatile boolean isTaskException = false;
@@ -30,13 +39,14 @@ public abstract class SchedulerContext implements TaskContext {
 
     /**
      * 是否定时器运行周期内
+     *
      * @return
      */
     protected boolean isTimerCycle() {
         boolean bRet = false;
         Date date = new Date();
         String now = Api.toString(date, "HH:mm:ss");
-        if(now.compareTo(taskStartTime) >= 0 && now.compareTo(taskEndTime) < 0) {
+        if (now.compareTo(taskStartTime) >= 0 && now.compareTo(taskEndTime) < 0) {
             bRet = true;
         }
 
@@ -45,13 +55,14 @@ public abstract class SchedulerContext implements TaskContext {
 
     /**
      * 是否过期
+     *
      * @return
      */
     protected boolean isTimeExpire() {
         boolean bRet = false;
         Date date = new Date();
         String now = Api.toString(date, "HH:mm:ss");
-        if(now.compareTo(taskEndTime) > 0) {
+        if (now.compareTo(taskEndTime) > 0) {
             bRet = true;
         }
 
@@ -70,7 +81,7 @@ public abstract class SchedulerContext implements TaskContext {
             return;
         }
 
-        try{
+        try {
             service();
         } catch (Exception e) {
             logger.error("{} execute failed:", taskEndTime, e);
@@ -79,6 +90,7 @@ public abstract class SchedulerContext implements TaskContext {
 
     /**
      * 设置任务开关
+     *
      * @param taskSwitch
      */
     public void setTaskSwitch(boolean taskSwitch) {
