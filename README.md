@@ -1,12 +1,12 @@
 ## HotWheel Framework
 一个轻量、快速的MVC框架
 
-[![Build Status](https://secure.travis-ci.org/mymmsc/goapi.png)](https://travis-ci.org/mymmsc/goapi)
-[![codecov](https://codecov.io/gh/mymmsc/goapi/branch/master/graph/badge.svg)](https://codecov.io/gh/mymmsc/goapi)
-![maven](https://img.shields.io/maven-central/v/org.apache.dubbo/dubbo.svg)
-![Golang 1.11.4+](https://img.shields.io/badge/Golang-1.11.4+-orange.svg?style=flat)
-![tag](https://img.shields.io/github/tag/mymmsc/goapi.svg?style=flat)
-![license](https://img.shields.io/github/license/mymmsc/goapi.svg)
+[![Build Status](https://secure.travis-ci.org/mymmsc/hotwheel.png)](https://travis-ci.org/mymmsc/hotwheel)
+[![codecov](https://codecov.io/gh/mymmsc/hotwheel/branch/master/graph/badge.svg)](https://codecov.io/gh/mymmsc/hotwheel)
+![maven](https://img.shields.io/maven-central/v/org.mymmsc/hotwheel.svg)
+![Java 1.7+](https://img.shields.io/badge/Java-1.7+-orange.svg?style=flat)
+![tag](https://img.shields.io/github/tag/mymmsc/hotwheel.svg?style=flat)
+![license](https://img.shields.io/github/license/mymmsc/hotwheel.svg)
 
 ###5.6.1
 1. 优化maven资源
