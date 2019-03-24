@@ -84,7 +84,7 @@
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->
     <properties>
-        <maven-deploy.skip>false</maven-deploy.skip>
+        <maven-deploy.skip>true</maven-deploy.skip>
 
         <!-- JDK设置 -->
         <javac.version>1.7</javac.version>
@@ -458,10 +458,10 @@
                                 </goals>
                                 <configuration>
                                     <failOnError>false</failOnError>
-                                    <!--
                                     <additionalparam>-Xdoclint:none</additionalparam>
-                                    -->
+                                    <!--
                                     <doclint>all,-missing</doclint>
+                                    -->
                                 </configuration>
                             </execution>
                         </executions>
