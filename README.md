@@ -3,7 +3,7 @@
 
 [![Build Status](https://secure.travis-ci.org/mymmsc/hotwheel.png)](https://travis-ci.org/mymmsc/hotwheel)
 [![codecov](https://codecov.io/gh/mymmsc/hotwheel/branch/master/graph/badge.svg)](https://codecov.io/gh/mymmsc/hotwheel)
-![maven](https://img.shields.io/maven-central/v/org.mymmsc/hotwheel.svg)
+![maven](https://img.shields.io/maven-central/v/org.mymmsc/hotwheel-parent.svg)
 ![tag](https://img.shields.io/github/tag/mymmsc/hotwheel.svg?style=flat)
 ![Java 1.7+](https://img.shields.io/badge/Java-1.7+-orange.svg?style=flat)
 ![license](https://img.shields.io/github/license/mymmsc/hotwheel.svg)
