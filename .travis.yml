@@ -2,8 +2,8 @@ language: java
 sudo: false # faster builds
 
 jdk:
-  - openjdk7
-  - oraclejdk7
+  - openjdk8
+  - oraclejdk8
 
 cache:
   directories:
