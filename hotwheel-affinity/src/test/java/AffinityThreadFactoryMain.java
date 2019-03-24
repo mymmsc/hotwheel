@@ -1,5 +1,3 @@
-package test.affinity;
-
 import org.hotwheel.jni.affinity.AffinityLock;
 import org.hotwheel.jni.affinity.AffinityThreadFactory;
 

@@ -1,5 +1,3 @@
-package test.org.hotwheel.assembly;
-
 import org.hotwheel.assembly.Api;
 import org.hotwheel.util.TraceId;
 

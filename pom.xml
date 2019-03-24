@@ -179,6 +179,7 @@
 
         <!-- others begin -->
         <javax.mail.version>1.4.4</javax.mail.version>
+        <junit.version>4.12</junit.version>
         <!-- others end -->
     </properties>
     <!-- ==================== 依赖jar 设置 =========================== -->
@@ -413,6 +414,12 @@
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm</artifactId>
                 <version>${asm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
             </dependency>
 
         </dependencies>

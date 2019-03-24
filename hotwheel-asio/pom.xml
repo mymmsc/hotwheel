@@ -49,6 +49,13 @@
             <scope>test</scope>
         </dependency>
         <!-- Apache Http Components end -->
+        <!-- test start -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- test end -->
     </dependencies>
     <build>
         <plugins>
