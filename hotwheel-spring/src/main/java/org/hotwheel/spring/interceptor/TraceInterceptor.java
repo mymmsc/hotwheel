@@ -34,7 +34,7 @@ public class TraceInterceptor implements HandlerInterceptor {
     private final static String mdcHeaderRequest = "MDC_HEADER_REQUEST";
     //private final static String mdcHeaderResponse = "MDC_HEADER_RESPONSE";
     // 日志跟踪tradeId的header域名称
-    private String httpTraceIdName = null;
+    private String httpTraceIdName = "app-traceid";
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {

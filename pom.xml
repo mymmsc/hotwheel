@@ -11,7 +11,7 @@
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc</groupId>
     <artifactId>hotwheel-parent</artifactId>
-    <version>5.6.2</version>
+    <version>5.6.3</version>
     <packaging>pom</packaging>
     <name>hotwheel</name>
     <description>The parent project of HotWheel</description>
