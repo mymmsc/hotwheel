@@ -5,14 +5,14 @@
     <parent>
         <groupId>org.mymmsc</groupId>
         <artifactId>hotwheel-parent</artifactId>
-        <version>5.6.3</version>
+        <version>5.6.4</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc</groupId>
     <artifactId>hotwheel-asio</artifactId>
-    <version>5.6.3</version>
+    <version>5.6.4</version>
     <packaging>jar</packaging>
 
     <!-- ==================== 依赖jar版本 设置 =========================== -->

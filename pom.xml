@@ -11,7 +11,7 @@
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc</groupId>
     <artifactId>hotwheel-parent</artifactId>
-    <version>5.6.3</version>
+    <version>5.6.4</version>
     <packaging>pom</packaging>
     <name>hotwheel</name>
     <description>The parent project of HotWheel</description>
@@ -459,10 +459,10 @@
                                 </goals>
                                 <configuration>
                                     <failOnError>false</failOnError>
-                                    <additionalparam>-Xdoclint:none</additionalparam>
                                     <!--
-                                    <doclint>all,-missing</doclint>
+                                    <additionalparam>-Xdoclint:none</additionalparam>
                                     -->
+                                    <doclint>all,-missing</doclint>
                                 </configuration>
                             </execution>
                         </executions>
