@@ -8,7 +8,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class AioHttpClientTest {
-    private final static String url = "http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/MoneyFlow.ssi_ssfx_flzjtj";
+    //private final static String url = "http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/MoneyFlow.ssi_ssfx_flzjtj";
+    private final static String url = "http://baidu.com/";
     private final List<String> list = new ArrayList<>();
     private AioHttpClient<String> httpClient = null;
     private long tm = System.currentTimeMillis();
