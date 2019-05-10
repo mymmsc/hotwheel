@@ -27,10 +27,10 @@ public class MdcUtils {
         int num = Api.valueOf(int.class, tmpCount);
         num += (isAdd ? 1 : -1);
         if (num <= 0) {
-            if (Api.isEmpty(MDC.get(traceCount))) {
+            if (!Api.isEmpty(MDC.get(traceCount))) {
                 MDC.remove(traceCount);
             }
-            if (Api.isEmpty(MDC.get(traceName))) {
+            if (!Api.isEmpty(MDC.get(traceName))) {
                 MDC.remove(traceName);
             }
         } else {
