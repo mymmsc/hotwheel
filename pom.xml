@@ -124,10 +124,7 @@
         <!-- jdbc end -->
 
         <!-- mybatis begin -->
-        <mybatis.version>3.4.1</mybatis.version>
-        <cglib.version>3.2.4</cglib.version>
         <asm.version>5.2</asm.version>
-        <aspectj.version>1.6.12</aspectj.version>
         <!-- mybatis end -->
 
         <!-- sftp-tooles begin -->
@@ -137,15 +134,15 @@
         <guava.version>20.0</guava.version>
 
         <!-- json start -->
-        <fastjson.version>1.2.33</fastjson.version>
+        <fastjson.version>1.2.58</fastjson.version>
 
-        <jackson.version>2.8.11.3</jackson.version>
-        <jackson.databind.version>2.8.11.3</jackson.databind.version>
+        <jackson.version>[2.9.9.1,)</jackson.version>
+        <jackson.databind.version>[2.9.9.1,)</jackson.databind.version>
         <!-- json end -->
 
         <!-- spring start -->
         <springframework.version>4.3.22.RELEASE</springframework.version>
-        <mybatis.version>3.4.1</mybatis.version>
+        <mybatis.version>3.4.6</mybatis.version>
         <mybatis.spring.version>1.3.0</mybatis.spring.version>
         <cglib.version>3.2.4</cglib.version>
         <aspectj.version>1.6.12</aspectj.version>

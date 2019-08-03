@@ -9,16 +9,20 @@ import java.util.TreeMap;
 
 public class AioHttpClientTest {
     //private final static String url = "http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/MoneyFlow.ssi_ssfx_flzjtj";
-    private final static String url = "http://baidu.com/";
+    private final static String url = "https://blog.csdn.net/q";
     private final List<String> list = new ArrayList<>();
     private AioHttpClient<String> httpClient = null;
     private long tm = System.currentTimeMillis();
-
+    private long count = 1 * 5;
+    private int concurrency = 1;
     @org.junit.Before
     public void setUp() throws Exception {
         list.add("sh600001");
         list.add("sh600002");
-        httpClient = new AioHttpClient<>(list, 2000);
+        for (int i = 0; i < count; i++) {
+            list.add("" + i);
+        }
+        httpClient = new AioHttpClient<>(list, concurrency);
     }
 
     @org.junit.After
@@ -50,7 +54,7 @@ public class AioHttpClientTest {
             @Override
             public void completed(HttpContext ctx) {
                 String body = ctx.getBody().toString();
-                System.out.println(body);
+                //System.out.println(body);
             }
 
             @Override
@@ -64,6 +68,14 @@ public class AioHttpClientTest {
             }
         });
         httpClient.start();
+        long ums = (System.currentTimeMillis() - tm);
+        httpClient.close();
+        System.out.println("Concurrency Level    : " + concurrency);
+        System.out.println("Complete requests    : " + count);
+        System.out.println("use                  : " + ums + "ms");
+        System.out.println("Time taken for tests : " + (ums / 1000) + " seconds");
+        System.out.println("process              : " + (ums / count) + "ms/peer");
+        System.out.println("Requests per second  : " + (count * 1000 / ums) + " [#/sec] (mean)");
     }
 
     @org.junit.Test

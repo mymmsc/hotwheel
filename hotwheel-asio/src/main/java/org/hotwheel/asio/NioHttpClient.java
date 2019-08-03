@@ -477,8 +477,11 @@ public class NioHttpClient<T> extends Asio<HttpContext> {
         host = httpUrl.getHost();
         port = httpUrl.getPort();
         if (port < 0) {
-            if (httpUrl.getProtocol().equalsIgnoreCase("http")) {
+            String protocol = httpUrl.getProtocol();
+            if (protocol.equalsIgnoreCase("http")) {
                 port = 80;
+            } else if (protocol.equalsIgnoreCase("https")) {
+                port = 443;
             }
         }
         path = httpUrl.getFile();
