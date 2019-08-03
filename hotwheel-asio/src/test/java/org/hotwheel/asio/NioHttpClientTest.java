@@ -9,92 +9,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static org.junit.Assert.*;
-
 public class NioHttpClientTest {
     //private final static String url = "http://vip.stock.finance.sina.com.cn:12345/quotes_service/api/json_v2.php/MoneyFlow.ssi_ssfx_flzjtj";
     //private final static String url = "http://127.0.0.1:12345/quotes_service/api/json_v2.php/MoneyFlow.ssi_ssfx_flzjtj";
 
-    private final static String url = "http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/MoneyFlow.ssi_ssfx_flzjtj";
+    //private final static String url = "http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/MoneyFlow.ssi_ssfx_flzjtj";
+    private final static String url = "https://blog.csdn.net/q";
     private final List<String> list = new ArrayList<>();
     private NioHttpClient<String> httpClient = null;
     private long tm = System.currentTimeMillis();
-
+    private long count = 1 * 1000;
+    private int concurrency = 200;
     @org.junit.Before
     public void setUp() throws Exception {
         list.add("sh600001");
         list.add("sh600002");
-        httpClient = new NioHttpClient<>(list, 2000);
+        for (int i = 0; i < count; i++) {
+            list.add("" + i);
+        }
+        httpClient = new NioHttpClient<>(list, 2);
     }
 
     @org.junit.After
     public void tearDown() throws Exception {
         httpClient.close();
         long ums = System.currentTimeMillis() - tm;
-    }
-
-    @Test
-    public void getSelector() {
-    }
-
-    @Test
-    public void close() {
-    }
-
-    @Test
-    public void isClosed() {
-    }
-
-    @Test
-    public void keyFor() {
-    }
-
-    @Test
-    public void contextFor() {
-    }
-
-    @Test
-    public void contextFor1() {
-    }
-
-    @Test
-    public void createSocket() {
-    }
-
-    @Test
-    public void closeChannel() {
-    }
-
-    @Test
-    public void handleCompact() {
-    }
-
-    @Test
-    public void handleAccepted() {
-    }
-
-    @Test
-    public void handleClosed() {
-    }
-
-    @Test
-    public void handleError() {
-    }
-
-    @Test
-    public void handleTimeout() {
-    }
-
-    @Test
-    public void handleConnected() {
-    }
-
-    @Test
-    public void handleRead() {
-    }
-
-    @Test
-    public void handleWrite() {
     }
 
     @Test
@@ -115,7 +54,7 @@ public class NioHttpClientTest {
             @Override
             public void completed(HttpContext ctx) {
                 String body = ctx.getBody().toString();
-                System.out.println(body);
+                //System.out.println(body);
             }
 
             @Override
@@ -129,69 +68,14 @@ public class NioHttpClientTest {
             }
         });
         httpClient.start();
+        long ums = (System.currentTimeMillis() - tm);
+        httpClient.close();
+        System.out.println("Concurrency Level    : " + concurrency);
+        System.out.println("Complete requests    : " + count);
+        System.out.println("use                  : " + ums + "ms");
+        System.out.println("Time taken for tests : " + (ums / 1000) + " seconds");
+        System.out.println("process              : " + (ums / count) + "ms/peer");
+        System.out.println("Requests per second  : " + (count * 1000 / ums) + " [#/sec] (mean)");
     }
 
-    @Test
-    public void getConcurrency() {
-    }
-
-    @Test
-    public void setConcurrency() {
-    }
-
-    @Test
-    public void getNumber() {
-    }
-
-    @Test
-    public void setNumber() {
-    }
-
-    @Test
-    public void add() {
-    }
-
-    @Test
-    public void onClosed() {
-    }
-
-    @Test
-    public void onCompleted() {
-    }
-
-    @Test
-    public void onAccepted() {
-    }
-
-    @Test
-    public void onError() {
-    }
-
-    @Test
-    public void onTimeout() {
-    }
-
-    @Test
-    public void onConnected() {
-    }
-
-    @Test
-    public void onRead() {
-    }
-
-    @Test
-    public void onWrite() {
-    }
-
-    @Test
-    public void onCompact() {
-    }
-
-    @Test
-    public void addField() {
-    }
-
-    @Test
-    public void post() {
-    }
 }
