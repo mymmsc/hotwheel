@@ -136,7 +136,7 @@
         <!-- json start -->
         <fastjson.version>1.2.58</fastjson.version>
 
-        <jackson.version>2.9.9.2</jackson.version>
+        <jackson.version>2.9.10.1</jackson.version>
         <jackson.databind.version>2.9.9.2</jackson.databind.version>
         <!-- json end -->
 
