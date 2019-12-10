@@ -17,14 +17,6 @@
     <description>The parent project of HotWheel</description>
     <url>https://github.com/mymmsc/hotwheel</url>
     <inceptionYear>2002</inceptionYear>
-    <!--
-    <contributors>
-        <contributor>
-            <name>Wang Feng</name>
-            <email>wangfengxy@sina.cn</email>
-        </contributor>
-    </contributors>
-    -->
     <scm>
         <url>https://github.com/mymmsc/hotwheel</url>
         <connection>scm:git:https://github.com/mymmsc/hotwheel.git</connection>
@@ -36,16 +28,6 @@
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
-    <!--
-    <developers>
-        <developer>
-            <name>Wang Feng</name>
-            <email>wangfeng@yeah.net</email>
-            <organization>mymmsc</organization>
-            <organizationUrl>http://www.mymmsc.org</organizationUrl>
-        </developer>
-    </developers>
-    -->
     <developers>
         <developer>
             <id>mymmsc.org</id>
@@ -134,7 +116,7 @@
         <guava.version>20.0</guava.version>
 
         <!-- json start -->
-        <fastjson.version>1.2.58</fastjson.version>
+        <fastjson.version>1.2.60</fastjson.version>
 
         <jackson.version>2.9.9.2</jackson.version>
         <jackson.databind.version>2.9.9.2</jackson.databind.version>
