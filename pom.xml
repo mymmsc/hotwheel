@@ -11,7 +11,7 @@
     <!-- ==================== 项目设置 =========================== -->
     <groupId>org.mymmsc</groupId>
     <artifactId>hotwheel-parent</artifactId>
-    <version>5.6.9</version>
+    <version>5.6.10</version>
     <packaging>pom</packaging>
     <name>hotwheel</name>
     <description>The parent project of HotWheel</description>
@@ -118,8 +118,8 @@
         <!-- json start -->
         <fastjson.version>1.2.60</fastjson.version>
 
-        <jackson.version>2.9.10.1</jackson.version>
-        <jackson.databind.version>2.9.10.1</jackson.databind.version>
+        <jackson.version>2.9.10.3</jackson.version>
+        <jackson.databind.version>2.9.10.3</jackson.databind.version>
         <!-- json end -->
 
         <!-- spring start -->
