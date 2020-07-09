@@ -97,7 +97,7 @@
         <log4j2.disruptor.version>3.4.2</log4j2.disruptor.version>
         <!-- logging end -->
 
-        <jedis.version>2.9.0</jedis.version>
+        <jedis.version>2.10.2</jedis.version>
 
         <!-- jdbc begin -->
         <jdbc.mysql.version>5.1.39</jdbc.mysql.version>
@@ -113,13 +113,13 @@
         <jsch.version>0.1.53</jsch.version>
         <!-- sftp-tooles end -->
 
-        <guava.version>20.0</guava.version>
+        <guava.version>24.1.1</guava.version>
 
         <!-- json start -->
-        <fastjson.version>1.2.60</fastjson.version>
+        <fastjson.version>1.2.72</fastjson.version>
 
-        <jackson.version>2.9.10.3</jackson.version>
-        <jackson.databind.version>2.9.10.3</jackson.databind.version>
+        <jackson.version>2.9.10.5</jackson.version>
+        <jackson.databind.version>2.9.10.5</jackson.databind.version>
         <!-- json end -->
 
         <!-- spring start -->
