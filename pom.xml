@@ -116,7 +116,7 @@
         <guava.version>24.1.1</guava.version>
 
         <!-- json start -->
-        <fastjson.version>1.2.72</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
 
         <jackson.version>2.9.10.5</jackson.version>
         <jackson.databind.version>2.9.10.5</jackson.databind.version>
