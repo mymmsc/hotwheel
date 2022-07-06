@@ -110,7 +110,7 @@
         <!-- mybatis end -->
 
         <!-- sftp-tooles begin -->
-        <jsch.version>0.1.53</jsch.version>
+        <jsch.version>0.1.54</jsch.version>
         <!-- sftp-tooles end -->
 
         <guava.version>24.1.1</guava.version>
