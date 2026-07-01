@@ -5,7 +5,7 @@ import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyValue;
 import org.springframework.web.servlet.mvc.method.annotation.ExtendedServletRequestDataBinder;
 
-import javax.servlet.ServletRequest;
+import jakarta.servlet.ServletRequest;
 import java.util.List;
 import java.util.Map;
 

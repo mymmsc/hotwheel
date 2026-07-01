@@ -19,6 +19,8 @@ public class EncryptablePropertyholder extends PropertyPlaceholderConfigurer {
 
     private static final String key = "12h4*&^%RTGHJNKLMKHTR^T&YIOJL123k(^&#%$%*&&>NJ$%W#$%^&:?MS%$%";
 
+    private static final String MASKED_VALUE = "******";
+
     private static String decrypt(String str) {
         byte[] dest = null;
         try {
@@ -27,6 +29,27 @@ public class EncryptablePropertyholder extends PropertyPlaceholderConfigurer {
             throw new RuntimeException("数据库账号解密失败: ", e);
         }
         return new String(dest);
+    }
+
+    private static boolean isSensitiveKey(String key) {
+        if (key == null) {
+            return false;
+        }
+        String normalizedKey = key.toLowerCase();
+        return normalizedKey.endsWith("jdbc.username")
+                || normalizedKey.endsWith("jdbc.password")
+                || normalizedKey.contains("password")
+                || normalizedKey.contains("passwd")
+                || normalizedKey.contains("secret")
+                || normalizedKey.contains("token")
+                || normalizedKey.contains("apikey")
+                || normalizedKey.contains("api-key")
+                || normalizedKey.contains("privatekey")
+                || normalizedKey.contains("private-key");
+    }
+
+    private static String maskLogValue(String key, String value) {
+        return isSensitiveKey(key) ? MASKED_VALUE : value;
     }
 
     @Override
@@ -56,11 +79,11 @@ public class EncryptablePropertyholder extends PropertyPlaceholderConfigurer {
             Map.Entry e = (Map.Entry) itr.next();
             key = (String) e.getKey();
             value = props.getProperty(key);
-            logger.debug(key + ": " + value);
+            logger.debug(key + ": " + maskLogValue(key, value));
             if (key.endsWith("jdbc.username") || key.endsWith("jdbc.password")) {
                 value = decrypt(value);
                 props.setProperty(key, value);
-                logger.debug("  ==>" + key + ": " + value);
+                logger.debug("  ==>" + key + ": " + maskLogValue(key, value));
             }
         }
 

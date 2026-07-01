@@ -16,6 +16,8 @@ import java.security.Security;
  * @since mymmsc-api 6.3.9
  */
 public abstract class AbstractCrypto extends BaseObject {
+    private static final String JCE_PROVIDER_NAME = "SunJCE";
+
     protected boolean bIsBase64 = true;
     protected String sAlgorithm = null;
     protected SecretKey deskey = null;
@@ -27,7 +29,7 @@ public abstract class AbstractCrypto extends BaseObject {
      */
     public AbstractCrypto() {
         if (!bInited) {
-            Security.addProvider(new com.sun.crypto.provider.SunJCE());
+            Security.getProvider(JCE_PROVIDER_NAME);
             bInited = true;
         }
     }
