@@ -1,6 +1,13 @@
 {
     "configurations": [
         {
+            "type": "java",
+            "name": "TestApi",
+            "request": "launch",
+            "mainClass": "TestApi",
+            "projectName": "hotwheel-core"
+        },
+        {
             "type": "cmake",
             "request": "launch",
             "name": "Debug portfile(s)",

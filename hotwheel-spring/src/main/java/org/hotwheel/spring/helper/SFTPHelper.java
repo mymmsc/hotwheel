@@ -30,6 +30,10 @@ public class SFTPHelper {
 
     private String remotePath;
 
+    private boolean strictHostKeyChecking;
+
+    private String knownHostsPath;
+
     private Session sshSession;
 
     private ChannelSftp channelSftp;
@@ -40,11 +44,25 @@ public class SFTPHelper {
         this.userName = userName;
         this.passWord = passWord;
         this.remotePath = remotePath;
+        this.strictHostKeyChecking = false;
+    }
+
+    public SFTPHelper setStrictHostKeyChecking(boolean strictHostKeyChecking) {
+        this.strictHostKeyChecking = strictHostKeyChecking;
+        return this;
+    }
+
+    public SFTPHelper setKnownHostsPath(String knownHostsPath) {
+        this.knownHostsPath = knownHostsPath;
+        return this;
     }
 
     private ChannelSftp connect() {
         try {
             JSch jsch = new JSch();
+            if (strictHostKeyChecking && knownHostsPath != null && knownHostsPath.trim().length() > 0) {
+                jsch.setKnownHosts(knownHostsPath);
+            }
             if (port == -1) {
                 sshSession = jsch.getSession(userName, host);
             } else {
@@ -52,7 +70,7 @@ public class SFTPHelper {
             }
             sshSession.setPassword(passWord);
             Properties sshConfig = new Properties();
-            sshConfig.put("StrictHostKeyChecking", "no");
+            sshConfig.put("StrictHostKeyChecking", strictHostKeyChecking ? "yes" : "no");
             sshSession.setConfig(sshConfig);
             sshSession.connect();
             Channel channel = sshSession.openChannel("sftp");
@@ -93,12 +111,16 @@ public class SFTPHelper {
         } catch (Exception e) {
             log.error("occurs exception：", e);
         } finally {
-            this.channelSftp.disconnect();
+            if (this.channelSftp != null) {
+                this.channelSftp.disconnect();
+            }
         }
     }
 
     public void disconnect() {
-        this.sshSession.disconnect();
+        if (this.sshSession != null) {
+            this.sshSession.disconnect();
+        }
     }
 
 }
