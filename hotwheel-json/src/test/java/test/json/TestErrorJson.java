@@ -7,13 +7,12 @@ import test.json.bean.CreditInfo;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 
 /**
  * Created by wangfeng on 2016/11/21.
  */
 public class TestErrorJson {
-
-    private final static Class<?> classGenericType = sun.reflect.generics.reflectiveObjects.TypeVariableImpl.class;
 
     private static Class<?> getFieldClass(Class<?> clazz, int index) {
 
@@ -59,7 +58,7 @@ public class TestErrorJson {
 
         Type fc = field.getGenericType(); // 关键的地方，如果是List类型，得到其Generic的类型
         System.out.println(fc.getClass());
-        if (fc.getClass() == classGenericType) {
+        if (fc instanceof TypeVariable<?>) {
             System.out.println("generics");
         }
         Object[] os = fc.getClass().getSigners();
