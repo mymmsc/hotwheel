@@ -10,9 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -90,7 +91,7 @@ public class ValidateAspect {
 
     private void validate(final List<Object> objs) {
         ValidatorFactory vf = Validation.buildDefaultValidatorFactory();
-        javax.validation.Validator validator = vf.getValidator();
+        Validator validator = vf.getValidator();
         for (Object obj : objs) {
             Set<ConstraintViolation<Object>> set = validator.validate(obj);
             if (!set.isEmpty()) {
